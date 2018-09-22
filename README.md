@@ -1,5 +1,3 @@
-# array-extra
-
 [![NPM](https://nodei.co/npm/array-extra.png)](https://nodei.co/npm/array-extra/)
 
 Extra methods for [array].<br>
