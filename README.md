@@ -1,3 +1,6 @@
+# array-extra
+
+> [array-extra](https://www.npmjs.com/package/array-extra) was renamed to [extra-array](https://www.npmjs.com/package/extra-array).
 [![NPM](https://nodei.co/npm/array-extra.png)](https://nodei.co/npm/array-extra/)
 
 Extra methods for [array].<br>
