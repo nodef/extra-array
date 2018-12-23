@@ -1,9 +1,12 @@
 {
   "name": "extra-array",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Standard utility methods for Array.",
   "main": "index.js",
   "scripts": {
+    "prepublishOnly": "node ./prepublish",
+    "browserify": "browserify index.js -o index.web.js -s Integer",
+    "uglifyjs": "uglifyjs -c -m -o index.min.js index.web.js",
     "test": "exit"
   },
   "keywords": [
