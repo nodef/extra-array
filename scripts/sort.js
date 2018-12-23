@@ -1,4 +1,4 @@
-const binarySearch = require('array-binarysearch.closest');
+const binarySearch = require('./binary-search.closest');
 function sortTo(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
   var z1 = z0+(end-bgn);
   if(z1>z.length) z.length = z1;

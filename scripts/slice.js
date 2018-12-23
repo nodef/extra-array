@@ -1,4 +1,4 @@
-const copyTo = require('array-copyto');
+const copyTo = require('./copy');
 function sliceTo(arr, bgn=0, end=arr.length, z=[], z0=z.length) {
   bgn = bgn<0? arr.length+bgn:bgn;
   end = end<0? arr.length+end:end;

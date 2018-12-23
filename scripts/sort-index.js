@@ -1,4 +1,4 @@
-const binarySearch = require('array-binarysearch.closest');
+const binarySearch = require('./binary-search.closest');
 function compare(i, j) {
   return this[i]===this[j]? 0:(this[i]<this[j]? -1:1);
 };
