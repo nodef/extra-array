@@ -1,6 +1,7 @@
 # jekyll config
 _config.yml
 
-# build scripts, log
-build.js
-*.log
+# scripts
+scripts/
+bundle.js
+prepublish.js

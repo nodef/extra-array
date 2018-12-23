@@ -1,75 +1,36 @@
 {
   "name": "extra-array",
-  "version": "0.1.8",
-  "description": "Extra methods for array.",
+  "version": "1.0.2",
+  "description": "Standard utility methods for Array.",
   "main": "index.js",
   "scripts": {
     "test": "exit"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/extra-array/extra-array.git"
-  },
   "keywords": [
     "extra",
     "array",
+    "standard",
+    "utility",
+    "method",
+    "manipulation",
+    "function",
     "merferry"
   ],
   "author": "wolfram77@gmail.com",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/extra-array/extra-array/issues"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodef/extra-array.git"
   },
-  "homepage": "https://github.com/extra-array/extra-array#readme",
+  "bugs": {
+    "url": "https://github.com/nodef/extra-array/issues"
+  },
+  "homepage": "https://github.com/nodef/extra-array#readme",
   "devDependencies": {
-    "@extra-array/all": "^1.0.1",
-    "@extra-array/any": "^1.0.1",
-    "@extra-array/append": "^1.0.1",
-    "@extra-array/arange": "^1.0.1",
-    "@extra-array/average": "^1.0.1",
-    "@extra-array/compact": "^1.0.1",
-    "@extra-array/contains": "^1.0.1",
-    "@extra-array/copy": "^1.0.1",
-    "@extra-array/count": "^1.0.1",
-    "@extra-array/count-all": "^1.0.1",
-    "@extra-array/equal": "^1.0.1",
-    "@extra-array/euclidean-distance": "^1.0.3",
-    "@extra-array/every": "^1.0.1",
-    "@extra-array/filter": "^1.0.1",
-    "@extra-array/find-all": "^1.0.1",
-    "@extra-array/find-all-indices": "^1.0.1",
-    "@extra-array/find": "^1.0.1",
-    "@extra-array/find-index": "^1.0.1",
-    "@extra-array/first": "^1.0.1",
-    "@extra-array/for-each": "^1.0.1",
-    "@extra-array/from-entries": "^1.0.1",
-    "@extra-array/from-lists": "^1.0.1",
-    "@extra-array/hamming-distance": "^1.0.2",
-    "@extra-array/includes": "^1.0.1",
-    "@extra-array/includes-only": "^1.0.1",
-    "@extra-array/index-of": "^1.0.1",
-    "@extra-array/indices-of": "^1.0.1",
-    "@extra-array/is": "^1.0.1",
-    "@extra-array/join": "^1.0.1",
-    "@extra-array/last-index-of": "^1.0.1",
-    "@extra-array/last": "^1.0.1",
-    "@extra-array/linspace": "^1.0.1",
-    "@extra-array/map": "^1.0.1",
-    "@extra-array/max": "^1.0.1",
-    "@extra-array/middle": "^1.0.1",
-    "@extra-array/min": "^1.0.1",
-    "@extra-array/move": "^1.0.1",
-    "@extra-array/pick": "^1.0.1",
-    "@extra-array/pick-as": "^1.0.2",
-    "@extra-array/reduce": "^1.0.1",
-    "@extra-array/repeat": "^1.0.1",
-    "@extra-array/reverse": "^1.0.1",
-    "@extra-array/slice": "^1.0.1",
-    "@extra-array/some": "^1.0.1",
-    "@extra-array/sort-index": "^1.0.1",
-    "@extra-array/sort": "^1.0.1",
-    "@extra-array/sum": "^1.0.1",
-    "@extra-array/values": "^1.0.1",
-    "@extra-array/zip-object": "^1.0.1"
+    "browserify": "^16.2.3",
+    "find-npm-prefix": "^1.0.2",
+    "recast": "^0.16.1",
+    "tempy": "^0.2.1",
+    "uglify-es": "^3.3.9"
   }
 }
