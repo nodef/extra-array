@@ -1,10 +1,10 @@
-Extra methods for [array].<br>
+Standard utility methods for [Array].<br>
 Browserified, minified module: [extra-array.min].
 
 ```javascript
-const extra = require('extra-array');
-// extra.is(<value>)
-// extra.equal(<array-1>, <array-2>)
+const Array = require('extra-array');
+// Array.is(<value>)
+// Array.equal(<array-1>, <array-2>)
 // ...
 ```
 
@@ -21,6 +21,8 @@ About methods:
 Generate methods:
 - [arange](https://www.npmjs.com/package/@extra-array/arange)
 - [linspace](https://www.npmjs.com/package/@extra-array/linspace)
+- [fromEntries](https://www.npmjs.com/package/@extra-array/from-entries)
+- [fromLists](https://www.npmjs.com/package/@extra-array/from-lists)
 
 Search methods:
 - [indexOf](https://www.npmjs.com/package/@extra-array/index-of)
@@ -28,13 +30,15 @@ Search methods:
 - [lastIndexOf](https://www.npmjs.com/package/@extra-array/last-index-of)
 - [includes](https://www.npmjs.com/package/@extra-array/includes)
 - [includesOnly](https://www.npmjs.com/package/@extra-array/includes-only)
+- [binarySearch](https://www.npmjs.com/package/@extra-array/binary-search)
+- [binarySearch.closest](https://www.npmjs.com/package/@extra-array/binary-search.closest)
+- [binarySearch.first](https://www.npmjs.com/package/@extra-array/binary-search.first)
+- [binarySearch.last](https://www.npmjs.com/package/@extra-array/binary-search.last)
 - [contains](https://www.npmjs.com/package/@extra-array/contains)
 - [count](https://www.npmjs.com/package/@extra-array/count)
 - [countAll](https://www.npmjs.com/package/@extra-array/count-all)
 
 Transform methods:
-- [fromEntries](https://www.npmjs.com/package/@extra-array/from-entries)
-- [fromLists](https://www.npmjs.com/package/@extra-array/from-lists)
 - [join](https://www.npmjs.com/package/@extra-array/join)
 - [pick](https://www.npmjs.com/package/@extra-array/pick)
 - [pickAs](https://www.npmjs.com/package/@extra-array/pick-as)
@@ -42,9 +46,13 @@ Transform methods:
 - [copy](https://www.npmjs.com/package/@extra-array/copy)
 - [move](https://www.npmjs.com/package/@extra-array/move)
 - [compact](https://www.npmjs.com/package/@extra-array/compact)
+- [unique](https://www.npmjs.com/package/@extra-array/unique)
+- [fill](https://www.npmjs.com/package/@extra-array/fill)
 - [reverse](https://www.npmjs.com/package/@extra-array/reverse)
 - [sort](https://www.npmjs.com/package/@extra-array/sort)
 - [sortIndex](https://www.npmjs.com/package/@extra-array/sort-index)
+- [zip](https://www.npmjs.com/package/@extra-iterable/zip)
+- [unzip](https://www.npmjs.com/package/@extra-iterable/zip)
 - [zipObject](https://www.npmjs.com/package/@extra-array/zip-object)
 - [append](https://www.npmjs.com/package/@extra-array/append)
 - [repeat](https://www.npmjs.com/package/@extra-array/repeat)
@@ -70,7 +78,10 @@ Evaluate methods:
 - [average](https://www.npmjs.com/package/@extra-array/average)
 - [hammingDistance](https://www.npmjs.com/package/@extra-array/hamming-distance)
 - [euclideanDistance](https://www.npmjs.com/package/@extra-array/euclidean-distance)
+<br>
 
 
-[array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
+[![nodef](https://i.imgur.com/nwyrmkW.jpg)](https://nodef.github.io)
+
+[Array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [extra-array.min]: https://www.npmjs.com/package/extra-array.min

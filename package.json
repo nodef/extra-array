@@ -1,6 +1,6 @@
 {
   "name": "extra-array",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Standard utility methods for Array.",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/nodef/extra-array#readme",
   "devDependencies": {
+    "@extra-iterable/zip": "^1.1.0",
     "browserify": "^16.2.3",
     "find-npm-prefix": "^1.0.2",
     "recast": "^0.16.1",
