@@ -17,7 +17,7 @@ const EOL = os.EOL;
 // Get filename.
 function resolve(pth) {
   var ext = path.extname(pth);
-  return ['.js', '.ts', '.json'].includes(ext)? pth+'.js':pth;
+  return ['.js', '.ts', '.json'].includes(ext)? pth:pth+'.js';
 };
 
 // Get requires from code.
