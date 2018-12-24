@@ -85,7 +85,7 @@ function pkgMinify(o) {
   var license = fs.readFileSync('LICENSE', 'utf8');
   var readme = fs.readFileSync('README.md', 'utf8');
   var index = fs.readFileSync('index.min.js', 'utf8');
-  readme = readme.replace(/(\.<br>)/, ', exported as `String`$1');
+  readme = readme.replace(/(\.<br>)/, ', exported as `Array`$1');
   readme = readme.replace(/(\.<br>)[\s\S]*?(\[!\[nodef\])/, `$1${EOL}${ORIGINAL}${EOL}${CDN}${EOL}<br>${EOL}${EOL}${EOL}$2`);
   readme = readme.replace(/extra-array\.min/g, 'extra-array');
   readme += `[unpkg]: https://unpkg.com/extra-array.min${EOL}`;
