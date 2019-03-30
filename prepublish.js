@@ -111,7 +111,7 @@ async function shell(a) {
   for(var f of fs.readdirSync('scripts'))
     if(f!=='index.js' && path.extname(f)==='.js') pkgScatter('scripts/'+f, o);
   var out = await bundle('scripts/index.js');
-  fs.writeFileSync('index.js', out);
+  fs.writeFileSync('index.js', out+'module.exports = Array;'+os.EOL);
   pkgMinify();
 };
 if(require.main===module) shell(process.argv);
