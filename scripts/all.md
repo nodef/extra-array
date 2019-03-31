@@ -12,7 +12,6 @@ allOf([0, -1, 4, 4, ''], 1, 4);
 // true
 ```
 
-
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections

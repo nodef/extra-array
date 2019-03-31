@@ -19,6 +19,7 @@ About methods:
 - [values](https://www.npmjs.com/package/@extra-array/values)
 
 Generate methods:
+- [ensure](https://www.npmjs.com/package/@extra-array/ensure)
 - [arange](https://www.npmjs.com/package/@extra-array/arange)
 - [linspace](https://www.npmjs.com/package/@extra-array/linspace)
 - [fromEntries](https://www.npmjs.com/package/@extra-array/from-entries)

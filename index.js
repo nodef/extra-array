@@ -442,3 +442,4 @@ Array.sum = sumOf;
 Array.average = average;
 Array.hammingDistance = hammingDistance;
 Array.euclideanDistance = euclideanDistance;
+module.exports = Array;
