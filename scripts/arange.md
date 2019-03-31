@@ -14,8 +14,11 @@ arange(0, -4, -2, [10, 11]);
 arange(0, -4, -2, [10, 11], 1);
 // [10, 0, -2]
 ```
+> With [extra-array] try `Array.arange()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [arange()]: https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.arange.html

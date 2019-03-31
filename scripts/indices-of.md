@@ -15,9 +15,12 @@ indicesOf(['r', 'o', 'b', 'o'], 'o', 1, 3, [10, 11]);
 indicesOf(['r', 'o', 'b', 'o'], 'o', 1, 3, [10, 11], 1);
 // [10, 1]
 ```
+> With [extra-array] try `Array.indicesOf()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [Array.indexOf()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf

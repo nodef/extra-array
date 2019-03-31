@@ -1,18 +1,21 @@
 Get sum of values in [array].
 
 ```javascript
-const sumOf = require('@extra-array/sum');
-// sumOf(<array>, [begin=0], [end])
+const sum = require('@extra-array/sum');
+// sum(<array>, [begin=0], [end])
 
-sumOf([7, 1, 9]);
+sum([7, 1, 9]);
 // 17
-sumOf([7, 1, 9], 1);
+sum([7, 1, 9], 1);
 // 10
-sumOf([7, 1, 9], 1, 2);
+sum([7, 1, 9], 1, 2);
 // 1
 ```
+> With [extra-array] try `Array.sum()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections

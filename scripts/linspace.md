@@ -11,8 +11,11 @@ linspace(0, -1, 5);
 linspace(0, 1);
 // [0, ..., 1]  (100 values)
 ```
+> With [extra-array] try `Array.linspace()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [linspace()]: https://in.mathworks.com/help/matlab/ref/linspace.html

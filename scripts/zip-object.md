@@ -13,8 +13,11 @@ zipObject([{odd: 1, even: 2}, {odd: 3, even: 4}, {odd: 5, even: 6}], 1, 2);
 zipObject([{odd: 1, even: 2}, {odd: 3, even: 4}, {odd: 5, even: 6}], 1, 2, {neither: [1.5]});
 // {neither: [1.5], odd: [3], even: [4]}
 ```
+> With [extra-array] try `Array.zipObject()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [_.zip()]: http://underscorejs.org/#zip

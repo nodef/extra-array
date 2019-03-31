@@ -16,9 +16,12 @@ findAllIndices(['a', 'b', 'c', 'd'], (v, i, arr) => v>'b', null, 1, 3, [10, 11])
 findAllIndices(['a', 'b', 'c', 'd'], (v, i, arr) => v>'b', null, 1, 3, [10, 11], 1);
 // [10, 2]
 ```
+> With [extra-array] try `Array.findAllIndices()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [Array.findIndex()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex

@@ -1,7 +1,7 @@
 Get index of value in [sorted] [array].
-> Use [@extra-array/binary-search.closest], if index of closest value is needed.<br>
-> Use [array-binarysearch.first], if index of first value is needed.<br>
-> Use [array-binarysearch.last], if index of last value is needed.
+> Use [binarySearch.closest], if index of closest value is needed.<br>
+> Use [binarySearch.first], if index of first value is needed.<br>
+> Use [binarySearch.last], if index of last value is needed.
 
 ```javascript
 const binarySearch = require('array-binarysearch');
@@ -22,16 +22,19 @@ binarySearch(['G', 'KG', 'KG', 'MG'], 'g', (a, b, i) => a.toLowerCase().localeCo
 binarySearch(['G', 'KG', 'KG', 'MG'], 'KG', (a, b, i, arr) => a.localeCompare(b), null, 1, 4);
 // 2
 ```
+> With [extra-array] try `Array.binarySearch()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
-References:
-- [array-binsearch](https://www.npmjs.com/package/array-binsearch)
-- [binarysearch](https://www.npmjs.com/package/binarysearch)
+> References: [array-binsearch], [binarysearch].
 
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [sorted]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
-[array-binarysearch.closest]: https://www.npmjs.com/package/array-binarysearch.closest
-[array-binarysearch.first]: https://www.npmjs.com/package/array-binarysearch.first
-[array-binarysearch.last]: https://www.npmjs.com/package/array-binarysearch.last
+[binarySearch.closest]: https://www.npmjs.com/package/@extra-array/binary-search.closest
+[binarySearch.first]: https://www.npmjs.com/package/@extra-array/binary-search.first
+[binarySearch.last]: https://www.npmjs.com/package/@extra-array/binary-search.last
+[array-binsearch]: https://www.npmjs.com/package/array-binsearch
+[binarysearch]: https://www.npmjs.com/package/binarysearch

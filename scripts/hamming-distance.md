@@ -11,9 +11,12 @@ hammingDistance([2, 1, 7, 3, 8, 9, 6], [2, 2, 3, 3, 7, 9, 6]);
 hammingDistance(['richard', 'hamming'], ['richard']);
 // NaN (array lengths are not equal)
 ```
+> With [extra-array] try `Array.hammigDistance()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [Hamming distance]: https://en.wikipedia.org/wiki/Hamming_distance
 [arrays]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections

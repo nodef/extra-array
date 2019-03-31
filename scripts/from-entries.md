@@ -11,9 +11,12 @@ fromEntries(['c', 'a', 'e', 's', 'e', 'r'].entries());
 fromEntries([[0, 'g'], [1, 'o']], (v, i, ent) => v==='g'? 'n':v);
 // ['n', 'o']
 ```
+> With [extra-array] try `Array.fromEntries()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [entries]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries

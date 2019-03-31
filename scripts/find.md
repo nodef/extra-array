@@ -1,20 +1,23 @@
 Get first value in [array] that satisfies the test, like [Array.find()].
 
 ```javascript
-const findIn = require('@extra-array/find');
-// findIn(<array>, <test function>, [this], [begin=0], [end])
+const find = require('@extra-array/find');
+// find(<array>, <test function>, [this], [begin=0], [end])
 // - <test function>(<value>, <index>, <array>)
 
-findIn(['a', 'b', 'cd'], (v) => v>'b');
+find(['a', 'b', 'cd'], (v) => v>'b');
 // 'cd'
-findIn(['a', 'b', 'cd'], (v, i, arr) => v>'b', null, 1);
+find(['a', 'b', 'cd'], (v, i, arr) => v>'b', null, 1);
 // 'cd'
-findIn(['a', 'b', 'cd'], (v, i, arr) => v>'b', null, 1, 2);
+find(['a', 'b', 'cd'], (v, i, arr) => v>'b', null, 1, 2);
 // undefined
 ```
+> With [extra-array] try `Array.find()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [Array.find()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find

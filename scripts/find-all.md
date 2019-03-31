@@ -16,9 +16,12 @@ findAll(['a', 'b', 'c', 'd'], (v, i, arr) => v>'b', null, 1, 3, ['z', 'y']);
 findAll(['a', 'b', 'c', 'd'], (v, i, arr) => v>'b', null, 1, 3, ['z', 'y'], 1);
 // ['z', 'c']
 ```
+> With [extra-array] try `Array.findAll()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [Array.find()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find

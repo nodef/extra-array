@@ -12,8 +12,11 @@ includesOnly(['a', 'b', 'b', 'c'], 'b', 1);
 includesOnly(['a', 'b', 'b', 'c'], 'b', 1, 3);
 // true  (bb === bb)
 ```
+> With [extra-array] try `Array.includesOnly()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections

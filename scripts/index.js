@@ -68,3 +68,4 @@ Array.sum = require('./sum');
 Array.average = require('./average');
 Array.hammingDistance = require('./hamming-distance');
 Array.euclideanDistance = require('./euclidean-distance');
+module.exports = Array;

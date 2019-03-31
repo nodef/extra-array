@@ -11,8 +11,11 @@ average([4, 1, 2, 3], 1);
 average([4, 1, 2, 3], 1, 3);
 // 1.5
 ```
+> With [extra-array] try `Array.average()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections

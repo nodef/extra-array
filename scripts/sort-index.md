@@ -20,8 +20,11 @@ sortIndex(['E', 'd', 'g', 'e'], null, null, 1, 3, [10, 11]);
 sortIndex(['E', 'd', 'g', 'e'], null, null, 1, 3, [10, 11], 1);
 // [10, 1, 2]
 ```
+> With [extra-array] try `Array.sortIndex()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections

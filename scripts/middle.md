@@ -1,18 +1,21 @@
 Get middle value of [array].
 
 ```javascript
-const middleOf = require('@extra-array/middle');
-// middleOf(<array>, [index=0])
+const middle = require('@extra-array/middle');
+// middle(<array>, [index=0])
 
-middleOf(['m', 'a', 'r', 'a', 'm', 'e', 'l']);
+middle(['m', 'a', 'r', 'a', 'm', 'e', 'l']);
 // 'm'
-middleOf(['m', 'i', 'l', 'k', 'm', 'a', 'n'], 1);
+middle(['m', 'i', 'l', 'k', 'm', 'a', 'n'], 1);
 // 'i'
-middleOf(['l', 'u', 'k', 'a'], -1);
+middle(['l', 'u', 'k', 'a'], -1);
 // 'a'
 ```
+> With [extra-array] try `Array.middle()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections

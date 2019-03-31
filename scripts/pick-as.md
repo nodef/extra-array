@@ -20,9 +20,12 @@ pickAs(a, [2, 1, 0], 1, 2, ['z', 'y']);
 pickAs(a, [2, 1, 0], 1, 2, ['z', 'y'], 1);
 // ['z', undefined, 'Planetary', undefined]
 ```
+> With [extra-array] try `Array.pickAs()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [_.pick()]: http://underscorejs.org/#pick

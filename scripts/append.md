@@ -12,10 +12,13 @@ append(['l', 'o', 'r', 'd'], 'jaga', 'nnath');
 append([], new Map([['j', 10], ['e', 5], ['s', 19]]), new Map([['u', 21], ['s', 19]]));
 // [['j', 10], ['e', 5], ['s', 19], ['u', 21], ['s', 19]]
 ```
+> With [extra-array] try `Array.append()` instead.
+<br>
 
 
 [![extra-array](https://i.imgur.com/nwyrmkW.jpg)](https://www.npmjs.com/package/extra-array)
 
+[extra-array]: https://www.npmjs.com/package/extra-array
 [iterables]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
 [Array.push()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
