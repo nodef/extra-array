@@ -18,6 +18,10 @@ function* values(arr, bgn=0, end=arr.length) {
   for(var i=bgn; i<end; i++)
     yield arr[i];
 }
+function ensure(val) {
+  if(val==null) return [];
+  return Array.isArray(val)? val:[val];
+}
 function arange(x1, x2, stp=1, z=[], z0=z.length) {
   for(var z1=z0+Math.max(Math.ceil((x2-x1)/stp), 0); z0<z1; x1+=stp)
     z[z0++] = x1;
@@ -87,7 +91,7 @@ function binarySearch(arr, val, fn, ths, bgn=0, end=arr.length) {
   }
   return ~bgn;
 }
-function by16(arr, val, fn, ths, bgn, end) {
+function by17(arr, val, fn, ths, bgn, end) {
   while(bgn<end) {
     var m = (bgn+end)>>>1, c = fn.call(ths, arr[m], val, m, arr);
     if(c<0) bgn = m+1;
@@ -96,8 +100,8 @@ function by16(arr, val, fn, ths, bgn, end) {
   }
   return bgn;
 }
-function binarySearch16(arr, val, fn, ths, bgn=0, end=arr.length) {
-  if(fn!=null) return by16(arr, val, fn, ths, bgn, end);
+function binarySearch17(arr, val, fn, ths, bgn=0, end=arr.length) {
+  if(fn!=null) return by17(arr, val, fn, ths, bgn, end);
   while(bgn<end) {
     var m = (bgn+end)>>>1;
     if(arr[m]<val) bgn = m+1;
@@ -106,7 +110,7 @@ function binarySearch16(arr, val, fn, ths, bgn=0, end=arr.length) {
   }
   return bgn;
 }
-function by17(arr, val, fn, ths, bgn, end) {
+function by18(arr, val, fn, ths, bgn, end) {
   var end0 = end;
   while(bgn<end) {
     var m = (bgn+end)>>>1, c = fn.call(ths, arr[m], val, m, arr);
@@ -115,8 +119,8 @@ function by17(arr, val, fn, ths, bgn, end) {
   }
   return bgn>=end0 || arr[bgn]!==val? ~bgn:bgn;
 }
-function binarySearch17(arr, val, fn, ths, bgn=0, end=arr.length) {
-  if(fn!=null) return by17(arr, val, fn, ths, bgn, end);
+function binarySearch18(arr, val, fn, ths, bgn=0, end=arr.length) {
+  if(fn!=null) return by18(arr, val, fn, ths, bgn, end);
   var end0 = end;
   while(bgn<end) {
     var m = (bgn+end)>>>1;
@@ -125,7 +129,7 @@ function binarySearch17(arr, val, fn, ths, bgn=0, end=arr.length) {
   }
   return bgn>=end0 || arr[bgn]!==val? ~bgn:bgn;
 }
-function by18(arr, val, fn, ths, bgn, end) {
+function by19(arr, val, fn, ths, bgn, end) {
   var bgn0 = bgn;
   while(bgn<end) {
     var m = (bgn+end)>>>1, c = fn.call(ths, arr[m], val, m, arr);
@@ -134,8 +138,8 @@ function by18(arr, val, fn, ths, bgn, end) {
   }
   return bgn<=bgn0 || arr[bgn-1]!==val? ~bgn:bgn-1;
 }
-function binarySearch18(arr, val, fn, ths, bgn=0, end=arr.length) {
-  if(fn!=null) return by18(arr, val, fn, ths, bgn, end);
+function binarySearch19(arr, val, fn, ths, bgn=0, end=arr.length) {
+  if(fn!=null) return by19(arr, val, fn, ths, bgn, end);
   var bgn0 = bgn;
   while(bgn<end) {
     var m = (bgn+end)>>>1;
@@ -383,6 +387,7 @@ Array.last = lastOf;
 Array.values = values;
 
 // Generate methods:
+Array.ensure = ensure;
 Array.arange = arange;
 Array.linspace = linspace;
 Array.fromEntries = fromEntries;
@@ -395,9 +400,9 @@ Array.lastIndexOf = lastIndexOf;
 Array.includes = includesIt;
 Array.includesOnly = includesOnly;
 Array.binarySearch = binarySearch;
-Array.binarySearch.closest = binarySearch16;
-Array.binarySearch.first = binarySearch17;
-Array.binarySearch.last = binarySearch18;
+Array.binarySearch.closest = binarySearch17;
+Array.binarySearch.first = binarySearch18;
+Array.binarySearch.last = binarySearch19;
 Array.contains = containsIt;
 Array.count = count;
 Array.countAll = countAll;
