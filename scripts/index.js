@@ -9,6 +9,7 @@ Array.last = require('./last');
 Array.values = require('./values');
 
 // Generate methods:
+Array.ensure = require('./ensure');
 Array.arange = require('./arange');
 Array.linspace = require('./linspace');
 Array.fromEntries = require('./from-entries');
