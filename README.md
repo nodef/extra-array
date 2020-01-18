@@ -1,3 +1,10 @@
+xor
+xorBy
+xorWith
+zipObject
+zipObjectDeep
+
+
 Standard utility methods for [Array].<br>
 Browserified, minified module: [extra-array.min].
 

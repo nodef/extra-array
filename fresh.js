@@ -1,4 +1,14 @@
 
+
+/**
+ * Returns corresponding values from n arrays.
+ * @param {array} xs n arrays
+ * @returns {array} array of corresponding values
+ */
+function zip(xs) {
+  return zipWith(xs ,args);
+}
+
 /**
  * Combines values from n arrays, with a function.
  * @param {array} xs n arrays
@@ -17,5 +27,10 @@ function zipWith(xs, fn, ths=null) {
   }
   return a;
 }
+
+function args() {
+  return arguments;
+}
+Array.zip = zip;
 Array.zipWith = zipWith;
 module.exports = Array;

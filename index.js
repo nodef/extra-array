@@ -250,18 +250,7 @@ function sortIndex(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
 }
 
 
-function zip(itr, bgn=0, end=Number.MAX_SAFE_INTEGER, z=[], z0=z.length) {
-  var i = -1, a = 0;
-  for(var v of itr) {
-    if(++i<bgn) continue;
-    if(i>=end) break;
-    var b = z0-1;
-    for(var u of v)
-      (z[++b] = z[b]||[])[a] = u;
-    a++;
-  }
-  return z;
-}
+
 function zipObject(arr, bgn=0, end=arr.length, z={}) {
   for(var i=bgn, j=0; i<end; i++, j++) {
     for(var k of Object.keys(arr[i])) {
