@@ -3,7 +3,7 @@
 // - dont manipulate input arrays
 /**
  * Gets first element of array.
- * @param {array} x array
+ * @param {Array} x array
  * @returns {*} first element
  */
 function head(x) {
@@ -12,7 +12,7 @@ function head(x) {
 
 /**
  * Gets last element of array.
- * @param {array} x array
+ * @param {Array} x array
  * @returns {*} last element
  */
 function last(x) {
@@ -21,8 +21,8 @@ function last(x) {
 
 /**
  * Gets elements after head of array.
- * @param {array} x array
- * @returns {array} elements after head
+ * @param {Array} x array
+ * @returns {Array} elements after head
  */
 function tail(x) {
   return x.slice(1);
@@ -30,8 +30,8 @@ function tail(x) {
 
 /**
  * Gets elements before last element of array.
- * @param {array} x array
- * @returns {array} elements before last
+ * @param {Array} x array
+ * @returns {Array} elements before last
  */
 function init(x) {
   return x.slice(0, -1);
@@ -39,7 +39,7 @@ function init(x) {
 
 /**
  * Gets largest element, as per compare function.
- * @param {array} x array
+ * @param {Array} x array
  * @param {function?} fn compare function (a, b)
  * @returns {*} largest element
  */
@@ -53,7 +53,7 @@ function max(x, fn) {
 
 /**
  * Gets least element, as per compare function.
- * @param {array} x array
+ * @param {Array} x array
  * @param {function?} fn compare function (a, b)
  * @returns {*} least element
  */
@@ -66,11 +66,31 @@ function min(x, fn) {
 }
 
 /**
+ * Gets prefix of desired length from array.
+ * @param {Array} x array
+ * @param {number} n prefix length
+ * @returns {Array} prefix
+ */
+function take(x, n) {
+  return x.slice(0, n);
+}
+
+/**
+ * Gets elements after prefix from array.
+ * @param {Array} x array
+ * @param {number} n prefix length
+ * @returns {Array} suffix
+ */
+function drop(x, n) {
+  return x.slice(n);
+}
+
+/**
  * Splits array to elements which do, and dont satify the filter.
- * @param {array} x array
+ * @param {Array} x array
  * @param {function} fn filter function (elem, index, array)
  * @param {object?} ths this argument
- * @returns {array} pair of arrays [satisfy, dont_satisfy]
+ * @returns {Array} pair of arrays [satisfy, dont_satisfy]
  */
 function partition(x, fn, ths=null) {
   var t = [], f = [], i = -1;
@@ -83,10 +103,10 @@ function partition(x, fn, ths=null) {
 
 /**
  * Combines values from n arrays, with a function.
- * @param {array} xs n arrays
+ * @param {Array} xs n arrays
  * @param {function} fn combine function (a, b, c, ...)
  * @param {object?} ths this argument
- * @returns {array} combined values
+ * @returns {Array} combined values
  */
 function zip(xs, fn, ths=null) {
   fn = fn||args;
@@ -111,7 +131,7 @@ function args() {
 // - manipulate input arrays
 /**
  * Appends arrays to end to input array!
- * @param {array} x input array
+ * @param {Array} x input array
  * @param  {...array} ys arrays to append
  * @returns input array (modified!)
  */
@@ -127,6 +147,8 @@ exports.tail = tail;
 exports.init = init;
 exports.max = max;
 exports.min = min;
+exports.take = take;
+exports.drop = drop;
 exports.partition = partition;
 exports.zip = zip;
 exports.append = append;
