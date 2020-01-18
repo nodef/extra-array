@@ -16,6 +16,14 @@ function last(x) {
   return x[x.length-1];
 }
 
+/**
+ * Gets elements after head of array.
+ * @param {array} x array
+ * @returns {array} elements after head
+ */
+function tail(x) {
+  return a.slice(1);
+}
 
 
 /**
@@ -51,5 +59,6 @@ function args() {
 }
 exports.head = head;
 exports.last = last;
+exports.tail = tail;
 exports.zip = zip;
 exports.zipWith = zipWith;
