@@ -1,4 +1,10 @@
-
+/**
+ * Gets first element of array.
+ * @param {array} x array
+ */
+function head(x) {
+  return x[0];
+}
 
 /**
  * Returns corresponding values from n arrays.
@@ -31,6 +37,7 @@ function zipWith(xs, fn, ths=null) {
 function args() {
   return arguments;
 }
+Array.head = head;
 Array.zip = zip;
 Array.zipWith = zipWith;
 module.exports = Array;
