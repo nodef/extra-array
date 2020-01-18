@@ -49,6 +49,20 @@ function max(x, fn) {
 }
 
 /**
+ * Gets least element, as per compare function.
+ * @param {array} x array
+ * @param {function?} fn compare function (a, b)
+ * @returns {*} least element
+ */
+function min(x, fn) {
+  if(!fn) return Math.min.apply(null, x);
+  var a = undefined;
+  for(var e of x)
+    a = fn(a, e)<0? a:e;
+  return a;
+}
+
+/**
  * Combines values from n arrays, with a function.
  * @param {array} xs n arrays
  * @param {function} fn combiner (a, b, c, ...)
@@ -75,4 +89,5 @@ exports.last = last;
 exports.tail = tail;
 exports.init = init;
 exports.max = max;
+exports.min = min;
 exports.zip = zip;
