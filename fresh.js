@@ -2,7 +2,7 @@
 // - behave like math functions
 // - dont manipulate input arrays
 /**
- * Gets first element of array.
+ * Gets first element.
  * @param {Array} x array
  * @returns {*} first element
  */
@@ -11,7 +11,7 @@ function head(x) {
 }
 
 /**
- * Gets last element of array.
+ * Gets last element.
  * @param {Array} x array
  * @returns {*} last element
  */
@@ -20,7 +20,7 @@ function last(x) {
 }
 
 /**
- * Gets elements after head of array.
+ * Gets elements after head.
  * @param {Array} x array
  * @returns {Array} elements after head
  */
@@ -29,7 +29,7 @@ function tail(x) {
 }
 
 /**
- * Gets elements before last element of array.
+ * Gets elements before last element.
  * @param {Array} x array
  * @returns {Array} elements before last
  */
@@ -66,7 +66,7 @@ function min(x, fn) {
 }
 
 /**
- * Gets prefix of desired length from array.
+ * Gets prefix of desired length.
  * @param {Array} x array
  * @param {number} n prefix length
  * @returns {Array} prefix
@@ -76,13 +76,29 @@ function take(x, n) {
 }
 
 /**
- * Gets elements after prefix from array.
+ * Gets elements after prefix.
  * @param {Array} x array
  * @param {number} n prefix length
  * @returns {Array} suffix
  */
 function drop(x, n) {
   return x.slice(n);
+}
+
+/**
+ * Gets longest prefix that satisfies filter.
+ * @param {Array} x array
+ * @param {function} fn filter function (elem, index, array)
+ * @param {object?} ths this argument
+ * @returns {Array} prefix
+ */
+function takeWhile(x, fn, ths=null) {
+  var a = [], i = -1;
+  for(var e of x) {
+    if(fn.call(ths, e, ++i, x)) a.push(e);
+    else break;
+  }
+  return a;
 }
 
 /**
@@ -130,7 +146,7 @@ function args() {
 // - dont behave like math functions
 // - manipulate input arrays
 /**
- * Appends arrays to end to input array!
+ * Appends arrays to end of input array!
  * @param {Array} x input array
  * @param  {...array} ys arrays to append
  * @returns input array (modified!)
@@ -149,6 +165,7 @@ exports.max = max;
 exports.min = min;
 exports.take = take;
 exports.drop = drop;
+exports.takeWhile = takeWhile;
 exports.partition = partition;
 exports.zip = zip;
 exports.append = append;
