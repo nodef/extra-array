@@ -248,6 +248,8 @@ function sortIndex(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
   }
   return z;
 }
+
+
 function zip(itr, bgn=0, end=Number.MAX_SAFE_INTEGER, z=[], z0=z.length) {
   var i = -1, a = 0;
   for(var v of itr) {
@@ -269,6 +271,9 @@ function zipObject(arr, bgn=0, end=arr.length, z={}) {
   }
   return z;
 }
+
+
+
 function append(arr) {
   for(var i=1, j=arr.length, I=arguments.length; i<I; i++) {
     for(var v of arguments[i])
