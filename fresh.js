@@ -1,10 +1,22 @@
 /**
  * Gets first element of array.
  * @param {array} x array
+ * @returns {*} first element
  */
 function head(x) {
   return x[0];
 }
+
+/**
+ * Gets last element of array.
+ * @param {array} x array
+ * @returns {*} last element
+ */
+function last(x) {
+  return x[x.length-1];
+}
+
+
 
 /**
  * Returns corresponding values from n arrays.
