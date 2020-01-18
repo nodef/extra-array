@@ -25,6 +25,14 @@ function tail(x) {
   return a.slice(1);
 }
 
+/**
+ * Gets elements before last element of array.
+ * @param {array} x array
+ * @returns {array} elements before last
+ */
+function init(x) {
+  return x.slice(0, -1);
+}
 
 /**
  * Returns corresponding values from n arrays.
@@ -60,5 +68,6 @@ function args() {
 exports.head = head;
 exports.last = last;
 exports.tail = tail;
+exports.init = init;
 exports.zip = zip;
 exports.zipWith = zipWith;
