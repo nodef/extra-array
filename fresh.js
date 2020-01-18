@@ -20,6 +20,15 @@ function last(x) {
 }
 
 /**
+ * Gets elements before last element.
+ * @param {Array} x array
+ * @returns {Array} elements before last
+ */
+function init(x) {
+  return x.slice(0, -1);
+}
+
+/**
  * Gets elements after head.
  * @param {Array} x array
  * @returns {Array} elements after head
@@ -29,12 +38,27 @@ function tail(x) {
 }
 
 /**
- * Gets elements before last element.
+ * Gets all initial segments.
  * @param {Array} x array
- * @returns {Array} elements before last
+ * @returns {Array} [initial segment ...]
  */
-function init(x) {
-  return x.slice(0, -1);
+function inits(x) {
+  var a = [];
+  for(var i=0, I=x.length; i<I; i++)
+    a.push(x.slice(0, i));
+  return a;
+}
+
+/**
+ * Gets all final segments.
+ * @param {Array} x array
+ * @returns {Array} [final segment ...]
+ */
+function tails(x) {
+  var a = [];
+  for(var i=0, I=x.length; i<I; i++)
+    a.push(x.slice(i));
+  return a;
 }
 
 /**
@@ -93,12 +117,25 @@ function drop(x, n) {
  * @returns {Array} prefix
  */
 function takeWhile(x, fn, ths=null) {
-  var a = [], i = -1;
-  for(var e of x) {
-    if(fn.call(ths, e, ++i, x)) a.push(e);
-    else break;
-  }
-  return a;
+  return x.slice(0, findFailIndex(x, fn, ths));
+}
+
+/**
+ * Get suffix remaining after takeWhile().
+ * @param {Array} x array
+ * @param {function} fn filter function (elem, index, array)
+ * @param {object?} ths this argument
+ * @returns {Array} suffix
+ */
+function dropWhile(x, fn, ths=null) {
+  return x.slice(findFailIndex(x, fn, ths));
+}
+
+function findFailIndex(x, fn, ths=null) {
+  var i = -1;
+  for(var e of x)
+    if(!fn.call(ths, e, ++i, x)) break;
+  return i;
 }
 
 /**
@@ -159,13 +196,16 @@ function append(x, ...ys) {
 
 exports.head = head;
 exports.last = last;
-exports.tail = tail;
 exports.init = init;
+exports.tail = tail;
+exports.inits = inits;
+exports.tails = tails;
 exports.max = max;
 exports.min = min;
 exports.take = take;
 exports.drop = drop;
 exports.takeWhile = takeWhile;
+exports.dropWhile = dropWhile;
 exports.partition = partition;
 exports.zip = zip;
 exports.append = append;
