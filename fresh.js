@@ -62,6 +62,22 @@ function tails(x) {
 }
 
 /**
+ * Lists all permutations.
+ * @param {array} x array
+ * @returns {Iterable} permutation ...
+ */
+function* permutations(x) {
+  if(x.length===0) yield [];
+  for(var i=x.length-1; i>=0; i--) {
+    var y = splice(x, i);
+    for(var p of permutations(y)) {
+      p.push(x[i]);
+      yield p;
+    }
+  }
+}
+
+/**
  * Gets largest element, as per compare function.
  * @param {Array} x array
  * @param {function?} fn compare function (a, b)
@@ -194,12 +210,23 @@ function append(x, ...ys) {
   return x;
 }
 
+
+function splice(x, i, n=1, ...es) {
+  var a = x.slice(0, i);
+  for(var e of es)
+    a.push(e);
+  for(var i=i+n, I=x.length; i<I; i++)
+    a.push(x[i]);
+  return a;
+}
+
 exports.head = head;
 exports.last = last;
 exports.init = init;
 exports.tail = tail;
 exports.inits = inits;
 exports.tails = tails;
+exports.permutations = permutations;
 exports.max = max;
 exports.min = min;
 exports.take = take;

@@ -263,13 +263,6 @@ function zipObject(arr, bgn=0, end=arr.length, z={}) {
 
 
 
-function append(arr) {
-  for(var i=1, j=arr.length, I=arguments.length; i<I; i++) {
-    for(var v of arguments[i])
-      arr[j++] = v;
-  }
-  return arr;
-}
 function repeatTo(arr, n=1, bgn=0, end=arr.length, z=[], z0=z.length) {
   for(var h=0; h<n; h++) {
     for(var i=bgn; i<end; i++)
@@ -325,28 +318,8 @@ function mapTo(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
     z[z0++] = fn.call(ths, arr[i], i, arr);
   return z;
 }
-function any(arr, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(arr[i]) return true;
-  return false;
-}
-function allOf(arr, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(!arr[i]) return false;
-  return true;
-}
-function maxOf(arr, bgn=0, end=arr.length) {
-  var z = -Infinity;
-  for(var i=bgn; i<end; i++)
-    z = arr[i]>z? arr[i]:z;
-  return z;
-}
-function minOf(arr, bgn=0, end=arr.length) {
-  var z = Infinity;
-  for(var i=bgn; i<end; i++)
-    z = arr[i]<z? arr[i]:z;
-  return z;
-}
+
+// math
 function sumOf(arr, bgn=0, end=arr.length) {
   var z = 0;
   for(var i=bgn; i<end; i++)
@@ -357,6 +330,8 @@ function average(arr, bgn=0, end=arr.length) {
   var n = end-bgn;
   return n? sumOf(arr, bgn, end)/n:0;
 }
+
+// vector
 function hammingDistance(a, b, a0=0, a1=a.length, b0=0, b1=b.length) {
   var L = a1-a0, z = 0;
   if(L!==b1-b0) return NaN;
