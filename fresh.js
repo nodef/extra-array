@@ -49,7 +49,7 @@ function zipWith(xs, fn, ths=null) {
 function args() {
   return arguments;
 }
-Array.head = head;
-Array.zip = zip;
-Array.zipWith = zipWith;
-module.exports = Array;
+exports.head = head;
+exports.last = last;
+exports.zip = zip;
+exports.zipWith = zipWith;
