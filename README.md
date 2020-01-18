@@ -1,3 +1,9 @@
+cons
+uncons
+intersperse
+intercalate
+
+
 xor
 xorBy
 xorWith

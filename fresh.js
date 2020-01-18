@@ -22,7 +22,7 @@ function last(x) {
  * @returns {array} elements after head
  */
 function tail(x) {
-  return a.slice(1);
+  return x.slice(1);
 }
 
 /**
@@ -35,12 +35,17 @@ function init(x) {
 }
 
 /**
- * Returns corresponding values from n arrays.
- * @param {array} xs n arrays
- * @returns {array} array of corresponding values
+ * Gets largest element, as per compare function.
+ * @param {array} x array
+ * @param {function?} fn compare function (a, b)
+ * @returns {*} largest element
  */
-function zip(xs) {
-  return zipWith(xs ,args);
+function max(x, fn) {
+  if(!fn) return Math.max.apply(null, x);
+  var a = undefined;
+  for(var e of x)
+    a = fn(a, e)<0? e:a;
+  return a;
 }
 
 /**
@@ -50,7 +55,8 @@ function zip(xs) {
  * @param {object?} ths this argument
  * @returns {array} combined values
  */
-function zipWith(xs, fn, ths=null) {
+function zip(xs, fn, ths=null) {
+  fn = fn||args;
   var a = [], A = 0;
   for(var r=0, R=xs.length; r<R; r++)
     A = Math.max(A, xs[r].length);
@@ -61,7 +67,6 @@ function zipWith(xs, fn, ths=null) {
   }
   return a;
 }
-
 function args() {
   return arguments;
 }
@@ -69,5 +74,5 @@ exports.head = head;
 exports.last = last;
 exports.tail = tail;
 exports.init = init;
+exports.max = max;
 exports.zip = zip;
-exports.zipWith = zipWith;
