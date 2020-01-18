@@ -1,3 +1,6 @@
+// PURE FUNCTIONS
+// - behave like math functions
+// - dont manipulate input arrays
 /**
  * Gets first element of array.
  * @param {array} x array
@@ -84,6 +87,24 @@ function zip(xs, fn, ths=null) {
 function args() {
   return arguments;
 }
+
+
+
+// IMPURE FUNCTIONS
+// - dont behave like math functions
+// - manipulate input arrays
+/**
+ * Appends arrays to end to input array!
+ * @param {array} x input array
+ * @param  {...array} ys arrays to append
+ * @returns input array (modified!)
+ */
+function append(x, ...ys) {
+  for(var y of ys)
+    Array.prototype.push.apply(x, y);
+  return x;
+}
+
 exports.head = head;
 exports.last = last;
 exports.tail = tail;
@@ -91,3 +112,4 @@ exports.init = init;
 exports.max = max;
 exports.min = min;
 exports.zip = zip;
+exports.append = append;
