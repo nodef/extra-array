@@ -66,9 +66,25 @@ function min(x, fn) {
 }
 
 /**
+ * Splits array to elements which do, and dont satify the filter.
+ * @param {array} x array
+ * @param {function} fn filter function (elem, index, array)
+ * @param {object?} ths this argument
+ * @returns {array} pair of arrays [satisfy, dont_satisfy]
+ */
+function partition(x, fn, ths=null) {
+  var t = [], f = [], i = -1;
+  for(var e of x) {
+    if(fn.call(ths, e, ++i, x)) t.push(e);
+    else f.push(e);
+  }
+  return [t, f];
+}
+
+/**
  * Combines values from n arrays, with a function.
  * @param {array} xs n arrays
- * @param {function} fn combiner (a, b, c, ...)
+ * @param {function} fn combine function (a, b, c, ...)
  * @param {object?} ths this argument
  * @returns {array} combined values
  */
@@ -111,5 +127,6 @@ exports.tail = tail;
 exports.init = init;
 exports.max = max;
 exports.min = min;
+exports.partition = partition;
 exports.zip = zip;
 exports.append = append;
