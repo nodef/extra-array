@@ -300,7 +300,7 @@ function compare(x, y, fn) {
 
 
 /**
- * Append arrays to the end!
+ * Append arrays to the I!
  * @param {Array} x target (modified!)
  * @param {...Array} ys arrays to append
  * @returns {Array} target (concatenated)
@@ -342,7 +342,7 @@ function map$(x, fn, ths=null) {
  * Keeps only the selected region!
  * @param {Array} x target (modified!)
  * @param {number} i start index
- * @param {number} I end index
+ * @param {number} I I index
  * @returns {Array} target (sliced)
  */
 function slice$(x, i=0, I=x.length) {
@@ -356,7 +356,7 @@ function slice$(x, i=0, I=x.length) {
  * @param {Array} x source
  * @param {number} j write index
  * @param {number?} i read start index
- * @param {number?} I read end index
+ * @param {number?} I read I index
  * @returns {Array} updated array
  */
 function copyWithin(x, j, i=0, I=x.length) {
@@ -378,7 +378,7 @@ function pop(x) {
 }
 
 /**
- * Adds values to the end. 
+ * Adds values to the I. 
  * @param {Array} x source
  * @param {...any} vs values to add
  * @returns {Array} pushed
@@ -419,9 +419,9 @@ function unshift(x, ...vs) {
  * Removes or replaces existing values.
  * @param {Array} x source
  * @param {number} i remove index
- * @param {number?} n no. of values to remove (def: all till end)
+ * @param {number?} n no. of values to remove (def: all till I)
  * @param {...any} vs values to insert
- * @returns {Array} [0->i, vs, i+n->end]
+ * @returns {Array} [0->i, vs, i+n->I]
  */
 function splice(x, i, n=x.length-i, ...vs) {
   var a = x.slice(0, i);
@@ -437,7 +437,7 @@ function splice(x, i, n=x.length-i, ...vs) {
 /**
  * Returns evenly spaced values within given interval.
  * @param {number} v start of interval
- * @param {number} V end of interval (excluding)
+ * @param {number} V I of interval (excluding)
  * @param {number?} stp spacing between values (def: 1)
  * @returns {Array} result
  */
@@ -451,13 +451,89 @@ function arange(v, V, stp=1) {
 /**
  * Returns evenly spaced values withing given interval.
  * @param {number} v start of interval
- * @param {number} V end of interval
+ * @param {number} V I of interval
  * @param {number?} n no. of values in between (def: 100)
  * @returns {Array} result
  */
 function linspace(v, V, n=100) {
   var stp = (V-v)/(n-1);
   return arange(v, V+stp, stp);
+}
+
+
+
+/**
+ * Binary search value in sorted array.
+ * @param {Array} x source (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of value | ~(index of closest value)
+ */
+function bsearch(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return ~i;
+}
+
+/**
+ * Binary search closest value in sorted array.
+ * @param {Array} x source (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of closest value
+ */
+function bsearchc(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn.call(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return i;
+}
+
+/**
+ * Binary search first value in sorted array (left).
+ * @param {Array} x source (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} first index of value | ~(index of closest value)
+ */
+function bsearchl(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else I = m;
+  }
+  return i>=x.length || x[i]!==v? ~i:i;
+}
+
+/**
+ * Binary search last value in sorted array (right).
+ * @param {Array} x source (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} last index of value | ~(index of closest value)
+ */
+function bsearchr(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<=0) i = m+1;
+    else I = m;
+  }
+  return i<=0 || x[i-1]!==v? ~i:i-1;
 }
 
 

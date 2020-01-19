@@ -354,7 +354,7 @@ Array.fromLists = fromLists;
 
 // Search methods:
 Array.indexOf = indexFor;
-Array.indicesOf = indicesOf;
+Array.indicesOf = indicesOf; // IMP
 Array.lastIndexOf = lastIndexOf;
 Array.includes = includesIt;
 Array.includesOnly = includesOnly;
