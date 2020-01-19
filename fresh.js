@@ -62,38 +62,6 @@ function tails(x) {
 }
 
 /**
- * Lists all possible partial sequences.
- * @param {array} x array
- * @returns {Iterable} subsequence ...
- */
-function* subsequences(x) {
-  if(x.length===0) { yield []; return; }
-  var y = x.slice(0, -1);
-  for(var s of subsequences(y))
-    yield s;
-  for(var s of subsequences(y)) {
-    s.push(x[x.length-1]);
-    yield s;
-  }
-}
-
-/**
- * Lists all possible arrangements.
- * @param {array} x array
- * @returns {Iterable} permutation ...
- */
-function* permutations(x) {
-  if(x.length===0) { yield []; return; }
-  for(var i=x.length-1; i>=0; i--) {
-    var y = splice(x, i);
-    for(var p of permutations(y)) {
-      p.push(x[i]);
-      yield p;
-    }
-  }
-}
-
-/**
  * Gets largest element, as per compare function.
  * @param {Array} x array
  * @param {function?} fn compare function (a, b)
