@@ -51,22 +51,6 @@ function findFailIndex(x, fn, ths=null) {
   return i;
 }
 
-/**
- * Splits array to elements which do, and dont satify the filter.
- * @param {Array} x array
- * @param {function} fn filter function (elem, index, array)
- * @param {object?} ths this argument
- * @returns {Array} pair of arrays [satisfy, dont_satisfy]
- */
-function partition(x, fn, ths=null) {
-  var t = [], f = [], i = -1;
-  for(var e of x) {
-    if(fn.call(ths, e, ++i, x)) t.push(e);
-    else f.push(e);
-  }
-  return [t, f];
-}
-
 
 
 

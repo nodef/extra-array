@@ -571,6 +571,29 @@ function nubOn(x, fn, ths=null) {
   return Array.from(m.values());
 }
 
+function intersect(x, y, fn) {
+  fn = fn||cmp;
+  var a = [];
+  x: for(var v of x) {
+    for(var w of y)
+      if(fn(v, w)===0) { a.push(v); continue x; }
+  }
+  return a;
+}
+
+function union$(x, y, fn) {
+  fn = fn||cmp;
+  y: for(var w of y) {
+    for(var v of x)
+      if(fn(v, w)===0) continue y;
+    x.push(w);
+  }
+}
+
+function union(x, y, fn) {
+  return union$(x.slice(), y, fn);
+}
+
 
 
 
