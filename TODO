@@ -1,0 +1,7 @@
+# FUNCTION
+- ifte(inp, cnd, then, else)
+(i => i>10? i:10)(i)
+
+not
+and
+or

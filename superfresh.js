@@ -3,7 +3,7 @@
 /**
  * Gets true index to source (+ve).
  * @param {Array} x source
- * @param {number} i index
+ * @param {number} i index (+ve, -ve)
  * @returns {number} +ve index
  */
 function index(x, i) {
@@ -210,12 +210,47 @@ function isSubsequence(x, y) {
 function isPermutation(x, y) {
   var xa = x.slice.sort();
   var ya = y.slice.sort();
-  return equals(xa, ya);
+  return compare(xa, ya)===0;
 }
 
 
 
-// equals
+
+function searchl(x, fn, ths=null) {
+  for(var i=0, I=x.length; i<I; i++)
+    if(fn.call(ths, x[i], i, x)===0) break;
+  return i;
+}
+
+function searchr(x, fn, ths=null) {
+  for(var i=x.length-1; i>=0; i--)
+    if(fn.call(ths, x[i], i, x)===0) break;
+  return i+1;
+}
+
+function skipl(x, fn, ths=null) {
+  for(var i=0, I=x.length; i<I; i++)
+    if(fn.call(ths, x[i], x)!==0) break;
+  return i;
+}
+
+function skipr(x, fn, ths=null) {
+  for(var i=x.length-1; i>=0; i--)
+    if(fn.call(ths, x[i], i, x)!==0) break;
+  return i+1;
+}
+
+
+
+
+function compare(x, y) {
+  var n = x.length - y.length;
+  if(n!==0) return n<0? -1:1;
+  for(var i=0, I=x.length; i<I; i++)
+    if(x[i]!==y[i]) return x[i]<y[i]? -1:1;
+  return 0;
+}
+
 function splice(x, i, n=1, ...vs) {
   var a = x.slice(0, i);
   for(var v of vs)
@@ -223,4 +258,55 @@ function splice(x, i, n=1, ...vs) {
   for(var i=i+n, I=x.length; i<I; i++)
     a.push(x[i]);
   return a;
+}
+
+function concat$(x, ...ys) {
+  for(var y of ys)
+    Array.prototype.push.apply(x, y);
+  return x;
+}
+
+
+
+/**
+ * Splits source into values, which do / dont satisfy the filter.
+ * @param {Array} x source
+ * @param {function} fn filter function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} [satisfies, doesnt]
+ */
+function partition(x, fn, ths=null) {
+  var t = [], f = [], i = -1;
+  for(var v of x) {
+    if(fn.call(ths, v, ++i, x)) t.push(v);
+    else f.push(v);
+  }
+  return [t, f];
+}
+
+// split(array, function)
+// break
+
+
+/**
+ * Combines values from n arrays, with a function.
+ * @param {Array<Array>} xs n arrays
+ * @param {function} fn combine function (a, b, c, ...)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} combined values
+ */
+function zip(xs, fn, ths=null) {
+  fn = fn||args;
+  var a = [], A = 0;
+  for(var r=0, R=xs.length; r<R; r++)
+    A = Math.max(A, xs[r].length);
+  for(var c=0; c<A; c++) {
+    for(var r=0, w=[]; r<R; r++)
+      w[r] = xs[r][c];
+    a[c] = fn.apply(ths, w);
+  }
+  return a;
+}
+function args() {
+  return arguments;
 }

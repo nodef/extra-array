@@ -8,7 +8,6 @@ uncons
 intersperse
 intercalate
 transpose
-permutations
 foldl1
 foldr1
 dropWhileEnd
@@ -18,13 +17,7 @@ sortOn
 union
 intersect
 difference
-subsequences
-isSubsequenceOf
-isInfixOf
-isSuffixOf
-isPrefixOf
 group
-stripPrefix
 break
 span
 dropWhileEnd
