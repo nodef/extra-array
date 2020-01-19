@@ -22,17 +22,7 @@ function ensure(val) {
   if(val==null) return [];
   return Array.isArray(val)? val:[val];
 }
-function arange(x1, x2, stp=1, z=[], z0=z.length) {
-  for(var z1=z0+Math.max(Math.ceil((x2-x1)/stp), 0); z0<z1; x1+=stp)
-    z[z0++] = x1;
-  return z;
-}
-function linspace(x1, x2, n=100) {
-  var z = [];
-  for(var i=0, dx=(x2-x1)/(n-1); i<n; i++)
-    z[i] = x1+(i*dx);
-  return z;
-}
+
 function fromEntries(ent, fn, ths) {
   var z = [];
   for(var e of ent)

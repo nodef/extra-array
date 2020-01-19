@@ -434,6 +434,34 @@ function splice(x, i, n=x.length-i, ...vs) {
 
 
 
+/**
+ * Returns evenly spaced values within given interval.
+ * @param {number} v start of interval
+ * @param {number} V end of interval (excluding)
+ * @param {number?} stp spacing between values (def: 1)
+ * @returns {Array} result
+ */
+function arange(v, V, stp=1) {
+  var a = [];
+  for(; v<V; v+=stp)
+    a.push(v);
+  return a;
+}
+
+/**
+ * Returns evenly spaced values withing given interval.
+ * @param {number} v start of interval
+ * @param {number} V end of interval
+ * @param {number?} n no. of values in between (def: 100)
+ * @returns {Array} result
+ */
+function linspace(v, V, n=100) {
+  var stp = (V-v)/(n-1);
+  return arange(v, V+stp, stp);
+}
+
+
+
 
 function searchl(x, fn, ths=null) {
   for(var i=0, I=x.length; i<I; i++)
