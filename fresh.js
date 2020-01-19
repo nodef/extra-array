@@ -214,17 +214,6 @@ function args() {
 // IMPURE FUNCTIONS
 // - dont behave like math functions
 // - manipulate input arrays
-/**
- * Appends arrays to end of input array!
- * @param {Array} x input array
- * @param  {...array} ys arrays to append
- * @returns input array (modified!)
- */
-function append(x, ...ys) {
-  for(var y of ys)
-    Array.prototype.push.apply(x, y);
-  return x;
-}
 
 function cons() {
 
