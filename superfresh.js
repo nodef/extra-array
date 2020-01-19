@@ -1,5 +1,3 @@
-// get, set, set$
-
 /**
  * Gets true index to source (+ve).
  * @param {Array} x source
@@ -301,6 +299,125 @@ function compare(x, y, fn) {
 
 
 
+/**
+ * Append arrays to the end!
+ * @param {Array} x target (modified!)
+ * @param {...Array} ys arrays to append
+ * @returns {Array} target (concatenated)
+ */
+function concat$(x, ...ys) {
+  for(var y of ys)
+    Array.prototype.push.apply(x, y);
+  return x;
+}
+
+/**
+ * Keeps the values which pass the test!
+ * @param {Array} x target (modified!)
+ * @param {function} fn filter function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} target (filtered)
+ */
+function filter$(x, fn, ths=null) {
+  for(var i=0, j=0, I=x.length; i<I; i++)
+    if(fn.call(ths, x[i], i, x)) x[j++] = x[i];
+  x.length = j;
+  return x;
+}
+
+/**
+ * Updates values based on map function!
+ * @param {Array} x target (modified!)
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} target (mapped)
+ */
+function map$(x, fn, ths=null) {
+  for(var i=0, I=x.length; i<I; i++)
+    x[i] = fn.call(ths, x[i], i, x);
+  return x;
+}
+
+/**
+ * Keeps only the selected region!
+ * @param {Array} x target (modified!)
+ * @param {number} i start index
+ * @param {number} I end index
+ * @returns {Array} target (sliced)
+ */
+function slice$(x, i=0, I=x.length) {
+  x.copyWithin(0, i, I);
+  x.length = I-i;
+  return x;
+}
+
+/**
+ * Copies part of array within.
+ * @param {Array} x source
+ * @param {number} j write index
+ * @param {number?} i read start index
+ * @param {number?} I read end index
+ * @returns {Array} updated array
+ */
+function copyWithin(x, j, i=0, I=x.length) {
+  var a = x.slice(0, j);
+  for(var J=j+I-i; j<J; j++, i++)
+    a[j] = x[i];
+  for(var J=x.length; j<J; j++)
+    a[j] = x[j];
+  return a;
+}
+
+/**
+ * Removes last value.
+ * @param {Array} x source
+ * @returns {Array} popped
+ */
+function pop(x) {
+  return x.slice(0, -1);
+}
+
+/**
+ * Adds values to the end. 
+ * @param {Array} x source
+ * @param {...any} vs values to add
+ * @returns {Array} pushed
+ */
+function push(x, ...vs) {
+  return x.concat(vs);
+}
+
+/**
+ * Reverses the values.
+ * @param {Array} x source
+ * @returns {Array} reversed
+ */
+function reverse(x) {
+  return x.slice().reverse();
+}
+
+/**
+ * Removes first value.
+ * @param {Array} x source
+ * @returns {Array} shifted
+ */
+function shift(x) {
+  return x.slice(1);
+}
+
+/**
+ * Adds values to the start.
+ * @param {Array} x source
+ * @param {...any} vs values to add
+ * @returns {Array} unshifted
+ */
+function unshift(x, ...vs) {
+  return concat$(vs, x);
+}
+
+
+
+
 function searchl(x, fn, ths=null) {
   for(var i=0, I=x.length; i<I; i++)
     if(fn.call(ths, x[i], i, x)===0) break;
@@ -335,12 +452,6 @@ function splice(x, i, n=1, ...vs) {
   for(var i=i+n, I=x.length; i<I; i++)
     a.push(x[i]);
   return a;
-}
-
-function concat$(x, ...ys) {
-  for(var y of ys)
-    Array.prototype.push.apply(x, y);
-  return x;
 }
 
 
