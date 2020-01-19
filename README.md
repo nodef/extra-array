@@ -1,3 +1,6 @@
+add to Array on demand
+add to Array prototype on demand
+
 find functions
 
 cons
