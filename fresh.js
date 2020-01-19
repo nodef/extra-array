@@ -258,36 +258,6 @@ function group(x) {
   return a;
 }
 
-function isPrefixOf(x, y) {
-  var i = 0;
-  for(var e of y)
-    if(x[i]!==e) return false;
-  return true;
-}
-
-function isSuffixOf(x, y) {
-  var i = x.length - y.length;
-  for(var e of y)
-    if(x[i]!==e) return false;
-  return true;
-}
-
-function isInfixOf(x, y) {
-  var i = 0, I = y.length;
-  for(var e of x) {
-    if(e===y[i]) i++;
-    else if(i<I) i = 0;
-  }
-  return i===I;
-}
-
-function isSubsequenceOf(x, y) {
-  var i = 0, I = y.length;
-  for(var e of x)
-    if(e===y[i]) i++;
-  return i===I;
-}
-
 /**
  * Removes duplicate elements.
  * @param {Array} x array
@@ -328,14 +298,7 @@ function remove(x, e, fn) {
   return x;
 }
 
-function splice(x, i, n=1, ...es) {
-  var a = x.slice(0, i);
-  for(var e of es)
-    a.push(e);
-  for(var i=i+n, I=x.length; i<I; i++)
-    a.push(x[i]);
-  return a;
-}
+
 exports.head = head;
 exports.last = last;
 exports.init = init;

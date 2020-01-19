@@ -3,5 +3,6 @@ _config.yml
 
 # scripts
 scripts/
+archive.js
 bundle.js
 prepublish.js

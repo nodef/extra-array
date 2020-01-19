@@ -144,3 +144,83 @@ function* permutations(x) {
     }
   }
 }
+
+
+
+/**
+ * Checks if array starts with a prefix.
+ * @param {Array} x source
+ * @param {Array} y prefix?
+ * @returns {boolean} true if prefix
+ */
+function isPrefix(x, y) {
+  var i = 0;
+  for(var v of y)
+    if(x[i]!==v) return false;
+  return true;
+}
+
+/**
+ * Checks if array ends with a suffix.
+ * @param {Array} x source
+ * @param {Array} y suffix?
+ * @returns {boolean} true if suffix
+ */
+function isSuffix(x, y) {
+  var i = x.length - y.length;
+  for(var v of y)
+    if(x[i]!==v) return false;
+  return true;
+}
+
+/**
+ * Checks if array contains an infix.
+ * @param {Array} x source
+ * @param {Array} y infix?
+ * @returns {boolean} true if infix
+ */
+function isInfix(x, y) {
+  var i = 0, I = y.length;
+  for(var v of x) {
+    if(v===y[i]) i++;
+    else if(i<I) i = 0;
+  }
+  return i===I;
+}
+
+/**
+ * Checks if array has a subsequence.
+ * @param {Array} x source
+ * @param {Array} y subsequence?
+ * @returns {boolean} true if subsequence
+ */
+function isSubsequence(x, y) {
+  var i = 0, I = y.length;
+  for(var v of x)
+    if(v===y[i]) i++;
+  return i===I;
+}
+
+/**
+ * Checks if array has a permutation.
+ * @param {Array} x source
+ * @param {Array} y permutation?
+ * @returns {boolean} true if permutation
+ */
+function isPermutation(x, y) {
+  var xa = x.slice.sort();
+  var ya = y.slice.sort();
+  return equals(xa, ya);
+}
+
+
+
+// equals
+function splice(x, i, n=1, ...vs) {
+  var a = x.slice(0, i);
+  for(var v of vs)
+    a.push(v);
+  for(var i=i+n, I=x.length; i<I; i++)
+    a.push(x[i]);
+  return a;
+}
