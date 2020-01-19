@@ -149,21 +149,6 @@ function group(x) {
   return a;
 }
 
-/**
- * Removes duplicate elements.
- * @param {Array} x array
- * @param {function} fn compare function (a, b)
- * @returns {Array} unique element array
- */
-function nub(x, fn) {
-  var a = [];
-  x: for(var e of x) {
-    for(var f of a)
-      if(fn(e, f)===0) continue x;
-    a.push(e);
-  }
-  return a;
-}
 
 /**
  * Inserts a value to an ordered array.

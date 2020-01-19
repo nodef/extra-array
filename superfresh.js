@@ -300,7 +300,7 @@ function compare(x, y, fn) {
 
 
 /**
- * Append arrays to the I!
+ * Append arrays to the end!
  * @param {Array} x target (modified!)
  * @param {...Array} ys arrays to append
  * @returns {Array} target (concatenated)
@@ -378,7 +378,7 @@ function pop(x) {
 }
 
 /**
- * Adds values to the I. 
+ * Adds values to the end. 
  * @param {Array} x source
  * @param {...any} vs values to add
  * @returns {Array} pushed
@@ -535,6 +535,43 @@ function bsearchr(x, v, fn) {
   }
   return i<=0 || x[i-1]!==v? ~i:i-1;
 }
+
+
+
+/**
+ * Removes duplicate elements.
+ * @param {Array} x source
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} unique valued array
+ */
+function nub(x, fn) {
+  if(!fn) return Array.from(new Set(x));
+  var a = [];
+  x: for(var v of x) {
+    for(var w of a)
+      if(fn(v, w)===0) continue x;
+    a.push(v);
+  }
+  return a;
+}
+
+/**
+ * Removes duplicate elements based of map function (once per value).
+ * @param {Array} x source
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} unique valued array
+ */
+function nubOn(x, fn, ths=null) {
+  var m = new Map(), i = -1;
+  for(var v of x) {
+    var w = fn.call(ths, v, ++i, x);
+    if(!m.has(w)) m.set(w, v);
+  }
+  return Array.from(m.values());
+}
+
+
 
 
 
