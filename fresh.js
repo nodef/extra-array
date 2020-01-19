@@ -226,6 +226,150 @@ function append(x, ...ys) {
   return x;
 }
 
+function cons() {
+
+}
+
+function uncons() {
+  
+}
+
+// zip?
+function transpose() {
+
+}
+
+function foldl() {
+
+}
+
+function foldr() {
+
+}
+
+function scanl() {
+  
+}
+
+function scanr() {
+
+}
+
+function unfoldr(e, fn, ths=null) {
+  var a = [], i = -1;
+  while(true) {
+    var p = fn.call(ths, e, ++i, a);
+    if(p===undefined) return a;
+    a.push(p[0]);
+    e = p[1];
+  }
+}
+
+function splitAt(x, i) {
+  return [x.slice(0, i), x.slice(i)];
+}
+
+// concat$
+function dropWhileEnd(x, fn, ths=null) {
+  var i = x.findLastNotIndex(x, fn, ths);
+  return x.slice(0, i+1);
+}
+
+// splitAt / breka?
+function span(x, fn, ths=null) {
+  var i = x.findNotIndex(x, fn, ths);
+  return [x.slice(0, i), x.slice(i)];
+}
+
+function breaks(x, fn, ths=null) {
+  var i = x.findIndex(x, fn, ths);
+  return [x.slice(0, i), x.slice(i)];
+}
+
+function stripPrefix(x, y) {
+  if(!isPrefixOf(x, y)) return null;
+  return x.slice(y.length);
+}
+
+function group(x) {
+  var a = [], b = [];
+  for(var e of x) {
+    if(e===last(b)) b.push(e);
+    else { a.push(b); b = []; }
+  }
+  if(b.length) a.push(b);
+  return a;
+}
+
+function isPrefixOf(x, y) {
+  var i = 0;
+  for(var e of y)
+    if(x[i]!==e) return false;
+  return true;
+}
+
+function isSuffixOf(x, y) {
+  var i = x.length - y.length;
+  for(var e of y)
+    if(x[i]!==e) return false;
+  return true;
+}
+
+function isInfixOf(x, y) {
+  var i = 0, I = y.length;
+  for(var e of x) {
+    if(e===y[i]) i++;
+    else if(i<I) i = 0;
+  }
+  return i===I;
+}
+
+function isSubsequenceOf(x, y) {
+  var i = 0, I = y.length;
+  for(var e of x)
+    if(e===y[i]) i++;
+  return i===I;
+}
+
+/**
+ * Removes duplicate elements.
+ * @param {Array} x array
+ * @param {function} fn compare function (a, b)
+ * @returns {Array} unique element array
+ */
+function nub(x, fn) {
+  var a = [];
+  x: for(var e of x) {
+    for(var f of a)
+      if(fn(e, f)===0) continue x;
+    a.push(e);
+  }
+  return a;
+}
+
+/**
+ * Inserts a value to an ordered array.
+ * @param {Array} x array
+ * @param {*} e element to insert
+ * @param {function} fn compare function (a, b)
+ */
+function insert(x, e, fn) {
+  var i = x.findIndex(f => fn(e, f)>=0);
+  x.splice(i, 0, e);
+  return x;
+}
+
+/**
+ * Deletes frist occurrence of an element.
+ * @param {Array} x array
+ * @param {*} e element to delete
+ * @param {function} fn compare function (a, b)
+ */
+function remove(x, e, fn) {
+  var i = x.findIndex(f => fn(e, f)===0);
+  x.splice(i, 1);
+  return x;
+}
 
 function splice(x, i, n=1, ...es) {
   var a = x.slice(0, i);
@@ -235,7 +379,6 @@ function splice(x, i, n=1, ...es) {
     a.push(x[i]);
   return a;
 }
-
 exports.head = head;
 exports.last = last;
 exports.init = init;
