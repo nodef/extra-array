@@ -215,6 +215,91 @@ function isPermutation(x, y) {
 
 
 
+/**
+ * Combines values from n arrays, with a function.
+ * @param {Array<Array>} xs n arrays
+ * @param {function} fn combine function (a, b, c, ...)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} combined values
+ */
+function zip(xs, fn, ths=null) {
+  fn = fn||args;
+  var a = [], A = 0;
+  for(var r=0, R=xs.length; r<R; r++)
+    A = Math.max(A, xs[r].length);
+  for(var c=0; c<A; c++) {
+    for(var r=0, w=[]; r<R; r++)
+      w[r] = xs[r][c];
+    a[c] = fn.apply(ths, w);
+  }
+  return a;
+}
+
+/**
+ * Sorts based on compare function (optional).
+ * @param {Array} x source
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} sorted array
+ */
+function sort(x, fn) {
+  return x.slice().sort(fn);
+}
+
+/**
+ * Sorts based on map function (once per value).
+ * @param {Array} x source
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} sorted array
+ */
+function sortOn(x, fn, ths=null) {
+  return sortOn$(x.slice(), fn, ths);
+}
+
+/**
+ * Sorts based on map function (once per value)!
+ * @param {Array} x target (modified!)
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} target (sorted)
+ */
+function sortOn$(x, fn, ths=null) {
+  var m = new Map(), i = -1;
+  for(var v of x)
+    m.set(v, fn.call(ths, v, ++i, x));
+  return x.sort((a, b) => cmp(m.get(a), m.get(b)));
+}
+
+/**
+ * Checks if two arrays are equal.
+ * @param {Array} x array 1
+ * @param {Array} y array 2
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if equal
+ */
+function equals(x, y, fn) {
+  return compare(x, y, fn)===0;
+}
+
+/**
+ * Compares two arrays.
+ * @param {Array} x array 1
+ * @param {Array} y array 2
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} x<y: -1, x=y: 0, x>y: 1
+ */
+function compare(x, y, fn) {
+  fn = fn||cmp;
+  var n = x.length - y.length;
+  if(n!==0) return n<0? -1:1;
+  for(var i=0, I=x.length; i<I; i++) {
+    var c = fn(x[i], y[i]);
+    if(c!==0) return c;
+  }
+  return 0;
+}
+
+
 
 function searchl(x, fn, ths=null) {
   for(var i=0, I=x.length; i<I; i++)
@@ -242,14 +327,6 @@ function skipr(x, fn, ths=null) {
 
 
 
-
-function compare(x, y) {
-  var n = x.length - y.length;
-  if(n!==0) return n<0? -1:1;
-  for(var i=0, I=x.length; i<I; i++)
-    if(x[i]!==y[i]) return x[i]<y[i]? -1:1;
-  return 0;
-}
 
 function splice(x, i, n=1, ...vs) {
   var a = x.slice(0, i);
@@ -284,28 +361,41 @@ function partition(x, fn, ths=null) {
   return [t, f];
 }
 
-// split(array, function)
-// break
-
+/**
+ * Breaks array wherever filter is true.
+ * @param {Array} x source
+ * @param {function} fn filter function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} [piece ...]
+ */
+function cut(x, fn, ths=null) {
+  var a = [], b = [], i = -1;
+  for(var v of x) {
+    if(!fn.call(ths, v, ++i, x)) b.push(v);
+    else { a.push(b); b = []; }
+  }
+  if(b.length) a.push(b);
+  return a;
+}
 
 /**
- * Combines values from n arrays, with a function.
- * @param {Array<Array>} xs n arrays
- * @param {function} fn combine function (a, b, c, ...)
+ * Breaks array considering filter as separator.
+ * @param {Array} x source
+ * @param {function} fn filter function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array<Array>} combined values
+ * @returns {Array<Array>} [piece ...]
  */
-function zip(xs, fn, ths=null) {
-  fn = fn||args;
-  var a = [], A = 0;
-  for(var r=0, R=xs.length; r<R; r++)
-    A = Math.max(A, xs[r].length);
-  for(var c=0; c<A; c++) {
-    for(var r=0, w=[]; r<R; r++)
-      w[r] = xs[r][c];
-    a[c] = fn.apply(ths, w);
+function split(x, fn, ths=null) {
+  var a = [], b = [], i = -1;
+  for(var v of x) {
+    if(!fn.call(ths, v, ++i, x)) b.push(v);
+    else if(b.length) { a.push(b); b = []; }
   }
+  if(b.length) a.push(b);
   return a;
+}
+function cmp(a, b) {
+  return a<b? -1:(a>b? 1:0);
 }
 function args() {
   return arguments;
