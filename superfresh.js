@@ -214,6 +214,109 @@ function isPermutation(x, y) {
 
 
 /**
+ * Places value between each element in source.
+ * @param {Array} x source
+ * @param {*} v value to place
+ * @returns {Array} [x0 v x1 v ...]
+ */
+function intersperse(x, v) {
+  var a = [];
+  for(var w of x)
+    a.push(w, v);
+  a.pop();
+  return a;
+}
+
+/**
+ * Places separator between each array in source.
+ * @param {Array<Array>} xs source arrays
+ * @param {Array} y separator
+ * @returns {Array} [x0 y x1 y ...]
+ */
+function intercalate(xs, y) {
+  var a = [], Y = y.length;
+  for(var x of xs)
+    concat$(a, x, y);
+  a.splice(a.length-Y, Y);
+  return a;
+}
+
+
+
+/**
+ * Applies a function against accumulator, and each value in array
+ * (from left-right) to reduce it to a single value.
+ * @param {Array} x array
+ * @param {function} fn reduce fn (acc, val, idx, arr)
+ * @param {*?} v inital value of accumulator | leftmost value in array
+ * @returns {*} reduced value
+ */
+function foldl(x, fn, v) {
+  return arguments.length>=3? x.reduce(fn, v):x.reduce(fn);
+}
+
+/**
+ * Applies a function against accumulator, and each value in array
+ * (from right-left) to reduce it to a single value.
+ * @param {Array} x array
+ * @param {function} fn reduce fn (acc, val, idx, arr)
+ * @param {*?} v inital value of accumulator | rightmost value in array
+ * @returns {*} reduced value
+ */
+function foldr(x, fn, v) {
+  return arguments.length>=3? x.reduceRight(fn, v):x.reduceRight(fn);
+}
+
+/**
+ * Applies a function against accumulator, and each value in array
+ * (from left-right) to return successively reduced values.
+ * @param {Array} x array
+ * @param {function} fn reduce fn (acc, val, idx, arr)
+ * @param {*?} v inital value of accumulator | leftmost value in array
+ * @returns {Array} reduced values
+ */
+function scanl(x, fn, v) {
+  var V = arguments.length>=3;
+  var a = V? []:[head(x)];
+  for(var i=V? 0:1, I=x.length; i<I; i++)
+    a.push(v = fn(v, x[i], i, x));
+  return a;
+}
+
+/**
+ * Applies a function against accumulator, and each value in array
+ * (from right-left) to return successively reduced values.
+ * @param {Array} x array
+ * @param {function} fn reduce fn (acc, val, idx, arr)
+ * @param {*?} v inital value of accumulator | rightmost value in array
+ * @returns {Array} reduced values
+ */
+function scanr(x, fn, v) {
+  var V = arguments.length>=3;
+  var a = V? []:[last(x)];
+  for(var i=x.length-(V? 1:2); i>=0; i--)
+    a.push(v = fn(v, x[i], i, x));
+  return a;
+}
+
+/**
+ * Builds list from a seed value (dual to foldr).
+ * @param {function} fn unreduce fn (val, idx, arr)
+ * @param {*} v initial value of accumucator
+ */
+function unfoldr(fn, v) {
+  var a = [], i = -1;
+  while(true) {
+    var r = fn(v, ++i, a);
+    if(!r) return a;
+    var [w, v] = r;
+    a.push(w);
+  }
+}
+
+
+
+/**
  * Combines values from n arrays, with a function.
  * @param {Array<Array>} xs n arrays
  * @param {function} fn combine function (a, b, c, ...)
