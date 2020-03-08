@@ -179,94 +179,13 @@ function equals(x, y, fn) {
   return compare(x, y, fn)===0;
 }
 
-/**
- * Compares two arrays.
- * @param {Array} x array 1
- * @param {Array} y array 2
- * @param {function?} fn compare function (a, b)
- * @returns {number} x<y: -1, x=y: 0, x>y: 1
- */
-function compare(x, y, fn) {
-  fn = fn||cmp;
-  var n = x.length - y.length;
-  if(n!==0) return n<0? -1:1;
-  for(var i=0, I=x.length; i<I; i++) {
-    var c = fn(x[i], y[i]);
-    if(c!==0) return c;
-  }
-  return 0;
-}
 
 
 
-/**
- * Append arrays to the end!
- * @param {Array} x target (modified!)
- * @param {...Array} ys arrays to append
- * @returns {Array} target (concatenated)
- */
-function concat$(x, ...ys) {
-  for(var y of ys)
-    Array.prototype.push.apply(x, y);
-  return x;
-}
 
-/**
- * Keeps the values which pass the test!
- * @param {Array} x target (modified!)
- * @param {function} fn filter function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} target (filtered)
- */
-function filter$(x, fn, ths=null) {
-  for(var i=0, j=0, I=x.length; i<I; i++)
-    if(fn.call(ths, x[i], i, x)) x[j++] = x[i];
-  x.length = j;
-  return x;
-}
 
-/**
- * Updates values based on map function!
- * @param {Array} x target (modified!)
- * @param {function} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} target (mapped)
- */
-function map$(x, fn, ths=null) {
-  for(var i=0, I=x.length; i<I; i++)
-    x[i] = fn.call(ths, x[i], i, x);
-  return x;
-}
 
-/**
- * Keeps only the selected region!
- * @param {Array} x target (modified!)
- * @param {number} i start index
- * @param {number} I I index
- * @returns {Array} target (sliced)
- */
-function slice$(x, i=0, I=x.length) {
-  x.copyWithin(0, i, I);
-  x.length = I-i;
-  return x;
-}
 
-/**
- * Copies part of array within.
- * @param {Array} x source
- * @param {number} j write index
- * @param {number?} i read start index
- * @param {number?} I read I index
- * @returns {Array} updated array
- */
-function copyWithin(x, j, i=0, I=x.length) {
-  var a = x.slice(0, j);
-  for(var J=j+I-i; j<J; j++, i++)
-    a[j] = x[i];
-  for(var J=x.length; j<J; j++)
-    a[j] = x[j];
-  return a;
-}
 
 /**
  * Removes last value.
@@ -313,23 +232,6 @@ function shift(x) {
  */
 function unshift(x, ...vs) {
   return concat$(vs, x);
-}
-
-/**
- * Removes or replaces existing values.
- * @param {Array} x source
- * @param {number} i remove index
- * @param {number?} n no. of values to remove (def: all till I)
- * @param {...any} vs values to insert
- * @returns {Array} [0->i, vs, i+n->I]
- */
-function splice(x, i, n=x.length-i, ...vs) {
-  var a = x.slice(0, i);
-  for(var v of vs)
-    a.push(v);
-  for(var i=i+n, I=x.length; i<I; i++)
-    a.push(x[i]);
-  return a;
 }
 
 
