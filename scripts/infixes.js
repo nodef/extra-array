@@ -1,6 +1,6 @@
 /**
  * Lists all possible infixes.
- * @param {Array} x source
+ * @param {Array} x an array
  * @returns {Iterable<Array>} infix...
  */
 function* infixes(x) {

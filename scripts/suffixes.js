@@ -1,6 +1,6 @@
 /**
  * Lists all possible suffixes.
- * @param {Array} x source
+ * @param {Array} x an array
  * @returns {Iterable<Array>} suffix...
  */
 function* suffixes(x) {

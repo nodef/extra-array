@@ -1,6 +1,6 @@
 /**
  * Lists all possible arrangements.
- * @param {Array} x source
+ * @param {Array} x an array
  * @returns {Iterable<Array>} permutation ...
  */
 function* permutations(x) {

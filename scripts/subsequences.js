@@ -1,6 +1,6 @@
 /**
  * Lists all possible partial sequences.
- * @param {Array} x source
+ * @param {Array} x an array
  * @returns {Iterable<Array>} subsequence...
  */
 function* subsequences(x) {
