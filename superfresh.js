@@ -79,69 +79,10 @@ function last(x) {
 
 
 
-/**
- * Lists all possible prefixes.
- * @param {Array} x source
- * @returns {Iterable<Array>} [prefix ...]
- */
-function* prefixes(x) {
-  for(var i=0, I=x.length; i<I; i++)
-    yield x.slice(0, i);
-}
 
-/**
- * Lists all possible suffixes.
- * @param {Array} x source
- * @returns {Iterable<Array>} [suffix ...]
- */
-function* suffixes(x) {
-  for(var i=0, I=x.length; i<I; i++)
-    yield x.slice(i);
-}
 
-/**
- * Lists all possible infixes.
- * @param {Array} x source
- * @returns {Iterable<Array>} [infix ...]
- */
-function* infixes(x) {
-  for(var i=0, I=x.length; i<I; i++) {
-    for(var j=0; j<I; j++)
-      yield x.slice(i, j);
-  }
-}
 
-/**
- * Lists all possible partial sequences.
- * @param {Array} x source
- * @returns {Iterable<Array>} subsequence ...
- */
-function* subsequences(x) {
-  if(x.length===0) { yield []; return; }
-  var y = x.slice(0, -1);
-  for(var s of subsequences(y))
-    yield s;
-  for(var s of subsequences(y)) {
-    s.push(x[x.length-1]);
-    yield s;
-  }
-}
 
-/**
- * Lists all possible arrangements.
- * @param {Array} x source
- * @returns {Iterable<Array>} permutation ...
- */
-function* permutations(x) {
-  if(x.length===0) { yield []; return; }
-  for(var i=x.length-1; i>=0; i--) {
-    var y = splice(x, i);
-    for(var p of permutations(y)) {
-      p.push(x[i]);
-      yield p;
-    }
-  }
-}
 
 
 
