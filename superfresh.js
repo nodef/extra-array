@@ -41,41 +41,9 @@ function set$(x, i, v) {
   return x;
 }
 
-/**
- * Gets first value.
- * @param {Array} x source
- * @returns {*} first value
- */
-function head(x) {
-  return x[0];
-}
 
-/**
- * Gets values except first.
- * @param {Array} x source
- * @returns {Array} except first
- */
-function tail(x) {
-  return x.slice(1);
-}
 
-/**
- * Gets values except last.
- * @param {Array} x source
- * @returns {Array} except last
- */
-function init(x) {
-  return x.slice(0, -1);
-}
 
-/**
- * Gets last value.
- * @param {Array} x source
- * @returns {*} last value
- */
-function last(x) {
-  return x[x.length-1];
-}
 
 
 
