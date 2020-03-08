@@ -1,305 +1,216 @@
-// # browserify
-// # uglify
-// 1. process .js -> single .js
-// 2. process .js + package.json -> package.json
-// 3. process .js + README.md -> README.md
-// 4. create package and publish
-const findNpmPrefix = require('find-npm-prefix');
-const recast = require('recast');
+const tempy = require('tempy');
+const cp = require('child_process');
 const path = require('path');
 const fs = require('fs');
-
+const os = require('os');
 
 // Global variables.
-var OPTIONS = {
-  dependencies: false,
-  devDependencies: false,
-  allDependencies: false
-};
+const ORG = 'nodef';
+const PACKAGE_ROOT = require('./package.json').name;
+const STANDALONE = PACKAGE_ROOT.replace(/extra-/, '').replace(/\W+/, '_');
+const BIN = (cp.execSync('npm prefix -g')+'/bin/').replace('\n', '');
+const stdio = [0, 1, 2];
+const EOL = os.EOL;
 
 
-// Get last value in array.
-function last(arr, i=1) {
-  return arr[arr.length-i];
-};
 
-// Remove value from array.
-function remove(arr, val) {
-  var i = arr.indexOf(val);
-  if(i>=0) arr.splice(i, 1);
-  return arr;
-};
+function toSnakeCase(x, sep='-') {
+  x = x.replace(/([a-z0-9])([A-Z])/g, '$1'+sep+'$2');
+  x = x.replace(/[^A-Za-z0-9\.]+/g, sep);
+  x = x.replace(/^[^A-Za-z0-9\.]+/, '');
+  x = x.replace(/[^A-Za-z0-9\.]+$/, '');
+  return x.toLowerCase();
+}
 
-// Remove values at all indexes.
-function removeAtAll(arr, idx) {
-  for(var i=idx.length-1; i>=0; i--)
-    arr.splice(idx[i], 1);
-  return arr;
-};
+function pathSplit(x) {
+  var d = path.dirname(x);
+  var e = path.extname(x);
+  var f = x.substring(d.length, x.length-e.length).replace(/^\//, '');
+  return [d, f, e];
+}
 
-// Get key of value in object.
-function keyOf(obj, val) {
-  for(var k in obj)
-    if(obj[k]===val) return k;
-  return null;
-};
+function fsReadDir(pth) {
+  return fs.existsSync(pth)? fs.readdirSync(pth):[];
+}
 
-// Add all values to set.
-function addAll(set, vals) {
-  for(var v of vals)
-    set.add(v);
-  return set;
-};
+// Get filename.
+function resolve(pth) {
+  var ext = path.extname(pth);
+  return ['.js', '.ts', '.json'].includes(ext)? pth:pth+'.js';
+}
 
-// Read json file at path.
-function jsonRead(pth) {
-  if(!fs.existsSync(pth)) return null;
-  return JSON.parse(fs.readFileSync(pth, 'utf8'));
-};
+// Get path to root package.
+function packageRoot(pth) {
+  while(!fs.existsSync(path.join(pth, 'package.json')))
+    pth = path.dirname(pth);
+  return pth;
+}
 
-// Check if node is function.
-function nodeIsFunction(ast) {
-  return /Function(Declaration|Expression)/.test(ast.type);
-};
+// Gets requires from code.
+function packageRequires(pth, a=[]) {
+  var d = fs.readFileSync(resolve(pth), 'utf8');
+  var re = re = /require\(\'(.*?)\'\)/g;
+  for(var m=null, reqs=[]; (m=re.exec(d))!=null;)
+  { reqs.push(m[1]); a.push(m[1]); }
+  if(reqs.length===0) return a;
+  var dir = path.dirname(pth);
+  for(var p of reqs)
+    if(/^\./.test(p)) packageRequires(path.join(dir, p), a);
+  return a;
+}
 
-// Check if node is assignment.
-function nodeIsAssignment(ast) {
-  if(ast.type==='VariableDeclarator') return true;
-  return ast.type==='AssignmentExpression';
-};
+// Download README.md from wiki.
+function downloadReadme(pth, o) {
+  console.log('downloadReadme:', pth, o);
+  var wiki = 'https://raw.githubusercontent.com/wiki/';
+  var url = `${wiki}${o.org}/${o.package_root}/${o.readme}.md`;
+  cp.execSync(BIN+`download ${url} > ${pth}`, {stdio});
+}
 
-// Check if node is require().
-function nodeIsRequire(ast) {
-  if(ast.type!=='CallExpression') return false;
-  return ast.callee.name==='require';
-};
+function readmeHeading(pth) {
+  console.log('readmeHeading:', pth);
+  var d = fs.readFileSync(pth, 'utf8');
+  return d.replace(/\r?\n[\s\S]*/, '').replace(/[\_\*\[\]]/g, '');
+}
 
-// Check if node is exports.
-function nodeIsExports(ast) {
-  if(ast.type!=='ExpressionStatement') return false;
-  if(ast.expression.left.type!=='MemberExpression') return false;
-  return ast.expression.left.object.name==='exports';
-};
+// Update README.md based on scatter options.
+function scatterReadme(pth, o) {
+  console.log('scatterReadme:', pth, o);
+  var d = fs.readFileSync(pth, 'utf8');
+  d = d.replace(o.note_top||/\s+```/, '<br>'+EOL+
+    `> This is part of package [${o.package_root}].`+EOL+EOL+
+    `[${o.package_root}]: https://www.npmjs.com/package/${o.package_root}`+EOL+EOL+
+    (o.note_topvalue||'```')
+  );
+  fs.writeFileSync(pth, d);
+}
 
-// Check if node is module.exports.
-function nodeIsModuleExports(ast) {
-  if(ast.type!=='ExpressionStatement') return false;
-  if(ast.expression.left.type!=='MemberExpression') return false;
-  if(ast.expression.left.object.name!=='module') return false;
-  return ast.expression.left.property.name==='exports';
-};
+// Update index.js to use README.md
+function scatterJs(pth, o) {
+  console.log('scatterJs:', pth, o);
+  var d = fs.readFileSync(pth, 'utf8');
+  d = d.replace(new RegExp(`less (.*?)${o.readme}.md`, 'g'), `less $1README.md`);
+  fs.writeFileSync(pth, d);
+}
 
-// Get assignment name.
-function assignmentName(ast) {
-  if(ast.type==='VariableDeclarator') return ast.id.name;
-  else if(ast.type==='AssignmentExpression') return ast.left.name;
-  return null;
-};
+// Update package.json based on scatter options.
+function scatterJson(pth, o) {
+  console.log('scatterJson:', pth, o);
+  var d = JSON.parse(fs.readFileSync(pth, 'utf8'));
+  d.name = `@${o.package_root}/${o.package}`;
+  d.description = o.description;
+  d.main = o.main||'index.js';
+  d.scripts = {test: 'exit'};
+  d.keywords.push(...o.package.split(/\W/));
+  d.keywords = Array.from(new Set(d.keywords));
+  d.dependencies = Object.assign({}, o.dependencies, o.devDependencies);
+  var dep_pkgs = Object.keys(d.dependencies)||[];
+  for(var p of dep_pkgs)
+    if(!o.requires.includes(p)) d.dependencies[p] = undefined;
+  d.devDependencies = undefined;
+  fs.writeFileSync(pth, JSON.stringify(d, null, 2));
+}
 
-// Remove an assignment from hierarchy.
-function assignmentRemove(asth) {
-  var ast1 = last(asth), ast2 = last(asth, 2), ast3 = last(asth, 3);
-  if(ast1.type==='AssignmentExpression') remove(ast3, ast2);
-  else if(ast1.type==='VariableDeclarator') {
-    if(ast2.length>1) remove(ast2, ast1);
-    else remove(last(asth, 4), ast3);
+// Scatter a file as a package.
+function scatterPackage(pth, o) {
+  console.log('scatterPackage:', pth, o);
+  var o = Object.assign({}, o);
+  var tmp = tempy.directory();
+  var [dir, fil, ext] = pathSplit(pth);
+  var src = packageRoot(pth);
+  var nam = fil.replace(/\$/g, 'Update');
+  var json_src = path.join(src, 'package.json');
+  var readme = path.join(tmp, 'README.md');
+  var index = path.join(tmp, 'index'+ext);
+  var json = path.join(tmp, 'package.json');
+  o.package = o.package||toSnakeCase(nam);
+  o.readme = o.readme||fil;
+  downloadReadme(readme, o);
+  o.description = o.description||readmeHeading(readme);
+  scatterReadme(readme, o);
+  fs.copyFileSync(pth, index);
+  scatterJs(index, o);
+  o.requires = packageRequires(pth);
+  fs.copyFileSync(json_src, json);
+  scatterJson(json, o);
+  for(var r of o.requires) {
+    if(!(/^[\.\/]/).test(r)) continue;
+    r = resolve(r);
+    var src = path.join(dir, r);
+    var dst = path.join(tmp, r);
+    fs.copyFileSync(src, dst);
   }
-  return asth;
-};
+  return tmp;
+}
 
-// Get function parameter name.
-function paramName(ast) {
-  if(ast.type==='Identifier') return ast.name;
-  else if(ast.type==='RestElement') return ast.argument.name;
-  else if(ast.type==='AssignmentPattern') return ast.left.name;
-  return null;
-};
+// Minifies JS file in place.
+function minifyJs(pth, o) {
+  console.log('minifyJs: ', pth, o);
+  var s = fs.statSync(pth);
+  cp.execSync(BIN+`browserify ${pth} -s ${o.standalone} -o ${pth}.tmp`, {stdio});
+  if(s.size<4*1024*1024) cp.execSync(BIN+`uglifyjs -c -m -o ${pth} ${pth}.tmp`, {stdio});
+  else cp.execSync(`mv ${pth}.tmp ${pth}`, {stdio});
+  cp.execSync(`rm -f ${pth}.tmp`, {stdio});
+}
 
-// Get function parameter names.
-function functionParams(ast, set=new Set()) {
-  for(var p of ast.params)
-    set.add(paramName(p));
-  return set;
-};
+// Adds minified message to README.md in place.
+function minifyReadme(pth, o) {
+  console.log('minifyReadme: ', pth, o);
+  var d = fs.readFileSync(pth, 'utf8');
+  d = d.replace(o.note_minified||/^> .*?minified.*$/m, '');
+  d = d.replace(o.note_top||/\s+```/, '<br>'+EOL+
+    `> This is browserified, minified version of [${o.package}].<br>`+EOL+
+    `> It is exported as global variable **${o.standalone}**.<br>`+EOL+
+    `> CDN: [unpkg], [jsDelivr].`+EOL+EOL+
+    `[${o.package}]: https://www.npmjs.com/package/${o.package}`+EOL+
+    `[unpkg]: https://unpkg.com/${o.package}.min`+EOL+
+    `[jsDelivr]: https://cdn.jsdelivr.net/npm/${o.package}.min`+EOL+EOL+
+    (o.note_topvalue||'```')
+  );
+  fs.writeFileSync(pth, d);
+}
 
-// Get variable declaration names.
-function variableDeclarationNames(ast, set=new Set()) {
-  for(var d of ast.declarations)
-    set.add(d.id.name);
-  return set;
-};
+// Adds minified message to package.json in place.
+function minifyJson(pth, o) {
+  console.log('minifyJson: ', pth, o);
+  var d = JSON.parse(fs.readFileSync(pth, 'utf8'));
+  d.name += '.min';
+  d.description = d.description.replace('.$', ' (browserified, minifined).');
+  d.scripts = {test: 'exit'};
+  d.devDependencies = undefined;
+  fs.writeFileSync(pth, JSON.stringify(d, null, 2));
+  return d.name.replace(/\.min$/, '');
+}
 
-// Get declaration names.
-function declarationNames(ast, set=new Set()) {
-  if(ast.type==='FunctionDeclaration') set.add(ast.id.name);
-  else if(ast.type==='VariableDeclaration') variableDeclarationNames(ast, set);
-  return set;
-};
-
-// Get global identifier names.
-function bodyGlobals(ast, set=new Set()) {
-  for(var s of ast)
-    declarationNames(s, set);
-  return set;
-};
-
-// Get empty window identifier map.
-function bodyEmptyWindow(ast, win=new Map()) {
-  for(var nam of bodyGlobals(ast))
-    win.set(nam, []);
-  return win;
-};
-
-// Get (scanned) window identifier map.
-function bodyWindow(ast, win=bodyEmptyWindow(ast), exc=new Set()) {
-  if(ast==null || typeof ast!=='object') return win;
-  if(nodeIsFunction(ast)) {
-    bodyWindow(ast.id, win, exc);
-    var excn = functionParams(ast, new Set(exc));
-    return bodyWindow(ast.body, win, excn);
-  }
-  if(ast.type==='Identifier') {
-    if(!win.has(ast.name) || exc.has(ast.name)) return win;
-    win.get(ast.name).push(ast); return win;
-  }
-  for(var k in ast)
-    bodyWindow(ast[k], win, exc);
-  return win;
-};
-
-// Get actual name of window identifier.
-function windowName(win, nam) {
-  if(!win.has(nam)) return nam;
-  return win.get(nam)[0].name;
-};
-
-// Rename a window identifier.
-function windowRename(win, nam, to) {
-  for(var ast of win.get(nam))
-    ast.name = to;
-  return win;
-};
-
-// Add window identifier to globals.
-function globalsAdd(glo, win, nam, suf) {
-  if(!glo.has(nam)) return glo.add(nam);
-  if(!glo.has(nam+suf)) {
-    windowRename(win, nam, nam+suf);
-    return glo.add(nam+suf);
-  }
-  for(var i=0; glo.has(nam+suf+i); i++) {}
-  windowRename(win, nam, nam+suf+i);
-  return glo.add(nam+suf+i);
-};
-
-// Add all window identifiers to globals.
-function globalsAddAll(glo, win, suf) {
-  for(var nam of win.keys())
-    globalsAdd(glo, win, nam, suf);
-  return glo;
-};
-
-// Update exports to given name.
-function bodyUpdateExports(ast, nam) {
-  for(var i=ast.length-1, idx=-1; i>=0; i--) {
-    if(!nodeIsExports(ast[i])) continue;
-    ast[idx=i].expression.left.object.name = nam;
-  }
-  if(idx<0) return null;
-  var astn = recast.parse(`\nconst ${nam} = {};`);
-  ast.splice(idx, 0, astn.program.body[0]);
-  return nam;
-};
-
-// Update module.exports to given name, if possible.
-function bodyUpdateModuleExports(ast, nam) {
-  for(var i=ast.length-1, idx=-1, rgt=null; i>=0; i--) {
-    if(!nodeIsModuleExports(ast[i])) continue;
-    rgt = ast[idx=i].expression.right;
-    ast.splice(i, 1);
-  }
-  if(idx<0) return null;
-  if(rgt.type==='Identifier') return rgt.name;
-  var astn = recast.parse(`\nconst ${nam} = 0;`);
-  astn.program.body[0].declarations[0].init = rgt;
-  ast.splice(idx, 0, astn.program.body[0]);
-  return nam;
-};
-
-// Update require() using module load function.
-// : support __dirname, __filename?
-function bodyUpdateRequire(ast, astp, fn) {
-  if(ast==null || typeof ast!=='object') return ast;
-  if(!nodeIsRequire(ast)) {
-    astp.push(ast);
-    for(var astv of Object.values(ast))
-      bodyUpdateRequire(astv, astp, fn);
-    return astp.pop();
-  }
-  var nam = fn(ast.arguments[0].value), ast1 = last(astp);
-  if(nam==null) return ast;
-  if(nodeIsAssignment(ast1) && assignmentName(ast1)===nam) {
-    assignmentRemove(astp); return ast;
-  }
-  var astr = recast.parse(`const a = ${nam};`);
-  ast1[keyOf(ast1, ast)] = astr.program.body[0].declarations[0].init;
-  return ast;
-};
-
-// Bundle script with options
-function bundleScript(pth, sym, exc=new Set(), top=false) {
-  var code = fs.readFileSync(pth, 'utf8'), paths = [path.dirname(pth)];
-  var ast = recast.parse(code), body = ast.program.body;
-  bodyUpdateRequire(body, [], val => {
-    if(exc.has(val)) return null;
-    var pth = require.resolve(val, {paths});
-    if(sym.exports.has(pth)) return sym.exports.get(pth).name;
-    return bundleScript(pth, sym, exc);
-  });
-  var suf = !top? sym.exports.size.toString():'', nam = 'exports'+suf;
-  if(!top) nam = bodyUpdateExports(body, nam)||bodyUpdateModuleExports(body, nam);
-  var win = bodyWindow(body); globalsAddAll(sym.globals, win, suf);
-  sym.exports.set(pth, {name: nam, suffix: suf, code: recast.print(ast).code});
-  return windowName(win, nam);
-};
-
-// Get exclude set for bundle.
-function bundleExclude(pth, opt) {
-  var exc = new Set();
-  var pkg = jsonRead(path.join(pth, 'package.json'))||{};
-  var pkgl = jsonRead(path.join(pth, 'package-lock.json'))||{};
-  if(opt.dependencies && pkg.dependencies) addAll(exc, Object.keys(pkg.dependencies));
-  if(opt.devDependencies && pkg.devDependencies) addAll(exc, Object.keys(pkg.devDependencies));
-  if(opt.allDependencies && pkgl.dependencies) addAll(exc, Object.keys(pkgl.dependencies));
-  return exc;
-};
-
-async function bundle(fil, o) {
-  var o = Object.assign({}, OPTIONS, o), z = '';
-  var cwd = process.cwd();
-  var pth = path.join(cwd, fil);
-  var pfx = await findNpmPrefix(cwd);
-  var sym = {exports: new Map(), globals: new Set()};
-  var exc = bundleExclude(pfx, o);
-  bundleScript(pth, sym, exc, true);
-  for(var exp of sym.exports.values())
-    z += exp.code;
-  return z;
-};
-module.exports =  bundle;
-
+// Minifies package in place.
+function minifyPackage(pth, o) {
+  console.log('minifyPackage: ', pth, o);
+  var o = Object.assign({}, o);
+  o.package = minifyJson(path.join(pth, 'package.json'), o);
+  minifyReadme(path.join(pth, 'README.md'), o);
+  minifyJs(path.join(pth, 'index.js'), o);
+}
 
 // Run on shell.
-async function shell(a) {
-  var files = [], o = {};
-  for(var i=2, I=a.length; i<I; i++) {
-    if(a[i]==='-?' || a[i]==='--help') { /* i am not a optimus */ }
-    else if(a[i]==='-d' || a[i]==='--dependencies') o.dependencies = true;
-    else if(a[i]==='-dd' || a[i]==='--dev_dependencies') o.devDependencies = true;
-    else if(a[i]==='-ad' || a[i]==='--all_dependencies') o.allDependencies = true;
-    else files.push(a[i]);
+async function main(a) {
+  console.log('main:', a);
+  console.log({BIN, ORG, PACKAGE_ROOT, STANDALONE});
+  var o = {org: ORG, package_root: PACKAGE_ROOT};
+  for(var f of fsReadDir('scripts')) {
+    if(path.extname(f)!=='.js') continue;
+    if(f.startsWith('_')) continue;
+    if(f==='index.js') continue;
+    var pth = path.join('scripts', f);
+    var tmp = scatterPackage(pth, o);
+    cp.execSync('npm publish', {cwd: tmp, stdio});
+    var standalone = toSnakeCase(f.replace(/\..*/, ''), '_');
+    standalone = STANDALONE+'_'+standalone;
+    minifyPackage(tmp, Object.assign({standalone}, o));
+    cp.execSync('npm publish', {cwd: tmp, stdio});
+    cp.execSync(`rm -rf ${tmp}`);
   }
-  for(var fil of files)
-    console.log(await bundle(fil, o));
-};
-if(require.main===module) shell(process.argv);
+  standalone = STANDALONE;
+  minifyPackage('.', Object.assign({standalone}, o));
+  cp.execSync('npm publish', {stdio});
+}
+if(require.main===module) main(process.argv);

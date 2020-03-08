@@ -1,12 +1,9 @@
 {
   "name": "extra-array",
-  "version": "2.0.30",
+  "version": "3.0.0",
   "description": "Standard utility methods for Array.",
   "main": "index.js",
   "scripts": {
-    "prepublishOnly": "exit && node ./prepublish",
-    "browserify": "browserify index.js -o index.web.js",
-    "uglifyjs": "uglifyjs -c -m -o index.min.js index.web.js",
     "test": "exit"
   },
   "keywords": [
@@ -30,11 +27,8 @@
   },
   "homepage": "https://github.com/nodef/extra-array#readme",
   "devDependencies": {
-    "@extra-iterable/zip": "^1.1.1",
-    "browserify": "^16.2.3",
     "find-npm-prefix": "^1.0.2",
-    "recast": "^0.16.1",
-    "tempy": "^0.2.1",
-    "uglify-es": "^3.3.9"
+    "recast": "^0.18.7",
+    "tempy": "^0.4.0"
   }
 }

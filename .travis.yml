@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "node"
+before_install:
+  - echo "access=public" >> ~/.npmrc
+  - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+before_script:
+  - npm install -g download-cli browserify uglify-es
+  - npm install
+script: node ./bundle
