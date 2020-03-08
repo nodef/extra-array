@@ -164,60 +164,9 @@ function unfoldr(fn, v) {
 
 
 
-/**
- * Combines values from n arrays, with a function.
- * @param {Array<Array>} xs n arrays
- * @param {function} fn combine function (a, b, c, ...)
- * @param {object?} ths this argument
- * @returns {Array<Array>} combined values
- */
-function zip(xs, fn, ths=null) {
-  fn = fn||args;
-  var a = [], A = 0;
-  for(var r=0, R=xs.length; r<R; r++)
-    A = Math.max(A, xs[r].length);
-  for(var c=0; c<A; c++) {
-    for(var r=0, w=[]; r<R; r++)
-      w[r] = xs[r][c];
-    a[c] = fn.apply(ths, w);
-  }
-  return a;
-}
 
-/**
- * Sorts based on compare function (optional).
- * @param {Array} x source
- * @param {function?} fn compare function (a, b)
- * @returns {Array} sorted array
- */
-function sort(x, fn) {
-  return x.slice().sort(fn);
-}
 
-/**
- * Sorts based on map function (once per value).
- * @param {Array} x source
- * @param {function} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} sorted array
- */
-function sortOn(x, fn, ths=null) {
-  return sortOn$(x.slice(), fn, ths);
-}
 
-/**
- * Sorts based on map function (once per value)!
- * @param {Array} x target (modified!)
- * @param {function} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} target (sorted)
- */
-function sortOn$(x, fn, ths=null) {
-  var m = new Map(), i = -1;
-  for(var v of x)
-    m.set(v, fn.call(ths, v, ++i, x));
-  return x.sort((a, b) => cmp(m.get(a), m.get(b)));
-}
 
 /**
  * Checks if two arrays are equal.
