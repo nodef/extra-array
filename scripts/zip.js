@@ -1,3 +1,5 @@
+const args = require('./_args');
+
 /**
  * Combines values from n arrays, with a function.
  * @param {Array<Array>} xs n arrays
