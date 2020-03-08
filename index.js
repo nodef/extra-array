@@ -1,333 +1,130 @@
-const exports0 = Array.isArray;
-function equalTo(a, b, a0=0, a1=a.length, b0=0, b1=b.length) {
-  if(a1-a0!==b1-b0) return false;
-  for(var i=0, I=a1-a0; i<I; i++)
-    if(a[a0+i]!==b[b0+i]) return false;
-  return true;
+/**
+ * Lists all possible prefixes.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} prefix...
+ */
+function* prefixes(x) {
+  for(var i=0, I=x.length; i<I; i++)
+    yield x.slice(0, i);
 }
-function firstOf(arr, i=0) {
-  return arr[i];
-}
-function middleOf(arr, i=0) {
-  return arr[i<0? arr.length+i:i];
-}
-function lastOf(arr, i=-1) {
-  return arr[arr.length+i];
-}
-function* values(arr, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    yield arr[i];
-}
-function ensure(val) {
-  if(val==null) return [];
-  return Array.isArray(val)? val:[val];
-}
-
-function fromEntries(ent, fn, ths) {
-  var z = [];
-  for(var e of ent)
-    z[e[0]] = fn? fn.call(ths, e[1], e[0], ent):e[1];
-  return z;
-}
-function fromLists(lst, fn, ths) {
-  var vi = lst[1][Symbol.iterator](), z = [];
-  for(var k of lst[0]) {
-    var v = vi.next().value;
-    z[k] = fn? fn.call(ths, v, k, lst):v;
+/**
+ * Lists all possible infixes.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} infix...
+ */
+function* infixes(x) {
+  for(var i=0, I=x.length; i<I; i++) {
+    for(var j=0; j<I; j++)
+      yield x.slice(i, j);
   }
-  return z;
 }
-function indexFor(arr, val, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(arr[i]===val) return i;
-  return -1;
+/**
+ * Lists all possible suffixes.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} suffix...
+ */
+function* suffixes(x) {
+  for(var i=0, I=x.length; i<I; i++)
+    yield x.slice(i);
 }
-function indicesOf(arr, val, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i=bgn; i<end; i++)
-    if(arr[i]===val) z[z0++] = i;
-  return z;
-}
-function lastIndexOf(arr, val, bgn=arr.length-1, end=-1) {
-  for(var i=bgn; i>end; i--)
-    if(arr[i]===val) return i;
-  return -1;
-}
-function includesIt(arr, val, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(arr[i]===val) return true;
-  return false;
-}
-function includesOnly(arr, val, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(arr[i]!==val) return false;
-  return true;
-}
-function containsIt(a, b, a0=0, a1=a.length, b0=0, b1=b.length) {
-  for(i=a0, L=b1-b0, I=a1-L+1; i<I; i++)
-    if(equalTo(a, b, i, i+L, b0, b1)) return true;
-  return false;
-}
-function count(arr, val, bgn=0, end=arr.length) {
-  var z = 0;
-  for(var i=bgn; i<end; i++)
-    if(arr[i]===val) z++;
-  return z;
-}
-function countAll(arr, bgn=0, end=arr.length, z=new Map()) {
-  for(var i=bgn; i<end; i++)
-    z.set(arr[i], (z.get(arr[i])||0)+1);
-  return z;
-}
-function joinTo(arr, sep=',', bgn=0, end=arr.length, z='') {
-  var zl = z.length;
-  for(var i=bgn; i<end; i++)
-    z += arr[i]+sep;
-  return z.length>zl? z.substring(0, z.length-sep.length):z;
-}
-function pick(arr, idx, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i of idx)
-    z[z0++] = i>=bgn && i<end? arr[i]:undefined;
-  return z;
-}
-function copyTo(arr, bgn=0, end=arr.length, z=[], z0=z.length, z1=z0+(end-bgn)) {
-  if(z1>z.length) z.length = z1;
-  if(arr===z) return z.copyWithin(z0, bgn, end);
-  for(var i=bgn; i<end; i++)
-    z[z0++] = arr[i];
-  return z;
-}
-function sliceTo(arr, bgn=0, end=arr.length, z=[], z0=z.length) {
-  bgn = bgn<0? arr.length+bgn:bgn;
-  end = end<0? arr.length+end:end;
-  end = end>arr.length? arr.length:end;
-  z0 = z0<0? z.length+z0:z0;
-  return copyTo(arr, bgn, end, z, z0);
-}
-function pickAs(arr, idx, bgn=0, end=arr.length, z=[], z0=z.length) {
-  if(idx==null) return sliceTo(arr, bgn, end, z, z0);
-  if(typeof idx[Symbol.iterator]==='function') return pick(arr, idx, bgn, end, z, z0);
-  return pick(arr, [idx], bgn, end, z, z0)[z0];
-}
-function moveTo(arr, val=0, bgn=0, end=arr.length, z=[], z0=z.length, z1=z0+(end-bgn)) {
-  copyTo(arr, bgn, end, z, z0, z1);
-  arr.fill(val, bgn, end);
-  return z;
-}
-function compactTo(arr, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i=bgn; i<end; i++)
-    if(arr[i]) z[z0++] = arr[i];
-  return z;
-}
-function uniqueOf(arr) {
-  var z = [];
-  for(var val of arr)
-    if(z.indexOf(val)<0) z.push(val);
-  return z;
-}
-function fill(a, v, x1=0, x2=a.length, stp=1) {
-  for(; x1<x2; x1+=stp)
-    a[x1] = v;
-  return a;
-}
-function reverseTo(arr, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i=end-1; i>=bgn; i--)
-    z[z0++] = arr[i];
-  return z;
-}
-function sortTo(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
-  var z1 = z0+(end-bgn);
-  if(z1>z.length) z.length = z1;
-  for(var i=bgn, zi=z0; i<end; i++, zi++) {
-    var j = binarySearch(z, arr[i], fn, ths, z0, zi);
-    if(j<zi) z.copyWithin(j+1, j, zi);
-    z[j] = arr[i];
+/**
+ * Lists all possible partial sequences.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} subsequence...
+ */
+function* subsequences(x) {
+  if(x.length===0) { yield []; return; }
+  var y = x.slice(0, -1);
+  for(var s of subsequences(y))
+    yield s;
+  for(var s of subsequences(y)) {
+    s.push(x[x.length-1]);
+    yield s;
   }
-  return z;
 }
-function compare(i, j) {
-  return this[i]===this[j]? 0:(this[i]<this[j]? -1:1);
-}
-function compareBy(i, j) {
-  return this.fn.call(this.ths, this.arr[i], this.arr[j]);
-}
-function sortIndex(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
-  var z1 = z0+(end-bgn);
-  var fx = fn==null? compare:compareBy;
-  var thx = fn==null? arr:{fn, ths, arr};
-  if(z1>z.length) z.length = z1;
-  for(var i=bgn, zi=z0; i<end; i++, zi++) {
-    var j = binarySearch(z, i, fx, thx, z0, zi);
-    if(j<zi) z.copyWithin(j+1, j, zi);
-    z[j] = i;
-  }
-  return z;
-}
-
-
-
-function zipObject(arr, bgn=0, end=arr.length, z={}) {
-  for(var i=bgn, j=0; i<end; i++, j++) {
-    for(var k of Object.keys(arr[i])) {
-      if(!(k in z)) z[k] = [];
-      z[k][j] = arr[i][k];
+/**
+ * Lists all possible arrangements.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} permutation ...
+ */
+function* permutations(x) {
+  if(x.length===0) { yield []; return; }
+  for(var i=x.length-1; i>=0; i--) {
+    var y = splice(x, i);
+    for(var p of permutations(y)) {
+      p.push(x[i]);
+      yield p;
     }
   }
-  return z;
 }
-
-
-
-function repeatTo(arr, n=1, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var h=0; h<n; h++) {
-    for(var i=bgn; i<end; i++)
-      z[z0++] = arr[i];
-  }
-  return z;
-}
-function forEachOf(arr, fn, ths, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    fn.call(ths, arr[i], i, arr);
-}
-function someOf(arr, fn, ths, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(fn.call(ths, arr[i], i, arr)) return true;
-  return false;
-}
-function everyOf(arr, fn, ths, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(!fn.call(ths, arr[i], i, arr)) return false;
+/**
+ * Checks if array starts with a prefix.
+ * @param {Array} x an array
+ * @param {Array} y prefix?
+ * @returns {boolean} true if prefix
+ */
+function isPrefix(x, y) {
+  var i = 0;
+  for(var v of y)
+    if(x[i]!==v) return false;
   return true;
 }
-function findIn(arr, fn, ths, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(fn.call(ths, arr[i], i, arr)) return arr[i];
+/**
+ * Checks if array contains an infix.
+ * @param {Array} x an array
+ * @param {Array} y infix?
+ * @returns {boolean} true if infix
+ */
+function isInfix(x, y) {
+  var i = 0, I = y.length;
+  for(var v of x) {
+    if(v===y[i]) i++;
+    else if(i<I) i = 0;
+  }
+  return i===I;
 }
-function findIndexOf(arr, fn, ths, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    if(fn.call(ths, arr[i], i, arr)) return i;
-  return -1;
+/**
+ * Checks if array ends with a suffix.
+ * @param {Array} x an array
+ * @param {Array} y suffix?
+ * @returns {boolean} true if suffix
+ */
+function isSuffix(x, y) {
+  var i = x.length - y.length;
+  for(var v of y)
+    if(x[i]!==v) return false;
+  return true;
 }
-function findAll(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i=bgn; i<end; i++)
-    if(fn.call(ths, arr[i], i, arr)) z[z0++] = arr[i];
-  return z;
+/**
+ * Checks if array has a subsequence.
+ * @param {Array} x an array
+ * @param {Array} y subsequence?
+ * @returns {boolean} true if subsequence
+ */
+function isSubsequence(x, y) {
+  var i = 0, I = y.length;
+  for(var v of x)
+    if(v===y[i]) i++;
+  return i===I;
 }
-function findAllIndices(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i=bgn; i<end; i++)
-    if(fn.call(ths, arr[i], i, arr)) z[z0++] = i;
-  return z;
+/**
+ * Checks if array has a permutation.
+ * @param {Array} x an array
+ * @param {Array} y permutation?
+ * @returns {boolean} true if permutation
+ */
+function isPermutation(x, y) {
+  var xa = x.slice.sort();
+  var ya = y.slice.sort();
+  return compare(xa, ya)===0;
 }
-function reduceBy(arr, fn, acc, bgn=0, end=arr.length) {
-  for(var i=bgn; i<end; i++)
-    acc = acc!==undefined? fn(acc, arr[i], i, arr):arr[i];
-  return acc;
-}
-function filterTo(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i=bgn; i<end; i++)
-    if(fn.call(ths, arr[i], i, arr)) z[z0++] = arr[i];
-  return z;
-}
-function mapTo(arr, fn, ths, bgn=0, end=arr.length, z=[], z0=z.length) {
-  for(var i=bgn; i<end; i++)
-    z[z0++] = fn.call(ths, arr[i], i, arr);
-  return z;
-}
-
-// math
-function sumOf(arr, bgn=0, end=arr.length) {
-  var z = 0;
-  for(var i=bgn; i<end; i++)
-    z += arr[i];
-  return z;
-}
-function average(arr, bgn=0, end=arr.length) {
-  var n = end-bgn;
-  return n? sumOf(arr, bgn, end)/n:0;
-}
-
-// vector
-function hammingDistance(a, b, a0=0, a1=a.length, b0=0, b1=b.length) {
-  var L = a1-a0, z = 0;
-  if(L!==b1-b0) return NaN;
-  for(var i=0; i<L; i++)
-    if(a[a0+i]!==b[b0+i]) z++;
-  return z;
-}
-function euclideanDistance(a, b, a0=0, a1=a.length, b0=0, b1=b.length) {
-  var L=a1-a0, z = 0;
-  for(var i=0; i<L; i++)
-    z += (a[a0+i]-b[b0+i])**2;
-  return Math.sqrt(z);
-}
-// Datatype methods:
-Array.is = exports0;
-
-// About methods:
-Array.equal = equalTo;
-Array.first = firstOf;
-Array.middle = middleOf;
-Array.last = lastOf;
-Array.values = values;
-
-// Generate methods:
-Array.ensure = ensure;
-Array.arange = arange;
-Array.linspace = linspace;
-Array.fromEntries = fromEntries;
-Array.fromLists = fromLists;
-
-// Search methods:
-Array.indexOf = indexFor;
-Array.indicesOf = indicesOf; // IMP
-Array.lastIndexOf = lastIndexOf;
-Array.includes = includesIt;
-Array.includesOnly = includesOnly;
-Array.binarySearch = binarySearch;
-Array.binarySearch.closest = binarySearch17;
-Array.binarySearch.first = binarySearch18;
-Array.binarySearch.last = binarySearch19;
-Array.contains = containsIt;
-Array.count = count;
-Array.countAll = countAll;
-
-// Transform methods:
-Array.join = joinTo;
-Array.pick = pick;
-Array.pickAs = pickAs;
-Array.slice = sliceTo;
-Array.copy = copyTo;
-Array.move = moveTo;
-Array.compact = compactTo;
-Array.unique = uniqueOf;
-Array.fill = fill;
-Array.reverse = reverseTo;
-Array.sort = sortTo;
-Array.sortIndex = sortIndex;
-Array.zip = zip;
-Array.unzip = Array.zip;
-Array.zipObject = zipObject;
-Array.append = append;
-Array.repeat = repeatTo;
-
-// Functional methods:
-Array.forEach = forEachOf;
-Array.some = someOf;
-Array.every = everyOf;
-Array.find = findIn;
-Array.findIndex = findIndexOf;
-Array.findAll = findAll;
-Array.findAllIndices = findAllIndices;
-Array.reduce = reduceBy;
-Array.filter = filterTo;
-Array.map = mapTo;
-
-// Evaluate methods:
-Array.any = any;
-Array.all = allOf;
-Array.max = maxOf;
-Array.min = minOf;
-Array.sum = sumOf;
-Array.average = average;
-Array.hammingDistance = hammingDistance;
-Array.euclideanDistance = euclideanDistance;
-module.exports = Array;
+exports.prefixes = prefixes;
+exports.infixes = infixes;
+exports.suffixes = suffixes;
+exports.subsequences = subsequences;
+exports.permutations = permutations;
+exports.isPrefix = isPrefix;
+exports.isInfix = isInfix;
+exports.isSuffix = isSuffix;
+exports.isSubsequence = isSubsequence;
+exports.isPermutation = isPermutation;

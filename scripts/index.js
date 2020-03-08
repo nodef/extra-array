@@ -1,0 +1,10 @@
+exports.prefixes = require('./prefixes');
+exports.infixes = require('./infixes');
+exports.suffixes = require('./suffixes');
+exports.subsequences = require('./subsequences');
+exports.permutations = require('./permutations');
+exports.isPrefix = require('./isPrefix');
+exports.isInfix = require('./isInfix');
+exports.isSuffix = require('./isSuffix');
+exports.isSubsequence = require('./isSubsequence');
+exports.isPermutation = require('./isPermutation');
