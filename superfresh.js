@@ -37,6 +37,9 @@ function union(x, y, fn) {
 
 
 
+function takel(x, fn) {
+  return x.slice();
+}
 
 function searchl(x, fn, ths=null) {
   for(var i=0, I=x.length; i<I; i++)

@@ -71,32 +71,6 @@ function transpose() {
 
 }
 
-function foldl() {
-
-}
-
-function foldr() {
-
-}
-
-function scanl() {
-  
-}
-
-function scanr() {
-
-}
-
-function unfoldr(e, fn, ths=null) {
-  var a = [], i = -1;
-  while(true) {
-    var p = fn.call(ths, e, ++i, a);
-    if(p===undefined) return a;
-    a.push(p[0]);
-    e = p[1];
-  }
-}
-
 function splitAt(x, i) {
   return [x.slice(0, i), x.slice(i)];
 }
@@ -134,29 +108,7 @@ function group(x) {
 }
 
 
-/**
- * Inserts a value to an ordered array.
- * @param {Array} x array
- * @param {*} e element to insert
- * @param {function} fn compare function (a, b)
- */
-function insert(x, e, fn) {
-  var i = x.findIndex(f => fn(e, f)>=0);
-  x.splice(i, 0, e);
-  return x;
-}
 
-/**
- * Deletes frist occurrence of an element.
- * @param {Array} x array
- * @param {*} e element to delete
- * @param {function} fn compare function (a, b)
- */
-function remove(x, e, fn) {
-  var i = x.findIndex(f => fn(e, f)===0);
-  x.splice(i, 1);
-  return x;
-}
 
 
 exports.head = head;
