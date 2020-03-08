@@ -5,3 +5,10 @@
 not
 and
 or
+
+- object.from(keys, values, deep=false) // zipObject(Deep)
+- object.fromentries
+- array.symmetricDifference
+- array.difference
+- array.union
+- array.intersection
