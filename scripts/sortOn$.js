@@ -1,6 +1,4 @@
-function cmp(a, b) {
-  return a<b? -1:(a>b? 1:0);
-}
+const cmp = require('./_cmp');
 
 /**
  * Sorts based on map function (once per value)!

@@ -362,114 +362,13 @@ function linspace(v, V, n=100) {
 
 
 
-/**
- * Binary search value in sorted array.
- * @param {Array} x source (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} index of value | ~(index of closest value)
- */
-function bsearch(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else if(c>0) I = m;
-    else return m;
-  }
-  return ~i;
-}
-
-/**
- * Binary search closest value in sorted array.
- * @param {Array} x source (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} index of closest value
- */
-function bsearchc(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn.call(x[m], v);
-    if(c<0) i = m+1;
-    else if(c>0) I = m;
-    else return m;
-  }
-  return i;
-}
-
-/**
- * Binary search first value in sorted array (left).
- * @param {Array} x source (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} first index of value | ~(index of closest value)
- */
-function bsearchl(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else I = m;
-  }
-  return i>=x.length || x[i]!==v? ~i:i;
-}
-
-/**
- * Binary search last value in sorted array (right).
- * @param {Array} x source (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} last index of value | ~(index of closest value)
- */
-function bsearchr(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<=0) i = m+1;
-    else I = m;
-  }
-  return i<=0 || x[i-1]!==v? ~i:i-1;
-}
 
 
 
-/**
- * Removes duplicate elements.
- * @param {Array} x source
- * @param {function?} fn compare function (a, b)
- * @returns {Array} unique valued array
- */
-function nub(x, fn) {
-  if(!fn) return Array.from(new Set(x));
-  var a = [];
-  x: for(var v of x) {
-    for(var w of a)
-      if(fn(v, w)===0) continue x;
-    a.push(v);
-  }
-  return a;
-}
 
-/**
- * Removes duplicate elements based of map function (once per value).
- * @param {Array} x source
- * @param {function} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} unique valued array
- */
-function nubOn(x, fn, ths=null) {
-  var m = new Map(), i = -1;
-  for(var v of x) {
-    var w = fn.call(ths, v, ++i, x);
-    if(!m.has(w)) m.set(w, v);
-  }
-  return Array.from(m.values());
-}
+
+
+
 
 function intersect(x, y, fn) {
   fn = fn||cmp;
