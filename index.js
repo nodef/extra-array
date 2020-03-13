@@ -118,6 +118,79 @@ function isPermutation(x, y) {
   var ya = y.slice.sort();
   return compare(xa, ya)===0;
 }
+function cmp(a, b) {
+  return a<b? -1:(a>b? 1:0);
+}
+/**
+ * Binary searches value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of value | ~(index of closest value)
+ */
+function bsearch(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return ~i;
+}
+/**
+ * Binary search closest value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of closest value
+ */
+function bsearchc(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn.call(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return i;
+}
+/**
+ * Binary search first value in sorted array (left).
+ * @param {Array} x an array (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} first index of value | ~(index of closest value)
+ */
+function bsearchl(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else I = m;
+  }
+  return i>=x.length || x[i]!==v? ~i:i;
+}
+/**
+ * Binary search last value in sorted array (right).
+ * @param {Array} x source (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} last index of value | ~(index of closest value)
+ */
+function bsearchr(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<=0) i = m+1;
+    else I = m;
+  }
+  return i<=0 || x[i-1]!==v? ~i:i-1;
+}
 exports.prefixes = prefixes;
 exports.infixes = infixes;
 exports.suffixes = suffixes;
@@ -128,3 +201,7 @@ exports.isInfix = isInfix;
 exports.isSuffix = isSuffix;
 exports.isSubsequence = isSubsequence;
 exports.isPermutation = isPermutation;
+exports.bsearch = bsearch;
+exports.bsearchc = bsearchc;
+exports.bsearchl = bsearchl;
+exports.bsearchr = bsearchr;

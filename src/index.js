@@ -8,3 +8,7 @@ exports.isInfix = require('./isInfix');
 exports.isSuffix = require('./isSuffix');
 exports.isSubsequence = require('./isSubsequence');
 exports.isPermutation = require('./isPermutation');
+exports.bsearch = require('./bsearch');
+exports.bsearchc = require('./bsearchc');
+exports.bsearchl = require('./bsearchl');
+exports.bsearchr = require('./bsearchr');
