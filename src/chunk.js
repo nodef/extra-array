@@ -1,7 +1,8 @@
 /**
  * Splits array into chunks of given size.
  * @param {Array} x an array
- * @param {number} n chunk size
+ * @param {number?} n chunk size
+ * @returns {Array<Array>} chunks
  */
 function chunk(x, n=1) {
   var a = [];

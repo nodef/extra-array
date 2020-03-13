@@ -207,11 +207,12 @@ function concat$(x, ...ys) {
 /**
  * Sorts based on map function (once per value).
  * @param {Array} x an array (updated)
- * @param {function} fn map function (v, i, x)
+ * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array} x
  */
 function sortOn$(x, fn, ths=null) {
+  if(!fn) return x.sort((a, b) => cmp(a, b)); 
   var m = new Map(), i = -1;
   for(var v of x)
     m.set(v, fn.call(ths, v, ++i, x));
@@ -220,7 +221,7 @@ function sortOn$(x, fn, ths=null) {
 /**
  * Sorts based on map function (once per value).
  * @param {Array} x an array
- * @param {function} fn map function (v, i, x)
+ * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array} sorted array
  */
@@ -234,7 +235,7 @@ function sortOn(x, fn, ths=null) {
  * @returns {Array} sorted array
  */
 function sort(x, fn) {
-  return x.slice().sort(fn);
+  return x.slice().sort(fn||cmp);
 }
 function args(...vs) {
   return vs;
@@ -242,7 +243,7 @@ function args(...vs) {
 /**
  * Combines values from n arrays, with a function.
  * @param {Array<Array>} xs n arrays
- * @param {function} fn combine function (a, b, c, ...)
+ * @param {function?} fn combine function (a, b, c, ...)
  * @param {object?} ths this argument
  * @returns {Array<Array>} combined values
  */
@@ -256,6 +257,18 @@ function zip(xs, fn, ths=null) {
       w[r] = xs[r][c];
     a[c] = fn.apply(ths, w);
   }
+  return a;
+}
+/**
+ * Splits array into chunks of given size.
+ * @param {Array} x an array
+ * @param {number?} n chunk size
+ * @returns {Array<Array>} chunks
+ */
+function chunk(x, n=1) {
+  var a = [];
+  for(var i=0, I=x.length; i<I; i+=n)
+    a.push(x.slice(i, i+n));
   return a;
 }
 exports.prefixes = prefixes;
@@ -277,3 +290,4 @@ exports.sortOn$ = sortOn$;
 exports.sortOn = sortOn;
 exports.sort = sort;
 exports.zip = zip;
+exports.chunk = chunk;

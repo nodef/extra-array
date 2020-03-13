@@ -3,7 +3,7 @@ const args = require('./_args');
 /**
  * Combines values from n arrays, with a function.
  * @param {Array<Array>} xs n arrays
- * @param {function} fn combine function (a, b, c, ...)
+ * @param {function?} fn combine function (a, b, c, ...)
  * @param {object?} ths this argument
  * @returns {Array<Array>} combined values
  */

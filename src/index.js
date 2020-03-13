@@ -17,3 +17,4 @@ exports.sortOn$ = require('./sortOn$');
 exports.sortOn = require('./sortOn');
 exports.sort = require('./sort');
 exports.zip = require('./zip');
+exports.chunk = require('./chunk');
