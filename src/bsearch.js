@@ -1,7 +1,7 @@
 const cmp = require('./_cmp');
 
 /**
- * Binary search value in sorted array.
+ * Binary searches value in sorted array.
  * @param {Array} x an array (sorted)
  * @param {*} v value to find
  * @param {function?} fn compare function (a, b)
