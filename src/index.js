@@ -12,3 +12,4 @@ exports.bsearch = require('./bsearch');
 exports.bsearchc = require('./bsearchc');
 exports.bsearchl = require('./bsearchl');
 exports.bsearchr = require('./bsearchr');
+exports.concat$ = require('./concat$');

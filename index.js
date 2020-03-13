@@ -191,6 +191,19 @@ function bsearchr(x, v, fn) {
   }
   return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
 }
+/**
+ * Appends arrays to the end.
+ * @param {Array} x an array (updated)
+ * @param {...Iterable} ys arrays to append
+ * @returns {Array} x
+ */
+function concat$(x, ...ys) {
+  for(var y of ys) {
+    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
+    else for(var v of y) x.push(v);
+  }
+  return x;
+}
 exports.prefixes = prefixes;
 exports.infixes = infixes;
 exports.suffixes = suffixes;
@@ -205,3 +218,4 @@ exports.bsearch = bsearch;
 exports.bsearchc = bsearchc;
 exports.bsearchl = bsearchl;
 exports.bsearchr = bsearchr;
+exports.concat$ = concat$;
