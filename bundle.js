@@ -200,6 +200,7 @@ async function main(a) {
     if(path.extname(f)!=='.js') continue;
     if(f.startsWith('_')) continue;
     if(f==='index.js') continue;
+    try {
     var pth = path.join('src', f);
     var tmp = scatterPackage(pth, o);
     cp.execSync('npm publish', {cwd: tmp, stdio});
@@ -208,6 +209,8 @@ async function main(a) {
     minifyPackage(tmp, Object.assign({standalone}, o));
     cp.execSync('npm publish', {cwd: tmp, stdio});
     cp.execSync(`rm -rf ${tmp}`);
+    }
+    catch(e) { console.error(e); }
   }
   standalone = STANDALONE;
   minifyPackage('.', Object.assign({standalone}, o));
