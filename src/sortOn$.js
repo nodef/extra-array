@@ -1,11 +1,11 @@
 const cmp = require('./_cmp');
 
 /**
- * Sorts based on map function (once per value)!
- * @param {Array} x target (modified!)
+ * Sorts based on map function (once per value).
+ * @param {Array} x an array (updated)
  * @param {function} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array} target (sorted)
+ * @returns {Array} x
  */
 function sortOn$(x, fn, ths=null) {
   var m = new Map(), i = -1;
