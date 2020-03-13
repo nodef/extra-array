@@ -1,4 +1,4 @@
-function args() {
-  return arguments;
+function args(...vs) {
+  return vs;
 }
 module.exports = args;
