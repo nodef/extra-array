@@ -1,8 +1,8 @@
 const concat$ = require('./concat$');
 
 /**
- * Places separator between each array in source.
- * @param {Array<Array>} xs source arrays
+ * Places separator between each array.
+ * @param {Array<Array>} xs arrays
  * @param {Array} y separator
  * @returns {Array} [x0 y x1 y ...]
  */

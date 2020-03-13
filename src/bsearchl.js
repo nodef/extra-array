@@ -1,7 +1,7 @@
 const cmp = require('./_cmp');
 
 /**
- * Binary search first value in sorted array (left).
+ * Binary searches leftmost value in sorted array.
  * @param {Array} x an array (sorted)
  * @param {*} v value to find
  * @param {function?} fn compare function (a, b)
@@ -15,6 +15,6 @@ function bsearchl(x, v, fn) {
     if(c<0) i = m+1;
     else I = m;
   }
-  return i>=x.length || x[i]!==v? ~i:i;
+  return i>=x.length || fn(x[i], v)!==0? ~i:i;
 }
 module.exports = bsearchl;

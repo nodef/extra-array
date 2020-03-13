@@ -1,8 +1,8 @@
 const cmp = require('./_cmp');
 
 /**
- * Binary search last value in sorted array (right).
- * @param {Array} x source (sorted)
+ * Binary searches rightmost value in sorted array.
+ * @param {Array} x an array (sorted)
  * @param {*} v value to find
  * @param {function?} fn compare function (a, b)
  * @returns {number} last index of value | ~(index of closest value)
@@ -15,6 +15,6 @@ function bsearchr(x, v, fn) {
     if(c<=0) i = m+1;
     else I = m;
   }
-  return i<=0 || x[i-1]!==v? ~i:i-1;
+  return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
 }
 module.exports = bsearchr;

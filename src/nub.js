@@ -1,6 +1,6 @@
 /**
  * Removes duplicate elements.
- * @param {Array} x source
+ * @param {Array} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array} unique valued array
  */

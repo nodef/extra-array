@@ -140,7 +140,7 @@ function bsearch(x, v, fn) {
   return ~i;
 }
 /**
- * Binary search closest value in sorted array.
+ * Binary searches closest value in sorted array.
  * @param {Array} x an array (sorted)
  * @param {*} v value to find
  * @param {function?} fn compare function (a, b)
@@ -150,7 +150,7 @@ function bsearchc(x, v, fn) {
   fn = fn||cmp;
   for(var i=0, I=x.length; i<I;) {
     var m = (i+I)>>>1;
-    var c = fn.call(x[m], v);
+    var c = fn(x[m], v);
     if(c<0) i = m+1;
     else if(c>0) I = m;
     else return m;
@@ -158,7 +158,7 @@ function bsearchc(x, v, fn) {
   return i;
 }
 /**
- * Binary search first value in sorted array (left).
+ * Binary searches leftmost value in sorted array.
  * @param {Array} x an array (sorted)
  * @param {*} v value to find
  * @param {function?} fn compare function (a, b)
@@ -172,11 +172,11 @@ function bsearchl(x, v, fn) {
     if(c<0) i = m+1;
     else I = m;
   }
-  return i>=x.length || x[i]!==v? ~i:i;
+  return i>=x.length || fn(x[i], v)!==0? ~i:i;
 }
 /**
- * Binary search last value in sorted array (right).
- * @param {Array} x source (sorted)
+ * Binary searches rightmost value in sorted array.
+ * @param {Array} x an array (sorted)
  * @param {*} v value to find
  * @param {function?} fn compare function (a, b)
  * @returns {number} last index of value | ~(index of closest value)
@@ -189,7 +189,7 @@ function bsearchr(x, v, fn) {
     if(c<=0) i = m+1;
     else I = m;
   }
-  return i<=0 || x[i-1]!==v? ~i:i-1;
+  return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
 }
 exports.prefixes = prefixes;
 exports.infixes = infixes;
