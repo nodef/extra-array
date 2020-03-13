@@ -227,6 +227,15 @@ function sortOn$(x, fn, ths=null) {
 function sortOn(x, fn, ths=null) {
   return sortOn$(x.slice(), fn, ths);
 }
+/**
+ * Sorts based on compare function (optional).
+ * @param {Array} x an array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} sorted array
+ */
+function sort(x, fn) {
+  return x.slice().sort(fn);
+}
 exports.prefixes = prefixes;
 exports.infixes = infixes;
 exports.suffixes = suffixes;
@@ -244,3 +253,4 @@ exports.bsearchr = bsearchr;
 exports.concat$ = concat$;
 exports.sortOn$ = sortOn$;
 exports.sortOn = sortOn;
+exports.sort = sort;

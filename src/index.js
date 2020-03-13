@@ -15,3 +15,4 @@ exports.bsearchr = require('./bsearchr');
 exports.concat$ = require('./concat$');
 exports.sortOn$ = require('./sortOn$');
 exports.sortOn = require('./sortOn');
+exports.sort = require('./sort');
