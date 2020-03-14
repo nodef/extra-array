@@ -5,6 +5,6 @@
  * @returns {number} +ve index
  */
 function index(x, i) {
-  return i<0? x.length-i:i;
+  return i<0? x.length+i:i;
 }
 module.exports = index;

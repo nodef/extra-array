@@ -7,9 +7,10 @@ function flattenTo(a, x, dep) {
 }
 
 /**
- * Flatten nested array to given depth.
+ * Flattens nested array to given depth.
  * @param {Array} x a nested array
- * @param {number} dep maximum depth
+ * @param {number?} dep maximum depth (-1)
+ * @returns {Array} flattened
  */
 function flatten(x, dep=-1) {
   return flattenTo([], x, dep);

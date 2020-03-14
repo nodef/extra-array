@@ -1,3 +1,47 @@
+/**
+ * Gets true index to array (+ve).
+ * @param {Array} x an array
+ * @param {number} i index (+ve, -ve)
+ * @returns {number} +ve index
+ */
+function index(x, i) {
+  return i<0? x.length+i:i;
+}
+/**
+ * Gets value at index (+ve, -ve).
+ * @param {Array} x an array
+ * @param {number} i index (-ve: from right)
+ * @returns {*} value
+ */
+function get(x, i) {
+  return x[index(x, i)];
+}
+/**
+ * Removes or replaces existing values.
+ * @param {Array} x an array
+ * @param {number} i remove index
+ * @param {number?} n no. of values to remove
+ * @param {...any} vs values to insert
+ * @returns {Array} [0->i, vs, i+n->I]
+ */
+function splice(x, i, n=x.length-i, ...vs) {
+  var a = x.slice(0, i);
+  for(var v of vs)
+    a.push(v);
+  for(var i=i+n, I=x.length; i<I; i++)
+    a.push(x[i]);
+  return a;
+}
+/**
+ * Sets value at index (+ve, -ve).
+ * @param {Array} x an array
+ * @param {number} i index (-ve: from right)
+ * @param {*} v value
+ * @returns {Array} set array
+ */
+function set(x, i, v) {
+  return splice(x, index(x, i), 1, v);
+}
 function cmp(a, b) {
   return a<b? -1:(a>b? 1:0);
 }
@@ -76,22 +120,6 @@ function zip(xs, fn, ths=null) {
       w[r] = xs[r][c];
     a[c] = fn.apply(ths, w);
   }
-  return a;
-}
-/**
- * Removes or replaces existing values.
- * @param {Array} x an array
- * @param {number} i remove index
- * @param {number?} n no. of values to remove
- * @param {...any} vs values to insert
- * @returns {Array} [0->i, vs, i+n->I]
- */
-function splice(x, i, n=x.length-i, ...vs) {
-  var a = x.slice(0, i);
-  for(var v of vs)
-    a.push(v);
-  for(var i=i+n, I=x.length; i<I; i++)
-    a.push(x[i]);
   return a;
 }
 /**
@@ -339,7 +367,10 @@ function isPermutation(x, y) {
   var ya = y.slice.sort();
   return compare(xa, ya)===0;
 }
+exports.get = get;
+exports.set = set;
 exports.compare = compare;
+
 exports.filter$ = filter$;
 exports.concat$ = concat$;
 exports.chunk = chunk;

@@ -1,4 +1,7 @@
+exports.get = require('./get');
+exports.set = require('./set');
 exports.compare = require('./compare');
+
 exports.filter$ = require('./filter$');
 exports.concat$ = require('./concat$');
 exports.chunk = require('./chunk');
