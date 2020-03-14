@@ -1,11 +1,12 @@
 /**
  * Lists all possible infixes.
  * @param {Array} x an array
- * @returns {Iterable<Array>} infix...
+ * @returns {Iterable<Array>} ...infixes
  */
 function* infixes(x) {
+  yield [];
   for(var i=0, I=x.length; i<I; i++) {
-    for(var j=0; j<I; j++)
+    for(var j=i+1; j<=I; j++)
       yield x.slice(i, j);
   }
 }

@@ -262,30 +262,31 @@ function sort(x, fn) {
 /**
  * Lists all possible prefixes.
  * @param {Array} x an array
- * @returns {Iterable<Array>} prefix...
+ * @returns {Iterable<Array>} ...prefixes
  */
 function* prefixes(x) {
-  for(var i=0, I=x.length; i<I; i++)
+  for(var i=0, I=x.length; i<=I; i++)
     yield x.slice(0, i);
 }
 /**
  * Lists all possible infixes.
  * @param {Array} x an array
- * @returns {Iterable<Array>} infix...
+ * @returns {Iterable<Array>} ...infixes
  */
 function* infixes(x) {
+  yield [];
   for(var i=0, I=x.length; i<I; i++) {
-    for(var j=0; j<I; j++)
+    for(var j=i+1; j<=I; j++)
       yield x.slice(i, j);
   }
 }
 /**
  * Lists all possible suffixes.
  * @param {Array} x an array
- * @returns {Iterable<Array>} suffix...
+ * @returns {Iterable<Array>} ...suffixes
  */
 function* suffixes(x) {
-  for(var i=0, I=x.length; i<I; i++)
+  for(var i=0, I=x.length; i<=I; i++)
     yield x.slice(i);
 }
 /**
