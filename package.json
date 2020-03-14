@@ -1,6 +1,6 @@
 {
   "name": "extra-array",
-  "version": "2.1.33",
+  "version": "2.1.34",
   "description": "Standard utility methods for Array.",
   "main": "index.js",
   "scripts": {
