@@ -7,7 +7,7 @@
 function isPrefix(x, y) {
   var i = 0;
   for(var v of y)
-    if(x[i]!==v) return false;
+    if(x[i++]!==v) return false;
   return true;
 }
 module.exports = isPrefix;

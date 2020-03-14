@@ -291,7 +291,7 @@ function* suffixes(x) {
 /**
  * Lists all possible partial sequences.
  * @param {Array} x an array
- * @returns {Iterable<Array>} subsequence...
+ * @returns {Iterable<Array>} ...subsequences
  */
 function* subsequences(x) {
   if(x.length===0) { yield []; return; }
@@ -306,12 +306,12 @@ function* subsequences(x) {
 /**
  * Lists all possible arrangements.
  * @param {Array} x an array
- * @returns {Iterable<Array>} permutation ...
+ * @returns {Iterable<Array>} ...permutations
  */
 function* permutations(x) {
   if(x.length===0) { yield []; return; }
   for(var i=x.length-1; i>=0; i--) {
-    var y = splice(x, i);
+    var y = splice(x, i, 1);
     for(var p of permutations(y)) {
       p.push(x[i]);
       yield p;
@@ -327,7 +327,7 @@ function* permutations(x) {
 function isPrefix(x, y) {
   var i = 0;
   for(var v of y)
-    if(x[i]!==v) return false;
+    if(x[i++]!==v) return false;
   return true;
 }
 /**
@@ -353,7 +353,7 @@ function isInfix(x, y) {
 function isSuffix(x, y) {
   var i = x.length - y.length;
   for(var v of y)
-    if(x[i]!==v) return false;
+    if(x[i++]!==v) return false;
   return true;
 }
 /**

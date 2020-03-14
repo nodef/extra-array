@@ -1,7 +1,7 @@
 /**
  * Lists all possible partial sequences.
  * @param {Array} x an array
- * @returns {Iterable<Array>} subsequence...
+ * @returns {Iterable<Array>} ...subsequences
  */
 function* subsequences(x) {
   if(x.length===0) { yield []; return; }

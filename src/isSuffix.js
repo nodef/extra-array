@@ -7,7 +7,7 @@
 function isSuffix(x, y) {
   var i = x.length - y.length;
   for(var v of y)
-    if(x[i]!==v) return false;
+    if(x[i++]!==v) return false;
   return true;
 }
 module.exports = isSuffix;
