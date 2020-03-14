@@ -79,6 +79,28 @@ function zip(xs, fn, ths=null) {
   return a;
 }
 /**
+ * Inserts a value to an ordered array.
+ * @param {Array} x an array (updated)
+ * @param {*} v value to insert
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} x
+ */
+function insert$(x, v, fn) {
+  fn = fn||cmp;
+  var i = x.findIndex(f => fn(f, v)>0);
+  x.splice(i>=0? i:x.length, 0, v);
+  return x;
+}
+/**
+ * Inserts a value to an ordered array.
+ * @param {Iterable} x an array
+ * @param {*} v value to insert
+ * @param {function?} fn compare function (a, b)
+ */
+function insert(x, v, fn) {
+  return insert$(Array.from(x), v, fn);
+}
+/**
  * Binary searches value in sorted array.
  * @param {Array} x an array (sorted)
  * @param {*} v value to find
@@ -306,6 +328,9 @@ exports.filter$ = filter$;
 exports.concat$ = concat$;
 exports.chunk = chunk;
 exports.zip = zip;
+
+exports.insert$ = insert$;
+exports.insert = insert;
 
 exports.bsearch = bsearch;
 exports.bsearchc = bsearchc;

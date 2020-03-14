@@ -4,6 +4,9 @@ exports.concat$ = require('./concat$');
 exports.chunk = require('./chunk');
 exports.zip = require('./zip');
 
+exports.insert$ = require('./insert$');
+exports.insert = require('./insert');
+
 exports.bsearch = require('./bsearch');
 exports.bsearchc = require('./bsearchc');
 exports.bsearchl = require('./bsearchl');

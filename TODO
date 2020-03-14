@@ -12,3 +12,11 @@ or
 - array.difference
 - array.union
 - array.intersection
+
+- nub
+- chunk by size
+- split by cond
+- break into n
+- break into 2
+- group into 2
+- group into n
