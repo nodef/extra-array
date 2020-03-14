@@ -63,6 +63,18 @@ function compare(x, y, fn) {
   return 0;
 }
 /**
+ * Updates values based on map function.
+ * @param {Array} x an array (updated)
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
+ */
+function map$(x, fn, ths=null) {
+  for(var i=0, I=x.length; i<I; i++)
+    x[i] = fn.call(ths, x[i], i, x);
+  return x;
+}
+/**
  * Keeps the values which pass the test.
  * @param {Array} x an array (updated)
  * @param {function} fn filter function (v, i, x)
@@ -371,6 +383,7 @@ exports.get = get;
 exports.set = set;
 exports.compare = compare;
 
+exports.map$ = map$;
 exports.filter$ = filter$;
 exports.concat$ = concat$;
 exports.chunk = chunk;
