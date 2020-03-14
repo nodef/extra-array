@@ -1,3 +1,173 @@
+function cmp(a, b) {
+  return a<b? -1:(a>b? 1:0);
+}
+/**
+ * Compares two arrays.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} x<y: -1, x=y: 0, x>y: 1
+ */
+function compare(x, y, fn) {
+  fn = fn||cmp;
+  var n = x.length - y.length;
+  if(n!==0) return n<0? -1:1;
+  for(var i=0, I=x.length; i<I; i++) {
+    var c = fn(x[i], y[i]);
+    if(c!==0) return c;
+  }
+  return 0;
+}
+/**
+ * Appends arrays to the end.
+ * @param {Array} x an array (updated)
+ * @param {...Iterable} ys arrays to append
+ * @returns {Array} x
+ */
+function concat$(x, ...ys) {
+  for(var y of ys) {
+    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
+    else for(var v of y) x.push(v);
+  }
+  return x;
+}
+/**
+ * Splits array into chunks of given size.
+ * @param {Array} x an array
+ * @param {number?} n chunk size
+ * @returns {Array<Array>} chunks
+ */
+function chunk(x, n=1) {
+  var a = [];
+  for(var i=0, I=x.length; i<I; i+=n)
+    a.push(x.slice(i, i+n));
+  return a;
+}
+function args(...vs) {
+  return vs;
+}
+/**
+ * Combines values from n arrays, with a function.
+ * @param {Array<Array>} xs n arrays
+ * @param {function?} fn combine function (a, b, c, ...)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} combined values
+ */
+function zip(xs, fn, ths=null) {
+  fn = fn||args;
+  var a = [], A = 0;
+  for(var r=0, R=xs.length; r<R; r++)
+    A = Math.max(A, xs[r].length);
+  for(var c=0; c<A; c++) {
+    for(var r=0, w=[]; r<R; r++)
+      w[r] = xs[r][c];
+    a[c] = fn.apply(ths, w);
+  }
+  return a;
+}
+/**
+ * Binary searches value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of value | ~(index of closest value)
+ */
+function bsearch(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return ~i;
+}
+/**
+ * Binary searches closest value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of closest value
+ */
+function bsearchc(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return i;
+}
+/**
+ * Binary searches leftmost value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} first index of value | ~(index of closest value)
+ */
+function bsearchl(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else I = m;
+  }
+  return i>=x.length || fn(x[i], v)!==0? ~i:i;
+}
+/**
+ * Binary searches rightmost value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v value to find
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} last index of value | ~(index of closest value)
+ */
+function bsearchr(x, v, fn) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<=0) i = m+1;
+    else I = m;
+  }
+  return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
+}
+/**
+ * Sorts based on map function (once per value).
+ * @param {Array} x an array (updated)
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
+ */
+function sortOn$(x, fn, ths=null) {
+  if(!fn) return x.sort((a, b) => cmp(a, b)); 
+  var m = new Map(), i = -1;
+  for(var v of x)
+    m.set(v, fn.call(ths, v, ++i, x));
+  return x.sort((a, b) => cmp(m.get(a), m.get(b)));
+}
+/**
+ * Sorts based on map function (once per value).
+ * @param {Array} x an array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} sorted array
+ */
+function sortOn(x, fn, ths=null) {
+  return sortOn$(x.slice(), fn, ths);
+}
+/**
+ * Sorts based on compare function (optional).
+ * @param {Array} x an array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} sorted array
+ */
+function sort(x, fn) {
+  return x.slice().sort(fn||cmp);
+}
 /**
  * Lists all possible prefixes.
  * @param {Array} x an array
@@ -118,159 +288,17 @@ function isPermutation(x, y) {
   var ya = y.slice.sort();
   return compare(xa, ya)===0;
 }
-function cmp(a, b) {
-  return a<b? -1:(a>b? 1:0);
-}
-/**
- * Binary searches value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} index of value | ~(index of closest value)
- */
-function bsearch(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else if(c>0) I = m;
-    else return m;
-  }
-  return ~i;
-}
-/**
- * Binary searches closest value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} index of closest value
- */
-function bsearchc(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else if(c>0) I = m;
-    else return m;
-  }
-  return i;
-}
-/**
- * Binary searches leftmost value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} first index of value | ~(index of closest value)
- */
-function bsearchl(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else I = m;
-  }
-  return i>=x.length || fn(x[i], v)!==0? ~i:i;
-}
-/**
- * Binary searches rightmost value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} last index of value | ~(index of closest value)
- */
-function bsearchr(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<=0) i = m+1;
-    else I = m;
-  }
-  return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
-}
-/**
- * Appends arrays to the end.
- * @param {Array} x an array (updated)
- * @param {...Iterable} ys arrays to append
- * @returns {Array} x
- */
-function concat$(x, ...ys) {
-  for(var y of ys) {
-    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
-    else for(var v of y) x.push(v);
-  }
-  return x;
-}
-/**
- * Sorts based on map function (once per value).
- * @param {Array} x an array (updated)
- * @param {function?} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} x
- */
-function sortOn$(x, fn, ths=null) {
-  if(!fn) return x.sort((a, b) => cmp(a, b)); 
-  var m = new Map(), i = -1;
-  for(var v of x)
-    m.set(v, fn.call(ths, v, ++i, x));
-  return x.sort((a, b) => cmp(m.get(a), m.get(b)));
-}
-/**
- * Sorts based on map function (once per value).
- * @param {Array} x an array
- * @param {function?} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} sorted array
- */
-function sortOn(x, fn, ths=null) {
-  return sortOn$(x.slice(), fn, ths);
-}
-/**
- * Sorts based on compare function (optional).
- * @param {Array} x an array
- * @param {function?} fn compare function (a, b)
- * @returns {Array} sorted array
- */
-function sort(x, fn) {
-  return x.slice().sort(fn||cmp);
-}
-function args(...vs) {
-  return vs;
-}
-/**
- * Combines values from n arrays, with a function.
- * @param {Array<Array>} xs n arrays
- * @param {function?} fn combine function (a, b, c, ...)
- * @param {object?} ths this argument
- * @returns {Array<Array>} combined values
- */
-function zip(xs, fn, ths=null) {
-  fn = fn||args;
-  var a = [], A = 0;
-  for(var r=0, R=xs.length; r<R; r++)
-    A = Math.max(A, xs[r].length);
-  for(var c=0; c<A; c++) {
-    for(var r=0, w=[]; r<R; r++)
-      w[r] = xs[r][c];
-    a[c] = fn.apply(ths, w);
-  }
-  return a;
-}
-/**
- * Splits array into chunks of given size.
- * @param {Array} x an array
- * @param {number?} n chunk size
- * @returns {Array<Array>} chunks
- */
-function chunk(x, n=1) {
-  var a = [];
-  for(var i=0, I=x.length; i<I; i+=n)
-    a.push(x.slice(i, i+n));
-  return a;
-}
+exports.compare = compare;
+exports.concat$ = concat$;
+exports.chunk = chunk;
+exports.zip = zip;
+exports.bsearch = bsearch;
+exports.bsearchc = bsearchc;
+exports.bsearchl = bsearchl;
+exports.bsearchr = bsearchr;
+exports.sortOn$ = sortOn$;
+exports.sortOn = sortOn;
+exports.sort = sort;
 exports.prefixes = prefixes;
 exports.infixes = infixes;
 exports.suffixes = suffixes;
@@ -281,13 +309,3 @@ exports.isInfix = isInfix;
 exports.isSuffix = isSuffix;
 exports.isSubsequence = isSubsequence;
 exports.isPermutation = isPermutation;
-exports.bsearch = bsearch;
-exports.bsearchc = bsearchc;
-exports.bsearchl = bsearchl;
-exports.bsearchr = bsearchr;
-exports.concat$ = concat$;
-exports.sortOn$ = sortOn$;
-exports.sortOn = sortOn;
-exports.sort = sort;
-exports.zip = zip;
-exports.chunk = chunk;
