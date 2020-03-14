@@ -3,7 +3,7 @@
  * @param {number} v start of interval
  * @param {number} V end of interval (excluding)
  * @param {number?} stp spacing between values (1)
- * @returns {Array} result
+ * @returns {Array}
  */
 function range(v, V, stp=1) {
   var a = [];
