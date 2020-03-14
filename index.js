@@ -375,8 +375,8 @@ function isSubsequence(x, y) {
  * @returns {boolean} true if permutation
  */
 function isPermutation(x, y) {
-  var xa = x.slice.sort();
-  var ya = y.slice.sort();
+  var xa = x.slice().sort();
+  var ya = y.slice().sort();
   return compare(xa, ya)===0;
 }
 exports.get = get;
