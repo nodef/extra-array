@@ -2,7 +2,7 @@
  * Removes or replaces existing values.
  * @param {Array} x an array
  * @param {number} i remove index
- * @param {number?} n no. of values to remove (def: all till I)
+ * @param {number?} n no. of values to remove
  * @param {...any} vs values to insert
  * @returns {Array} [0->i, vs, i+n->I]
  */

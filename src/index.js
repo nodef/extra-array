@@ -4,6 +4,7 @@ exports.concat$ = require('./concat$');
 exports.chunk = require('./chunk');
 exports.zip = require('./zip');
 
+exports.splice = require('./splice');
 exports.insert$ = require('./insert$');
 exports.insert = require('./insert');
 
