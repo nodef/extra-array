@@ -19,6 +19,19 @@ function compare(x, y, fn) {
   return 0;
 }
 /**
+ * Keeps the values which pass the test.
+ * @param {Array} x an array (updated)
+ * @param {function} fn filter function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
+ */
+function filter$(x, fn, ths=null) {
+  for(var i=0, j=0, I=x.length; i<I; i++)
+    if(fn.call(ths, x[i], i, x)) x[j++] = x[i];
+  x.length = j;
+  return x;
+}
+/**
  * Appends arrays to the end.
  * @param {Array} x an array (updated)
  * @param {...Iterable} ys arrays to append
@@ -289,9 +302,11 @@ function isPermutation(x, y) {
   return compare(xa, ya)===0;
 }
 exports.compare = compare;
+exports.filter$ = filter$;
 exports.concat$ = concat$;
 exports.chunk = chunk;
 exports.zip = zip;
+
 exports.bsearch = bsearch;
 exports.bsearchc = bsearchc;
 exports.bsearchl = bsearchl;
@@ -299,6 +314,7 @@ exports.bsearchr = bsearchr;
 exports.sortOn$ = sortOn$;
 exports.sortOn = sortOn;
 exports.sort = sort;
+
 exports.prefixes = prefixes;
 exports.infixes = infixes;
 exports.suffixes = suffixes;
