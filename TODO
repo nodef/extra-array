@@ -40,6 +40,8 @@ or
 
 // operation match function
 // https://www.npmjs.com/package/is-array-uniq
+// https://github.com/w3nl/array-helpers
+// https://github.com/flejz/array-reducer
 
 - nub
 - chunk by size
