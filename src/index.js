@@ -17,7 +17,6 @@ exports.push = require('./push');
 exports.pop = require('./pop');
 exports.shift = require('./shift');
 exports.unshift = require('./unshift');
-
 exports.copy$ = require('./copy$');
 exports.copy = require('./copy');
 exports.rotate$ = require('./rotate$');

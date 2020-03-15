@@ -34,22 +34,22 @@ set.symmetricDifference([1, 2, 3], [2, 3, 4]);
 | [range]                | Returns evenly spaced values within given interval.
 | [linspace]             | Returns evenly spaced values within given interval.
 |                        | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
+| [push]                 | Adds values to the end. 
+| [pop]                  | Removes last value.
+| [shift]                | Removes first value.
+| [unshift]              | Adds values to the start.
+| [copy]                 | Copies part of array to another.
+| [copy$]                | Copies part of array to another.
+| [rotate]               | Rotates values in array.
+| [rotate$]              | Rotates values in array.
+| [slice$]               | Keeps only the selected region.
+| [filter$]              | Keeps the values which pass the test.
+| [map$]                 | Updates values based on map function.
+| [concat$]              | Appends arrays to the end.
+| [reverse]              | Reverses the values.
+| [chunk]                | Splits array into chunks of given size.
+| [zip]                  | Combines values from n arrays, with a function.
+|                        | 
 | [is]                   | 
 | [is]                   | 
 | [is]                   | 
