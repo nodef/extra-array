@@ -1,4 +1,6 @@
 An [array] is a collection of values, stored contiguously.
+Methods that modify any argument end in `$`. All other methods are functional,
+and do not modify any parameters.
 
 ```javascript
 const array = require('extra-array');
@@ -87,6 +89,8 @@ array.bsearchl([1, 3, 5, 7], 5);
 | [isSuffix]             | Checks if array ends with a suffix.
 | [isSubsequence]        | Checks if array has a subsequence.
 | [isPermutation]        | Checks if array has a permutation.
+
+<br>
 
 [![nodef](https://merferry.glitch.me/card/extra-array.svg)](https://nodef.github.io)
 
