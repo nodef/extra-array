@@ -1,6 +1,8 @@
 exports.get = require('./get');
 exports.set = require('./set');
 exports.compare = require('./compare');
+exports.range = require('./range');
+exports.linspace = require('./linspace');
 
 exports.map$ = require('./map$');
 exports.filter$ = require('./filter$');
@@ -11,6 +13,7 @@ exports.zip = require('./zip');
 exports.splice = require('./splice');
 exports.insert$ = require('./insert$');
 exports.insert = require('./insert');
+exports.repeat = require('./repeat');
 
 exports.bsearch = require('./bsearch');
 exports.bsearchc = require('./bsearchc');

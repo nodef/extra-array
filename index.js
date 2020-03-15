@@ -63,6 +63,30 @@ function compare(x, y, fn) {
   return 0;
 }
 /**
+ * Returns evenly spaced values within given interval.
+ * @param {number} v start of interval
+ * @param {number} V end of interval (excluding)
+ * @param {number?} stp spacing between values (1)
+ * @returns {Array}
+ */
+function range(v, V, stp=1) {
+  var a = [];
+  for(; v<V; v+=stp)
+    a.push(v);
+  return a;
+}
+/**
+ * Returns evenly spaced values within given interval.
+ * @param {number} v start of interval
+ * @param {number} V end of interval
+ * @param {number?} n no. of values in between (100)
+ * @returns {Array}
+ */
+function linspace(v, V, n=100) {
+  var stp = (V-v)/(n-1);
+  return range(v, V+stp, stp);
+}
+/**
  * Updates values based on map function.
  * @param {Array} x an array (updated)
  * @param {function} fn map function (v, i, x)
@@ -155,6 +179,17 @@ function insert$(x, v, fn) {
  */
 function insert(x, v, fn) {
   return insert$(Array.from(x), v, fn);
+}
+/**
+ * Repeats an array gives times.
+ * @param {Array} x an array
+ * @param {number} n times
+ * @returns {Array}
+ */
+function repeat(x, n) {
+  for(var a=[];n>0; n--)
+    concat$(a, x);
+  return a;
 }
 /**
  * Binary searches value in sorted array.
@@ -383,6 +418,8 @@ function isPermutation(x, y) {
 exports.get = get;
 exports.set = set;
 exports.compare = compare;
+exports.range = range;
+exports.linspace = linspace;
 
 exports.map$ = map$;
 exports.filter$ = filter$;
@@ -393,6 +430,7 @@ exports.zip = zip;
 exports.splice = splice;
 exports.insert$ = insert$;
 exports.insert = insert;
+exports.repeat = repeat;
 
 exports.bsearch = bsearch;
 exports.bsearchc = bsearchc;
