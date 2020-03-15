@@ -50,22 +50,79 @@ set.symmetricDifference([1, 2, 3], [2, 3, 4]);
 | [chunk]                | Splits array into chunks of given size.
 | [zip]                  | Combines values from n arrays, with a function.
 |                        | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
-| [is]                   | 
+| [splice]               | Removes or replaces existing values.
+| [insert]               | Inserts a value to an ordered array.
+| [insert$]              | Inserts a value to an ordered array.
+| [repeat]               | Repeats an array gives times.
+|                        | 
+| [bsearch]              | Binary searches value in sorted array.
+| [bsearchc]             | Binary searches closest value in sorted array.
+| [bsearchl]             | Binary searches leftmost value in sorted array.
+| [bsearchr]             | Binary searches rightmost value in sorted array.
+| [sort]                 | Sorts based on compare function (optional).
+|                        | 
+| [prefixes]             | Lists all possible prefixes.
+| [infixes]              | Lists all possible infixes.
+| [suffixes]             | Lists all possible suffixes.
+| [subsequences]         | Lists all possible partial sequences.
+| [permutations]         | Lists all possible arrangements.
+| [isPrefix]             | Checks if array starts with a prefix.
+| [isInfix]              | Checks if array contains an infix.
+| [isSuffix]             | Checks if array ends with a suffix.
+| [isSubsequence]        | Checks if array has a subsequence.
+| [isPermutation]        | Checks if array has a permutation.
 
 [![nodef](https://merferry.glitch.me/card/extra-array.svg)](https://nodef.github.io)
 
 > Browserified, minified version of this package is [extra-array.min].
 
 [is]: https://github.com/nodef/extra-array/wiki/is
+[head]: https://github.com/nodef/extra-array/wiki/head
+[tail]: https://github.com/nodef/extra-array/wiki/tail
+[init]: https://github.com/nodef/extra-array/wiki/init
+[last]: https://github.com/nodef/extra-array/wiki/last
+[get]: https://github.com/nodef/extra-array/wiki/get
+[set]: https://github.com/nodef/extra-array/wiki/set
+[set]: https://github.com/nodef/extra-array/wiki/set
+[swap]: https://github.com/nodef/extra-array/wiki/swap
+[swap]: https://github.com/nodef/extra-array/wiki/swap
+[compare]: https://github.com/nodef/extra-array/wiki/compare
+[isEqual]: https://github.com/nodef/extra-array/wiki/isEqual
+[range]: https://github.com/nodef/extra-array/wiki/range
+[linspace]: https://github.com/nodef/extra-array/wiki/linspace
+[push]: https://github.com/nodef/extra-array/wiki/push
+[pop]: https://github.com/nodef/extra-array/wiki/pop
+[shift]: https://github.com/nodef/extra-array/wiki/shift
+[unshift]: https://github.com/nodef/extra-array/wiki/unshift
+[copy]: https://github.com/nodef/extra-array/wiki/copy
+[copy]: https://github.com/nodef/extra-array/wiki/copy
+[rotate]: https://github.com/nodef/extra-array/wiki/rotate
+[rotate]: https://github.com/nodef/extra-array/wiki/rotate
+[slice]: https://github.com/nodef/extra-array/wiki/slice
+[filter]: https://github.com/nodef/extra-array/wiki/filter
+[map]: https://github.com/nodef/extra-array/wiki/map
+[concat]: https://github.com/nodef/extra-array/wiki/concat
+[reverse]: https://github.com/nodef/extra-array/wiki/reverse
+[chunk]: https://github.com/nodef/extra-array/wiki/chunk
+[zip]: https://github.com/nodef/extra-array/wiki/zip
+[splice]: https://github.com/nodef/extra-array/wiki/splice
+[insert]: https://github.com/nodef/extra-array/wiki/insert
+[insert]: https://github.com/nodef/extra-array/wiki/insert
+[repeat]: https://github.com/nodef/extra-array/wiki/repeat
+[bsearch]: https://github.com/nodef/extra-array/wiki/bsearch
+[bsearchc]: https://github.com/nodef/extra-array/wiki/bsearchc
+[bsearchl]: https://github.com/nodef/extra-array/wiki/bsearchl
+[bsearchr]: https://github.com/nodef/extra-array/wiki/bsearchr
+[sort]: https://github.com/nodef/extra-array/wiki/sort
+[prefixes]: https://github.com/nodef/extra-array/wiki/prefixes
+[infixes]: https://github.com/nodef/extra-array/wiki/infixes
+[suffixes]: https://github.com/nodef/extra-array/wiki/suffixes
+[subsequences]: https://github.com/nodef/extra-array/wiki/subsequences
+[permutations]: https://github.com/nodef/extra-array/wiki/permutations
+[isPrefix]: https://github.com/nodef/extra-array/wiki/isPrefix
+[isInfix]: https://github.com/nodef/extra-array/wiki/isInfix
+[isSuffix]: https://github.com/nodef/extra-array/wiki/isSuffix
+[isSubsequence]: https://github.com/nodef/extra-array/wiki/isSubsequence
+[isPermutation]: https://github.com/nodef/extra-array/wiki/isPermutation
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 [extra-array.min]: https://www.npmjs.com/package/extra-array.min
