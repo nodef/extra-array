@@ -7,6 +7,7 @@ exports.get = require('./get');
 exports.set = require('./set');
 exports.set$ = require('./set$');
 exports.swap$ = require('./swap$');
+exports.swap = require('./swap');
 exports.compare = require('./compare');
 exports.isEqual = require('./isEqual');
 exports.range = require('./range');

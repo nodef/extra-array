@@ -101,6 +101,16 @@ function swap$(x, i, j) {
   x[j] = t;
   return x;
 }
+/**
+ * Exchanges two values.
+ * @param {Array} x an array
+ * @param {number} i an index
+ * @param {number} j another index
+ * @returns {Array}
+ */
+function swap(x, i, j) {
+  return swap$(x.slice(), i, j);
+}
 function cmp(a, b) {
   return a<b? -1:(a>b? 1:0);
 }
@@ -609,6 +619,7 @@ exports.get = get;
 exports.set = set;
 exports.set$ = set$;
 exports.swap$ = swap$;
+exports.swap = swap;
 exports.compare = compare;
 exports.isEqual = isEqual;
 exports.range = range;
