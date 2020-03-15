@@ -25,7 +25,6 @@ or
 - partition
 - remove$
 - set$
-- slice$
 - splice
 - split
 - unfoldr

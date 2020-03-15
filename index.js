@@ -75,6 +75,17 @@ function splice(x, i, n=x.length-i, ...vs) {
 function set(x, i, v) {
   return splice(x, index(x, i), 1, v);
 }
+/**
+ * Sets value at index (+ve, -ve).
+ * @param {Array} x an array (updated)
+ * @param {number} i index (-ve: from right)
+ * @param {*} v value
+ * @returns {Array} x
+ */
+function set$(x, i, v) {
+  x[index(x, i)] = v;
+  return x;
+}
 function cmp(a, b) {
   return a<b? -1:(a>b? 1:0);
 }
@@ -519,6 +530,7 @@ exports.init = init;
 exports.last = last;
 exports.get = get;
 exports.set = set;
+exports.set$ = set$;
 exports.compare = compare;
 
 exports.range = range;

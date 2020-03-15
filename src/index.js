@@ -5,6 +5,7 @@ exports.init = require('./init');
 exports.last = require('./last');
 exports.get = require('./get');
 exports.set = require('./set');
+exports.set$ = require('./set$');
 exports.compare = require('./compare');
 
 exports.range = require('./range');
