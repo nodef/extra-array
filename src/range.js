@@ -7,8 +7,8 @@
  */
 function range(v, V, stp=1) {
   var a = [];
-  for(; v<V; v+=stp)
-    a.push(v);
+  if(stp>0) for(; v<V; v+=stp) a.push(v);
+  else for(; v>V; v+=stp) a.push(v);
   return a;
 }
 module.exports = range;

@@ -1,3 +1,4 @@
+const exports0 = Array.isArray;
 /**
  * Gets true index to array (+ve).
  * @param {Array} x an array
@@ -71,8 +72,8 @@ function compare(x, y, fn) {
  */
 function range(v, V, stp=1) {
   var a = [];
-  for(; v<V; v+=stp)
-    a.push(v);
+  if(stp>0) for(; v<V; v+=stp) a.push(v);
+  else for(; v>V; v+=stp) a.push(v);
   return a;
 }
 /**
@@ -415,6 +416,7 @@ function isPermutation(x, y) {
   var ya = y.slice().sort();
   return compare(xa, ya)===0;
 }
+exports.is = exports0;
 exports.get = get;
 exports.set = set;
 exports.compare = compare;

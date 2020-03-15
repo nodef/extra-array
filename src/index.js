@@ -1,3 +1,4 @@
+exports.is = require('./is');
 exports.get = require('./get');
 exports.set = require('./set');
 exports.compare = require('./compare');
