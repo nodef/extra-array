@@ -3,16 +3,32 @@ An [array] is a collection of values, stored contiguously.
 ```javascript
 const array = require('extra-array');
 
-var s = new array([1, 2, 3, 4]);
-array.difference(s, [1, 3]);
-// array(2) { 2, 4 }
+array.last([1, 2, 3]);
+// 3
 
-var t = new array([2, 3]);
-array.isDisjoint(t, [4, 5]);
-// true
+var a = [1, 2, 3, 4];
+array.swap(a, 0, 1);
+// [2, 1, 3, 4]
 
-array.symmetricDifference([1, 2, 3], [2, 3, 4]);
-// array(2) { 1, 4 }
+array.linspace(0, -1, 5);
+// [0, -0.25, -0.5, -0.75, -1]
+
+var a = [1, 2, 3, 4];
+array.rotate(a, 1);
+// [4, 1, 2, 3]
+
+array.bsearchl([1, 3, 5, 7], 5);
+// 2                  ^ found
+
+[...array.permutations([1, 2, 3])];
+// [
+//   [ 1, 2, 3 ],
+//   [ 2, 1, 3 ],
+//   [ 1, 3, 2 ],
+//   [ 3, 1, 2 ],
+//   [ 2, 3, 1 ],
+//   [ 3, 2, 1 ]
+// ]
 ```
 
 ### reference
