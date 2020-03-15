@@ -5,6 +5,7 @@ const insert$ = require('./insert$');
  * @param {Iterable} x an array
  * @param {*} v value to insert
  * @param {function?} fn compare function (a, b)
+ * @returns {Array}
  */
 function insert(x, v, fn) {
   return insert$(Array.from(x), v, fn);
