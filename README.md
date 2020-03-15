@@ -2,6 +2,9 @@ An [array] is a collection of values, stored contiguously.
 Methods that modify any argument end in `$`. All other methods are functional,
 and do not modify any parameters.
 
+> Stability: Experimental.<br>
+> Unavilable array methods will be added here as its necessity is noticed.
+
 ```javascript
 const array = require('extra-array');
 
