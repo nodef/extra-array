@@ -29,6 +29,9 @@ or
 - split
 - unfoldr
 
+// operation match function
+// https://www.npmjs.com/package/is-array-uniq
+
 - nub
 - chunk by size
 - split by cond

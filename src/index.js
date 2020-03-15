@@ -7,7 +7,7 @@ exports.get = require('./get');
 exports.set = require('./set');
 exports.set$ = require('./set$');
 exports.compare = require('./compare');
-
+exports.isEqual = require('./isEqual');
 exports.range = require('./range');
 exports.linspace = require('./linspace');
 

@@ -107,6 +107,16 @@ function compare(x, y, fn) {
   return 0;
 }
 /**
+ * Checks if two arrays are equal.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if equal
+ */
+function isEqual(x, y, fn) {
+  return compare(x, y, fn)===0;
+}
+/**
  * Returns evenly spaced values within given interval.
  * @param {number} v start of interval
  * @param {number} V end of interval (excluding)
@@ -532,7 +542,7 @@ exports.get = get;
 exports.set = set;
 exports.set$ = set$;
 exports.compare = compare;
-
+exports.isEqual = isEqual;
 exports.range = range;
 exports.linspace = linspace;
 
