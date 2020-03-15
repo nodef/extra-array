@@ -1,18 +1,18 @@
-An [array] is a collection of values, stored contiguosly.
+An [array] is a collection of values, stored contiguously.
 
 ```javascript
-const set = require('extra-set');
+const array = require('extra-array');
 
-var s = new Set([1, 2, 3, 4]);
-set.difference(s, [1, 3]);
-// Set(2) { 2, 4 }
+var s = new array([1, 2, 3, 4]);
+array.difference(s, [1, 3]);
+// array(2) { 2, 4 }
 
-var t = new Set([2, 3]);
-set.isDisjoint(t, [4, 5]);
+var t = new array([2, 3]);
+array.isDisjoint(t, [4, 5]);
 // true
 
-set.symmetricDifference([1, 2, 3], [2, 3, 4]);
-// Set(2) { 1, 4 }
+array.symmetricDifference([1, 2, 3], [2, 3, 4]);
+// array(2) { 1, 4 }
 ```
 
 ### reference
