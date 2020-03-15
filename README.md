@@ -1,4 +1,4 @@
-An array is a collection of values, stored contiguosly.
+An [array] is a collection of values, stored contiguosly.
 
 ```javascript
 const set = require('extra-set');
@@ -19,36 +19,53 @@ set.symmetricDifference([1, 2, 3], [2, 3, 4]);
 
 | Method                 | Action
 |------------------------|-------
-| [is]                   | Checks if value is a set.
-| [isEqual]              | Checks if two sets have the same values.
-| [isSubset]             | Checks if set is part of all collections.
-| [isSuperset]           | Checks if all collections are part of set.
-| [isDisjoint]           | Checks if collections have no value in common.
-| [union]                | Gives a set with values from all collections.
-| [union$]               | Gives a set with values from all collections.
-| [intersection]         | Gives a set with values in all collections.
-| [intersection$]        | Gives a set with values in all collections.
-| [difference]           | Gives a set excluding values in collections.
-| [difference$]          | Gives a set excluding values in collections.
-| [symmetricDifference]  | Gives a set with values in odd number of collections.
-| [powerset]             | Lists all subsets of a set.
+| [is]                   | Checks if value is array.
+| [head]                 | Gets first value.
+| [tail]                 | Gets values except first.
+| [init]                 | Gets values except last.
+| [last]                 | Gets last value.
+| [get]                  | Gets value at index (+ve, -ve).
+| [set]                  | Sets value at index (+ve, -ve).
+| [set$]                 | Sets value at index (+ve, -ve).
+| [swap]                 | Exchanges two values.
+| [swap$]                | Exchanges two values.
+| [compare]              | Compares two arrays.
+| [isEqual]              | Checks if two arrays are equal.
+| [range]                | Returns evenly spaced values within given interval.
+| [linspace]             | Returns evenly spaced values within given interval.
+|                        | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
+| [is]                   | 
 
-[![nodef](https://merferry.glitch.me/card/extra-set.svg)](https://nodef.github.io)
+[![nodef](https://merferry.glitch.me/card/extra-array.svg)](https://nodef.github.io)
 
-> Browserified, minified version of this package is [extra-set.min].
+> Browserified, minified version of this package is [extra-array.min].
 
-[is]: https://github.com/nodef/extra-set/wiki/is
-[isEqual]: https://github.com/nodef/extra-set/wiki/isEqual
-[isSubset]: https://github.com/nodef/extra-set/wiki/isSubset
-[isSuperset]: https://github.com/nodef/extra-set/wiki/is
-[isDisjoint]: https://github.com/nodef/extra-set/wiki/isDisjoint
-[union]: https://github.com/nodef/extra-set/wiki/union
-[union$]: https://github.com/nodef/extra-set/wiki/union$
-[intersection]: https://github.com/nodef/extra-set/wiki/intersection
-[intersection$]: https://github.com/nodef/extra-set/wiki/intersection$
-[difference]: https://github.com/nodef/extra-set/wiki/difference
-[difference$]: https://github.com/nodef/extra-set/wiki/difference$
-[symmetricDifference]: https://github.com/nodef/extra-set/wiki/symmetricDifference
-[powerset]: https://github.com/nodef/extra-set/wiki/powerset
-[set]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
-[extra-set.min]: https://www.npmjs.com/package/extra-set.min
+[is]: https://github.com/nodef/extra-array/wiki/is
+[array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+[extra-array.min]: https://www.npmjs.com/package/extra-array.min
