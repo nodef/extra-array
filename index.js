@@ -236,6 +236,15 @@ function rotate$(x, n) {
   x.copyWithin(n, 0);
   return copy$(x, y);
 }
+/**
+ * Rotates values in array.
+ * @param {Array} x an array
+ * @param {number} n rotate amount (-ve: left, +ve: right)
+ * @returns {Array}
+ */
+function rotate(x, n) {
+  return rotate$(x.slice(), n);
+}
 function length(x, i, I) {
   var [i, I] = region(x, i, I);
   return I-i;
@@ -597,6 +606,7 @@ exports.unshift = unshift;
 exports.copy$ = copy$;
 exports.copy = copy;
 exports.rotate$ = rotate$;
+exports.rotate = rotate;
 exports.slice$ = slice$;
 exports.filter$ = filter$;
 exports.map$ = map$;
