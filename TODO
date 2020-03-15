@@ -28,6 +28,7 @@ or
 - unfoldr
 - typescript
 - rust (wasm)
+- number.modp
 
 // operation match function
 // https://www.npmjs.com/package/is-array-uniq

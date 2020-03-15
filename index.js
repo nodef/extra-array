@@ -200,7 +200,7 @@ function region(x, i, I) {
  * @param {number?} j write index (0)
  * @param {number?} i read start index (0)
  * @param {number?} I read end index (x.length)
- * @returns {Array} y
+ * @returns {Array} x
  */
 function copy$(x, y, j=0, i=0, I=y.length) {
   var j = index(x, j);
@@ -208,6 +208,33 @@ function copy$(x, y, j=0, i=0, I=y.length) {
   for(; i<I; i++, j++)
     x[j] = y[i];
   return x;
+}
+/**
+ * Copies part of array to another.
+ * @param {Array} x target array
+ * @param {Array} y source array
+ * @param {number?} j write index (0)
+ * @param {number?} i read start index (0)
+ * @param {number?} I read end index (x.length)
+ * @returns {Array}
+ */
+function copy(x, y, j=0, i=0, I=y.length) {
+  return copy$(x.slice(), y, j, i, I);
+}
+function modp(m, n) {
+  return (m % n + n) % n;
+}
+/**
+ * Rotates values in array.
+ * @param {Array} x an array (updated)
+ * @param {number} n rotate amount (-ve: left, +ve: right)
+ * @returns {Array} x
+ */
+function rotate$(x, n) {
+  var n = modp(n, x.length);
+  var y = x.slice(-n);
+  x.copyWithin(n, 0);
+  return copy$(x, y);
 }
 function length(x, i, I) {
   var [i, I] = region(x, i, I);
@@ -568,6 +595,8 @@ exports.shift = shift;
 exports.unshift = unshift;
 
 exports.copy$ = copy$;
+exports.copy = copy;
+exports.rotate$ = rotate$;
 exports.slice$ = slice$;
 exports.filter$ = filter$;
 exports.map$ = map$;

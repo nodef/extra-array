@@ -18,6 +18,7 @@ exports.unshift = require('./unshift');
 
 exports.copy$ = require('./copy$');
 exports.copy = require('./copy');
+exports.rotate$ = require('./rotate$');
 exports.slice$ = require('./slice$');
 exports.filter$ = require('./filter$');
 exports.map$ = require('./map$');
