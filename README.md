@@ -1,122 +1,54 @@
-add to Array on demand
-add to Array prototype on demand
-
-find functions
-
-cons
-uncons
-intersperse
-intercalate
-transpose
-foldl1
-foldr1
-dropWhileEnd
-insert
-delete
-sortOn
-union
-intersect
-difference
-group
-break
-span
-dropWhileEnd
-splitAt
-unfoldr
-
-remove
-xor
-xorBy
-xorWith
-zipObject
-zipObjectDeep
-
-
-Standard utility methods for [Array].<br>
-Browserified, minified module: [extra-array.min].
+An array is a collection of values, stored contiguosly.
 
 ```javascript
-const Array = require('extra-array');
-// Array.is(<value>)
-// Array.equal(<array-1>, <array-2>)
-// ...
+const set = require('extra-set');
+
+var s = new Set([1, 2, 3, 4]);
+set.difference(s, [1, 3]);
+// Set(2) { 2, 4 }
+
+var t = new Set([2, 3]);
+set.isDisjoint(t, [4, 5]);
+// true
+
+set.symmetricDifference([1, 2, 3], [2, 3, 4]);
+// Set(2) { 1, 4 }
 ```
 
-Datatype methods:
-- [is](https://www.npmjs.com/package/@extra-array/is)
+### reference
 
-About methods:
-- [equal](https://www.npmjs.com/package/@extra-array/equal)
-- [first](https://www.npmjs.com/package/@extra-array/first)
-- [middle](https://www.npmjs.com/package/@extra-array/middle)
-- [last](https://www.npmjs.com/package/@extra-array/last)
-- [values](https://www.npmjs.com/package/@extra-array/values)
+| Method                 | Action
+|------------------------|-------
+| [is]                   | Checks if value is a set.
+| [isEqual]              | Checks if two sets have the same values.
+| [isSubset]             | Checks if set is part of all collections.
+| [isSuperset]           | Checks if all collections are part of set.
+| [isDisjoint]           | Checks if collections have no value in common.
+| [union]                | Gives a set with values from all collections.
+| [union$]               | Gives a set with values from all collections.
+| [intersection]         | Gives a set with values in all collections.
+| [intersection$]        | Gives a set with values in all collections.
+| [difference]           | Gives a set excluding values in collections.
+| [difference$]          | Gives a set excluding values in collections.
+| [symmetricDifference]  | Gives a set with values in odd number of collections.
+| [powerset]             | Lists all subsets of a set.
 
-Generate methods:
-- [ensure](https://www.npmjs.com/package/@extra-array/ensure)
-- [arange](https://www.npmjs.com/package/@extra-array/arange)
-- [linspace](https://www.npmjs.com/package/@extra-array/linspace)
-- [fromEntries](https://www.npmjs.com/package/@extra-array/from-entries)
-- [fromLists](https://www.npmjs.com/package/@extra-array/from-lists)
+[![nodef](https://merferry.glitch.me/card/extra-set.svg)](https://nodef.github.io)
 
-Search methods:
-- [indexOf](https://www.npmjs.com/package/@extra-array/index-of)
-- [indicesOf](https://www.npmjs.com/package/@extra-array/indices-of)
-- [lastIndexOf](https://www.npmjs.com/package/@extra-array/last-index-of)
-- [includes](https://www.npmjs.com/package/@extra-array/includes)
-- [includesOnly](https://www.npmjs.com/package/@extra-array/includes-only)
-- [binarySearch](https://www.npmjs.com/package/@extra-array/binary-search)
-- [binarySearch.closest](https://www.npmjs.com/package/@extra-array/binary-search.closest)
-- [binarySearch.first](https://www.npmjs.com/package/@extra-array/binary-search.first)
-- [binarySearch.last](https://www.npmjs.com/package/@extra-array/binary-search.last)
-- [contains](https://www.npmjs.com/package/@extra-array/contains)
-- [count](https://www.npmjs.com/package/@extra-array/count)
-- [countAll](https://www.npmjs.com/package/@extra-array/count-all)
+> Browserified, minified version of this package is [extra-set.min].
 
-Transform methods:
-- [join](https://www.npmjs.com/package/@extra-array/join)
-- [pick](https://www.npmjs.com/package/@extra-array/pick)
-- [pickAs](https://www.npmjs.com/package/@extra-array/pick-as)
-- [slice](https://www.npmjs.com/package/@extra-array/slice)
-- [copy](https://www.npmjs.com/package/@extra-array/copy)
-- [move](https://www.npmjs.com/package/@extra-array/move)
-- [compact](https://www.npmjs.com/package/@extra-array/compact)
-- [unique](https://www.npmjs.com/package/@extra-array/unique)
-- [fill](https://www.npmjs.com/package/@extra-array/fill)
-- [reverse](https://www.npmjs.com/package/@extra-array/reverse)
-- [sort](https://www.npmjs.com/package/@extra-array/sort)
-- [sortIndex](https://www.npmjs.com/package/@extra-array/sort-index)
-- [zip](https://www.npmjs.com/package/@extra-iterable/zip)
-- [unzip](https://www.npmjs.com/package/@extra-iterable/zip)
-- [zipObject](https://www.npmjs.com/package/@extra-array/zip-object)
-- [append](https://www.npmjs.com/package/@extra-array/append)
-- [repeat](https://www.npmjs.com/package/@extra-array/repeat)
-
-Functional methods:
-- [forEach](https://www.npmjs.com/package/@extra-array/for-each)
-- [some](https://www.npmjs.com/package/@extra-array/some)
-- [every](https://www.npmjs.com/package/@extra-array/every)
-- [find](https://www.npmjs.com/package/@extra-array/find)
-- [findIndex](https://www.npmjs.com/package/@extra-array/find-index)
-- [findAll](https://www.npmjs.com/package/@extra-array/find-all)
-- [findAllIndices](https://www.npmjs.com/package/@extra-array/find-all-indices)
-- [reduce](https://www.npmjs.com/package/@extra-array/reduce)
-- [filter](https://www.npmjs.com/package/@extra-array/filter)
-- [map](https://www.npmjs.com/package/@extra-array/map)
-
-Evaluate methods:
-- [any](https://www.npmjs.com/package/@extra-array/any)
-- [all](https://www.npmjs.com/package/@extra-array/all)
-- [max](https://www.npmjs.com/package/@extra-array/max)
-- [min](https://www.npmjs.com/package/@extra-array/min)
-- [sum](https://www.npmjs.com/package/@extra-array/sum)
-- [average](https://www.npmjs.com/package/@extra-array/average)
-- [hammingDistance](https://www.npmjs.com/package/@extra-array/hamming-distance)
-- [euclideanDistance](https://www.npmjs.com/package/@extra-array/euclidean-distance)
-<br>
-
-
-[![nodef](https://i.imgur.com/nwyrmkW.jpg)](https://nodef.github.io)
-
-[Array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections
-[extra-array.min]: https://www.npmjs.com/package/extra-array.min
+[is]: https://github.com/nodef/extra-set/wiki/is
+[isEqual]: https://github.com/nodef/extra-set/wiki/isEqual
+[isSubset]: https://github.com/nodef/extra-set/wiki/isSubset
+[isSuperset]: https://github.com/nodef/extra-set/wiki/is
+[isDisjoint]: https://github.com/nodef/extra-set/wiki/isDisjoint
+[union]: https://github.com/nodef/extra-set/wiki/union
+[union$]: https://github.com/nodef/extra-set/wiki/union$
+[intersection]: https://github.com/nodef/extra-set/wiki/intersection
+[intersection$]: https://github.com/nodef/extra-set/wiki/intersection$
+[difference]: https://github.com/nodef/extra-set/wiki/difference
+[difference$]: https://github.com/nodef/extra-set/wiki/difference$
+[symmetricDifference]: https://github.com/nodef/extra-set/wiki/symmetricDifference
+[powerset]: https://github.com/nodef/extra-set/wiki/powerset
+[set]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+[extra-set.min]: https://www.npmjs.com/package/extra-set.min
