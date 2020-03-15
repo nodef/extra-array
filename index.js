@@ -166,6 +166,28 @@ function concat$(x, ...ys) {
 function unshift(x, ...vs) {
   return concat$(vs, x);
 }
+function region(x, i, I) {
+  return [
+    Math.max(index(x, i), 0),
+    Math.min(index(x, I), x.length)
+  ];
+}
+function length(x, i, I) {
+  var [i, I] = region(x, i, I);
+  return I-i;
+}
+/**
+ * Keeps only the selected region.
+ * @param {Array} x an array (updated)
+ * @param {number} i start index (0)
+ * @param {number} I end index (x.length)
+ * @returns {Array} x
+ */
+function slice$(x, i=0, I=x.length) {
+  x.copyWithin(0, i, I);
+  x.length = length(x, i, I);
+  return x;
+}
 /**
  * Keeps the values which pass the test.
  * @param {Array} x an array (updated)
@@ -507,6 +529,7 @@ exports.pop = pop;
 exports.shift = shift;
 exports.unshift = unshift;
 
+exports.slice$ = slice$;
 exports.filter$ = filter$;
 exports.map$ = map$;
 exports.concat$ = concat$;

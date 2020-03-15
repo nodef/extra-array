@@ -21,16 +21,13 @@ or
 - scanr
 - intercalate
 - intersperse
-- last
 - nubOn
 - partition
 - remove$
-- reverse
 - set$
 - slice$
 - splice
 - split
-- tail
 - unfoldr
 
 - nub
