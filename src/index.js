@@ -6,8 +6,14 @@ exports.last = require('./last');
 exports.get = require('./get');
 exports.set = require('./set');
 exports.compare = require('./compare');
+
 exports.range = require('./range');
 exports.linspace = require('./linspace');
+
+exports.push = require('./push');
+exports.pop = require('./pop');
+exports.shift = require('./shift');
+exports.unshift = require('./unshift');
 
 exports.filter$ = require('./filter$');
 exports.map$ = require('./map$');

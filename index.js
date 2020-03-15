@@ -120,6 +120,53 @@ function linspace(v, V, n=100) {
   return range(v, V+stp, stp);
 }
 /**
+ * Adds values to the end. 
+ * @param {Array} x an array
+ * @param {...any} vs values to add
+ * @returns {Array} pushed
+ */
+function push(x, ...vs) {
+  return x.concat(vs);
+}
+/**
+ * Removes last value.
+ * @param {Array} x an array
+ * @returns {Array} [value, array]
+ */
+function pop(x) {
+  return [x[x.length-1], x.slice(0, -1)];
+}
+/**
+ * Removes first value.
+ * @param {Array} x an array
+ * @returns {Array} [value, array]
+ */
+function shift(x) {
+  return [x[0], x.slice(1)];
+}
+/**
+ * Appends arrays to the end.
+ * @param {Array} x an array (updated)
+ * @param {...Iterable} ys arrays to append
+ * @returns {Array} x
+ */
+function concat$(x, ...ys) {
+  for(var y of ys) {
+    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
+    else for(var v of y) x.push(v);
+  }
+  return x;
+}
+/**
+ * Adds values to the start.
+ * @param {Array} x an array
+ * @param {...any} vs values to add
+ * @returns {Array} unshifted
+ */
+function unshift(x, ...vs) {
+  return concat$(vs, x);
+}
+/**
  * Keeps the values which pass the test.
  * @param {Array} x an array (updated)
  * @param {function} fn filter function (v, i, x)
@@ -142,19 +189,6 @@ function filter$(x, fn, ths=null) {
 function map$(x, fn, ths=null) {
   for(var i=0, I=x.length; i<I; i++)
     x[i] = fn.call(ths, x[i], i, x);
-  return x;
-}
-/**
- * Appends arrays to the end.
- * @param {Array} x an array (updated)
- * @param {...Iterable} ys arrays to append
- * @returns {Array} x
- */
-function concat$(x, ...ys) {
-  for(var y of ys) {
-    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
-    else for(var v of y) x.push(v);
-  }
   return x;
 }
 /**
@@ -456,8 +490,14 @@ exports.last = last;
 exports.get = get;
 exports.set = set;
 exports.compare = compare;
+
 exports.range = range;
 exports.linspace = linspace;
+
+exports.push = push;
+exports.pop = pop;
+exports.shift = shift;
+exports.unshift = unshift;
 
 exports.filter$ = filter$;
 exports.map$ = map$;
