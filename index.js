@@ -192,6 +192,14 @@ function map$(x, fn, ths=null) {
   return x;
 }
 /**
+ * Reverses the values.
+ * @param {Array} x an array
+ * @returns {Array} reversed
+ */
+function reverse(x) {
+  return x.slice().reverse();
+}
+/**
  * Splits array into chunks of given size.
  * @param {Array} x an array
  * @param {number?} n chunk size
@@ -502,6 +510,7 @@ exports.unshift = unshift;
 exports.filter$ = filter$;
 exports.map$ = map$;
 exports.concat$ = concat$;
+exports.reverse = reverse;
 exports.chunk = chunk;
 exports.zip = zip;
 

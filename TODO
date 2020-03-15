@@ -27,13 +27,11 @@ or
 - remove$
 - reverse
 - set$
-- shift
 - slice$
 - splice
 - split
 - tail
 - unfoldr
-- unshift
 
 - nub
 - chunk by size

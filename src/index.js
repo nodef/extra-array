@@ -18,6 +18,7 @@ exports.unshift = require('./unshift');
 exports.filter$ = require('./filter$');
 exports.map$ = require('./map$');
 exports.concat$ = require('./concat$');
+exports.reverse = require('./reverse');
 exports.chunk = require('./chunk');
 exports.zip = require('./zip');
 
