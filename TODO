@@ -13,6 +13,28 @@ or
 - array.union
 - array.intersection
 
+- isEqual
+- cut
+- foldl
+- foldr
+- scanl
+- scanr
+- intercalate
+- intersperse
+- last
+- nubOn
+- partition
+- remove$
+- reverse
+- set$
+- shift
+- slice$
+- splice
+- split
+- tail
+- unfoldr
+- unshift
+
 - nub
 - chunk by size
 - split by cond

@@ -1,5 +1,37 @@
 const exports0 = Array.isArray;
 /**
+ * Gets first value.
+ * @param {Array} x an array
+ * @returns {*} first value
+ */
+function head(x) {
+  return x[0];
+}
+/**
+ * Gets values except first.
+ * @param {Array} x an array
+ * @returns {Array} except first
+ */
+function tail(x) {
+  return x.slice(1);
+}
+/**
+ * Gets values except last.
+ * @param {Array} x an array
+ * @returns {Array} except last
+ */
+function init(x) {
+  return x.slice(0, -1);
+}
+/**
+ * Gets last value.
+ * @param {Array} x an array
+ * @returns {*} last value
+ */
+function last(x) {
+  return x[x.length-1];
+}
+/**
  * Gets true index to array (+ve).
  * @param {Array} x an array
  * @param {number} i index (+ve, -ve)
@@ -88,18 +120,6 @@ function linspace(v, V, n=100) {
   return range(v, V+stp, stp);
 }
 /**
- * Updates values based on map function.
- * @param {Array} x an array (updated)
- * @param {function} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} x
- */
-function map$(x, fn, ths=null) {
-  for(var i=0, I=x.length; i<I; i++)
-    x[i] = fn.call(ths, x[i], i, x);
-  return x;
-}
-/**
  * Keeps the values which pass the test.
  * @param {Array} x an array (updated)
  * @param {function} fn filter function (v, i, x)
@@ -110,6 +130,18 @@ function filter$(x, fn, ths=null) {
   for(var i=0, j=0, I=x.length; i<I; i++)
     if(fn.call(ths, x[i], i, x)) x[j++] = x[i];
   x.length = j;
+  return x;
+}
+/**
+ * Updates values based on map function.
+ * @param {Array} x an array (updated)
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
+ */
+function map$(x, fn, ths=null) {
+  for(var i=0, I=x.length; i<I; i++)
+    x[i] = fn.call(ths, x[i], i, x);
   return x;
 }
 /**
@@ -417,14 +449,18 @@ function isPermutation(x, y) {
   return compare(xa, ya)===0;
 }
 exports.is = exports0;
+exports.head = head;
+exports.tail = tail;
+exports.init = init;
+exports.last = last;
 exports.get = get;
 exports.set = set;
 exports.compare = compare;
 exports.range = range;
 exports.linspace = linspace;
 
-exports.map$ = map$;
 exports.filter$ = filter$;
+exports.map$ = map$;
 exports.concat$ = concat$;
 exports.chunk = chunk;
 exports.zip = zip;

@@ -1,12 +1,16 @@
 exports.is = require('./is');
+exports.head = require('./head');
+exports.tail = require('./tail');
+exports.init = require('./init');
+exports.last = require('./last');
 exports.get = require('./get');
 exports.set = require('./set');
 exports.compare = require('./compare');
 exports.range = require('./range');
 exports.linspace = require('./linspace');
 
-exports.map$ = require('./map$');
 exports.filter$ = require('./filter$');
+exports.map$ = require('./map$');
 exports.concat$ = require('./concat$');
 exports.chunk = require('./chunk');
 exports.zip = require('./zip');
