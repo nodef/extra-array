@@ -23,7 +23,6 @@ or
 - nubOn
 - partition
 - remove$
-- splice
 - split
 - unfoldr
 - typescript
@@ -41,5 +40,4 @@ or
 - group into 2
 - group into n
 - string splice https://www.npmjs.com/package/splice-string
-- rotatel, rotater https://www.npmjs.com/package/arr-rotate
 - move https://www.npmjs.com/package/array-move https://www.npmjs.com/package/immutable-array-methods

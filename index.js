@@ -86,6 +86,21 @@ function set$(x, i, v) {
   x[index(x, i)] = v;
   return x;
 }
+/**
+ * Exchanges two values.
+ * @param {Array} x an array (updated)
+ * @param {number} i an index
+ * @param {number} j another index
+ * @returns {Array} x
+ */
+function swap$(x, i, j) {
+  var i = index(x, i);
+  var j = index(x, j);
+  var t = x[i];
+  x[i] = x[j];
+  x[j] = t;
+  return x;
+}
 function cmp(a, b) {
   return a<b? -1:(a>b? 1:0);
 }
@@ -593,6 +608,7 @@ exports.last = last;
 exports.get = get;
 exports.set = set;
 exports.set$ = set$;
+exports.swap$ = swap$;
 exports.compare = compare;
 exports.isEqual = isEqual;
 exports.range = range;
