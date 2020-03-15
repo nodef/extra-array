@@ -28,6 +28,15 @@ or
 - typescript
 - rust (wasm)
 - number.modp
+- isDisjoint(x, y)
+- frequency(x, v)
+- max(x, fcmp)
+- min(x, fcmp)
+- shuffle(x, n)
+- sortOn -> sort (unified possible?)
+- containsAll (subset) Java
+- removeAll (coll) Java
+- retainAll (coll) Java
 
 // operation match function
 // https://www.npmjs.com/package/is-array-uniq
