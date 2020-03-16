@@ -1,7 +1,7 @@
 /**
- * Splits array into values, which do / dont satisfy the filter.
+ * Splits array into values, which do/dont satisfy the test.
  * @param {Array} x an array
- * @param {function} fn filter function (v, i, x)
+ * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array<Array>} [satisfies, doesnt]
  */
