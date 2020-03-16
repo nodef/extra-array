@@ -21,7 +21,6 @@ or
 - intercalate
 - intersperse
 - nubOn
-- partition
 - remove$
 - split
 - unfoldr
@@ -30,8 +29,6 @@ or
 - number.modp
 - isDisjoint(x, y)
 - frequency(x, v)
-- max(x, fcmp)
-- min(x, fcmp)
 - shuffle(x, n)
 - sortOn -> sort (unified possible?)
 - containsAll (subset) Java

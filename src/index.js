@@ -20,7 +20,6 @@ exports.reverse = require('./reverse');
 exports.rotate = require('./rotate');
 exports.rotate$ = require('./rotate$');
 exports.repeat = require('./repeat');
-exports.partition = require('./partition');
 exports.chunk = require('./chunk');
 exports.zip = require('./zip');
 
@@ -29,12 +28,17 @@ exports.swap$ = require('./swap$');
 exports.copy = require('./copy');
 exports.copy$ = require('./copy$');
 exports.slice$ = require('./slice$');
-exports.filter$ = require('./filter$');
-exports.map$ = require('./map$');
 exports.insert = require('./insert');
 exports.insert$ = require('./insert$');
 exports.concat$ = require('./concat$');
 
+// Functional
+exports.map$ = require('./map$');
+exports.filter$ = require('./filter$');
+exports.partition = require('./partition');
+// fincIndices
+
+// Search
 exports.bsearch = require('./bsearch');
 exports.bsearchc = require('./bsearchc');
 exports.bsearchl = require('./bsearchl');

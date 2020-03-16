@@ -1,5 +1,6 @@
 const length = require('./_length');
 
+// TODO
 // this can be a derivative of swap block
 /**
  * Moves part of array within.
