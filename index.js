@@ -86,31 +86,6 @@ function set$(x, i, v) {
   x[index(x, i)] = v;
   return x;
 }
-/**
- * Exchanges two values.
- * @param {Array} x an array (updated)
- * @param {number} i an index
- * @param {number} j another index
- * @returns {Array} x
- */
-function swap$(x, i, j) {
-  var i = index(x, i);
-  var j = index(x, j);
-  var t = x[i];
-  x[i] = x[j];
-  x[j] = t;
-  return x;
-}
-/**
- * Exchanges two values.
- * @param {Array} x an array
- * @param {number} i an index
- * @param {number} j another index
- * @returns {Array}
- */
-function swap(x, i, j) {
-  return swap$(x.slice(), i, j);
-}
 function cmp(a, b) {
   return a<b? -1:(a>b? 1:0);
 }
@@ -212,6 +187,17 @@ function concat$(x, ...ys) {
 function unshift(x, ...vs) {
   return concat$(vs, x);
 }
+/**
+ * Reverses the values.
+ * @param {Array} x an array
+ * @returns {Array} reversed
+ */
+function reverse(x) {
+  return x.slice().reverse();
+}
+function modp(m, n) {
+  return (m % n + n) % n;
+}
 function region(x, i, I) {
   return [
     Math.max(index(x, i), 0),
@@ -235,21 +221,6 @@ function copy$(x, y, j=0, i=0, I=y.length) {
   return x;
 }
 /**
- * Copies part of array to another.
- * @param {Array} x target array
- * @param {Array} y source array
- * @param {number?} j write index (0)
- * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
- * @returns {Array}
- */
-function copy(x, y, j=0, i=0, I=y.length) {
-  return copy$(x.slice(), y, j, i, I);
-}
-function modp(m, n) {
-  return (m % n + n) % n;
-}
-/**
  * Rotates values in array.
  * @param {Array} x an array (updated)
  * @param {number} n rotate amount (-ve: left, +ve: right)
@@ -269,6 +240,103 @@ function rotate$(x, n) {
  */
 function rotate(x, n) {
   return rotate$(x.slice(), n);
+}
+/**
+ * Repeats an array gives times.
+ * @param {Array} x an array
+ * @param {number} n times
+ * @returns {Array}
+ */
+function repeat(x, n) {
+  for(var a=[];n>0; n--)
+    concat$(a, x);
+  return a;
+}
+/**
+ * Splits array into values, which do/dont satisfy the test.
+ * @param {Array} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} [satisfies, doesnt]
+ */
+function partition(x, fn, ths=null) {
+  var t = [], f = [], i = -1;
+  for(var v of x) {
+    if(fn.call(ths, v, ++i, x)) t.push(v);
+    else f.push(v);
+  }
+  return [t, f];
+}
+/**
+ * Splits array into chunks of given size.
+ * @param {Array} x an array
+ * @param {number?} n chunk size
+ * @returns {Array<Array>} chunks
+ */
+function chunk(x, n=1) {
+  var a = [];
+  for(var i=0, I=x.length; i<I; i+=n)
+    a.push(x.slice(i, i+n));
+  return a;
+}
+function args(...vs) {
+  return vs;
+}
+/**
+ * Combines values from n arrays, with a function.
+ * @param {Array<Array>} xs n arrays
+ * @param {function?} fn combine function (a, b, c, ...)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} combined values
+ */
+function zip(xs, fn, ths=null) {
+  fn = fn||args;
+  var a = [], A = 0;
+  for(var r=0, R=xs.length; r<R; r++)
+    A = Math.max(A, xs[r].length);
+  for(var c=0; c<A; c++) {
+    for(var r=0, w=[]; r<R; r++)
+      w[r] = xs[r][c];
+    a[c] = fn.apply(ths, w);
+  }
+  return a;
+}
+/**
+ * Exchanges two values.
+ * @param {Array} x an array (updated)
+ * @param {number} i an index
+ * @param {number} j another index
+ * @returns {Array} x
+ */
+function swap$(x, i, j) {
+  var i = index(x, i);
+  var j = index(x, j);
+  var t = x[i];
+  x[i] = x[j];
+  x[j] = t;
+  return x;
+}
+/**
+ * Exchanges two values.
+ * @param {Array} x an array
+ * @param {number} i an index
+ * @param {number} j another index
+ * @returns {Array}
+ */
+function swap(x, i, j) {
+  return swap$(x.slice(), i, j);
+}
+/**
+ * Copies part of array to another.
+ * @param {Array} x target array
+ * @param {Array} y source array
+ * @param {number?} j write index (0)
+ * @param {number?} i read start index (0)
+ * @param {number?} I read end index (x.length)
+ * @returns {Array}
+ */
+function copy(x, y, j=0, i=0, I=y.length) {
+  return copy$(x.slice(), y, j, i, I);
 }
 function length(x, i, I) {
   var [i, I] = region(x, i, I);
@@ -312,48 +380,6 @@ function map$(x, fn, ths=null) {
   return x;
 }
 /**
- * Reverses the values.
- * @param {Array} x an array
- * @returns {Array} reversed
- */
-function reverse(x) {
-  return x.slice().reverse();
-}
-/**
- * Splits array into chunks of given size.
- * @param {Array} x an array
- * @param {number?} n chunk size
- * @returns {Array<Array>} chunks
- */
-function chunk(x, n=1) {
-  var a = [];
-  for(var i=0, I=x.length; i<I; i+=n)
-    a.push(x.slice(i, i+n));
-  return a;
-}
-function args(...vs) {
-  return vs;
-}
-/**
- * Combines values from n arrays, with a function.
- * @param {Array<Array>} xs n arrays
- * @param {function?} fn combine function (a, b, c, ...)
- * @param {object?} ths this argument
- * @returns {Array<Array>} combined values
- */
-function zip(xs, fn, ths=null) {
-  fn = fn||args;
-  var a = [], A = 0;
-  for(var r=0, R=xs.length; r<R; r++)
-    A = Math.max(A, xs[r].length);
-  for(var c=0; c<A; c++) {
-    for(var r=0, w=[]; r<R; r++)
-      w[r] = xs[r][c];
-    a[c] = fn.apply(ths, w);
-  }
-  return a;
-}
-/**
  * Inserts a value to an ordered array.
  * @param {Array} x an array (updated)
  * @param {*} v value to insert
@@ -375,17 +401,6 @@ function insert$(x, v, fn) {
  */
 function insert(x, v, fn) {
   return insert$(Array.from(x), v, fn);
-}
-/**
- * Repeats an array gives times.
- * @param {Array} x an array
- * @param {number} n times
- * @returns {Array}
- */
-function repeat(x, n) {
-  for(var a=[];n>0; n--)
-    concat$(a, x);
-  return a;
 }
 /**
  * Binary searches value in sorted array.
@@ -458,6 +473,15 @@ function bsearchr(x, v, fn) {
   return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
 }
 /**
+ * Sorts based on compare function (optional).
+ * @param {Array} x an array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} sorted array
+ */
+function sort(x, fn) {
+  return x.slice().sort(fn||cmp);
+}
+/**
  * Sorts based on map function (once per value).
  * @param {Array} x an array (updated)
  * @param {function?} fn map function (v, i, x)
@@ -480,15 +504,6 @@ function sortOn$(x, fn, ths=null) {
  */
 function sortOn(x, fn, ths=null) {
   return sortOn$(x.slice(), fn, ths);
-}
-/**
- * Sorts based on compare function (optional).
- * @param {Array} x an array
- * @param {function?} fn compare function (a, b)
- * @returns {Array} sorted array
- */
-function sort(x, fn) {
-  return x.slice().sort(fn||cmp);
 }
 /**
  * Lists all possible prefixes.
@@ -619,8 +634,6 @@ exports.last = last;
 exports.get = get;
 exports.set = set;
 exports.set$ = set$;
-exports.swap$ = swap$;
-exports.swap = swap;
 exports.compare = compare;
 exports.isEqual = isEqual;
 exports.range = range;
@@ -630,30 +643,33 @@ exports.push = push;
 exports.pop = pop;
 exports.shift = shift;
 exports.unshift = unshift;
-exports.copy$ = copy$;
-exports.copy = copy;
-exports.rotate$ = rotate$;
-exports.rotate = rotate;
-exports.slice$ = slice$;
-exports.filter$ = filter$;
-exports.map$ = map$;
-exports.concat$ = concat$;
+exports.splice = splice;
 exports.reverse = reverse;
+exports.rotate = rotate;
+exports.rotate$ = rotate$;
+exports.repeat = repeat;
+exports.partition = partition;
 exports.chunk = chunk;
 exports.zip = zip;
 
-exports.splice = splice;
-exports.insert$ = insert$;
+exports.swap = swap;
+exports.swap$ = swap$;
+exports.copy = copy;
+exports.copy$ = copy$;
+exports.slice$ = slice$;
+exports.filter$ = filter$;
+exports.map$ = map$;
 exports.insert = insert;
-exports.repeat = repeat;
+exports.insert$ = insert$;
+exports.concat$ = concat$;
 
 exports.bsearch = bsearch;
 exports.bsearchc = bsearchc;
 exports.bsearchl = bsearchl;
 exports.bsearchr = bsearchr;
-exports.sortOn$ = sortOn$;
-exports.sortOn = sortOn;
 exports.sort = sort;
+exports.sortOn = sortOn;
+exports.sortOn$ = sortOn$;
 
 exports.prefixes = prefixes;
 exports.infixes = infixes;
