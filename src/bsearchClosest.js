@@ -3,7 +3,7 @@ const cmp = require('./_cmp');
 /**
  * Binary searches closest value in sorted array.
  * @param {Array} x an array (sorted)
- * @param {*} v value to find
+ * @param {*} v search value
  * @param {function?} fn compare function (a, b)
  * @returns {number} index of closest value
  */

@@ -1,7 +1,7 @@
 const concat$ = require('./concat$');
 
 /**
- * Repeats an array gives times.
+ * Repeats an array given times.
  * @param {Array} x an array
  * @param {number} n times
  * @returns {Array}
