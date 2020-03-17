@@ -9,119 +9,25 @@ or
 - object.from(keys, values, deep=false) // zipObject(Deep)
 - object.fromentries
 - array.symmetricDifference
-- array.difference
-- array.union
-- array.intersection
 
-- cut
-- foldl
-- foldr
-- scanl
-- scanr
-- intercalate
-- intersperse
-- nubOn
-- remove$
-- split
-- unfoldr
-- typescript
-- rust (wasm)
 - number.modp
-- isDisjoint(x, y)
-- frequency(x, v)
 - shuffle(x, n)
-- sortOn -> sort (unified possible?)
-- containsAll (subset) Java
-- removeAll (coll) Java
-- retainAll (coll) Java
 
 // operation match function
 // https://www.npmjs.com/package/is-array-uniq
 // https://github.com/w3nl/array-helpers
 // https://github.com/flejz/array-reducer
 
-- nub
-- chunk by size
-- split by cond
-- break into n
-- break into 2
-- group into 2
-- group into n
 - string splice https://www.npmjs.com/package/splice-string
 - move https://www.npmjs.com/package/array-move https://www.npmjs.com/package/immutable-array-methods
-
 - random: https://www.npmjs.com/package/random-item
 - https://www.npmjs.com/package/unique-random-array
 
 
 ####################################
 
-
-find functions
-
-cons
-uncons
-intersperse
-intercalate
-transpose
-foldl1
-foldr1
-insert
-delete
-sortOn
-union
-intersect
-difference
-group
-break
-span
-dropWhileEnd
-splitAt
-unfoldr
-
-remove
 xor
 xorBy
 xorWith
 zipObject
 zipObjectDeep
-
-Generate methods:
-- [ensure](https://www.npmjs.com/package/@extra-array/ensure)
-
-Search methods:
-- [indicesOf](https://www.npmjs.com/package/@extra-array/indices-of)
-- [lastIndexOf](https://www.npmjs.com/package/@extra-array/last-index-of)
-- [includes](https://www.npmjs.com/package/@extra-array/includes)
-- [includesOnly](https://www.npmjs.com/package/@extra-array/includes-only)
-- [contains](https://www.npmjs.com/package/@extra-array/contains)
-- [count](https://www.npmjs.com/package/@extra-array/count)
-- [countAll](https://www.npmjs.com/package/@extra-array/count-all)
-
-Transform methods:
-- [join](https://www.npmjs.com/package/@extra-array/join)
-- [pick](https://www.npmjs.com/package/@extra-array/pick)
-- [pickAs](https://www.npmjs.com/package/@extra-array/pick-as)
-- [unique](https://www.npmjs.com/package/@extra-array/unique)
-- [reverse](https://www.npmjs.com/package/@extra-array/reverse)
-- [sortIndex](https://www.npmjs.com/package/@extra-array/sort-index)
-- [zipObject](https://www.npmjs.com/package/@extra-array/zip-object)
-
-Functional methods:
-- [findIndex](https://www.npmjs.com/package/@extra-array/find-index)
-- [findAll](https://www.npmjs.com/package/@extra-array/find-all)
-- [findAllIndices](https://www.npmjs.com/package/@extra-array/find-all-indices)
-- [reduce](https://www.npmjs.com/package/@extra-array/reduce)
-
-Evaluate methods:
-- [any](https://www.npmjs.com/package/@extra-array/any)
-- [all](https://www.npmjs.com/package/@extra-array/all)
-- [max](https://www.npmjs.com/package/@extra-array/max)
-- [min](https://www.npmjs.com/package/@extra-array/min)
-- [sum](https://www.npmjs.com/package/@extra-array/sum)
-- [average](https://www.npmjs.com/package/@extra-array/average)
-- [hammingDistance](https://www.npmjs.com/package/@extra-array/hamming-distance)
-- [euclideanDistance](https://www.npmjs.com/package/@extra-array/euclidean-distance)
-
-takeWhile  v<10
-- lookup
