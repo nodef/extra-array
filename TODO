@@ -18,7 +18,6 @@ X flatten
 
 - string splice https://www.npmjs.com/package/splice-string
 - move https://www.npmjs.com/package/array-move https://www.npmjs.com/package/immutable-array-methods
-- random: https://www.npmjs.com/package/random-item
 - https://www.npmjs.com/package/unique-random-array
 
 
