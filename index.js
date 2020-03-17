@@ -1,35 +1,117 @@
-const exports0 = Array.isArray;
-/**
- * Gets first value.
- * @param {Array} x an array
- * @returns {*} first value
- */
-function head(x) {
-  return x[0];
+function cmp(a, b) {
+  return a<b? -1:(a>b? 1:0);
 }
 /**
- * Gets values except first.
- * @param {Array} x an array
- * @returns {Array} except first
+ * Binary searches leftmost value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v search value
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} first index of value | ~(index of closest value)
  */
-function tail(x) {
-  return x.slice(1);
+function bsearch(x, v, fn=null) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else I = m;
+  }
+  return i>=x.length || fn(x[i], v)!==0? ~i:i;
 }
 /**
- * Gets values except last.
- * @param {Array} x an array
- * @returns {Array} except last
+ * Binary searches value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v search value
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of value | ~(index of closest value)
  */
-function init(x) {
-  return x.slice(0, -1);
+function bsearchAny(x, v, fn=null) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return ~i;
 }
 /**
- * Gets last value.
- * @param {Array} x an array
- * @returns {*} last value
+ * Binary searches closest value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v search value
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of closest value
  */
-function last(x) {
-  return x[x.length-1];
+function bsearchClosest(x, v, fn=null) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<0) i = m+1;
+    else if(c>0) I = m;
+    else return m;
+  }
+  return i;
+}
+/**
+ * Binary searches rightmost value in sorted array.
+ * @param {Array} x an array (sorted)
+ * @param {*} v search value
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} last index of value | ~(index of closest value)
+ */
+function bsearchRight(x, v, fn=null) {
+  fn = fn||cmp;
+  for(var i=0, I=x.length; i<I;) {
+    var m = (i+I)>>>1;
+    var c = fn(x[m], v);
+    if(c<=0) i = m+1;
+    else I = m;
+  }
+  return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
+}
+/**
+ * Breaks array into chunks of given size.
+ * @param {Array} x an array
+ * @param {number?} n chunk size
+ * @returns {Array<Array>} chunks
+ */
+function chunk(x, n=1) {
+  var a = [];
+  for(var i=0, I=x.length; i<I; i+=n)
+    a.push(x.slice(i, i+n));
+  return a;
+}
+/**
+ * Compares two arrays.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} x<y: -1, x=y: 0, x>y: 1
+ */
+function compare(x, y, fn=null) {
+  var fn = fn||cmp;
+  var n = x.length - y.length;
+  if(n!==0) return n<0? -1:1;
+  for(var i=0, I=x.length; i<I; i++) {
+    var c = fn(x[i], y[i]);
+    if(c!==0) return c;
+  }
+  return 0;
+}
+/**
+ * Appends arrays to the end.
+ * @param {Array} x an array (updated)
+ * @param {...Iterable} ys arrays to append
+ * @returns {Array} x
+ */
+function concat$(x, ...ys) {
+  for(var y of ys) {
+    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
+    else for(var v of y) x.push(v);
+  }
+  return x;
 }
 /**
  * Gets true index to array (+ve).
@@ -39,6 +121,244 @@ function last(x) {
  */
 function index(x, i) {
   return i<0? x.length+i:i;
+}
+function region(x, i, I) {
+  return [
+    Math.max(index(x, i), 0),
+    Math.min(index(x, I), x.length)
+  ];
+}
+/**
+ * Copies part of array to another.
+ * @param {Array} x target array (updated)
+ * @param {Array} y source array
+ * @param {number?} j write index (0)
+ * @param {number?} i read start index (0)
+ * @param {number?} I read end index (x.length)
+ * @returns {Array} x
+ */
+function copy$(x, y, j=0, i=0, I=y.length) {
+  var j = index(x, j);
+  var [i, I] = region(y, i, I);
+  for(; i<I; i++, j++)
+    x[j] = y[i];
+  return x;
+}
+/**
+ * Copies part of array to another.
+ * @param {Array} x target array
+ * @param {Array} y source array
+ * @param {number?} j write index (0)
+ * @param {number?} i read start index (0)
+ * @param {number?} I read end index (x.length)
+ * @returns {Array}
+ */
+function copy(x, y, j=0, i=0, I=y.length) {
+  return copy$(x.slice(), y, j, i, I);
+}
+/**
+ * Copies part of array within.
+ * @param {Array} x an array
+ * @param {number} j write index
+ * @param {number?} i read start index (0)
+ * @param {number?} I read end index (x.length)
+ * @returns {Array}
+ */
+function copyWithin(x, j, i=0, I=x.length) {
+  var a = x.slice(0, j)
+  var num = Math.min(I-i, x.length-i);
+  for(var J=Math.min(j+num, x.length); j<J; j++, i++)
+    a[j] = x[i];
+  for(var J=x.length; j<J; j++)
+    a[j] = x[j];
+  return a;
+}
+/**
+ * Counts occurrences of a value.
+ * @param {Array} x an array
+ * @param {*} v value
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} occurrences
+ */
+function count(x, v, fn=null) {
+  var fn = fn||cmp, n = 0;
+  for(var u of x)
+    if(fn(u, v)===0) n++;
+  return n;
+}
+function id(v) {
+  return v;
+}
+/**
+ * Counts occurrences of values.
+ * @param {Array} x an array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Map<any, number>} occurrences
+ */
+function countAllOn(x, fn=null, ths=null) {
+  var fn = fn||id;
+  var m = new Map(), i = -1;
+  for(var v of x) {
+    var v1 = fn.call(ths, v, i, x);
+    m.set((m.get(v1)||0) + 1);
+  }
+  return m;
+}
+/**
+ * Counts occurrences of a value.
+ * @param {Array} x an array
+ * @param {*} v value
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {number} occurrences
+ */
+function countOn(x, v, fn=null, ths=null) {
+  var fn = fn||id, i = -1, n = 0;
+  var v1 = fn.call(ths, v, 0, null);
+  for(var u of x) {
+    var u1 = fn.call(ths, u, ++i, x);
+    if(u1===v1) n++;
+  }
+  return n;
+}
+/**
+ * Breaks array at given indices.
+ * @param {Array} x an array
+ * @param {Array<number>} is split indices (sorted)
+ * @returns {Array<Array>} [...pieces]
+ */
+function cut(x, is) {
+  var a = [], i = 0;
+  for(var j of is) {
+    j = j<0? 0:j;
+    a.push(x.slice(i, j));
+    i = j;
+  }
+  a.push(x.slice(j));
+  return a;
+}
+/**
+ * Breaks array after given indices.
+ * @param {Array} x an array
+ * @param {Array<number>} is split indices (sorted)
+ * @returns {Array<Array>} [...pieces]
+ */
+function cutRight(x, is) {
+  var a = [], i = 0;
+  for(var j of is) {
+    j = j<0? x.length:j;
+    a.push(x.slice(i, j+1));
+    i = j+1;
+  }
+  a.push(x.slice(j+1));
+  return a;
+}
+/**
+ * Gives values of an array not present in another.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array}
+ */
+function difference(x, y, fn=null) {
+  var fn = fn||cmp, a = [];
+  x: for(var u of x) {
+    for(var v of y)
+      if(fn(u, v)===0) continue x;
+    a.push(u);
+  }
+  return a;
+}
+function map(x, fn=null, ths=null) {
+  if(!fn) return new Set(x);
+  var s = new Set(), i = -1;
+  for(var v of x)
+    s.add(fn.call(ths, v, ++i, x));
+  return s;
+}
+/**
+ * Gives values of an array not present in another.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function differenceOn(x, y, fn=null, ths=null) {
+  var s = map(y, fn, ths);
+  var fn = fn||id, i = -1, a = [];
+  for(var u of x) {
+    var u1 = fn.call(ths, u, ++i, x);
+    if(!s.has(u1)) a.push(u);
+  }
+  return a;
+}
+/**
+ * Fills with given value.
+ * @param {Array} x an array
+ * @param {*} v value
+ * @param {number?} i start index (0)
+ * @param {number?} I end index (x.length-1)
+ * @returns {Array} filled
+ */
+function fill(x, v, i=0, I=x.length) {
+  return x.slice().fill(v, i, I);
+}
+/**
+ * Keeps the values which pass the test.
+ * @param {Array} x an array (updated)
+ * @param {function} fn filter function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
+ */
+function filter$(x, fn, ths=null) {
+  for(var i=0, j=0, I=x.length; i<I; i++)
+    if(fn.call(ths, x[i], i, x)) x[j++] = x[i];
+  x.length = j;
+  return x;
+}
+/**
+ * Finds indices of values passing the test.
+ * @param {Array} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array<number>} [...indices]
+ */
+function findIndices(x, fn, ths=null) {
+  var a = [], i = -1;
+  for(var v of x)
+    if(fn.call(ths, v, ++i, x)) a.push(i);
+  return a;
+}
+/**
+ * Finds index of rightmost value passing the test.
+ * @param {Array} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {number} index of value, -1 if not found
+ */
+function findRight(x, fn, ths=null) {
+  for(var i=x.length-1; i>=0; i--)
+    if(fn.call(ths, x[i], i, x)) return i;
+  return -1;
+}
+function flattenTo(a, x, dep) {
+  for(var v of x) {
+    if(dep!==0 && Array.isArray(v)) flattenTo(a, v, dep-1);
+    else a.push(v);
+  }
+  return a;
+}
+
+/**
+ * Flattens nested array to given depth.
+ * @param {Array} x a nested array
+ * @param {number?} dep maximum depth (-1)
+ * @returns {Array} flattened
+ */
+function flatten(x, dep=-1) {
+  return flattenTo([], x, dep);
 }
 /**
  * Gets value at index (+ve, -ve).
@@ -50,61 +370,146 @@ function get(x, i) {
   return x[index(x, i)];
 }
 /**
- * Removes or replaces existing values.
+ * Gets value at indices (+ve, -ve).
  * @param {Array} x an array
- * @param {number} i remove index
- * @param {number?} n no. of values to remove
- * @param {...any} vs values to insert
- * @returns {Array} [0->i, vs, i+n->I]
+ * @param {number} is indices (-ve: from right)
+ * @returns {*} [...values]
  */
-function splice(x, i, n=x.length-i, ...vs) {
-  var a = x.slice(0, i);
-  for(var v of vs)
-    a.push(v);
-  for(var i=i+n, I=x.length; i<I; i++)
-    a.push(x[i]);
+function getAll(x, is) {
+  var a = [];
+  for(var i of is)
+    a.push(get(x, i));
   return a;
 }
 /**
- * Sets value at index (+ve, -ve).
+ * Keeps similar values together and in order.
  * @param {Array} x an array
- * @param {number} i index (-ve: from right)
- * @param {*} v value
- * @returns {Array} set array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array<Array>}
  */
-function set(x, i, v) {
-  return splice(x, index(x, i), 1, v);
+function group(x, fn=null) {
+  var fn = fn||cmp;
+  var u = x[0], a = [], b = [];
+  for(var v of x) {
+    if(fn(u, v)===0) b.push(v);
+    else { a.push(b); b = [v]; }
+    u = v;
+  }
+  a.push(b);
+  return a;
 }
 /**
- * Sets value at index (+ve, -ve).
- * @param {Array} x an array (updated)
- * @param {number} i index (-ve: from right)
- * @param {*} v value
- * @returns {Array} x
+ * Keeps similar values together and in order.
+ * @param {Array} x an array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>}
  */
-function set$(x, i, v) {
-  x[index(x, i)] = v;
-  return x;
-}
-function cmp(a, b) {
-  return a<b? -1:(a>b? 1:0);
+function groupOn(x, fn=null) {
+  var fn = fn||id;
+  var a = [], b = [], i = -1;
+  var u1 = fn.call(ths, x[0], 0, x);
+  for(var v of x) {
+    var v1 = fn.call(ths, v, ++i, x);
+    if(u1===v1) b.push(v);
+    else { a.push(b); b = [v]; }
+    u1 = v1;
+  }
+  a.push(b);
+  return a;
 }
 /**
- * Compares two arrays.
+ * Gets first value.
+ * @param {Array} x an array
+ * @returns {*} first value
+ */
+function head(x) {
+  return x[0];
+}
+/**
+ * Lists all possible infixes.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} ...infixes
+ */
+function* infixes(x) {
+  yield [];
+  for(var i=0, I=x.length; i<I; i++) {
+    for(var j=i+1; j<=I; j++)
+      yield x.slice(i, j);
+  }
+}
+/**
+ * Gets values except last.
+ * @param {Array} x an array
+ * @returns {Array} except last
+ */
+function init(x) {
+  return x.slice(0, -1);
+}
+/**
+ * Gives values of an array present in another.
  * @param {Array} x an array
  * @param {Array} y another array
  * @param {function?} fn compare function (a, b)
- * @returns {number} x<y: -1, x=y: 0, x>y: 1
+ * @returns {Array}
  */
-function compare(x, y, fn) {
-  fn = fn||cmp;
-  var n = x.length - y.length;
-  if(n!==0) return n<0? -1:1;
-  for(var i=0, I=x.length; i<I; i++) {
-    var c = fn(x[i], y[i]);
-    if(c!==0) return c;
+function intersection(x, y, fn=null) {
+  var fn = fn||cmp, a = [];
+  x: for(var u of x) {
+    for(var v of y)
+      if(fn(u, v)===0) { a.push(u); continue x; }
   }
-  return 0;
+  return a;
+}
+/**
+ * Gives values of an array present in another.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function intersectionOn(x, y, fn=null, ths=null) {
+  var s = map(y, fn, ths);
+  var fn = fn||id, i = -1, a = [];
+  for(var u of x) {
+    var u1 = fn.call(ths, u, ++i, x);
+    if(s.has(u1)) a.push(u);
+  }
+  return a;
+}
+const exports36 = Array.isArray;
+/**
+ * Checks if arrays have no value in common.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if disjoint
+ */
+function isDisjoint(x, y, fn=null) {
+  var fn = fn||cmp;
+  for(var v of y) {
+    for(var u of x)
+      if(fn(u, v)===0) return false;
+  }
+  return true;
+}
+/**
+ * Checks if arrays have no value in common.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean} true if disjoint
+ */
+function isDisjointOn(x, y, fn=null, ths=null) {
+  var s = map(x, fn, ths);
+  var fn = fn||id, i = -1;
+  for(var v of y) {
+    var v1 = fn.call(ths, v, ++i, y);
+    if(s.has(v1)) return false;
+  }
+  return true;
 }
 /**
  * Checks if two arrays are equal.
@@ -113,8 +518,181 @@ function compare(x, y, fn) {
  * @param {function?} fn compare function (a, b)
  * @returns {boolean} true if equal
  */
-function isEqual(x, y, fn) {
+function isEqual(x, y, fn=null) {
   return compare(x, y, fn)===0;
+}
+/**
+ * Checks if array contains an infix.
+ * @param {Array} x an array
+ * @param {Array} y infix?
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if infix
+ */
+function isInfix(x, y, fn=null) {
+  if(y.length===0) return true;
+  var fn = fn||cmp;
+  var Y = y.length, J = 0;
+  var m = new Array(Y).fill(false);
+  for(var u of x) {
+    for(var j=J; j>0; j--)
+      m[j] = m[j-1] && fn(u, y[j])===0;
+    m[0] = fn(u, y[0])===0;
+    J = Math.min(J+1, Y-1);
+    if(m[Y-1]) return true;
+  }
+  return false;
+}
+/**
+ * Checks if array contains an infix.
+ * @param {Array} x an array
+ * @param {Array} y infix?
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean} true if infix
+ */
+function isInfixOn(x, y, fn=null, ths=null) {
+  if(y.length===0) return true;
+  var fn = fn||id;
+  var Y = y.length, i = -1, J = 0;
+  var y1 = y.map(fn, ths);
+  var m = new Array(Y).fill(false);
+  for(var u of x) {
+    var u1 = fn.call(ths, u, ++i, x);
+    for(var j=J; j>0; j--)
+      m[j] = m[j-1] && u1===y1[j];
+    m[0] = u1===y1[0];
+    J = Math.min(J+1, Y-1);
+    if(m[Y-1]) return true;
+  }
+  return false;
+}
+/**
+ * Checks if array has a permutation.
+ * @param {Array} x an array
+ * @param {Array} y permutation?
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if permutation
+ */
+function isPermutation(x, y, fn=null) {
+  var fn = fn||cmp;
+  var x1 = x.slice().sort(fn);
+  var y1 = y.slice().sort(fn);
+  return compare(x1, y1, fn)===0;
+}
+/**
+ * Checks if array has a permutation.
+ * @param {Array} x an array
+ * @param {Array} y permutation?
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean} true if permutation
+ */
+function isPermutationOn(x, y, fn=null, ths=null) {
+  var fn = fn||id;
+  var x1 = x.map(fn, ths).sort();
+  var y1 = y.map(fn, ths).sort();
+  return compare(x1, y1)===0;
+}
+/**
+ * Checks if array starts with a prefix.
+ * @param {Array} x an array
+ * @param {Array} y prefix?
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if prefix
+ */
+function isPrefix(x, y, fn=null) {
+  var fn = fn||cmp, i = -1;
+  for(var v of y)
+    if(fn(x[++i], v)===0) return false;
+  return true;
+}
+/**
+ * Checks if array starts with a prefix.
+ * @param {Array} x an array
+ * @param {Array} y prefix?
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean} true if prefix
+ */
+function isPrefixOn(x, y, fn=null, ths=null) {
+  var fn = fn||id, i = -1;
+  for(var v of y) {
+    var u1 = fn.call(ths, x[++i], i, x);
+    var v1 = fn.call(ths, v, i, y);
+    if(u1!==v1) return false;
+  }
+  return true;
+}
+/**
+ * Checks if array has a subsequence.
+ * @param {Array} x an array
+ * @param {Array} y subsequence?
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if subsequence
+ */
+function isSubsequence(x, y, fn=null) {
+  if(y.length===0) return true;
+  var fn = fn||cmp;
+  var j = 0, J = y.length;
+  for(var u of x)
+    if(fn(u, y[j])===0 && (++j)===J) return true;
+  return false;
+}
+/**
+ * Checks if array has a subsequence.
+ * @param {Array} x an array
+ * @param {Array} y subsequence?
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean} true if subsequence
+ */
+function isSubsequenceOn(x, y, fn=null, ths=null) {
+  var fn = fn||id, i = -1;
+  var j = 0, J = y.length;
+  var y1 = y.map(fn, ths);
+  for(var u of x) {
+    var u1 = fn.call(ths, u, ++i, x);
+    if(u===y1[j] && (++j)===J) return true;
+  }
+  return false;
+}
+/**
+ * Checks if array ends with a suffix.
+ * @param {Array} x an array
+ * @param {Array} y suffix?
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if suffix
+ */
+function isSuffix(x, y, fn=null) {
+  var fn = fn||cmp, i = x.length-y.length-1;
+  for(var v of y)
+    if(fn(x[++i], v)!==0) return false;
+  return true;
+}
+/**
+ * Checks if array ends with a suffix.
+ * @param {Array} x an array
+ * @param {Array} y suffix?
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean} true if suffix
+ */
+function isSuffixOn(x, y, fn=null, ths=null) {
+  var fn = fn||id, i = x.length-y.length-1, j = -1;
+  for(var v of y) {
+    var u1 = fn.call(ths, x[++i], i, x);
+    var v1 = fn.call(ths, v, ++j, y);
+    if(u1!==v1) return false;
+  }
+  return true;
+}
+/**
+ * Gets last value.
+ * @param {Array} x an array
+ * @returns {*} last value
+ */
+function last(x) {
+  return x[x.length-1];
 }
 /**
  * Returns evenly spaced values within given interval.
@@ -141,13 +719,79 @@ function linspace(v, V, n=100) {
   return range(v, V+stp, stp);
 }
 /**
- * Adds values to the end. 
- * @param {Array} x an array
- * @param {...any} vs values to add
- * @returns {Array} pushed
+ * Updates values based on map function.
+ * @param {Array} x an array (updated)
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
  */
-function push(x, ...vs) {
-  return x.concat(vs);
+function map$(x, fn, ths=null) {
+  for(var i=0, I=x.length; i<I; i++)
+    x[i] = fn.call(ths, x[i], i, x);
+  return x;
+}
+/**
+ * Breaks array into values, by test.
+ * @param {Array} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} [[...satisfies], [...doesnt]]
+ */
+function partition(x, fn, ths=null) {
+  var t = [], f = [], i = -1;
+  for(var v of x) {
+    if(fn.call(ths, v, ++i, x)) t.push(v);
+    else f.push(v);
+  }
+  return [t, f];
+}
+/**
+ * Breaks array into values, by map.
+ * @param {Array} x an array
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Map<any, Array>} {key => [...values]}
+ */
+function partitionOn(x, fn=null, ths=null) {
+  var fn = fn||id;
+  var m = new Map(), i = -1;
+  for(var v of x) {
+    var v1 = fn.call(ths, v, ++i, x);
+    if(!m.has(v1)) m.set(v1, []);
+    m.get(v1).push(v);
+  }
+  return m;
+}
+/**
+ * Removes or replaces existing values.
+ * @param {Array} x an array
+ * @param {number} i remove index
+ * @param {number?} n no. of values to remove
+ * @param {...any} vs values to insert
+ * @returns {Array} [0->i, vs, i+n->I]
+ */
+function splice(x, i, n=x.length-i, ...vs) {
+  var a = x.slice(0, i);
+  for(var v of vs)
+    a.push(v);
+  for(var i=i+n, I=x.length; i<I; i++)
+    a.push(x[i]);
+  return a;
+}
+/**
+ * Lists all possible arrangements.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} ...permutations
+ */
+function* permutations(x) {
+  if(x.length===0) { yield []; return; }
+  for(var i=x.length-1; i>=0; i--) {
+    var y = splice(x, i, 1);
+    for(var p of permutations(y)) {
+      p.push(x[i]);
+      yield p;
+    }
+  }
 }
 /**
  * Removes last value.
@@ -158,34 +802,33 @@ function pop(x) {
   return [x[x.length-1], x.slice(0, -1)];
 }
 /**
- * Removes first value.
+ * Lists all possible prefixes.
  * @param {Array} x an array
- * @returns {Array} [value, array]
+ * @returns {Iterable<Array>} ...prefixes
  */
-function shift(x) {
-  return [x[0], x.slice(1)];
+function* prefixes(x) {
+  for(var i=0, I=x.length; i<=I; i++)
+    yield x.slice(0, i);
 }
 /**
- * Appends arrays to the end.
- * @param {Array} x an array (updated)
- * @param {...Iterable} ys arrays to append
- * @returns {Array} x
- */
-function concat$(x, ...ys) {
-  for(var y of ys) {
-    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
-    else for(var v of y) x.push(v);
-  }
-  return x;
-}
-/**
- * Adds values to the start.
+ * Adds values to the end. 
  * @param {Array} x an array
  * @param {...any} vs values to add
- * @returns {Array} unshifted
+ * @returns {Array} pushed
  */
-function unshift(x, ...vs) {
-  return concat$(vs, x);
+function push(x, ...vs) {
+  return x.concat(vs);
+}
+/**
+ * Repeats an array given times.
+ * @param {Array} x an array
+ * @param {number} n times
+ * @returns {Array}
+ */
+function repeat(x, n) {
+  for(var a=[];n>0; n--)
+    concat$(a, x);
+  return a;
 }
 /**
  * Reverses the values.
@@ -197,28 +840,6 @@ function reverse(x) {
 }
 function modp(m, n) {
   return (m % n + n) % n;
-}
-function region(x, i, I) {
-  return [
-    Math.max(index(x, i), 0),
-    Math.min(index(x, I), x.length)
-  ];
-}
-/**
- * Copies part of array to another.
- * @param {Array} x target array (updated)
- * @param {Array} y source array
- * @param {number?} j write index (0)
- * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
- * @returns {Array} x
- */
-function copy$(x, y, j=0, i=0, I=y.length) {
-  var j = index(x, j);
-  var [i, I] = region(y, i, I);
-  for(; i<I; i++, j++)
-    x[j] = y[i];
-  return x;
 }
 /**
  * Rotates values in array.
@@ -242,64 +863,162 @@ function rotate(x, n) {
   return rotate$(x.slice(), n);
 }
 /**
- * Repeats an array gives times.
+ * Searches a value from left.
  * @param {Array} x an array
- * @param {number} n times
+ * @param {*} v search value
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of value, -1 if not found
+ */
+function search(x, v, fn=null) {
+  var fn = fn||cmp;
+  for(var i=0, I=x.length; i<I; i++)
+    if(fn(x[i], v)===0) return i;
+  return -1;
+}
+/**
+ * Searches a value throughout.
+ * @param {Array} x an array
+ * @param {*} v search value
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array<number>} indices of value
+ */
+function searchAll(x, v, fn=null) {
+  var fn = fn||cmp, a = [];
+  for(var i=0, I=x.length; i<I; i++)
+    if(fn(x[i], v)===0) a.push(i);
+  return a;
+}
+/**
+ * Searches a value from right.
+ * @param {Array} x an array
+ * @param {*} v search value
+ * @param {function?} fn compare function (a, b)
+ * @returns {number} index of value, -1 if not found
+ */
+function searchRight(x, v, fn=null) {
+  var fn = fn||cmp;
+  for(var i=x.length-1; i>=0; i--)
+    if(fn(x[i], v)===0) return i;
+  return -1;
+}
+/**
+ * Sets value at index (+ve, -ve).
+ * @param {Array} x an array (updated)
+ * @param {number} i index (-ve: from right)
+ * @param {*} v value
+ * @returns {Array} x
+ */
+function set$(x, i, v) {
+  x[index(x, i)] = v;
+  return x;
+}
+/**
+ * Sets value at index (+ve, -ve).
+ * @param {Array} x an array
+ * @param {number} i index (-ve: from right)
+ * @param {*} v value
+ * @returns {Array} set array
+ */
+function set(x, i, v) {
+  return splice(x, index(x, i), 1, v);
+}
+/**
+ * Removes first value.
+ * @param {Array} x an array
+ * @returns {Array} [value, array]
+ */
+function shift(x) {
+  return [x[0], x.slice(1)];
+}
+function length(x, i, I) {
+  var [i, I] = region(x, i, I);
+  return I-i;
+}
+/**
+ * Keeps only the selected region.
+ * @param {Array} x an array (updated)
+ * @param {number} i start index (0)
+ * @param {number} I end index (x.length)
+ * @returns {Array} x
+ */
+function slice$(x, i=0, I=x.length) {
+  x.copyWithin(0, i, I);
+  x.length = length(x, i, I);
+  return x;
+}
+/**
+ * Arranges values in an order.
+ * @param {Array} x an array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} sorted array
+ */
+function sort(x, fn=null) {
+  var fn = fn||cmp;
+  return x.slice().sort(fn);
+}
+/**
+ * Arranges values in an order.
+ * @param {Array} x an array (updated)
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
+ */
+function sortOn$(x, fn=null, ths=null) {
+  if(!fn) return x.sort(cmp);
+  var m = new Map(), i = -1;
+  for(var v of x)
+    m.set(v, fn.call(ths, v, ++i, x));
+  return x.sort((a, b) => cmp(m.get(a), m.get(b)));
+}
+/**
+ * Arranges values in an order.
+ * @param {Array} x an array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
  * @returns {Array}
  */
-function repeat(x, n) {
-  for(var a=[];n>0; n--)
-    concat$(a, x);
-  return a;
+function sortOn(x, fn=null, ths=null) {
+  return sortOn$(x.slice(), fn, ths);
 }
 /**
- * Splits array into values, which do/dont satisfy the test.
+ * Breaks array considering filter as separator.
  * @param {Array} x an array
- * @param {function} fn test function (v, i, x)
+ * @param {function} fn filter function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array<Array>} [satisfies, doesnt]
+ * @returns {Array<Array>} [...pieces]
  */
-function partition(x, fn, ths=null) {
-  var t = [], f = [], i = -1;
+function split(x, fn, ths=null) {
+  var a = [], b = [], i = -1;
   for(var v of x) {
-    if(fn.call(ths, v, ++i, x)) t.push(v);
-    else f.push(v);
+    if(!fn.call(ths, v, ++i, x)) b.push(v);
+    else if(b.length) { a.push(b); b = []; }
   }
-  return [t, f];
+  if(b.length) a.push(b);
+  return a;
 }
 /**
- * Splits array into chunks of given size.
+ * Lists all possible partial sequences.
  * @param {Array} x an array
- * @param {number?} n chunk size
- * @returns {Array<Array>} chunks
+ * @returns {Iterable<Array>} ...subsequences
  */
-function chunk(x, n=1) {
-  var a = [];
-  for(var i=0, I=x.length; i<I; i+=n)
-    a.push(x.slice(i, i+n));
-  return a;
-}
-function args(...vs) {
-  return vs;
+function* subsequences(x) {
+  if(x.length===0) { yield []; return; }
+  var y = x.slice(0, -1);
+  for(var s of subsequences(y))
+    yield s;
+  for(var s of subsequences(y)) {
+    s.push(x[x.length-1]);
+    yield s;
+  }
 }
 /**
- * Combines values from n arrays, with a function.
- * @param {Array<Array>} xs n arrays
- * @param {function?} fn combine function (a, b, c, ...)
- * @param {object?} ths this argument
- * @returns {Array<Array>} combined values
+ * Lists all possible suffixes.
+ * @param {Array} x an array
+ * @returns {Iterable<Array>} ...suffixes
  */
-function zip(xs, fn, ths=null) {
-  fn = fn||args;
-  var a = [], A = 0;
-  for(var r=0, R=xs.length; r<R; r++)
-    A = Math.max(A, xs[r].length);
-  for(var c=0; c<A; c++) {
-    for(var r=0, w=[]; r<R; r++)
-      w[r] = xs[r][c];
-    a[c] = fn.apply(ths, w);
-  }
-  return a;
+function* suffixes(x) {
+  for(var i=0, I=x.length; i<=I; i++)
+    yield x.slice(i);
 }
 /**
  * Exchanges two values.
@@ -327,357 +1046,199 @@ function swap(x, i, j) {
   return swap$(x.slice(), i, j);
 }
 /**
- * Copies part of array to another.
- * @param {Array} x target array
- * @param {Array} y source array
- * @param {number?} j write index (0)
- * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
- * @returns {Array}
- */
-function copy(x, y, j=0, i=0, I=y.length) {
-  return copy$(x.slice(), y, j, i, I);
-}
-function length(x, i, I) {
-  var [i, I] = region(x, i, I);
-  return I-i;
-}
-/**
- * Keeps only the selected region.
- * @param {Array} x an array (updated)
- * @param {number} i start index (0)
- * @param {number} I end index (x.length)
- * @returns {Array} x
- */
-function slice$(x, i=0, I=x.length) {
-  x.copyWithin(0, i, I);
-  x.length = length(x, i, I);
-  return x;
-}
-/**
- * Keeps the values which pass the test.
- * @param {Array} x an array (updated)
- * @param {function} fn filter function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} x
- */
-function filter$(x, fn, ths=null) {
-  for(var i=0, j=0, I=x.length; i<I; i++)
-    if(fn.call(ths, x[i], i, x)) x[j++] = x[i];
-  x.length = j;
-  return x;
-}
-/**
- * Updates values based on map function.
- * @param {Array} x an array (updated)
- * @param {function} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} x
- */
-function map$(x, fn, ths=null) {
-  for(var i=0, I=x.length; i<I; i++)
-    x[i] = fn.call(ths, x[i], i, x);
-  return x;
-}
-/**
- * Inserts a value to an ordered array.
- * @param {Array} x an array (updated)
- * @param {*} v value to insert
- * @param {function?} fn compare function (a, b)
- * @returns {Array} x
- */
-function insert$(x, v, fn) {
-  fn = fn||cmp;
-  var i = x.findIndex(f => fn(f, v)>0);
-  x.splice(i>=0? i:x.length, 0, v);
-  return x;
-}
-/**
- * Inserts a value to an ordered array.
- * @param {Iterable} x an array
- * @param {*} v value to insert
- * @param {function?} fn compare function (a, b)
- * @returns {Array}
- */
-function insert(x, v, fn) {
-  return insert$(Array.from(x), v, fn);
-}
-/**
- * Binary searches value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} index of value | ~(index of closest value)
- */
-function bsearch(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else if(c>0) I = m;
-    else return m;
-  }
-  return ~i;
-}
-/**
- * Binary searches closest value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} index of closest value
- */
-function bsearchc(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else if(c>0) I = m;
-    else return m;
-  }
-  return i;
-}
-/**
- * Binary searches leftmost value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} first index of value | ~(index of closest value)
- */
-function bsearchl(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else I = m;
-  }
-  return i>=x.length || fn(x[i], v)!==0? ~i:i;
-}
-/**
- * Binary searches rightmost value in sorted array.
- * @param {Array} x an array (sorted)
- * @param {*} v value to find
- * @param {function?} fn compare function (a, b)
- * @returns {number} last index of value | ~(index of closest value)
- */
-function bsearchr(x, v, fn) {
-  fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
-    var c = fn(x[m], v);
-    if(c<=0) i = m+1;
-    else I = m;
-  }
-  return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
-}
-/**
- * Sorts based on compare function (optional).
+ * Gets values except first.
  * @param {Array} x an array
- * @param {function?} fn compare function (a, b)
- * @returns {Array} sorted array
+ * @returns {Array} except first
  */
-function sort(x, fn) {
-  return x.slice().sort(fn||cmp);
+function tail(x) {
+  return x.slice(1);
 }
 /**
- * Sorts based on map function (once per value).
+ * Gives union of first array with another.
  * @param {Array} x an array (updated)
+ * @param {Array} y another array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} x
+ */
+function union$(x, y, fn=null) {
+  var fn = fn||cmp;
+  y: for(var v of y) {
+    for(var u of x)
+      if(fn(u, v)===0) continue y;
+    x.push(v);
+  }
+  return x;
+}
+/**
+ * Gives union of first array with another.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array}
+ */
+function union(x, y, fn=null) {
+  return union$(x.slice(), y, fn);
+}
+/**
+ * Gives union of first array with another.
+ * @param {Array} x an array (updated)
+ * @param {Array} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array} x
  */
-function sortOn$(x, fn, ths=null) {
-  if(!fn) return x.sort((a, b) => cmp(a, b)); 
-  var m = new Map(), i = -1;
-  for(var v of x)
-    m.set(v, fn.call(ths, v, ++i, x));
-  return x.sort((a, b) => cmp(m.get(a), m.get(b)));
+function unionOn$(x, y, fn=null, ths=null) {
+  var s = map(x, fn, ths);
+  var fn = fn||id, i = -1;
+  for(var v of y) {
+    var v1 = fn.call(ths, v, ++i, y);
+    if(!s.has(v1)) { x.push(v); s.add(v1); }
+  }
+  return x;
 }
 /**
- * Sorts based on map function (once per value).
+ * Gives union of first array with another.
+ * @param {Array} x an array
+ * @param {Array} y another array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function unionOn(x, y, fn, ths=null) {
+  return unionOn$(x.slice(), y, fn, ths);
+}
+/**
+ * Removes duplicate elements.
+ * @param {Array} x an array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} unique values
+ */
+function unique(x, fn=null) {
+  return union$([], x, fn);
+}
+/**
+ * Removes duplicate elements.
  * @param {Array} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array} sorted array
+ * @returns {Array} unique values
  */
-function sortOn(x, fn, ths=null) {
-  return sortOn$(x.slice(), fn, ths);
+function uniqueOn(x, fn=null, ths=null) {
+  if(!fn) return Array.from(new Set(x));
+  return unionOn$([], x, fn, ths);
 }
 /**
- * Lists all possible prefixes.
+ * Adds values to the start.
  * @param {Array} x an array
- * @returns {Iterable<Array>} ...prefixes
+ * @param {...any} vs values to add
+ * @returns {Array} unshifted
  */
-function* prefixes(x) {
-  for(var i=0, I=x.length; i<=I; i++)
-    yield x.slice(0, i);
+function unshift(x, ...vs) {
+  return concat$(vs, x);
+}
+function args(...vs) {
+  return vs;
 }
 /**
- * Lists all possible infixes.
- * @param {Array} x an array
- * @returns {Iterable<Array>} ...infixes
+ * Combines values from n arrays, with a function.
+ * @param {Array<Array>} xs n arrays
+ * @param {function?} fn combine function (a, b, c, ...)
+ * @param {object?} ths this argument
+ * @returns {Array<Array>} combined values
  */
-function* infixes(x) {
-  yield [];
-  for(var i=0, I=x.length; i<I; i++) {
-    for(var j=i+1; j<=I; j++)
-      yield x.slice(i, j);
+function zip(xs, fn, ths=null) {
+  fn = fn||args;
+  var a = [], A = 0;
+  for(var r=0, R=xs.length; r<R; r++)
+    A = Math.max(A, xs[r].length);
+  for(var c=0; c<A; c++) {
+    for(var r=0, w=[]; r<R; r++)
+      w[r] = xs[r][c];
+    a[c] = fn.apply(ths, w);
   }
+  return a;
 }
-/**
- * Lists all possible suffixes.
- * @param {Array} x an array
- * @returns {Iterable<Array>} ...suffixes
- */
-function* suffixes(x) {
-  for(var i=0, I=x.length; i<=I; i++)
-    yield x.slice(i);
-}
-/**
- * Lists all possible partial sequences.
- * @param {Array} x an array
- * @returns {Iterable<Array>} ...subsequences
- */
-function* subsequences(x) {
-  if(x.length===0) { yield []; return; }
-  var y = x.slice(0, -1);
-  for(var s of subsequences(y))
-    yield s;
-  for(var s of subsequences(y)) {
-    s.push(x[x.length-1]);
-    yield s;
-  }
-}
-/**
- * Lists all possible arrangements.
- * @param {Array} x an array
- * @returns {Iterable<Array>} ...permutations
- */
-function* permutations(x) {
-  if(x.length===0) { yield []; return; }
-  for(var i=x.length-1; i>=0; i--) {
-    var y = splice(x, i, 1);
-    for(var p of permutations(y)) {
-      p.push(x[i]);
-      yield p;
-    }
-  }
-}
-/**
- * Checks if array starts with a prefix.
- * @param {Array} x an array
- * @param {Array} y prefix?
- * @returns {boolean} true if prefix
- */
-function isPrefix(x, y) {
-  var i = 0;
-  for(var v of y)
-    if(x[i++]!==v) return false;
-  return true;
-}
-/**
- * Checks if array contains an infix.
- * @param {Array} x an array
- * @param {Array} y infix?
- * @returns {boolean} true if infix
- */
-function isInfix(x, y) {
-  var i = 0, I = y.length;
-  for(var v of x) {
-    if(v===y[i]) i++;
-    else if(i<I) i = 0;
-  }
-  return i===I;
-}
-/**
- * Checks if array ends with a suffix.
- * @param {Array} x an array
- * @param {Array} y suffix?
- * @returns {boolean} true if suffix
- */
-function isSuffix(x, y) {
-  var i = x.length - y.length;
-  for(var v of y)
-    if(x[i++]!==v) return false;
-  return true;
-}
-/**
- * Checks if array has a subsequence.
- * @param {Array} x an array
- * @param {Array} y subsequence?
- * @returns {boolean} true if subsequence
- */
-function isSubsequence(x, y) {
-  var i = 0, I = y.length;
-  for(var v of x)
-    if(v===y[i]) i++;
-  return i===I;
-}
-/**
- * Checks if array has a permutation.
- * @param {Array} x an array
- * @param {Array} y permutation?
- * @returns {boolean} true if permutation
- */
-function isPermutation(x, y) {
-  var xa = x.slice().sort();
-  var ya = y.slice().sort();
-  return compare(xa, ya)===0;
-}
-exports.is = exports0;
-exports.head = head;
-exports.tail = tail;
-exports.init = init;
-exports.last = last;
-exports.get = get;
-exports.set = set;
-exports.set$ = set$;
-exports.compare = compare;
-exports.isEqual = isEqual;
-exports.range = range;
-exports.linspace = linspace;
-
-exports.push = push;
-exports.pop = pop;
-exports.shift = shift;
-exports.unshift = unshift;
-exports.splice = splice;
-exports.reverse = reverse;
-exports.rotate = rotate;
-exports.rotate$ = rotate$;
-exports.repeat = repeat;
-exports.partition = partition;
-exports.chunk = chunk;
-exports.zip = zip;
-
-exports.swap = swap;
-exports.swap$ = swap$;
-exports.copy = copy;
-exports.copy$ = copy$;
-exports.slice$ = slice$;
-exports.filter$ = filter$;
-exports.map$ = map$;
-exports.insert = insert;
-exports.insert$ = insert$;
-exports.concat$ = concat$;
-
 exports.bsearch = bsearch;
-exports.bsearchc = bsearchc;
-exports.bsearchl = bsearchl;
-exports.bsearchr = bsearchr;
-exports.sort = sort;
-exports.sortOn = sortOn;
-exports.sortOn$ = sortOn$;
-
-exports.prefixes = prefixes;
+exports.bsearchAny = bsearchAny;
+exports.bsearchClosest = bsearchClosest;
+exports.bsearchRight = bsearchRight;
+exports.chunk = chunk;
+exports.compare = compare;
+exports.concat$ = concat$;
+exports.copy$ = copy$;
+exports.copy = copy;
+exports.copyWithin = copyWithin;
+exports.count = count;
+exports.countAllOn = countAllOn;
+exports.countOn = countOn;
+exports.cut = cut;
+exports.cutRight = cutRight;
+exports.difference = difference;
+exports.differenceOn = differenceOn;
+exports.fill = fill;
+exports.filter$ = filter$;
+exports.findIndices = findIndices;
+exports.findRight = findRight;
+exports.flatten = flatten;
+exports.get = get;
+exports.getAll = getAll;
+exports.group = group;
+exports.groupOn = groupOn;
+exports.head = head;
 exports.infixes = infixes;
-exports.suffixes = suffixes;
-exports.subsequences = subsequences;
-exports.permutations = permutations;
-exports.isPrefix = isPrefix;
+exports.init = init;
+exports.intersection = intersection;
+exports.intersectionOn = intersectionOn;
+exports.is = exports36;
+exports.isDisjoint = isDisjoint;
+exports.isDisjointOn = isDisjointOn;
+exports.isEqual = isEqual;
 exports.isInfix = isInfix;
-exports.isSuffix = isSuffix;
-exports.isSubsequence = isSubsequence;
+exports.isInfixOn = isInfixOn;
 exports.isPermutation = isPermutation;
+exports.isPermutationOn = isPermutationOn;
+exports.isPrefix = isPrefix;
+exports.isPrefixOn = isPrefixOn;
+exports.isSubsequence = isSubsequence;
+exports.isSubsequenceOn = isSubsequenceOn;
+exports.isSuffix = isSuffix;
+exports.isSuffixOn = isSuffixOn;
+exports.last = last;
+exports.linspace = linspace;
+exports.map$ = map$;
+exports.partition = partition;
+exports.partitionOn = partitionOn;
+exports.permutations = permutations;
+exports.pop = pop;
+exports.prefixes = prefixes;
+exports.push = push;
+exports.range = range;
+exports.repeat = repeat;
+exports.reverse = reverse;
+exports.rotate$ = rotate$;
+exports.rotate = rotate;
+exports.search = search;
+exports.searchAll = searchAll;
+exports.searchRight = searchRight;
+exports.set$ = set$;
+exports.set = set;
+exports.shift = shift;
+exports.slice$ = slice$;
+exports.sort = sort;
+exports.sortOn$ = sortOn$;
+exports.sortOn = sortOn;
+exports.splice = splice;
+exports.split = split;
+exports.subsequences = subsequences;
+exports.suffixes = suffixes;
+exports.swap$ = swap$;
+exports.swap = swap;
+exports.tail = tail;
+exports.union$ = union$;
+exports.union = union;
+exports.unionOn$ = unionOn$;
+exports.unionOn = unionOn;
+exports.unique = unique;
+exports.uniqueOn = uniqueOn;
+exports.unshift = unshift;
+exports.zip = zip;
