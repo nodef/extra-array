@@ -31,8 +31,8 @@ var a = [1, 2, 3, 4];
 array.rotate(a, 1);
 // [4, 1, 2, 3]
 
-array.bsearchl([1, 3, 5, 7], 5);
-// 2                  ^ found
+array.bsearch([1, 3, 5, 7], 5);
+// 2                 ^ found
 
 [...array.permutations([1, 2, 3])];
 // [
