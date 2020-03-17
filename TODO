@@ -2,13 +2,8 @@
 - ifte(inp, cnd, then, else)
 (i => i>10? i:10)(i)
 
-not
-and
-or
-
 - object.from(keys, values, deep=false) // zipObject(Deep)
 - object.fromentries
-- array.symmetricDifference
 
 - number.modp
 - shuffle(x, n)
@@ -31,8 +26,5 @@ X flatten
 
 ####################################
 
-xor
-xorBy
-xorWith
 zipObject
 zipObjectDeep
