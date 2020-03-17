@@ -55,43 +55,43 @@ array.bsearchl([1, 3, 5, 7], 5);
 | [init]                | Gets values except last.
 | [last]                | Gets last value.
 | [get]                 | Gets value at index (+ve, -ve).
-| [getAll]              | Gets value at indices (+ve, -ve).
 | [getLerp]             | Gets value at fractional index.
+| [getAll]              | Gets value at indices (+ve, -ve).
 | [set]                 | Sets value at index (+ve, -ve).
-| [set$]                | Searches a value from right.
+| [set$]                | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.
 | [swap$]               | Exchanges two values.
-| [range]               | Lists all possible prefixes.
+| [range]               | Returns evenly spaced values within given interval.
 | [linspace]            | Returns evenly spaced values within given interval.
 |                       | 
-| [push]                | Removes last value.
-| [pop]                 | Removes or replaces existing values.
-| [shift]               | Sets value at index (+ve, -ve).
+| [push]                | Adds values to the end. 
+| [pop]                 | Removes last value.
+| [shift]               | Removes first value.
 | [unshift]             | Adds values to the start.
 | [copyWithin]          | Copies part of array within.
 | [copy]                | Copies part of array to another.
 | [copy$]               | Copies part of array to another.
 | [fill]                | Fills with given value.
-| [slice$]              | Rearranges values in arbitrary order.
+| [slice$]              | Keeps only the selected region.
 | [concat$]             | Appends arrays to the end.
-| [splice]              | Keeps only the selected region.
+| [splice]              | Removes or replaces existing values.
 | [flatten]             | Flattens nested array to given depth.
 | [chunk]               | Breaks array into chunks of given size.
-| [repeat]              | Adds values to the end. 
-| [reverse]             | Repeats an array given times.
+| [repeat]              | Repeats an array given times.
+| [reverse]             | Reverses the values.
 | [rotate]              | Rotates values in array.
-| [rotate$]             | Reverses the values.
+| [rotate$]             | Rotates values in array.
 | [shuffle]             | Rearranges values in arbitrary order.
-| [shuffle$]            | Removes first value.
+| [shuffle$]            | Rearranges values in arbitrary order.
 | [zip]                 | Combines values from n arrays, with a function.
 |                       | 
-| [map$]                | Returns evenly spaced values within given interval.
+| [map$]                | Updates values based on map function.
 | [filter$]             | Keeps the values which pass the test.
 | [count]               | Counts occurrences of a value.
 | [countOn]             | Counts occurrences of a value.
 | [countAllOn]          | Counts occurrences of values.
-| [partition]           | Updates values based on map function.
-| [partitionOn]         | Breaks array into values, by test.
+| [partition]           | Breaks array into values, by test.
+| [partitionOn]         | Breaks array into values, by map.
 | [group]               | Keeps similar values together and in order.
 | [groupOn]             | Keeps similar values together and in order.
 | [cut]                 | Breaks array at given indices.
@@ -111,11 +111,11 @@ array.bsearchl([1, 3, 5, 7], 5);
 | [isDisjoint]          | Checks if arrays have no value in common.
 | [isDisjointOn]        | Checks if arrays have no value in common.
 |                       | 
-| [prefixes]            | Lists all possible arrangements.
+| [prefixes]            | Lists all possible prefixes.
+| [infixes]             | Lists all possible infixes.
 | [suffixes]            | Lists all possible suffixes.
 | [subsequences]        | Lists all possible partial sequences.
-| [permutations]        | Breaks array into values, by map.
-| [infixes]             | Lists all possible infixes.
+| [permutations]        | Lists all possible arrangements.
 | [isPrefix]            | Checks if array starts with a prefix.
 | [isPrefixOn]          | Checks if array starts with a prefix.
 | [isInfix]             | Checks if array contains an infix.
@@ -129,15 +129,15 @@ array.bsearchl([1, 3, 5, 7], 5);
 |                       | 
 | [isEqual]             | Checks if two arrays are equal.
 | [compare]             | Compares two arrays.
-| [search]              | Rotates values in array.
-| [searchAll]           | Searches a value from left.
-| [searchRight]         | Searches a value throughout.
+| [search]              | Searches a value from left.
+| [searchRight]         | Searches a value from right.
+| [searchAll]           | Searches a value throughout.
 | [bsearch]             | Binary searches leftmost value in sorted array.
-| [bsearchAny]          | Binary searches value in sorted array.
-| [bsearchClosest]      | Binary searches closest value in sorted array.
 | [bsearchRight]        | Binary searches rightmost value in sorted array.
-| [findIndices]         | Finds indices of values passing the test.
+| [bsearchClosest]      | Binary searches closest value in sorted array.
+| [bsearchAny]          | Binary searches value in sorted array.
 | [findRight]           | Finds index of rightmost value passing the test.
+| [findIndices]         | Finds indices of values passing the test.
 | [sort]                | Arranges values in an order.
 | [sortOn]              | Arranges values in an order.
 | [sortOn$]             | Arranges values in an order.
