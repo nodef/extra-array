@@ -7,7 +7,7 @@ const id = require('./_id');
  * @param {object?} ths this argument
  * @returns {Array<Array>}
  */
-function groupOn(x, fn=null) {
+function groupOn(x, fn=null, ths=null) {
   var fn = fn||id;
   var a = [], b = [], i = -1;
   var u1 = fn.call(ths, x[0], 0, x);

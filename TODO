@@ -12,6 +12,11 @@ or
 
 - number.modp
 - shuffle(x, n)
+- getRandom
+- searchOn?
+- isEqualOn
+- compareOn
+X flatten
 
 // operation match function
 // https://www.npmjs.com/package/is-array-uniq

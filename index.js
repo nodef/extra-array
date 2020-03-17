@@ -405,7 +405,7 @@ function group(x, fn=null) {
  * @param {object?} ths this argument
  * @returns {Array<Array>}
  */
-function groupOn(x, fn=null) {
+function groupOn(x, fn=null, ths=null) {
   var fn = fn||id;
   var a = [], b = [], i = -1;
   var u1 = fn.call(ths, x[0], 0, x);
@@ -603,7 +603,7 @@ function isPermutationOn(x, y, fn=null, ths=null) {
 function isPrefix(x, y, fn=null) {
   var fn = fn||cmp, i = -1;
   for(var v of y)
-    if(fn(x[++i], v)===0) return false;
+    if(fn(x[++i], v)!==0) return false;
   return true;
 }
 /**

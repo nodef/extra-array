@@ -10,7 +10,7 @@ const cmp = require('./_cmp');
 function isPrefix(x, y, fn=null) {
   var fn = fn||cmp, i = -1;
   for(var v of y)
-    if(fn(x[++i], v)===0) return false;
+    if(fn(x[++i], v)!==0) return false;
   return true;
 }
 module.exports = isPrefix;
