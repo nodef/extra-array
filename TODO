@@ -6,11 +6,9 @@
 - object.fromentries
 
 - number.modp
-- shuffle(x, n)
-- getRandom
 - searchOn?
-- isEqualOn
-- compareOn
+- isEqualOn?
+- compareOn?
 X flatten
 
 // operation match function

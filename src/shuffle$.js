@@ -3,7 +3,7 @@ const mulberry32 = require('./_mulberry32');
 /**
  * Rearranges values in arbitrary order.
  * @param {Array} x an array (updated)
- * @param {number?} n random seed
+ * @param {number?} n random seed 0->1
  * @returns {Array} x
  */
 function shuffle$(x, n=Math.random()) {

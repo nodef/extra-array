@@ -382,6 +382,16 @@ function getAll(x, is) {
   return a;
 }
 /**
+ * Gets value at fractional index.
+ * @param {Array} x an array
+ * @param {number?} f fractional index 0->1
+ * @returns {*} value
+ */
+function getLerp(x, f) {
+  var i = Math.floor(f * x.length);
+  return get(x, i);
+}
+/**
  * Keeps similar values together and in order.
  * @param {Array} x an array
  * @param {function?} fn compare function (a, b)
@@ -478,7 +488,7 @@ function intersectionOn(x, y, fn=null, ths=null) {
   }
   return a;
 }
-const exports36 = Array.isArray;
+const exports37 = Array.isArray;
 /**
  * Checks if arrays have no value in common.
  * @param {Array} x an array
@@ -930,6 +940,40 @@ function set(x, i, v) {
 function shift(x) {
   return [x[0], x.slice(1)];
 }
+function mulberry32(a) {
+  return function() {
+    var t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+}
+/**
+ * Rearranges values in arbitrary order.
+ * @param {Array} x an array (updated)
+ * @param {number?} n random seed 0->1
+ * @returns {Array} x
+ */
+function shuffle$(x, n=Math.random()) {
+  var rnd = mulberry32(Math.floor(n * (2 ** 31)));
+  for(var i=0, I=x.length; i<I; i++) {
+    var m = Math.floor(rnd() * I);
+    var n = Math.floor(rnd() * I);
+    var t = x[m];
+    x[m] = x[n];
+    x[n] = t;
+  }
+  return x;
+}
+/**
+ * Rearranges values in arbitrary order.
+ * @param {Array} x an array
+ * @param {number?} n random seed
+ * @returns {Array}
+ */
+function shuffle(x, n=Math.random()) {
+  return shuffle$(x.slice(), n);
+}
 function length(x, i, I) {
   var [i, I] = region(x, i, I);
   return I-i;
@@ -1182,6 +1226,7 @@ exports.findRight = findRight;
 exports.flatten = flatten;
 exports.get = get;
 exports.getAll = getAll;
+exports.getLerp = getLerp;
 exports.group = group;
 exports.groupOn = groupOn;
 exports.head = head;
@@ -1189,7 +1234,7 @@ exports.infixes = infixes;
 exports.init = init;
 exports.intersection = intersection;
 exports.intersectionOn = intersectionOn;
-exports.is = exports36;
+exports.is = exports37;
 exports.isDisjoint = isDisjoint;
 exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
@@ -1223,6 +1268,8 @@ exports.searchRight = searchRight;
 exports.set$ = set$;
 exports.set = set;
 exports.shift = shift;
+exports.shuffle = shuffle;
+exports.shuffle$ = shuffle$;
 exports.slice$ = slice$;
 exports.sort = sort;
 exports.sortOn$ = sortOn$;
