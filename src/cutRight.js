@@ -1,17 +1,17 @@
 /**
- * Breaks array at given indices.
+ * Breaks array after given indices.
  * @param {Array} x an array
  * @param {Array<number>} is split indices (sorted)
  * @returns {Array<Array>} [...pieces]
  */
-function cut(x, is) {
+function cutRight(x, is) {
   var a = [], i = 0;
   for(var j of is) {
-    j = j<0? 0:j;
-    a.push(x.slice(i, j));
-    i = j;
+    j = j<0? x.length:j;
+    a.push(x.slice(i, j+1));
+    i = j+1;
   }
-  a.push(x.slice(j));
+  a.push(x.slice(j+1));
   return a;
 }
-module.exports = cut;
+module.exports = cutRight;

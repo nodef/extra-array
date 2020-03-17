@@ -1,5 +1,5 @@
 /**
- * Splits array into values, which do/dont satisfy the test.
+ * Breaks array into values, by test.
  * @param {Array} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument

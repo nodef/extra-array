@@ -1,3 +1,4 @@
+const map = require('./_map');
 const id = require('./_id');
 
 /**
@@ -8,16 +9,11 @@ const id = require('./_id');
  * @param {object?} ths this argument
  * @returns {boolean} true if disjoint
  */
-function isDisjointOn(x, y, fn, ths=null) {
-  fn = fn||id;
-  var s = new Set();
-  var i = -1, j = -1;
-  for(var u of x) {
-    var u1 = fn.call(ths, u, ++i, x);
-    s.add(u1);
-  }
+function isDisjointOn(x, y, fn=null, ths=null) {
+  var s = map(x, fn, ths);
+  var fn = fn||id, i = -1;
   for(var v of y) {
-    var v1 = fn.call(ths, v, ++j, y);
+    var v1 = fn.call(ths, v, ++i, y);
     if(s.has(v1)) return false;
   }
   return true;

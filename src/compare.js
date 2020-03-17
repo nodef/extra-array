@@ -7,8 +7,8 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {number} x<y: -1, x=y: 0, x>y: 1
  */
-function compare(x, y, fn) {
-  fn = fn||cmp;
+function compare(x, y, fn=null) {
+  var fn = fn||cmp;
   var n = x.length - y.length;
   if(n!==0) return n<0? -1:1;
   for(var i=0, I=x.length; i<I; i++) {

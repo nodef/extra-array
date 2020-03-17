@@ -3,7 +3,7 @@
  * @param {Array} x an array
  * @param {function} fn filter function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array<Array>} [piece ...]
+ * @returns {Array<Array>} [...pieces]
  */
 function split(x, fn, ths=null) {
   var a = [], b = [], i = -1;

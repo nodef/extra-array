@@ -1,12 +1,13 @@
 const cmp = require('./_cmp');
 
 /**
- * Sorts based on compare function (optional).
+ * Arranges values in an order.
  * @param {Array} x an array
  * @param {function?} fn compare function (a, b)
- * @returns {Array} sorted array
+ * @returns {Array}
  */
-function sort(x, fn) {
-  return x.slice().sort(fn||cmp);
+function sort(x, fn=null) {
+  var fn = fn||cmp;
+  return x.slice().sort(fn);
 }
 module.exports = sort;

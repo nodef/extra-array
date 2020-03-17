@@ -1,5 +1,5 @@
-const modp = require('./_modp');
 const copy$ = require('./copy$');
+const modp = require('./_modp');
 
 /**
  * Rotates values in array.

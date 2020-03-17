@@ -1,5 +1,5 @@
 /**
- * Splits array into chunks of given size.
+ * Breaks array into chunks of given size.
  * @param {Array} x an array
  * @param {number?} n chunk size
  * @returns {Array<Array>} chunks

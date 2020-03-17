@@ -7,7 +7,7 @@ const compare = require('./compare');
  * @param {function?} fn compare function (a, b)
  * @returns {boolean} true if equal
  */
-function isEqual(x, y, fn) {
+function isEqual(x, y, fn=null) {
   return compare(x, y, fn)===0;
 }
 module.exports = isEqual;

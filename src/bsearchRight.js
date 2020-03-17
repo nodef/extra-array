@@ -1,20 +1,20 @@
 const cmp = require('./_cmp');
 
 /**
- * Binary searches leftmost value in sorted array.
+ * Binary searches rightmost value in sorted array.
  * @param {Array} x an array (sorted)
  * @param {*} v value to find
  * @param {function?} fn compare function (a, b)
- * @returns {number} first index of value | ~(index of closest value)
+ * @returns {number} last index of value | ~(index of closest value)
  */
-function bsearchl(x, v, fn) {
+function bsearchRight(x, v, fn=null) {
   fn = fn||cmp;
   for(var i=0, I=x.length; i<I;) {
     var m = (i+I)>>>1;
     var c = fn(x[m], v);
-    if(c<0) i = m+1;
+    if(c<=0) i = m+1;
     else I = m;
   }
-  return i>=x.length || fn(x[i], v)!==0? ~i:i;
+  return i<=0 || fn(x[i-1], v)!==0? ~i:i-1;
 }
-module.exports = bsearchl;
+module.exports = bsearchRight;

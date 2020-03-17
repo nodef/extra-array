@@ -1,13 +1,16 @@
+const cmp = require('./_cmp');
+
 /**
  * Checks if array starts with a prefix.
  * @param {Array} x an array
  * @param {Array} y prefix?
+ * @param {function?} fn compare function (a, b)
  * @returns {boolean} true if prefix
  */
-function isPrefix(x, y) {
-  var i = 0;
+function isPrefix(x, y, fn=null) {
+  var fn = fn||cmp, i = -1;
   for(var v of y)
-    if(x[i++]!==v) return false;
+    if(fn(x[++i], v)===0) return false;
   return true;
 }
 module.exports = isPrefix;
