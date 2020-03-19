@@ -372,7 +372,7 @@ function get(x, i) {
 /**
  * Gets value at indices (+ve, -ve).
  * @param {Array} x an array
- * @param {number} is indices (-ve: from right)
+ * @param {Array<number>} is indices (-ve: from right)
  * @returns {*} [...values]
  */
 function getAll(x, is) {
@@ -384,7 +384,7 @@ function getAll(x, is) {
 /**
  * Gets value at fractional index.
  * @param {Array} x an array
- * @param {number?} f fractional index 0->1
+ * @param {number} f fractional index 0->1
  * @returns {*} value
  */
 function getLerp(x, f) {
