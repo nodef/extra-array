@@ -13,19 +13,28 @@ X flatten
 - random(length, generator<->seed)
 - random
 
-- max
+- max (elm)
 - min
 - sample
 - choose
 - shuffle update to use Fisher-Yates algorithm
+- function.iterate
+- product/cartesianProduct
+- interweave/interleave
+- intercalate? intersperse?
+- select
+X isUnique/allDifferent/allDifferentBy(elm)
+- permutation? subsequence? prefix infix suffix
+
 
 // operation match function
-// https://www.npmjs.com/package/is-array-uniq
+XX https://www.npmjs.com/package/is-array-uniq
 // https://github.com/w3nl/array-helpers
 // https://github.com/flejz/array-reducer
 
 - string splice https://www.npmjs.com/package/splice-string
-- move https://www.npmjs.com/package/array-move https://www.npmjs.com/package/immutable-array-methods
+- move https://www.npmjs.com/package/array-move
+- https://www.npmjs.com/package/immutable-array-methods
 - https://www.npmjs.com/package/unique-random-array
 
 

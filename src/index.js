@@ -13,6 +13,7 @@ exports.countAllOn = require('./countAllOn');
 exports.countOn = require('./countOn');
 exports.cut = require('./cut');
 exports.cutRight = require('./cutRight');
+exports.cycle = require('./cycle');
 exports.difference = require('./difference');
 exports.differenceOn = require('./differenceOn');
 exports.fill = require('./fill');

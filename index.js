@@ -255,6 +255,19 @@ function cutRight(x, is) {
   return a;
 }
 /**
+ * Gives values that cycle through an array.
+ * @param {Array} x an array
+ * @param {number} n number of values
+ * @returns {Array}
+ */
+function cycle(x, n) {
+  var a = [], X = x.length;
+  if(X===0) return a;
+  for(var i=0, I=Math.floor(n/X); i<I; i++)
+    concat$(a, x);
+  return concat$(a, x.slice(0, n % X));
+}
+/**
  * Gives values of an array not present in another.
  * @param {Array} x an array
  * @param {Array} y another array
@@ -488,7 +501,7 @@ function intersectionOn(x, y, fn=null, ths=null) {
   }
   return a;
 }
-const exports37 = Array.isArray;
+const exports38 = Array.isArray;
 /**
  * Checks if arrays have no value in common.
  * @param {Array} x an array
@@ -1217,6 +1230,7 @@ exports.countAllOn = countAllOn;
 exports.countOn = countOn;
 exports.cut = cut;
 exports.cutRight = cutRight;
+exports.cycle = cycle;
 exports.difference = difference;
 exports.differenceOn = differenceOn;
 exports.fill = fill;
@@ -1234,7 +1248,7 @@ exports.infixes = infixes;
 exports.init = init;
 exports.intersection = intersection;
 exports.intersectionOn = intersectionOn;
-exports.is = exports37;
+exports.is = exports38;
 exports.isDisjoint = isDisjoint;
 exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
