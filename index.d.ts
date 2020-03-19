@@ -1,4 +1,7 @@
 declare module 'extra-array' {
+  type compareFn<T> = (...args: T[]) => number;
+  type mapFn<T, U> = (v: T, i: number, x: T[]) => U;
+
   /**
    * Binary searches leftmost value in sorted array.
    * @param {Array} x an array (sorted)
@@ -6,7 +9,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} first index of value | ~(index of closest value)
    */
-  export function bsearch<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number;
+  export function bsearch<T>(x: T[], v: T, fn?: compareFn<T>): number;
 
   /**
    * Binary searches value in sorted array.
@@ -15,7 +18,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} index of value | ~(index of closest value)
    */
-  export function bsearchAny<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number;
+  export function bsearchAny<T>(x: T[], v: T, fn?: compareFn<T>): number;
 
   /**
    * Binary searches closest value in sorted array.
@@ -24,7 +27,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} index of closest value
    */
-  export function bsearchClosest<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number;
+  export function bsearchClosest<T>(x: T[], v: T, fn?: compareFn<T>): number;
 
   /**
    * Binary searches rightmost value in sorted array.
@@ -33,7 +36,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} last index of value | ~(index of closest value)
    */
-  export function bsearchRight<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number;
+  export function bsearchRight<T>(x: T[], v: T, fn?: compareFn<T>): number;
 
   /**
    * Breaks array into chunks of given size.
@@ -50,7 +53,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} x<y: -1, x=y: 0, x>y: 1
    */
-  export function compare<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): number;
+  export function compare<T>(x: T[], y: T[], fn?: compareFn<T>): number;
 
   /**
    * Appends arrays to the end.
@@ -58,7 +61,7 @@ declare module 'extra-array' {
    * @param {...Iterable} ys arrays to append
    * @returns {Array} x
    */
-  export function concat$<T>(x: T[], ...ys: Iterable<T[]>[]): T[];
+  export function concat$<T>(x: T[], ...ys: Iterable<T>[]): T[];
 
   /**
    * Gets true index to array (+ve).
@@ -107,7 +110,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} occurrences
    */
-  export function count<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number;
+  export function count<T>(x: T[], v: T, fn?: compareFn<T>): number;
 
   /**
    * Counts occurrences of values.
@@ -116,7 +119,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Map<any, number>} occurrences
    */
-  export function countAllOn<T>(x: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): typeof Map;
+  export function countAllOn<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): Map<U, number>;
 
   /**
    * Counts occurrences of a value.
@@ -126,7 +129,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {number} occurrences
    */
-  export function countOn<T>(x: T[], v: T, fn?: (v: T, i: number, x: T[]) => T[], ths?: object): number;
+  export function countOn<T, U>(x: T[], v: T, fn?: mapFn<T, U>, ths?: object): number;
 
   /**
    * Breaks array at given indices.
@@ -151,7 +154,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array}
    */
-  export function difference<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): T[];
+  export function difference<T>(x: T[], y: T[], fn?: compareFn<T>): T[];
 
   /**
    * Gives values of an array not present in another.
@@ -161,7 +164,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array}
    */
-  export function differenceOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function differenceOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Fills with given value.
@@ -205,7 +208,7 @@ declare module 'extra-array' {
    * @param {number?} dep maximum depth (-1)
    * @returns {Array} flattened
    */
-  export function flatten<T>(x: T[], dep?: number): T[];
+  export function flatten<T, U>(x: T[], dep?: number): U[];
 
   /**
    * Gets value at index (+ve, -ve).
@@ -218,10 +221,10 @@ declare module 'extra-array' {
   /**
    * Gets value at indices (+ve, -ve).
    * @param {Array} x an array
-   * @param {number} is indices (-ve: from right)
+   * @param {Array<number>} is indices (-ve: from right)
    * @returns {*} [...values]
    */
-  export function getAll<T>(x: T[], is: number): T[];
+  export function getAll<T>(x: T[], is: number[]): T[];
 
   /**
    * Gets value at fractional index.
@@ -237,7 +240,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array<Array>}
    */
-  export function group<T>(x: T[], fn?: (a: T, b: T) => boolean): T[][];
+  export function group<T>(x: T[], fn?: compareFn<T>): T[][];
 
   /**
    * Keeps similar values together and in order.
@@ -246,7 +249,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array<Array>}
    */
-  export function groupOn<T>(x: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[][];
+  export function groupOn<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): T[][];
 
   /**
    * Gets first value.
@@ -276,7 +279,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array}
    */
-  export function intersection<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): T[];
+  export function intersection<T>(x: T[], y: T[], fn?: compareFn<T>): T[];
 
   /**
    * Gives values of an array present in another.
@@ -286,7 +289,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array}
    */
-  export function intersectionOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function intersectionOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Checks if arrays have no value in common.
@@ -295,7 +298,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {boolean} true if disjoint
    */
-  export function isDisjoint<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): boolean;
+  export function isDisjoint<T>(x: T[], y: T[], fn?: compareFn<T>): boolean;
 
   /**
    * Checks if arrays have no value in common.
@@ -305,7 +308,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {boolean} true if disjoint
    */
-  export function isDisjointOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): boolean;
+  export function isDisjointOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): boolean;
 
   /**
    * Checks if two arrays are equal.
@@ -314,7 +317,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {boolean} true if equal
    */
-  export function isEqual<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): boolean;
+  export function isEqual<T>(x: T[], y: T[], fn?: compareFn<T>): boolean;
 
   /**
    * Checks if array contains an infix.
@@ -323,7 +326,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {boolean} true if infix
    */
-  export function isInfix<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): boolean;
+  export function isInfix<T>(x: T[], y: T[], fn?: compareFn<T>): boolean;
 
   /**
    * Checks if array contains an infix.
@@ -333,7 +336,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {boolean} true if infix
    */
-  export function isInfixOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): boolean;
+  export function isInfixOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): boolean;
 
   /**
    * Checks if array has a permutation.
@@ -342,7 +345,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {boolean} true if permutation
    */
-  export function isPermutation<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): boolean;
+  export function isPermutation<T>(x: T[], y: T[], fn?: compareFn<T>): boolean;
 
   /**
    * Checks if array has a permutation.
@@ -352,7 +355,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {boolean} true if permutation
    */
-  export function isPermutationOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): boolean;
+  export function isPermutationOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): boolean;
 
   /**
    * Checks if array starts with a prefix.
@@ -361,7 +364,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {boolean} true if prefix
    */
-  export function isPrefix<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): boolean;
+  export function isPrefix<T>(x: T[], y: T[], fn?: compareFn<T>): boolean;
 
   /**
    * Checks if array starts with a prefix.
@@ -371,7 +374,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {boolean} true if prefix
    */
-  export function isPrefixOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): boolean;
+  export function isPrefixOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): boolean;
 
   /**
    * Checks if array has a subsequence.
@@ -380,7 +383,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {boolean} true if subsequence
    */
-  export function isSubsequence<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): boolean;
+  export function isSubsequence<T>(x: T[], y: T[], fn?: compareFn<T>): boolean;
 
   /**
    * Checks if array has a subsequence.
@@ -390,7 +393,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {boolean} true if subsequence
    */
-  export function isSubsequenceOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): boolean;
+  export function isSubsequenceOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): boolean;
 
   /**
    * Checks if array ends with a suffix.
@@ -399,7 +402,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {boolean} true if suffix
    */
-  export function isSuffix<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): boolean;
+  export function isSuffix<T>(x: T[], y: T[], fn?: compareFn<T>): boolean;
 
   /**
    * Checks if array ends with a suffix.
@@ -409,7 +412,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {boolean} true if suffix
    */
-  export function isSuffixOn<T>(x: T[], y, fn?: (v: T, i: number, x: T[]) => T[], ths?: object);
+  export function isSuffixOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): boolean;
 
   /**
    * Gets last value.
@@ -443,7 +446,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array} x
    */
-  export function map$<T>(x: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function map$<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Breaks array into values, by test.
@@ -452,7 +455,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array<Array>} [[...satisfies], [...doesnt]]
    */
-  export function partition<T>(x: T[], fn: (v: T, i?: number, x?: T[]) => boolean, ths?: object): typeof Array;
+  export function partition<T>(x: T[], fn: (v: T, i?: number, x?: T[]) => boolean, ths?: object): T[][];
 
   /**
    * Breaks array into values, by map.
@@ -461,7 +464,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Map<any, Array>} {key => [...values]}
    */
-  export function partitionOn<T>(x: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): typeof Map;
+  export function partitionOn<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): Map<U, T[]>;
 
   /**
    * Removes or replaces existing values.
@@ -471,7 +474,7 @@ declare module 'extra-array' {
    * @param {...any} vs values to insert
    * @returns {Array} [0->i, vs, i+n->I]
    */
-  export function splice<T>(x: T[], i: number, n?: number, ...vs: T[]): typeof Array;
+  export function splice<T>(x: T[], i: number, n?: number, ...vs: T[]): T[];
 
   /**
    * Lists all possible arrangements.
@@ -540,7 +543,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} index of value, -1 if not found
    */
-  export function search<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number;
+  export function search<T>(x: T[], v: T, fn?: compareFn<T>): number;
 
   /**
    * Searches a value throughout.
@@ -549,7 +552,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array<number>} indices of value
    */
-  export function searchAll<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number[];
+  export function searchAll<T>(x: T[], v: T, fn?: compareFn<T>): number[];
 
   /**
    * Searches a value from right.
@@ -558,7 +561,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {number} index of value, -1 if not found
    */
-  export function searchRight<T>(x: T[], v: T, fn?: (a: T, b: T) => boolean): number;
+  export function searchRight<T>(x: T[], v: T, fn?: compareFn<T>): number;
 
   /**
    * Sets value at index (+ve, -ve).
@@ -616,7 +619,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array} sorted array
    */
-  export function sort<T>(x: T[], fn?: (a: T, b: T) => boolean): T[];
+  export function sort<T>(x: T[], fn?: compareFn<T>): T[];
 
   /**
    * Arranges values in an order.
@@ -625,7 +628,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array} x
    */
-  export function sortOn$<T>(x: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function sortOn$<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Arranges values in an order.
@@ -634,7 +637,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array}
    */
-  export function sortOn<T>(x: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function sortOn<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Breaks array considering filter as separator.
@@ -691,7 +694,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array} x
    */
-  export function union$<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): T[];
+  export function union$<T>(x: T[], y: T[], fn?: compareFn<T>): T[];
 
   /**
    * Gives union of first array with another.
@@ -700,7 +703,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array}
    */
-  export function union<T>(x: T[], y: T[], fn?: (a: T, b: T) => boolean): T[];
+  export function union<T>(x: T[], y: T[], fn?: compareFn<T>): T[];
 
   /**
    * Gives union of first array with another.
@@ -710,7 +713,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array} x
    */
-  export function unionOn$<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function unionOn$<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Gives union of first array with another.
@@ -720,7 +723,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array}
    */
-  export function unionOn<T>(x: T[], y: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function unionOn<T, U>(x: T[], y: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Removes duplicate elements.
@@ -728,7 +731,7 @@ declare module 'extra-array' {
    * @param {function?} fn compare function (a, b)
    * @returns {Array} unique values
    */
-  export function unique<T>(x: T[], fn?: (a: T, b: T) => boolean): T[];
+  export function unique<T>(x: T[], fn?: compareFn<T>): T[];
 
   /**
    * Removes duplicate elements.
@@ -737,7 +740,7 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array} unique values
    */
-  export function uniqueOn<T>(x: T[], fn?: (v: T, i: number, x: T[]) => T[], ths?: object): T[];
+  export function uniqueOn<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
    * Adds values to the start.
@@ -754,5 +757,5 @@ declare module 'extra-array' {
    * @param {object?} ths this argument
    * @returns {Array<Array>} combined values
    */
-  export function zip<T>(xs: T[][], fn?: (...args: T[]) => T, ths?: object): T[] | T[][];
+  export function zip<T, U>(xs: T[][], fn?: (...args: T[]) => U, ths?: object): U[];
 }
