@@ -4,7 +4,7 @@ const cmp = require('./_cmp');
  * Checks if there are no duplicate values.
  * @param {Array} x an array
  * @param {function?} fn compare function (a, b)
- * @returns {boolean}
+ * @returns {boolean} true if no duplicates
  */
 function isUnique(x, fn=null) {
   var fn = fn||cmp;

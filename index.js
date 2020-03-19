@@ -710,6 +710,38 @@ function isSuffixOn(x, y, fn=null, ths=null) {
   return true;
 }
 /**
+ * Checks if there are no duplicate values.
+ * @param {Array} x an array
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean} true if no duplicates
+ */
+function isUnique(x, fn=null) {
+  var fn = fn||cmp;
+  for(var i=0, I=x.length; i<I; i++) {
+    for(var j=0; j<i; j++)
+      if(fn(x[i], x[j])===0) return false;
+  }
+  return true;
+}
+/**
+ * Checks if there are no duplicate values.
+ * @param {Array} x an array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean} true if no duplicates
+ */
+function isUniqueOn(x, fn=null, ths=null) {
+  var fn = fn||id;
+  for(var i=0, I=x.length; i<I; i++) {
+    var u = fn.call(ths, x[i], i, x);
+    for(var j=0; j<i; j++) {
+      var v = fn.call(ths, x[j], j, x);
+      if(u===v) return false;
+    }
+  }
+  return true;
+}
+/**
  * Gets last value.
  * @param {Array} x an array
  * @returns {*} last value
@@ -1262,6 +1294,8 @@ exports.isSubsequence = isSubsequence;
 exports.isSubsequenceOn = isSubsequenceOn;
 exports.isSuffix = isSuffix;
 exports.isSuffixOn = isSuffixOn;
+exports.isUnique = isUnique;
+exports.isUniqueOn = isUniqueOn;
 exports.last = last;
 exports.linspace = linspace;
 exports.map$ = map$;

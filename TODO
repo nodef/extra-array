@@ -23,7 +23,6 @@ X flatten
 - interweave/interleave
 - intercalate? intersperse?
 - select
-X isUnique/allDifferent/allDifferentBy(elm)
 - permutation? subsequence? prefix infix suffix
 
 
