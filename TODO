@@ -12,10 +12,12 @@
 X flatten
 - random(length, generator<->seed)
 - random
-  .sample
-  .choose$
-  .shuffle
 
+- max
+- min
+- sample
+- choose
+- shuffle update to use Fisher-Yates algorithm
 
 // operation match function
 // https://www.npmjs.com/package/is-array-uniq

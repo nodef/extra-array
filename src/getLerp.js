@@ -3,7 +3,7 @@ const get = require('./get');
 /**
  * Gets value at fractional index.
  * @param {Array} x an array
- * @param {number?} f fractional index 0->1
+ * @param {number} f fractional index 0->1
  * @returns {*} value
  */
 function getLerp(x, f) {
