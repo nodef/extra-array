@@ -200,7 +200,7 @@ function countAllOn(x, fn=null, ths=null) {
   var fn = fn||id;
   var m = new Map(), i = -1;
   for(var v of x) {
-    var v1 = fn.call(ths, v, ++i, x);
+    var v1 = fn.call(ths, v, i, x);
     m.set((m.get(v1)||0) + 1);
   }
   return m;
@@ -321,7 +321,7 @@ function fill(x, v, i=0, I=x.length) {
 /**
  * Keeps the values which pass the test.
  * @param {Array} x an array (updated)
- * @param {function} fn filter function (v, i, x)
+ * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array} x
  */
@@ -1071,9 +1071,9 @@ function sortOn(x, fn=null, ths=null) {
   return sortOn$(x.slice(), fn, ths);
 }
 /**
- * Breaks array considering filter as separator.
+ * Breaks array considering test as separator.
  * @param {Array} x an array
- * @param {function} fn filter function (v, i, x)
+ * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array<Array>} [...pieces]
  */

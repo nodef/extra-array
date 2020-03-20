@@ -1,7 +1,7 @@
 /**
  * Keeps the values which pass the test.
  * @param {Array} x an array (updated)
- * @param {function} fn filter function (v, i, x)
+ * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array} x
  */

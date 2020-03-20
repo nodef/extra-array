@@ -1,7 +1,8 @@
 declare module 'extra-array' {
   type compareFn<T> = (...args: T[]) => number;
+  type testFn<T> = (v: T, i: number, x: T[]) => boolean;
   type mapFn<T, U> = (v: T, i: number, x: T[]) => U;
-
+  
   /**
    * Binary searches leftmost value in sorted array.
    * @param x an array (sorted)
@@ -179,11 +180,11 @@ declare module 'extra-array' {
   /**
    * Keeps the values which pass the test.
    * @param x an array (updated)
-   * @param fn filter function (v, i, x)
+   * @param fn test function (v, i, x)
    * @param ths this argument
    * @returns x
    */
-  export function filter$<T>(x: T[], fn: (v: T, i: number, x?: T[]) => T[], ths?: object): T[];
+  export function filter$<T>(x: T[], fn: testFn<T>, ths?: object): T[];
 
   /**
    * Finds indices of values passing the test.
@@ -192,7 +193,7 @@ declare module 'extra-array' {
    * @param ths this argument
    * @returns [...indices]
    */
-  export function findIndices<T>(x: T[], fn: (v: T, i?: number, x?: T[]) => boolean, ths?: object): number[];
+  export function findIndices<T>(x: T[], fn: testFn<T>, ths?: object): number[];
   /**
    * Finds index of rightmost value passing the test.
    * @param x an array
@@ -200,7 +201,7 @@ declare module 'extra-array' {
    * @param ths this argument
    * @returns index of value, -1 if not found
    */
-  export function findRight<T>(x: T[], fn: (v: T, i?: number, x?: T[]) => boolean, ths?: object): number;
+  export function findRight<T>(x: T[], fn: testFn<T>, ths?: object): number;
 
   /**
    * Flattens nested array to given depth.
@@ -455,7 +456,7 @@ declare module 'extra-array' {
    * @param ths this argument
    * @returns [[...satisfies], [...doesnt]]
    */
-  export function partition<T>(x: T[], fn: (v: T, i?: number, x?: T[]) => boolean, ths?: object): T[][];
+  export function partition<T>(x: T[], fn: testFn<T>, ths?: object): T[][];
 
   /**
    * Breaks array into values, by map.
@@ -640,13 +641,13 @@ declare module 'extra-array' {
   export function sortOn<T, U>(x: T[], fn?: mapFn<T, U>, ths?: object): T[];
 
   /**
-   * Breaks array considering filter as separator.
+   * Breaks array considering test as separator.
    * @param x an array
-   * @param fn filter function (v, i, x)
+   * @param fn test function (v, i, x)
    * @param ths this argument
    * @returns [...pieces]
    */
-  export function split<T>(x: T[], fn: (v: T, i: number, x?: T[]) => T[], ths?: object): T[][];
+  export function split<T>(x: T[], fn: testFn<T>, ths?: object): T[][];
 
   /**
    * Lists all possible partial sequences.

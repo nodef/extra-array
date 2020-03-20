@@ -1,7 +1,7 @@
 /**
- * Breaks array considering filter as separator.
+ * Breaks array considering test as separator.
  * @param {Array} x an array
- * @param {function} fn filter function (v, i, x)
+ * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array<Array>} [...pieces]
  */
