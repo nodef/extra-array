@@ -96,7 +96,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [groupOn]             | Keeps similar values together and in order.
 | [cut]                 | Breaks array at given indices.
 | [cutRight]            | Breaks array after given indices.
-| [split]               | Breaks array considering filter as separator.
+| [split]               | Breaks array considering test as separator.
 |                       | 
 | [unique]              | Removes duplicate elements.
 | [uniqueOn]            | Removes duplicate elements.
