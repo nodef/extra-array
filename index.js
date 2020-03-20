@@ -200,7 +200,7 @@ function countAllOn(x, fn=null, ths=null) {
   var fn = fn||id;
   var m = new Map(), i = -1;
   for(var v of x) {
-    var v1 = fn.call(ths, v, i, x);
+    var v1 = fn.call(ths, v, ++i, x);
     m.set((m.get(v1)||0) + 1);
   }
   return m;
