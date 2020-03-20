@@ -1,41 +1,122 @@
-# FUNCTION
-- ifte(inp, cnd, then, else)
-(i => i>10? i:10)(i)
+RETURN PAIRS?
 
-- object.from(keys, values, deep=false) // zipObject(Deep)
-- object.fromentries
+It is possible to returns pairs, or just returns updated array.
+Which seems useful? (maybe include both)
 
-- number.modp
+- pop
+- shift
+- splice
+
+
+PARTS
+
+For a generic implementation, permutations() to now return
+all possible arrangemnts of desired length (like we learnt in school).
+Similarly for others. But what should be the default desired length.
+(-1 => any).
+
+- permutations(x, n=x.length?)
+- subsequences(x, n=-1?)
+- infixes(x, n=-1?)
+- prefixes(x, n?)
+- suffixes(x, n?)
+- combinations?
+
+
+SHUFFLE
+
+This is equivalent to getting a random permutation of desired length.
+Renaming shuffle() -> permutation() could help reduce names to remember,
+and also provide a generic implementation (any length).
+
+- permutation
+- subsequence
+- infix
+- prefix
+- suffix
+
+
+SELECT
+
+Selecting a random item from an array, with replacement. infix() might be
+good enough for this?
+
+
+CHOOSE
+
+Selecting a random item from an array, without replacement. permutation()+pop()
+could be used for this?
+
+
+RANDOM
+
+Generating a random array of some length, with a random seed.
+But what about accepting a random generator? And what about random strings?
+https://www.npmjs.com/package/unique-random-array
+
+- random(n, r=Math.random())?
+
+
+INTERLEAVE
+
+Interleaving values between 2 arrays. This could be a hybrid of
+the following:
+
+- interweave
+- intersperse
+- intercalate
+
+MERGE
+
+Merging 2 arrays could also be done with a test function/boolean array.
+http://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge
+
+
+FLATTEN
+
+Should flatten() be called flat() instead? Should it be removed?
+(most likely yes)
+
+
+MAXIMUM/MINIMUM
+
+Should this be "maximum"/"minimum" or just "max", "min"?
+
+
+COMPARE/MAP FUNCTIONS
+
+Is it possible to combine "On" (with mapFn) functions with
+default (with compareFn) functions? Should there be:
+(it can be more convenient)
+
 - searchOn?
 - isEqualOn?
 - compareOn?
-X flatten
-- random(length, generator<->seed)
-- random
 
-- max (elm)
-- min
-- sample
-- choose
-- shuffle update to use Fisher-Yates algorithm
-- function.iterate
+
+CARTESIAN PRODUCT
+
 - product/cartesianProduct
-- interweave/interleave
-- intercalate? intersperse?
-- select
-- permutation? subsequence? prefix infix suffix
 
 
-// operation match function
+MOVE
+
+https://www.npmjs.com/package/array-move
+https://www.npmjs.com/package/immutable-array-methods
+
+
+ASYNC?
+
 // https://github.com/flejz/array-reducer
 
-- string splice https://www.npmjs.com/package/splice-string
-- move https://www.npmjs.com/package/array-move
-- https://www.npmjs.com/package/immutable-array-methods
-- https://www.npmjs.com/package/unique-random-array
+
+##############
 
 
-####################################
-
-zipObject
-zipObjectDeep
+- object.from(keys, values, deep=false) // object.zip(deep)
+- object.fromentries
+- object.zip
+- object.zip(deep)
+- function.iterate
+- number.modp
+- string.splice

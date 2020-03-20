@@ -1,4 +1,5 @@
-function mulberry32(a) {
+function mulberry32(r) {
+  var a = Math.floor(r * 2**31);
   return function() {
     var t = a += 0x6D2B79F5;
     t = Math.imul(t ^ t >>> 15, t | 1);

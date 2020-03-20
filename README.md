@@ -12,7 +12,7 @@ together by function, in reference below. Did i miss some really useful method?
 Each method is also available as separate package for use by bundling tools,
 like [browserify], [rollup], [uglify-js].
 
-> Stability: Stable.<br>
+> Stability: Experimental.
 
 ```javascript
 const array = require('extra-array');

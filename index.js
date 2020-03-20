@@ -452,12 +452,14 @@ function head(x) {
 /**
  * Lists all possible infixes.
  * @param {Array} x an array
+ * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...infixes
  */
-function* infixes(x) {
-  yield [];
-  for(var i=0, I=x.length; i<I; i++) {
-    for(var j=i+1; j<=I; j++)
+function* infixes(x, n=-1) {
+  if(n<=0) { yield []; if(n===0) return; }
+  var X = x.length, N = Math.max(n, 1), dj = n<0? 1:X;
+  for(var i=0, I=X-N+1; i<I; i++) {
+    for(var j=i+N; j<=X; j+=dj)
       yield x.slice(i, j);
   }
 }
@@ -823,31 +825,40 @@ function partitionOn(x, fn=null, ths=null) {
  * @param {number} i remove index
  * @param {number?} n no. of values to remove
  * @param {...any} vs values to insert
- * @returns {Array<Array>} [[...removed], [...updated]]
+ * @returns {Array}
  */
 function splice(x, i, n=x.length-i, ...vs) {
   var a = x.slice(0, i);
-  var r = x.slice(i, i+n);
+  // TODO: include remove values?
+  // var r = x.slice(i, i+n);
   for(var v of vs)
     a.push(v);
   for(var i=i+n, I=x.length; i<I; i++)
     a.push(x[i]);
-  return [r, a];
+  // return [r, a];
+  return a;
 }
-/**
- * Lists all possible arrangements.
- * @param {Array} x an array
- * @returns {Iterable<Array>} ...permutations
- */
-function* permutations(x) {
-  if(x.length===0) { yield []; return; }
+function* permutationsOf(x, n) {
+  if(x.length===0 || n===0) { yield []; return; }
   for(var i=x.length-1; i>=0; i--) {
     var y = splice(x, i, 1);
-    for(var p of permutations(y)) {
+    for(var p of permutationsOf(y, n-1)) {
       p.push(x[i]);
       yield p;
     }
   }
+}
+
+/**
+ * Lists all possible arrangements.
+ * @param {Array} x an array
+ * @param {number} n number of values (x.length)
+ * @returns {Iterable<Array>} ...permutations
+ */
+function* permutations(x, n=x.length) {
+  if(n>x.length) return;
+  for(var i=n<0? 0:n, I=n<0? x.length:n; i<=I; i++)
+    yield* permutationsOf(x, i);
 }
 /**
  * Removes last value.
@@ -986,40 +997,6 @@ function set(x, i, v) {
 function shift(x) {
   return [x[0], x.slice(1)];
 }
-function mulberry32(a) {
-  return function() {
-    var t = a += 0x6D2B79F5;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  }
-}
-/**
- * Rearranges values in arbitrary order.
- * @param {Array} x an array (updated)
- * @param {number?} n random seed 0->1
- * @returns {Array} x
- */
-function shuffle$(x, n=Math.random()) {
-  var rnd = mulberry32(Math.floor(n * (2 ** 31)));
-  for(var i=0, I=x.length; i<I; i++) {
-    var m = Math.floor(rnd() * I);
-    var n = Math.floor(rnd() * I);
-    var t = x[m];
-    x[m] = x[n];
-    x[n] = t;
-  }
-  return x;
-}
-/**
- * Rearranges values in arbitrary order.
- * @param {Array} x an array
- * @param {number?} n random seed
- * @returns {Array}
- */
-function shuffle(x, n=Math.random()) {
-  return shuffle$(x.slice(), n);
-}
 function length(x, i, I) {
   var [i, I] = region(x, i, I);
   return I-i;
@@ -1089,15 +1066,17 @@ function split(x, fn, ths=null) {
 /**
  * Lists all possible partial sequences.
  * @param {Array} x an array
+ * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...subsequences
  */
-function* subsequences(x) {
-  if(x.length===0) { yield []; return; }
+function* subsequences(x, n=-1) {
+  var X = x.length;
+  if(n>=X) { if(n===X) yield x; return; }
+  if(n===0 || X===0) { yield []; return; }
   var y = x.slice(0, -1);
-  for(var s of subsequences(y))
-    yield s;
-  for(var s of subsequences(y)) {
-    s.push(x[x.length-1]);
+  yield* subsequences(y, n);
+  for(var s of subsequences(y, n-1)) {
+    s.push(x[X-1]);
     yield s;
   }
 }
@@ -1317,8 +1296,6 @@ exports.searchRight = searchRight;
 exports.set$ = set$;
 exports.set = set;
 exports.shift = shift;
-exports.shuffle = shuffle;
-exports.shuffle$ = shuffle$;
 exports.slice$ = slice$;
 exports.sort = sort;
 exports.sortOn$ = sortOn$;
