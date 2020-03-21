@@ -1,4 +1,4 @@
-const mulberry32 = require('./_mulberry32');
+const random = require('./_random');
 
 /**
  * Rearranges values in arbitrary order.
@@ -8,7 +8,7 @@ const mulberry32 = require('./_mulberry32');
  * @returns {Array} x
  */
 function permutation$(x, n=x.length, r=Math.random()) {
-  var rnd = mulberry32(r), X = x.length;
+  var rnd = random(r), X = x.length;
   for(var i=0, I=n-1; i<I; i++) {
     var j = i+Math.floor((X-i)*rnd());
     var t = x[i]; x[i] = x[j]; x[j] = t;
