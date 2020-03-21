@@ -5,9 +5,9 @@ const id = require('./_id');
  * @param {Array} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {*} minimum
+ * @returns {*}
  */
-function minimumOn(x, fn=null, ths=null) {
+function minOn(x, fn=null, ths=null) {
   var fn = fn||id, i = -1;
   var mk = fn.call(ths, x[0], 0, x), mv = x[0];
   for(var v of x) {
@@ -16,4 +16,4 @@ function minimumOn(x, fn=null, ths=null) {
   }
   return mv;
 }
-module.exports = minimumOn;
+module.exports = minOn;
