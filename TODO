@@ -48,15 +48,6 @@ Selecting a random item from an array, without replacement. permutation()+pop()
 could be used for this?
 
 
-RANDOM
-
-Generating a random array of some length, with a random seed.
-But what about accepting a random generator? And what about random strings?
-https://www.npmjs.com/package/unique-random-array
-
-- random(n, r=Math.random())?
-
-
 INTERLEAVE
 
 Interleaving values between 2 arrays. This could be a hybrid of
