@@ -57,11 +57,6 @@ the following:
 - intersperse
 - intercalate
 
-MERGE
-
-Merging 2 arrays could also be done with a test function/boolean array.
-http://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge
-
 
 COMPARE/MAP FUNCTIONS
 
