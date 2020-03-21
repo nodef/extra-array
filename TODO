@@ -8,21 +8,6 @@ Which seems useful? (maybe include both)
 - splice
 
 
-PARTS
-
-For a generic implementation, permutations() to now return
-all possible arrangemnts of desired length (like we learnt in school).
-Similarly for others. But what should be the default desired length.
-(-1 => any).
-
-- permutations(x, n=x.length?)
-- subsequences(x, n=-1?)
-- infixes(x, n=-1?)
-- prefixes(x, n?)
-- suffixes(x, n?)
-- combinations?
-
-
 SHUFFLE
 
 This is equivalent to getting a random permutation of desired length.

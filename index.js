@@ -954,7 +954,7 @@ function* permutationsOf(x, n) {
 /**
  * Lists all possible arrangements.
  * @param {Array} x an array
- * @param {number} n number of values (x.length)
+ * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...permutations
  */
 function* permutations(x, n=-1) {
@@ -973,9 +973,11 @@ function pop(x) {
 /**
  * Lists all possible prefixes.
  * @param {Array} x an array
+ * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...prefixes
  */
-function* prefixes(x) {
+function* prefixes(x, n=-1) {
+  if(n>=0) { yield x.slice(0, n); return; }
   for(var i=0, I=x.length; i<=I; i++)
     yield x.slice(0, i);
 }
@@ -1209,9 +1211,11 @@ function* subsequences(x, n=-1) {
 /**
  * Lists all possible suffixes.
  * @param {Array} x an array
+ * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...suffixes
  */
-function* suffixes(x) {
+function* suffixes(x, n=-1) {
+  if(n>=0) { yield x.slice(x.length-n); return; }
   for(var i=0, I=x.length; i<=I; i++)
     yield x.slice(i);
 }
