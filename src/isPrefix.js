@@ -1,16 +1,17 @@
-const cmp = require('./_cmp');
+const isPrefixBy = require('./isPrefixBy');
+const isPrefixOn = require('./isPrefixOn');
 
 /**
  * Checks if array starts with a prefix.
  * @param {Array} x an array
  * @param {Array} y prefix?
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if prefix
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
  */
-function isPrefix(x, y, fn=null) {
-  var fn = fn||cmp, i = -1;
-  for(var v of y)
-    if(fn(x[++i], v)!==0) return false;
-  return true;
+function isPrefix(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return isPrefixOn(x, y, fm, ths);
+  return isPrefixBy(x, y, fc);
 }
 module.exports = isPrefix;

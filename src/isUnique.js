@@ -1,17 +1,16 @@
-const cmp = require('./_cmp');
+const isUniqueBy = require('./isUniqueBy');
+const isUniqueOn = require('./isUniqueOn');
 
 /**
  * Checks if there are no duplicate values.
  * @param {Array} x an array
- * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if no duplicates
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
  */
-function isUnique(x, fn=null) {
-  var fn = fn||cmp;
-  for(var i=0, I=x.length; i<I; i++) {
-    for(var j=0; j<i; j++)
-      if(fn(x[i], x[j])===0) return false;
-  }
-  return true;
+function isUnique(x, fc=null, fm=null, ths=null) {
+  if(fm) return isUniqueOn(x, fm, ths);
+  return isUniqueBy(x, fc);
 }
 module.exports = isUnique;

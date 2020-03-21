@@ -1,8 +1,8 @@
-const map = require('./_map');
+const uniques = require('./_uniques');
 const id = require('./_id');
 
 /**
- * Gives union of first array with another.
+ * Gives union of an array with another.
  * @param {Array} x an array (updated)
  * @param {Array} y another array
  * @param {function?} fn map function (v, i, x)
@@ -10,7 +10,7 @@ const id = require('./_id');
  * @returns {Array} x
  */
 function unionOn$(x, y, fn=null, ths=null) {
-  var s = map(x, fn, ths);
+  var s = uniques(x, fn, ths);
   var fn = fn||id, i = -1;
   for(var v of y) {
     var v1 = fn.call(ths, v, ++i, y);

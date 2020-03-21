@@ -6,7 +6,7 @@ const id = require('./_id');
  * @param {Array} y subsequence?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if subsequence
+ * @returns {boolean}
  */
 function isSubsequenceOn(x, y, fn=null, ths=null) {
   var fn = fn||id, i = -1;
@@ -14,7 +14,7 @@ function isSubsequenceOn(x, y, fn=null, ths=null) {
   var y1 = y.map(fn, ths);
   for(var u of x) {
     var u1 = fn.call(ths, u, ++i, x);
-    if(u===y1[j] && (++j)===J) return true;
+    if(u1===y1[j] && (++j)===J) return true;
   }
   return false;
 }

@@ -6,7 +6,7 @@ const id = require('./_id');
  * @param {Array} y infix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if infix
+ * @returns {boolean}
  */
 function isInfixOn(x, y, fn=null, ths=null) {
   if(y.length===0) return true;

@@ -10,9 +10,7 @@ const index = require('./_index');
 function swap$(x, i, j) {
   var i = index(x, i);
   var j = index(x, j);
-  var t = x[i];
-  x[i] = x[j];
-  x[j] = t;
+  var t = x[i]; x[i] = x[j]; x[j] = t;
   return x;
 }
 module.exports = swap$;

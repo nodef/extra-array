@@ -5,7 +5,7 @@ const id = require('./_id');
  * @param {Array} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if no duplicates
+ * @returns {boolean}
  */
 function isUniqueOn(x, fn=null, ths=null) {
   var fn = fn||id;

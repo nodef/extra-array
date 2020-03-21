@@ -7,7 +7,7 @@ const id = require('./_id');
  * @param {Array} y permutation?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if permutation
+ * @returns {boolean}
  */
 function isPermutationOn(x, y, fn=null, ths=null) {
   var fn = fn||id;

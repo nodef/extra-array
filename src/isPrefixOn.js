@@ -6,7 +6,7 @@ const id = require('./_id');
  * @param {Array} y prefix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if prefix
+ * @returns {boolean}
  */
 function isPrefixOn(x, y, fn=null, ths=null) {
   var fn = fn||id, i = -1;

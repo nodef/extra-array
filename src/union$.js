@@ -1,19 +1,17 @@
-const cmp = require('./_cmp');
+const unionBy$ = require('./unionBy$');
+const unionOn$ = require('./unionOn$');
 
 /**
- * Gives union of first array with another.
+ * Gives union of an array with another.
  * @param {Array} x an array (updated)
  * @param {Array} y another array
- * @param {function?} fn compare function (a, b)
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
  * @returns {Array} x
  */
-function union$(x, y, fn=null) {
-  var fn = fn||cmp;
-  y: for(var v of y) {
-    for(var u of x)
-      if(fn(u, v)===0) continue y;
-    x.push(v);
-  }
-  return x;
+function union$(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return unionOn$(x, y, fm, ths);
+  return unionBy$(x, y, fc, ths);
 }
 module.exports = union$;

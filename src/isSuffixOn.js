@@ -6,7 +6,7 @@ const id = require('./_id');
  * @param {Array} y suffix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if suffix
+ * @returns {boolean}
  */
 function isSuffixOn(x, y, fn=null, ths=null) {
   var fn = fn||id, i = x.length-y.length-1, j = -1;
