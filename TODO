@@ -63,17 +63,6 @@ Merging 2 arrays could also be done with a test function/boolean array.
 http://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge
 
 
-FLATTEN
-
-Should flatten() be called flat() instead? Should it be removed?
-(most likely yes)
-
-
-MAXIMUM/MINIMUM
-
-Should this be "maximum"/"minimum" or just "max", "min"?
-
-
 COMPARE/MAP FUNCTIONS
 
 Is it possible to combine "On" (with mapFn) functions with
