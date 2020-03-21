@@ -4,12 +4,12 @@ const cmp = require('./_cmp');
  * Finds largest value.
  * @param {Array} x an array
  * @param {function?} fn compare function (a, b)
- * @returns {*} maximum
+ * @returns {*}
  */
-function maximum(x, fn=null) {
+function maxBy(x, fn=null) {
   var fn = fn||cmp, m = x[0];
   for(var v of x)
     if(fn(v, m)>0) m = v;
   return m;
 }
-module.exports = maximum;
+module.exports = maxBy;
