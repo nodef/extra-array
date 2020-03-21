@@ -17,7 +17,7 @@ function* permutationsOf(x, n) {
  * @param {number} n number of values (x.length)
  * @returns {Iterable<Array>} ...permutations
  */
-function* permutations(x, n=x.length) {
+function* permutations(x, n=-1) {
   if(n>x.length) return;
   for(var i=n<0? 0:n, I=n<0? x.length:n; i<=I; i++)
     yield* permutationsOf(x, i);

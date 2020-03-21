@@ -1,3 +1,9 @@
+/**
+ * Compares two values.
+ * @param {*} a a value
+ * @param {*} b another value
+ * @returns {number} a<b: -1, a=b: 0, a>b: 1
+ */
 function cmp(a, b) {
   return a<b? -1:(a>b? 1:0);
 }
@@ -114,14 +120,21 @@ function concat$(x, ...ys) {
   return x;
 }
 /**
- * Gets true index to array (+ve).
+ * Gets absolute index within array.
  * @param {Array} x an array
- * @param {number} i index (+ve, -ve)
- * @returns {number} +ve index
+ * @param {number} i index (+ve/-ve)
+ * @returns {number} index
  */
 function index(x, i) {
   return i<0? x.length+i:i;
 }
+/**
+ * Gives absolute indices within array.
+ * @param {Array} x an array
+ * @param {number} i start index (+ve/-ve)
+ * @param {number} I end index (+ve/-ve)
+ * @returns {number} [start index, end index]
+ */
 function region(x, i, I) {
   return [
     Math.max(index(x, i), 0),
@@ -186,6 +199,11 @@ function count(x, v, fn=null) {
     if(fn(u, v)===0) n++;
   return n;
 }
+/**
+ * Gives same value.
+ * @param {*} v a value
+ * @returns {*} v
+ */
 function id(v) {
   return v;
 }
@@ -283,7 +301,14 @@ function difference(x, y, fn=null) {
   }
   return a;
 }
-function map(x, fn=null, ths=null) {
+/**
+ * Gets unique set of values.
+ * @param {Array} x an array
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Set}
+ */
+function uniques(x, fn=null, ths=null) {
   if(!fn) return new Set(x);
   var s = new Set(), i = -1;
   for(var v of x)
@@ -299,7 +324,7 @@ function map(x, fn=null, ths=null) {
  * @returns {Array}
  */
 function differenceOn(x, y, fn=null, ths=null) {
-  var s = map(y, fn, ths);
+  var s = uniques(y, fn, ths);
   var fn = fn||id, i = -1, a = [];
   for(var u of x) {
     var u1 = fn.call(ths, u, ++i, x);
@@ -356,9 +381,9 @@ function findRight(x, fn, ths=null) {
     if(fn.call(ths, x[i], i, x)) return i;
   return -1;
 }
-function flattenTo(a, x, dep) {
+function flatTo(a, x, dep) {
   for(var v of x) {
-    if(dep!==0 && Array.isArray(v)) flattenTo(a, v, dep-1);
+    if(dep!==0 && Array.isArray(v)) flatTo(a, v, dep-1);
     else a.push(v);
   }
   return a;
@@ -368,10 +393,10 @@ function flattenTo(a, x, dep) {
  * Flattens nested array to given depth.
  * @param {Array} x a nested array
  * @param {number?} dep maximum depth (-1)
- * @returns {Array} flattened
+ * @returns {Array}
  */
-function flatten(x, dep=-1) {
-  return flattenTo([], x, dep);
+function flat(x, dep=-1) {
+  return flatTo([], x, dep);
 }
 /**
  * Gets value at index (+ve, -ve).
@@ -495,7 +520,7 @@ function intersection(x, y, fn=null) {
  * @returns {Array}
  */
 function intersectionOn(x, y, fn=null, ths=null) {
-  var s = map(y, fn, ths);
+  var s = uniques(y, fn, ths);
   var fn = fn||id, i = -1, a = [];
   for(var u of x) {
     var u1 = fn.call(ths, u, ++i, x);
@@ -528,7 +553,7 @@ function isDisjoint(x, y, fn=null) {
  * @returns {boolean} true if disjoint
  */
 function isDisjointOn(x, y, fn=null, ths=null) {
-  var s = map(x, fn, ths);
+  var s = uniques(x, fn, ths);
   var fn = fn||id, i = -1;
   for(var v of y) {
     var v1 = fn.call(ths, v, ++i, y);
@@ -553,7 +578,7 @@ function isEqual(x, y, fn=null) {
  * @param {function?} fn compare function (a, b)
  * @returns {boolean} true if infix
  */
-function isInfix(x, y, fn=null) {
+function isInfixBy(x, y, fn=null) {
   if(y.length===0) return true;
   var fn = fn||cmp;
   var Y = y.length, J = 0;
@@ -573,7 +598,7 @@ function isInfix(x, y, fn=null) {
  * @param {Array} y infix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if infix
+ * @returns {boolean}
  */
 function isInfixOn(x, y, fn=null, ths=null) {
   if(y.length===0) return true;
@@ -592,13 +617,26 @@ function isInfixOn(x, y, fn=null, ths=null) {
   return false;
 }
 /**
+ * Checks if array contains an infix.
+ * @param {Array} x an array
+ * @param {Array} y infix?
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
+ */
+function isInfix(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return isInfixOn(x, y, fm, ths);
+  return isInfixBy(x, y, fc);
+}
+/**
  * Checks if array has a permutation.
  * @param {Array} x an array
  * @param {Array} y permutation?
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if permutation
+ * @returns {boolean}
  */
-function isPermutation(x, y, fn=null) {
+function isPermutationBy(x, y, fn=null) {
   var fn = fn||cmp;
   var x1 = x.slice().sort(fn);
   var y1 = y.slice().sort(fn);
@@ -610,7 +648,7 @@ function isPermutation(x, y, fn=null) {
  * @param {Array} y permutation?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if permutation
+ * @returns {boolean}
  */
 function isPermutationOn(x, y, fn=null, ths=null) {
   var fn = fn||id;
@@ -619,13 +657,26 @@ function isPermutationOn(x, y, fn=null, ths=null) {
   return compare(x1, y1)===0;
 }
 /**
+ * Checks if array has a permutation.
+ * @param {Array} x an array
+ * @param {Array} y permutation?
+ * @param {function?} fc combine function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
+ */
+function isPermutation(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return isPermutationOn(x, y, fm, ths);
+  return isPermutationBy(x, y, fc);
+}
+/**
  * Checks if array starts with a prefix.
  * @param {Array} x an array
  * @param {Array} y prefix?
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if prefix
+ * @returns {boolean}
  */
-function isPrefix(x, y, fn=null) {
+function isPrefixBy(x, y, fn=null) {
   var fn = fn||cmp, i = -1;
   for(var v of y)
     if(fn(x[++i], v)!==0) return false;
@@ -637,7 +688,7 @@ function isPrefix(x, y, fn=null) {
  * @param {Array} y prefix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if prefix
+ * @returns {boolean}
  */
 function isPrefixOn(x, y, fn=null, ths=null) {
   var fn = fn||id, i = -1;
@@ -649,13 +700,26 @@ function isPrefixOn(x, y, fn=null, ths=null) {
   return true;
 }
 /**
+ * Checks if array starts with a prefix.
+ * @param {Array} x an array
+ * @param {Array} y prefix?
+ * @param {function?} fn compare function (a, b)
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
+ */
+function isPrefix(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return isPrefixOn(x, y, fm, ths);
+  return isPrefixBy(x, y, fc);
+}
+/**
  * Checks if array has a subsequence.
  * @param {Array} x an array
  * @param {Array} y subsequence?
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if subsequence
+ * @returns {boolean}
  */
-function isSubsequence(x, y, fn=null) {
+function isSubsequenceBy(x, y, fn=null) {
   if(y.length===0) return true;
   var fn = fn||cmp;
   var j = 0, J = y.length;
@@ -669,7 +733,7 @@ function isSubsequence(x, y, fn=null) {
  * @param {Array} y subsequence?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if subsequence
+ * @returns {boolean}
  */
 function isSubsequenceOn(x, y, fn=null, ths=null) {
   var fn = fn||id, i = -1;
@@ -677,18 +741,31 @@ function isSubsequenceOn(x, y, fn=null, ths=null) {
   var y1 = y.map(fn, ths);
   for(var u of x) {
     var u1 = fn.call(ths, u, ++i, x);
-    if(u===y1[j] && (++j)===J) return true;
+    if(u1===y1[j] && (++j)===J) return true;
   }
   return false;
+}
+/**
+ * Checks if array has a subsequence.
+ * @param {Array} x an array
+ * @param {Array} y subsequence?
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
+ */
+function isSubsequence(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return isSubsequenceOn(x, y, fm, ths);
+  return isSubsequenceBy(x, y, fc);
 }
 /**
  * Checks if array ends with a suffix.
  * @param {Array} x an array
  * @param {Array} y suffix?
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if suffix
+ * @returns {boolean}
  */
-function isSuffix(x, y, fn=null) {
+function isSuffixBy(x, y, fn=null) {
   var fn = fn||cmp, i = x.length-y.length-1;
   for(var v of y)
     if(fn(x[++i], v)!==0) return false;
@@ -700,7 +777,7 @@ function isSuffix(x, y, fn=null) {
  * @param {Array} y suffix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if suffix
+ * @returns {boolean}
  */
 function isSuffixOn(x, y, fn=null, ths=null) {
   var fn = fn||id, i = x.length-y.length-1, j = -1;
@@ -712,12 +789,25 @@ function isSuffixOn(x, y, fn=null, ths=null) {
   return true;
 }
 /**
+ * Checks if array ends with a suffix.
+ * @param {Array} x an array
+ * @param {Array} y suffix?
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
+ */
+function isSuffix(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return isSuffixOn(x, y, fm, ths);
+  return isSuffixBy(x, y, fc);
+}
+/**
  * Checks if there are no duplicate values.
  * @param {Array} x an array
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if no duplicates
+ * @returns {boolean}
  */
-function isUnique(x, fn=null) {
+function isUniqueBy(x, fn=null) {
   var fn = fn||cmp;
   for(var i=0, I=x.length; i<I; i++) {
     for(var j=0; j<i; j++)
@@ -730,7 +820,7 @@ function isUnique(x, fn=null) {
  * @param {Array} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if no duplicates
+ * @returns {boolean}
  */
 function isUniqueOn(x, fn=null, ths=null) {
   var fn = fn||id;
@@ -742,6 +832,18 @@ function isUniqueOn(x, fn=null, ths=null) {
     }
   }
   return true;
+}
+/**
+ * Checks if there are no duplicate values.
+ * @param {Array} x an array
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {boolean}
+ */
+function isUnique(x, fc=null, fm=null, ths=null) {
+  if(fm) return isUniqueOn(x, fm, ths);
+  return isUniqueBy(x, fc);
 }
 /**
  * Gets last value.
@@ -855,7 +957,7 @@ function* permutationsOf(x, n) {
  * @param {number} n number of values (x.length)
  * @returns {Iterable<Array>} ...permutations
  */
-function* permutations(x, n=x.length) {
+function* permutations(x, n=-1) {
   if(n>x.length) return;
   for(var i=n<0? 0:n, I=n<0? x.length:n; i<=I; i++)
     yield* permutationsOf(x, i);
@@ -905,6 +1007,12 @@ function repeat(x, n) {
 function reverse(x) {
   return x.slice().reverse();
 }
+/**
+ * Gives positive modulus.
+ * @param {number} m dividend
+ * @param {number} n divisor
+ * @returns {number} m % n
+ */
 function modp(m, n) {
   return (m % n + n) % n;
 }
@@ -969,7 +1077,7 @@ function searchRight(x, v, fn=null) {
   return -1;
 }
 /**
- * Sets value at index (+ve, -ve).
+ * Sets value at index.
  * @param {Array} x an array (updated)
  * @param {number} i index (-ve: from right)
  * @param {*} v value
@@ -980,11 +1088,11 @@ function set$(x, i, v) {
   return x;
 }
 /**
- * Sets value at index (+ve, -ve).
+ * Sets value at index.
  * @param {Array} x an array
  * @param {number} i index (-ve: from right)
  * @param {*} v value
- * @returns {Array} set array
+ * @returns {Array}
  */
 function set(x, i, v) {
   return splice(x, index(x, i), 1, v);
@@ -997,6 +1105,12 @@ function set(x, i, v) {
 function shift(x) {
   return [x[0], x.slice(1)];
 }
+/**
+ * Gets length within array.
+ * @param {Array} x an array
+ * @param {number} i start index (+ve/-ve)
+ * @param {number} I end index (+ve/-ve)
+ */
 function length(x, i, I) {
   var [i, I] = region(x, i, I);
   return I-i;
@@ -1015,16 +1129,6 @@ function slice$(x, i=0, I=x.length) {
 }
 /**
  * Arranges values in an order.
- * @param {Array} x an array
- * @param {function?} fn compare function (a, b)
- * @returns {Array} sorted array
- */
-function sort(x, fn=null) {
-  var fn = fn||cmp;
-  return x.slice().sort(fn);
-}
-/**
- * Arranges values in an order.
  * @param {Array} x an array (updated)
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
@@ -1039,13 +1143,35 @@ function sortOn$(x, fn=null, ths=null) {
 }
 /**
  * Arranges values in an order.
- * @param {Array} x an array
- * @param {function?} fn map function (v, i, x)
+ * @param {Array} x an array (updated)
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array} x
+ */
+function sortBy$(x, fn=null) {
+  return x.sort(fn||cmp);
+}
+/**
+ * Arranges values in an order.
+ * @param {Array} x an array (updated)
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}
  */
-function sortOn(x, fn=null, ths=null) {
-  return sortOn$(x.slice(), fn, ths);
+function sort$(x, fc=null, fm=null, ths=null) {
+  if(fm) return sortOn$(x, fm, ths);
+  return sortBy$(x, fc);
+}
+/**
+ * Arranges values in an order.
+ * @param {Array} x an array
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function sort(x, fc=null, fm=null, ths=null) {
+  return sort$(x.slice(), fc, fm, ths);
 }
 /**
  * Breaks array considering test as separator.
@@ -1099,9 +1225,7 @@ function* suffixes(x) {
 function swap$(x, i, j) {
   var i = index(x, i);
   var j = index(x, j);
-  var t = x[i];
-  x[i] = x[j];
-  x[j] = t;
+  var t = x[i]; x[i] = x[j]; x[j] = t;
   return x;
 }
 /**
@@ -1123,13 +1247,13 @@ function tail(x) {
   return x.slice(1);
 }
 /**
- * Gives union of first array with another.
+ * Gives union of an array with another.
  * @param {Array} x an array (updated)
  * @param {Array} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {Array} x
  */
-function union$(x, y, fn=null) {
+function unionBy$(x, y, fn=null) {
   var fn = fn||cmp;
   y: for(var v of y) {
     for(var u of x)
@@ -1139,17 +1263,7 @@ function union$(x, y, fn=null) {
   return x;
 }
 /**
- * Gives union of first array with another.
- * @param {Array} x an array
- * @param {Array} y another array
- * @param {function?} fn compare function (a, b)
- * @returns {Array}
- */
-function union(x, y, fn=null) {
-  return union$(x.slice(), y, fn);
-}
-/**
- * Gives union of first array with another.
+ * Gives union of an array with another.
  * @param {Array} x an array (updated)
  * @param {Array} y another array
  * @param {function?} fn map function (v, i, x)
@@ -1157,7 +1271,7 @@ function union(x, y, fn=null) {
  * @returns {Array} x
  */
 function unionOn$(x, y, fn=null, ths=null) {
-  var s = map(x, fn, ths);
+  var s = uniques(x, fn, ths);
   var fn = fn||id, i = -1;
   for(var v of y) {
     var v1 = fn.call(ths, v, ++i, y);
@@ -1166,35 +1280,61 @@ function unionOn$(x, y, fn=null, ths=null) {
   return x;
 }
 /**
- * Gives union of first array with another.
+ * Gives union of an array with another.
+ * @param {Array} x an array (updated)
+ * @param {Array} y another array
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} x
+ */
+function union$(x, y, fc=null, fm=null, ths=null) {
+  if(fm) return unionOn$(x, y, fm, ths);
+  return unionBy$(x, y, fc, ths);
+}
+/**
+ * Gives union of an array with another.
  * @param {Array} x an array
  * @param {Array} y another array
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function union(x, y, fc=null, fm=null, ths=null) {
+  return union$(x.slice(), y, fc, fm, ths);
+}
+/**
+ * Removes duplicate values.
+ * @param {Array} x an array
+ * @param {function?} fn compare function (a, b)
+ * @returns {Array}
+ */
+function uniqueBy(x, fn=null) {
+  return unionBy$([], x, fn);
+}
+/**
+ * Removes duplicate values.
+ * @param {Array} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}
  */
-function unionOn(x, y, fn, ths=null) {
-  return unionOn$(x.slice(), y, fn, ths);
-}
-/**
- * Removes duplicate elements.
- * @param {Array} x an array
- * @param {function?} fn compare function (a, b)
- * @returns {Array} unique values
- */
-function unique(x, fn=null) {
-  return union$([], x, fn);
-}
-/**
- * Removes duplicate elements.
- * @param {Array} x an array
- * @param {function?} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array} unique values
- */
 function uniqueOn(x, fn=null, ths=null) {
   if(!fn) return Array.from(new Set(x));
   return unionOn$([], x, fn, ths);
+}
+/**
+ * Removes duplicate values.
+ * @param {Array} x an array
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function unique(x, fc=null, fm=null, ths=null) {
+  if(fm) return uniqueOn(x, fm, ths);
+  return unique(x, fc);
 }
 /**
  * Adds values to the start.
@@ -1205,6 +1345,11 @@ function uniqueOn(x, fn=null, ths=null) {
 function unshift(x, ...vs) {
   return concat$(vs, x);
 }
+/**
+ * Gives passed values as array.
+ * @param  {...any} vs values
+ * @returns {Array}
+ */
 function args(...vs) {
   return vs;
 }
@@ -1249,7 +1394,7 @@ exports.fill = fill;
 exports.filter$ = filter$;
 exports.findIndices = findIndices;
 exports.findRight = findRight;
-exports.flatten = flatten;
+exports.flat = flat;
 exports.get = get;
 exports.getAll = getAll;
 exports.getLerp = getLerp;
@@ -1299,7 +1444,7 @@ exports.shift = shift;
 exports.slice$ = slice$;
 exports.sort = sort;
 exports.sortOn$ = sortOn$;
-exports.sortOn = sortOn;
+// exports.sortOn = require('./sortOn');
 exports.splice = splice;
 exports.split = split;
 exports.subsequences = subsequences;
@@ -1310,7 +1455,7 @@ exports.tail = tail;
 exports.union$ = union$;
 exports.union = union;
 exports.unionOn$ = unionOn$;
-exports.unionOn = unionOn;
+// exports.unionOn = require('./unionOn');
 exports.unique = unique;
 exports.uniqueOn = uniqueOn;
 exports.unshift = unshift;

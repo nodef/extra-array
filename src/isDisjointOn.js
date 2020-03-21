@@ -1,4 +1,4 @@
-const map = require('./_map');
+const uniques = require('./_uniques');
 const id = require('./_id');
 
 /**
@@ -10,7 +10,7 @@ const id = require('./_id');
  * @returns {boolean} true if disjoint
  */
 function isDisjointOn(x, y, fn=null, ths=null) {
-  var s = map(x, fn, ths);
+  var s = uniques(x, fn, ths);
   var fn = fn||id, i = -1;
   for(var v of y) {
     var v1 = fn.call(ths, v, ++i, y);

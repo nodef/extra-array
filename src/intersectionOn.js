@@ -1,4 +1,4 @@
-const map = require('./_map');
+const uniques = require('./_uniques');
 const id = require('./_id');
 
 /**
@@ -10,7 +10,7 @@ const id = require('./_id');
  * @returns {Array}
  */
 function intersectionOn(x, y, fn=null, ths=null) {
-  var s = map(y, fn, ths);
+  var s = uniques(y, fn, ths);
   var fn = fn||id, i = -1, a = [];
   for(var u of x) {
     var u1 = fn.call(ths, u, ++i, x);
