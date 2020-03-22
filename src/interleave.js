@@ -2,8 +2,8 @@
  * Places values of an array between another.
  * @param {Array} x an array
  * @param {Array} y another array
- * @param {number?} m number of values from x
- * @param {number?} n number of values from y
+ * @param {number?} m number of values from x (1)
+ * @param {number?} n number of values from y (1)
  * @returns {Array}
  */
 function interleave(x, y, m=1, n=1) {
