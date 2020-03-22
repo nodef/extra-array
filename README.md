@@ -61,8 +61,6 @@ array.bsearch([1, 3, 5, 7], 5);
 | [set$]                | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.
 | [swap$]               | Exchanges two values.
-| [range]               | Returns evenly spaced values within given interval.
-| [linspace]            | Returns evenly spaced values within given interval.
 |                       | 
 | [push]                | Adds values to the end. 
 | [pop]                 | Removes last value.
@@ -75,18 +73,24 @@ array.bsearch([1, 3, 5, 7], 5);
 | [slice$]              | Keeps only the selected region.
 | [concat$]             | Appends arrays to the end.
 | [splice]              | Removes or replaces existing values.
-| [flatten]             | Flattens nested array to given depth.
+| [flat]                | Flattens nested array to given depth.
 | [chunk]               | Breaks array into chunks of given size.
+| [cycle]               | Gives values that cycle through an array.
 | [repeat]              | Repeats an array given times.
 | [reverse]             | Reverses the values.
 | [rotate]              | Rotates values in array.
 | [rotate$]             | Rotates values in array.
-| [shuffle]             | Rearranges values in arbitrary order.
-| [shuffle$]            | Rearranges values in arbitrary order.
+| [interleave]          | Places values of an array between another.
 | [zip]                 | Combines values from n arrays, with a function.
 |                       | 
 | [map$]                | Updates values based on map function.
 | [filter$]             | Keeps the values which pass the test.
+| [min]                 | Finds smallest value.
+| [minOn]               | Finds smallest value.
+| [max]                 | Finds largest value.
+| [maxOn]               | Finds largest value.
+| [range]               | Finds smallest and largest values.
+| [rangeOn]             | Finds smallest and largest values.
 | [count]               | Counts occurrences of a value.
 | [countOn]             | Counts occurrences of a value.
 | [countAllOn]          | Counts occurrences of values.
@@ -108,9 +112,17 @@ array.bsearch([1, 3, 5, 7], 5);
 | [intersectionOn]      | Gives values of an array present in another.
 | [difference]          | Gives values of an array not present in another.
 | [differenceOn]        | Gives values of an array not present in another.
+| [isUnique]            | Checks if there are no duplicate values.
+| [isUniqueOn]          | Checks if there are no duplicate values.
 | [isDisjoint]          | Checks if arrays have no value in common.
 | [isDisjointOn]        | Checks if arrays have no value in common.
 |                       | 
+| [prefix]              | Gives an arbitrary prefix.
+| [infix]               | Gives an arbitrary infix.
+| [suffix]              | Gives an arbitrary suffix.
+| [subsequence]         | Gives an arbitrary subsequence.
+| [permutation]         | Rearranges values in arbitrary order.
+| [permutation$]        | Rearranges values in arbitrary order.
 | [prefixes]            | Lists all possible prefixes.
 | [infixes]             | Lists all possible infixes.
 | [suffixes]            | Lists all possible suffixes.
@@ -139,6 +151,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [findRight]           | Finds index of rightmost value passing the test.
 | [findIndices]         | Finds indices of values passing the test.
 | [sort]                | Arranges values in an order.
+| [sort$]               | Arranges values in an order.
 | [sortOn]              | Arranges values in an order.
 | [sortOn$]             | Arranges values in an order.
 
@@ -163,22 +176,24 @@ array.bsearch([1, 3, 5, 7], 5);
 [countOn]: https://github.com/nodef/extra-array/wiki/countOn
 [cut]: https://github.com/nodef/extra-array/wiki/cut
 [cutRight]: https://github.com/nodef/extra-array/wiki/cutRight
+[cycle]: https://github.com/nodef/extra-array/wiki/cycle
 [difference]: https://github.com/nodef/extra-array/wiki/difference
 [differenceOn]: https://github.com/nodef/extra-array/wiki/differenceOn
 [fill]: https://github.com/nodef/extra-array/wiki/fill
 [filter$]: https://github.com/nodef/extra-array/wiki/filter$
 [findIndices]: https://github.com/nodef/extra-array/wiki/findIndices
 [findRight]: https://github.com/nodef/extra-array/wiki/findRight
-[flatten]: https://github.com/nodef/extra-array/wiki/flatten
+[flat]: https://github.com/nodef/extra-array/wiki/flat
 [get]: https://github.com/nodef/extra-array/wiki/get
 [getAll]: https://github.com/nodef/extra-array/wiki/getAll
 [getLerp]: https://github.com/nodef/extra-array/wiki/getLerp
 [group]: https://github.com/nodef/extra-array/wiki/group
 [groupOn]: https://github.com/nodef/extra-array/wiki/groupOn
 [head]: https://github.com/nodef/extra-array/wiki/head
-[index]: https://github.com/nodef/extra-array/wiki/index
+[infix]: https://github.com/nodef/extra-array/wiki/infix
 [infixes]: https://github.com/nodef/extra-array/wiki/infixes
 [init]: https://github.com/nodef/extra-array/wiki/init
+[interleave]: https://github.com/nodef/extra-array/wiki/interleave
 [intersection]: https://github.com/nodef/extra-array/wiki/intersection
 [intersectionOn]: https://github.com/nodef/extra-array/wiki/intersectionOn
 [is]: https://github.com/nodef/extra-array/wiki/is
@@ -195,16 +210,25 @@ array.bsearch([1, 3, 5, 7], 5);
 [isSubsequenceOn]: https://github.com/nodef/extra-array/wiki/isSubsequenceOn
 [isSuffix]: https://github.com/nodef/extra-array/wiki/isSuffix
 [isSuffixOn]: https://github.com/nodef/extra-array/wiki/isSuffixOn
+[isUnique]: https://github.com/nodef/extra-array/wiki/isUnique
+[isUniqueOn]: https://github.com/nodef/extra-array/wiki/isUniqueOn
 [last]: https://github.com/nodef/extra-array/wiki/last
-[linspace]: https://github.com/nodef/extra-array/wiki/linspace
 [map$]: https://github.com/nodef/extra-array/wiki/map$
+[max]: https://github.com/nodef/extra-array/wiki/max
+[maxOn]: https://github.com/nodef/extra-array/wiki/maxOn
+[min]: https://github.com/nodef/extra-array/wiki/min
+[minOn]: https://github.com/nodef/extra-array/wiki/minOn
 [partition]: https://github.com/nodef/extra-array/wiki/partition
 [partitionOn]: https://github.com/nodef/extra-array/wiki/partitionOn
+[permutation]: https://github.com/nodef/extra-array/wiki/permutation
+[permutation$]: https://github.com/nodef/extra-array/wiki/permutation$
 [permutations]: https://github.com/nodef/extra-array/wiki/permutations
 [pop]: https://github.com/nodef/extra-array/wiki/pop
+[prefix]: https://github.com/nodef/extra-array/wiki/prefix
 [prefixes]: https://github.com/nodef/extra-array/wiki/prefixes
 [push]: https://github.com/nodef/extra-array/wiki/push
 [range]: https://github.com/nodef/extra-array/wiki/range
+[rangeOn]: https://github.com/nodef/extra-array/wiki/rangeOn
 [repeat]: https://github.com/nodef/extra-array/wiki/repeat
 [reverse]: https://github.com/nodef/extra-array/wiki/reverse
 [rotate$]: https://github.com/nodef/extra-array/wiki/rotate$
@@ -219,11 +243,14 @@ array.bsearch([1, 3, 5, 7], 5);
 [shuffle]: https://github.com/nodef/extra-array/wiki/shuffle
 [slice$]: https://github.com/nodef/extra-array/wiki/slice$
 [sort]: https://github.com/nodef/extra-array/wiki/sort
+[sort$]: https://github.com/nodef/extra-array/wiki/sort$
 [sortOn$]: https://github.com/nodef/extra-array/wiki/sortOn$
 [sortOn]: https://github.com/nodef/extra-array/wiki/sortOn
 [splice]: https://github.com/nodef/extra-array/wiki/splice
 [split]: https://github.com/nodef/extra-array/wiki/split
+[subsequence]: https://github.com/nodef/extra-array/wiki/subsequence
 [subsequences]: https://github.com/nodef/extra-array/wiki/subsequences
+[suffix]: https://github.com/nodef/extra-array/wiki/suffix
 [suffixes]: https://github.com/nodef/extra-array/wiki/suffixes
 [swap$]: https://github.com/nodef/extra-array/wiki/swap$
 [swap]: https://github.com/nodef/extra-array/wiki/swap
