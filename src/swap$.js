@@ -8,8 +8,7 @@ const index = require('./_index');
  * @returns {Array} x
  */
 function swap$(x, i, j) {
-  var i = index(x, i);
-  var j = index(x, j);
+  var i = index(x, i), j = index(x, j);
   var t = x[i]; x[i] = x[j]; x[j] = t;
   return x;
 }

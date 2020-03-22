@@ -1,16 +1,3 @@
-SHUFFLE
-
-This is equivalent to getting a random permutation of desired length.
-Renaming shuffle() -> permutation() could help reduce names to remember,
-and also provide a generic implementation (any length).
-
-- permutation
-- subsequence
-- infix
-- prefix
-- suffix
-
-
 SELECT
 
 Selecting a random item from an array, with replacement. infix() might be
@@ -37,7 +24,7 @@ default (with compareFn) functions? Should there be:
 CARTESIAN PRODUCT
 
 - product/cartesianProduct
-
+- permutation, infix bellshaped curve
 
 MOVE
 

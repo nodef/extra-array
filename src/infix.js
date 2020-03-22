@@ -1,15 +1,16 @@
 const random = require('./_random');
 
 /**
- * Gives an arbitrary prefix.
+ * Gives an arbitrary infix.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
  * @returns {Array}
  */
-function prefix(x, n=-1, r=Math.random()) {
+function infix(x, n=-1, r=Math.random()) {
   var X = x.length, rnd = random(r);
   var n = n>=0? n:Math.floor((X+1)*rnd());
-  return n>X? null:x.slice(0, n);
+  var i = Math.floor((X+1-n)*rnd());
+  return n>X? null:x.slice(i, i+n);
 }
-module.exports = prefix;
+module.exports = infix;

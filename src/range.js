@@ -1,14 +1,16 @@
+const rangeBy = require('./rangeBy');
+const rangeOn = require('./rangeOn');
+
 /**
- * Returns evenly spaced values within given interval.
- * @param {number} v start of interval
- * @param {number} V end of interval (excluding)
- * @param {number?} stp spacing between values (1)
- * @returns {Array}
+ * Finds smallest and largest values.
+ * @param {Array} x an array
+ * @param {function?} fc compare function (a, b)
+ * @param {function?} fm map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array} [min, max]
  */
-function range(v, V, stp=1) {
-  var a = [];
-  if(stp>0) for(; v<V; v+=stp) a.push(v);
-  else for(; v>V; v+=stp) a.push(v);
-  return a;
+function range(x, fc=null, fm=null, ths=null) {
+  if(fm) return rangeOn(x, fm, ths);
+  return rangeBy(x, fc);
 }
 module.exports = range;

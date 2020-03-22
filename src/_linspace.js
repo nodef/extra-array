@@ -1,4 +1,4 @@
-const range = require('./range');
+const arange = require('./_arange');
 
 /**
  * Returns evenly spaced values within given interval.
@@ -9,6 +9,6 @@ const range = require('./range');
  */
 function linspace(v, V, n=100) {
   var stp = (V-v)/(n-1);
-  return range(v, V+stp, stp);
+  return arange(v, V+stp, stp);
 }
 module.exports = linspace;

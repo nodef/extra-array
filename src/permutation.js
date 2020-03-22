@@ -7,7 +7,8 @@ const permutation$ = require('./permutation$');
  * @param {number?} r random seed 0->1
  * @returns {Array}
  */
-function permutation(x, n=x.length, r=Math.random()) {
+function permutation(x, n=-1, r=Math.random()) {
+  if(n>x.length) return null;
   return permutation$(x.slice(), n, r);
 }
 module.exports = permutation;
