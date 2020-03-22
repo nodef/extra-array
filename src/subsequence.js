@@ -3,7 +3,6 @@ const getAll = require('./getAll');
 const random = require('./_random');
 const arange = require('./_arange');
 
-
 function subsequenceNum(x, n, r) {
   var is = arange(0, x.length);
   permutation$(is, n, r).sort();
