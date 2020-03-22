@@ -1,11 +1,7 @@
-SELECT
+SELECT/CHOOSE
 
 Selecting a random item from an array, with replacement. infix() might be
 good enough for this?
-
-
-CHOOSE
-
 Selecting a random item from an array, without replacement. permutation()+pop()
 could be used for this?
 
