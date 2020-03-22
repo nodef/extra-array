@@ -37,6 +37,7 @@ INTERLEAVE
 
 Interleaving values between 2 arrays. This could be a hybrid of
 the following:
+interleave(x, y, m, n)
 
 - interweave
 - intersperse
