@@ -3,7 +3,7 @@ const splice = require('./splice');
 function* permutationsOf(x, n) {
   if(x.length===0 || n===0) { yield []; return; }
   for(var i=x.length-1; i>=0; i--) {
-    var y = splice(x, i, 1);
+    var y = splice(x, i, 1)[1];
     for(var p of permutationsOf(y, n-1)) {
       p.push(x[i]);
       yield p;

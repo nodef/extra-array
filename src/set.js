@@ -9,6 +9,6 @@ const splice = require('./splice');
  * @returns {Array}
  */
 function set(x, i, v) {
-  return splice(x, index(x, i), 1, v);
+  return splice(x, index(x, i), 1, v)[1];
 }
 module.exports = set;

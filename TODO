@@ -1,13 +1,3 @@
-RETURN PAIRS???
-
-It is possible to returns pairs, or just returns updated array.
-Which seems useful? (maybe include both)
-
-- pop
-- shift
-- splice
-
-
 SHUFFLE
 
 This is equivalent to getting a random permutation of desired length.
@@ -31,17 +21,6 @@ CHOOSE
 
 Selecting a random item from an array, without replacement. permutation()+pop()
 could be used for this?
-
-
-INTERLEAVE
-
-Interleaving values between 2 arrays. This could be a hybrid of
-the following:
-interleave(x, y, m, n)
-
-- interweave
-- intersperse
-- intercalate
 
 
 COMPARE/MAP FUNCTIONS
