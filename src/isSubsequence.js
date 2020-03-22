@@ -7,7 +7,7 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
  */
-function isSubsequenceBy(x, y, fn=null) {
+function isSubsequence(x, y, fn=null) {
   if(y.length===0) return true;
   var fn = fn||cmp;
   var j = 0, J = y.length;
@@ -15,4 +15,4 @@ function isSubsequenceBy(x, y, fn=null) {
     if(fn(u, y[j])===0 && (++j)===J) return true;
   return false;
 }
-module.exports = isSubsequenceBy;
+module.exports = isSubsequence;

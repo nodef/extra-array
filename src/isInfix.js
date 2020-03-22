@@ -7,7 +7,7 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {boolean} true if infix
  */
-function isInfixBy(x, y, fn=null) {
+function isInfix(x, y, fn=null) {
   if(y.length===0) return true;
   var fn = fn||cmp;
   var Y = y.length, J = 0;
@@ -21,4 +21,4 @@ function isInfixBy(x, y, fn=null) {
   }
   return false;
 }
-module.exports = isInfixBy;
+module.exports = isInfix;

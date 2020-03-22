@@ -7,7 +7,7 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {Array} x
  */
-function unionBy$(x, y, fn=null) {
+function union$(x, y, fn=null) {
   var fn = fn||cmp;
   y: for(var v of y) {
     for(var u of x)
@@ -16,4 +16,4 @@ function unionBy$(x, y, fn=null) {
   }
   return x;
 }
-module.exports = unionBy$;
+module.exports = union$;

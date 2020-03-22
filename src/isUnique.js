@@ -6,7 +6,7 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
  */
-function isUniqueBy(x, fn=null) {
+function isUnique(x, fn=null) {
   var fn = fn||cmp;
   for(var i=0, I=x.length; i<I; i++) {
     for(var j=0; j<i; j++)
@@ -14,4 +14,4 @@ function isUniqueBy(x, fn=null) {
   }
   return true;
 }
-module.exports = isUniqueBy;
+module.exports = isUnique;

@@ -6,21 +6,11 @@ Selecting a random item from an array, without replacement. permutation()+pop()
 could be used for this?
 
 
-COMPARE/MAP FUNCTIONS
-
-Is it possible to combine "On" (with mapFn) functions with
-default (with compareFn) functions? Should there be:
-(it can be more convenient)
-
-- searchOn?
-- isEqualOn?
-- compareOn?
-
-
 CARTESIAN PRODUCT
 
 - product/cartesianProduct
 - permutation, infix bellshaped curve
+
 
 MOVE
 

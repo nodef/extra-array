@@ -6,7 +6,7 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {Array} x
  */
-function sortBy$(x, fn=null) {
+function sort$(x, fn=null) {
   return x.sort(fn||cmp);
 }
-module.exports = sortBy$;
+module.exports = sort$;

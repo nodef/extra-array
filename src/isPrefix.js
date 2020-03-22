@@ -1,16 +1,16 @@
 const cmp = require('./_cmp');
 
 /**
- * Checks if array ends with a suffix.
+ * Checks if array starts with a prefix.
  * @param {Array} x an array
- * @param {Array} y suffix?
+ * @param {Array} y prefix?
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
  */
-function isSuffixBy(x, y, fn=null) {
-  var fn = fn||cmp, i = x.length-y.length-1;
+function isPrefix(x, y, fn=null) {
+  var fn = fn||cmp, i = -1;
   for(var v of y)
     if(fn(x[++i], v)!==0) return false;
   return true;
 }
-module.exports = isSuffixBy;
+module.exports = isPrefix;

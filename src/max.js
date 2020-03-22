@@ -6,10 +6,10 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {*}
  */
-function maxBy(x, fn=null) {
+function max(x, fn=null) {
   var fn = fn||cmp, m = x[0];
   for(var v of x)
     if(fn(v, m)>0) m = v;
   return m;
 }
-module.exports = maxBy;
+module.exports = max;

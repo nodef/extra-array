@@ -6,7 +6,7 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {Array} [min, max]
  */
-function rangeBy(x, fn=null) {
+function range(x, fn=null) {
   var fn = fn||cmp, m = x[0], n = m;
   for(var v of x) {
     if(fn(v, m)<0) m = v;
@@ -14,4 +14,4 @@ function rangeBy(x, fn=null) {
   }
   return [m, n];
 }
-module.exports = rangeBy;
+module.exports = range;

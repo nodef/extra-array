@@ -1,4 +1,4 @@
-const unionBy$ = require('./unionBy$');
+const union$ = require('./union$');
 
 /**
  * Removes duplicate values.
@@ -6,7 +6,7 @@ const unionBy$ = require('./unionBy$');
  * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */
-function uniqueBy(x, fn=null) {
-  return unionBy$([], x, fn);
+function unique(x, fn=null) {
+  return union$([], x, fn);
 }
-module.exports = uniqueBy;
+module.exports = unique;
