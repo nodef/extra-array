@@ -3,7 +3,7 @@ const union$ = require('./union$');
 /**
  * Gives union of an array with another.
  * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */

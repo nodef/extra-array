@@ -196,10 +196,10 @@ function id(v) {
 }
 /**
  * Counts occurrences of values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Map<any, number>} occurrences
+ * @returns {Map<any, number>}
  */
 function countAllOn(x, fn=null, ths=null) {
   var fn = fn||id;
@@ -212,10 +212,10 @@ function countAllOn(x, fn=null, ths=null) {
 }
 /**
  * Counts occurrences of a value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {*} v value
  * @param {function?} fn compare function (a, b)
- * @returns {number} occurrences
+ * @returns {number}
  */
 function count(x, v, fn=null) {
   var fn = fn||cmp, n = 0;
@@ -225,11 +225,11 @@ function count(x, v, fn=null) {
 }
 /**
  * Counts occurrences of a value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {*} v value
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {number} occurrences
+ * @returns {number}
  */
 function countOn(x, v, fn=null, ths=null) {
   var fn = fn||id, i = -1, n = 0;
@@ -243,7 +243,7 @@ function countOn(x, v, fn=null, ths=null) {
 /**
  * Breaks array at given indices.
  * @param {Array} x an array
- * @param {Array<number>} is split indices (sorted)
+ * @param {Iterable<number>} is split indices (sorted)
  * @returns {Array<Array>} [...pieces]
  */
 function cut(x, is) {
@@ -259,7 +259,7 @@ function cut(x, is) {
 /**
  * Breaks array after given indices.
  * @param {Array} x an array
- * @param {Array<number>} is split indices (sorted)
+ * @param {Iterable<number>} is split indices (sorted)
  * @returns {Array<Array>} [...pieces]
  */
 function cutRight(x, is) {
@@ -287,8 +287,8 @@ function cycle(x, n) {
 }
 /**
  * Gives values of an array not present in another.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */
@@ -317,8 +317,8 @@ function uniques(x, fn=null, ths=null) {
 }
 /**
  * Gives values of an array not present in another.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}
@@ -358,7 +358,7 @@ function filter$(x, fn, ths=null) {
 }
 /**
  * Finds indices of values passing the test.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array<number>} [...indices]
@@ -391,7 +391,7 @@ function flatTo(a, x, dep) {
 
 /**
  * Flattens nested array to given depth.
- * @param {Array} x a nested array
+ * @param {Iterable} x a nested array
  * @param {number?} dep maximum depth (-1)
  * @returns {Array}
  */
@@ -410,7 +410,7 @@ function get(x, i) {
 /**
  * Gets value at indices (+ve, -ve).
  * @param {Array} x an array
- * @param {Array<number>} is indices (-ve: from right)
+ * @param {Iterable<number>} is indices (-ve: from right)
  * @returns {*} [...values]
  */
 function getAll(x, is) {
@@ -431,7 +431,7 @@ function getLerp(x, f) {
 }
 /**
  * Keeps similar values together and in order.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array<Array>}
  */
@@ -448,7 +448,7 @@ function group(x, fn=null) {
 }
 /**
  * Keeps similar values together and in order.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array<Array>}
@@ -552,8 +552,8 @@ function interleave(x, y, m=1, n=1) {
 }
 /**
  * Gives values of an array present in another.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */
@@ -567,8 +567,8 @@ function intersection(x, y, fn=null) {
 }
 /**
  * Gives values of an array present in another.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}
@@ -584,8 +584,8 @@ function intersectionOn(x, y, fn=null, ths=null) {
 }
 /**
  * Checks if arrays have no value in common.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {boolean} true if disjoint
  */
@@ -599,8 +599,8 @@ function isDisjoint(x, y, fn=null) {
 }
 /**
  * Checks if arrays have no value in common.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {boolean} true if disjoint
@@ -844,7 +844,7 @@ function map$(x, fn, ths=null) {
 }
 /**
  * Finds largest value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {*}
  */
@@ -856,7 +856,7 @@ function max(x, fn=null) {
 }
 /**
  * Finds largest value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {*}
@@ -872,7 +872,7 @@ function maxOn(x, fn=null, ths=null) {
 }
 /**
  * Finds smallest value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {*}
  */
@@ -884,7 +884,7 @@ function min(x, fn=null) {
 }
 /**
  * Finds smallest value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {*}
@@ -900,7 +900,7 @@ function minOn(x, fn=null, ths=null) {
 }
 /**
  * Breaks array into values, by test.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array<Array>} [[...satisfies], [...doesnt]]
@@ -915,7 +915,7 @@ function partition(x, fn, ths=null) {
 }
 /**
  * Breaks array into values, by map.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Map<any, Array>} {key => [...values]}
@@ -1036,7 +1036,7 @@ function push(x, ...vs) {
 }
 /**
  * Finds smallest and largest values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array} [min, max]
  */
@@ -1050,7 +1050,7 @@ function range(x, fn=null) {
 }
 /**
  * Finds smallest and largest values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array} [min, max]
@@ -1374,7 +1374,7 @@ function tail(x) {
 /**
  * Gives union of an array with another.
  * @param {Array} x an array (updated)
- * @param {Array} y another array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {Array} x
  */
@@ -1390,7 +1390,7 @@ function union$(x, y, fn=null) {
 /**
  * Gives union of an array with another.
  * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */
@@ -1400,7 +1400,7 @@ function union(x, y, fn=null) {
 /**
  * Gives union of an array with another.
  * @param {Array} x an array (updated)
- * @param {Array} y another array
+ * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array} x
@@ -1417,7 +1417,7 @@ function unionOn$(x, y, fn=null, ths=null) {
 /**
  * Gives union of an array with another.
  * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}
@@ -1427,7 +1427,7 @@ function unionOn(x, y, fn=null, ths=null) {
 }
 /**
  * Removes duplicate values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */
@@ -1436,7 +1436,7 @@ function unique(x, fn=null) {
 }
 /**
  * Removes duplicate values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}

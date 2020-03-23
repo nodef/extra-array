@@ -2,7 +2,7 @@ const id = require('./_id');
 
 /**
  * Keeps similar values together and in order.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array<Array>}

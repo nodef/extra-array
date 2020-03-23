@@ -8,7 +8,7 @@ function flatTo(a, x, dep) {
 
 /**
  * Flattens nested array to given depth.
- * @param {Array} x a nested array
+ * @param {Iterable} x a nested array
  * @param {number?} dep maximum depth (-1)
  * @returns {Array}
  */

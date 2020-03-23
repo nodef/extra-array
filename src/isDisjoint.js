@@ -2,8 +2,8 @@ const cmp = require('./_cmp');
 
 /**
  * Checks if arrays have no value in common.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {boolean} true if disjoint
  */

@@ -1,7 +1,7 @@
 /**
  * Breaks array at given indices.
  * @param {Array} x an array
- * @param {Array<number>} is split indices (sorted)
+ * @param {Iterable<number>} is split indices (sorted)
  * @returns {Array<Array>} [...pieces]
  */
 function cut(x, is) {

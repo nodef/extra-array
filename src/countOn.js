@@ -2,11 +2,11 @@ const id = require('./_id');
 
 /**
  * Counts occurrences of a value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {*} v value
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {number} occurrences
+ * @returns {number}
  */
 function countOn(x, v, fn=null, ths=null) {
   var fn = fn||id, i = -1, n = 0;

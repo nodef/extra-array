@@ -2,7 +2,7 @@ const cmp = require('./_cmp');
 
 /**
  * Keeps similar values together and in order.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array<Array>}
  */

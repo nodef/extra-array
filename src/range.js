@@ -2,7 +2,7 @@ const cmp = require('./_cmp');
 
 /**
  * Finds smallest and largest values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array} [min, max]
  */

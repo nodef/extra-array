@@ -2,7 +2,7 @@ const union$ = require('./union$');
 
 /**
  * Removes duplicate values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */

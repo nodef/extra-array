@@ -2,7 +2,7 @@ const id = require('./_id');
 
 /**
  * Finds largest value.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {*}

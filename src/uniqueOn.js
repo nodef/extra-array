@@ -2,7 +2,7 @@ const unionOn$ = require('./unionOn$');
 
 /**
  * Removes duplicate values.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}

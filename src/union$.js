@@ -3,7 +3,7 @@ const cmp = require('./_cmp');
 /**
  * Gives union of an array with another.
  * @param {Array} x an array (updated)
- * @param {Array} y another array
+ * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
  * @returns {Array} x
  */

@@ -3,8 +3,8 @@ const id = require('./_id');
 
 /**
  * Gives values of an array not present in another.
- * @param {Array} x an array
- * @param {Array} y another array
+ * @param {Iterable} x an array
+ * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Array}
