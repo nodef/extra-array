@@ -61,7 +61,6 @@ array.bsearch([1, 3, 5, 7], 5);
 | [unshift]             | Adds values to the start.
 | [copyWithin]          | Copies part of array within.
 | [copy]                | Copies part of array to another.
-| [copy$]               | Copies part of array to another.
 | [fill]                | Fills with given value.
 | [slice$]              | Keeps only the selected region.
 | [concat$]             | Appends arrays to the end.
