@@ -52,12 +52,8 @@ array.bsearch([1, 3, 5, 7], 5);
 | [init]                | Gets values except last.
 | [last]                | Gets last value.
 | [get]                 | Gets value at index (+ve, -ve).
-| [getLerp]             | Gets value at fractional index.
-| [getAll]              | Gets value at indices (+ve, -ve).
 | [set]                 | Sets value at index (+ve, -ve).
-| [set$]                | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.
-| [swap$]               | Exchanges two values.
 |                       | 
 | [push]                | Adds values to the end. 
 | [pop]                 | Removes last value.
@@ -83,74 +79,44 @@ array.bsearch([1, 3, 5, 7], 5);
 | [map$]                | Updates values based on map function.
 | [filter$]             | Keeps the values which pass the test.
 | [min]                 | Finds smallest value.
-| [minOn]               | Finds smallest value.
 | [max]                 | Finds largest value.
-| [maxOn]               | Finds largest value.
 | [range]               | Finds smallest and largest values.
-| [rangeOn]             | Finds smallest and largest values.
-| [count]               | Counts occurrences of a value.
-| [countOn]             | Counts occurrences of a value.
-| [countAllOn]          | Counts occurrences of values.
+| [count]               | Counts occurrences of value(s).
 | [partition]           | Breaks array into values, by test.
-| [partitionOn]         | Breaks array into values, by map.
 | [group]               | Keeps similar values together and in order.
-| [groupOn]             | Keeps similar values together and in order.
-| [cut]                 | Breaks array at given indices.
-| [cutRight]            | Breaks array after given indices.
+| [cut]                 | Breaks array at/after given indices.
 | [split]               | Breaks array considering test as separator.
 |                       | 
 | [unique]              | Removes duplicate elements.
-| [uniqueOn]            | Removes duplicate elements.
 | [union]               | Gives union of first array with another.
-| [union$]              | Gives union of first array with another.
-| [unionOn]             | Gives union of first array with another.
-| [unionOn$]            | Gives union of first array with another.
 | [intersection]        | Gives values of an array present in another.
-| [intersectionOn]      | Gives values of an array present in another.
 | [difference]          | Gives values of an array not present in another.
-| [differenceOn]        | Gives values of an array not present in another.
 | [isUnique]            | Checks if there are no duplicate values.
-| [isUniqueOn]          | Checks if there are no duplicate values.
 | [isDisjoint]          | Checks if arrays have no value in common.
-| [isDisjointOn]        | Checks if arrays have no value in common.
 |                       | 
 | [prefix]              | Gives an arbitrary prefix.
 | [infix]               | Gives an arbitrary infix.
 | [suffix]              | Gives an arbitrary suffix.
 | [subsequence]         | Gives an arbitrary subsequence.
 | [permutation]         | Rearranges values in arbitrary order.
-| [permutation$]        | Rearranges values in arbitrary order.
 | [prefixes]            | Lists all possible prefixes.
 | [infixes]             | Lists all possible infixes.
 | [suffixes]            | Lists all possible suffixes.
 | [subsequences]        | Lists all possible partial sequences.
 | [permutations]        | Lists all possible arrangements.
 | [isPrefix]            | Checks if array starts with a prefix.
-| [isPrefixOn]          | Checks if array starts with a prefix.
 | [isInfix]             | Checks if array contains an infix.
-| [isInfixOn]           | Checks if array contains an infix.
 | [isSuffix]            | Checks if array ends with a suffix.
-| [isSuffixOn]          | Checks if array ends with a suffix.
 | [isSubsequence]       | Checks if array has a subsequence.
-| [isSubsequenceOn]     | Checks if array has a subsequence.
 | [isPermutation]       | Checks if array has a permutation.
-| [isPermutationOn]     | Checks if array has a permutation.
 |                       | 
 | [isEqual]             | Checks if two arrays are equal.
 | [compare]             | Compares two arrays.
 | [search]              | Searches a value from left.
-| [searchRight]         | Searches a value from right.
-| [searchAll]           | Searches a value throughout.
-| [bsearch]             | Binary searches leftmost value in sorted array.
-| [bsearchRight]        | Binary searches rightmost value in sorted array.
-| [bsearchClosest]      | Binary searches closest value in sorted array.
-| [bsearchAny]          | Binary searches value in sorted array.
+| [bsearch]             | Binary searches value in sorted array.
 | [findRight]           | Finds index of rightmost value passing the test.
 | [findIndices]         | Finds indices of values passing the test.
 | [sort]                | Arranges values in an order.
-| [sort$]               | Arranges values in an order.
-| [sortOn]              | Arranges values in an order.
-| [sortOn$]             | Arranges values in an order.
 
 <br>
 
