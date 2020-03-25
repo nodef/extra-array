@@ -1,3 +1,10 @@
+CHUNK
+
+chunk-pattern : chunk(x, [2, 3])
+to-grid: chunk(x, 3, X/Y)
+chunkd: chunk(x, i, n)
+chunks, chunk, isChunk
+
 SELECT/CHOOSE
 
 Selecting a random item from an array, with replacement. infix() might be
