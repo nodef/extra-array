@@ -71,7 +71,6 @@ array.bsearch([1, 3, 5, 7], 5);
 | [repeat]              | Repeats an array given times.
 | [reverse]             | Reverses the values.
 | [rotate]              | Rotates values in array.
-| [rotate$]             | Rotates values in array.
 | [interleave]          | Places values of an array between another.
 | [zip]                 | Combines values from n arrays, with a function.
 |                       | 
