@@ -53,7 +53,7 @@ array.bsearch([1, 3, 5, 7], 5);
 |                       | 
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
-| [slice$]              | Gets part of array.
+| [slice]               | Gets a part of array.
 | [concat$]             | Appends arrays to the end.
 | [splice]              | Removes or replaces existing values.
 | [flat]                | Flattens nested array to given depth.
@@ -163,7 +163,7 @@ array.bsearch([1, 3, 5, 7], 5);
 [search]: https://github.com/nodef/extra-array/wiki/search
 [set]: https://github.com/nodef/extra-array/wiki/set
 [shift]: https://github.com/nodef/extra-array/wiki/shift
-[slice$]: https://github.com/nodef/extra-array/wiki/slice$
+[slice]: https://github.com/nodef/extra-array/wiki/slice
 [sort]: https://github.com/nodef/extra-array/wiki/sort
 [splice]: https://github.com/nodef/extra-array/wiki/splice
 [split]: https://github.com/nodef/extra-array/wiki/split
