@@ -1,9 +1,9 @@
 /**
- * Breaks array into values, by test.
+ * Segregates array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array<Array>} [[...satisfies], [...doesnt]]
+ * @returns {Array<Array>} [satisfies, doesnt]
  */
 function partition(x, fn, ths=null) {
   var t = [], f = [], i = -1;

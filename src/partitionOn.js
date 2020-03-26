@@ -1,11 +1,11 @@
 const id = require('./_id');
 
 /**
- * Breaks array into values, by map.
+ * Segregates array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Map<any, Array>} {key => [...values]}
+ * @returns {Map<any, Array>} {key => values}
  */
 function partitionOn(x, fn=null, ths=null) {
   var fn = fn||id;

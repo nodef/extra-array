@@ -1,7 +1,7 @@
 const cmp = require('./_cmp');
 
 /**
- * Keeps similar values together and in order.
+ * Breaks array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array<Array>}

@@ -1,7 +1,7 @@
 const id = require('./_id');
 
 /**
- * Keeps similar values together and in order.
+ * Breaks array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument

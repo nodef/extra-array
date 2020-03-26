@@ -462,7 +462,7 @@ function getLerp(x, f) {
   return get(x, i);
 }
 /**
- * Keeps similar values together and in order.
+ * Breaks array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function?} fn compare function (a, b)
  * @returns {Array<Array>}
@@ -479,7 +479,7 @@ function group(x, fn=null) {
   return a;
 }
 /**
- * Keeps similar values together and in order.
+ * Breaks array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
@@ -919,11 +919,11 @@ function minOn(x, fn=null, ths=null) {
   return mv;
 }
 /**
- * Breaks array into values, by test.
+ * Segregates array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array<Array>} [[...satisfies], [...doesnt]]
+ * @returns {Array<Array>} [satisfies, doesnt]
  */
 function partition(x, fn, ths=null) {
   var t = [], f = [], i = -1;
@@ -934,11 +934,11 @@ function partition(x, fn, ths=null) {
   return [t, f];
 }
 /**
- * Breaks array into values, by map.
+ * Segregates array keeping similar values together.
  * @param {Iterable} x an array
  * @param {function} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Map<any, Array>} {key => [...values]}
+ * @returns {Map<any, Array>} {key => values}
  */
 function partitionOn(x, fn=null, ths=null) {
   var fn = fn||id;
