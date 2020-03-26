@@ -47,10 +47,6 @@ array.bsearch([1, 3, 5, 7], 5);
 | Method                | Action
 |-----------------------|-------
 | [is]                  | Checks if value is array.
-| [head]                | Gets first value.
-| [tail]                | Gets values except first.
-| [init]                | Gets values except last.
-| [last]                | Gets last value.
 | [get]                 | Gets value at index (+ve, -ve).
 | [set]                 | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.

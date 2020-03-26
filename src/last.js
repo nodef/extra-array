@@ -1,7 +1,7 @@
 /**
  * Gets last value.
  * @param {Array} x an array
- * @returns {*} last value
+ * @returns {*}
  */
 function last(x) {
   return x[x.length-1];

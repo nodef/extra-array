@@ -1,7 +1,7 @@
 /**
  * Gets values except first.
  * @param {Array} x an array
- * @returns {Array} except first
+ * @returns {Array}
  */
 function tail(x) {
   return x.slice(1);

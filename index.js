@@ -467,14 +467,6 @@ function groupOn(x, fn=null, ths=null) {
   return a;
 }
 /**
- * Gets first value.
- * @param {Array} x an array
- * @returns {*} first value
- */
-function head(x) {
-  return x[0];
-}
-/**
  * Lists all possible infixes.
  * @param {Array} x an array
  * @param {number} n number of values (-1 => any)
@@ -514,14 +506,6 @@ function infix(x, n=-1, r=Math.random()) {
   var n = n>=0? n:Math.floor((X+1)*rnd());
   var i = Math.floor((X+1-n)*rnd());
   return n>X? null:x.slice(i, i+n);
-}
-/**
- * Gets values except last.
- * @param {Array} x an array
- * @returns {Array} except last
- */
-function init(x) {
-  return x.slice(0, -1);
 }
 /**
  * Places values of an array between another.
@@ -669,7 +653,7 @@ function isInfixOn(x, y, fn=null, ths=null) {
   }
   return false;
 }
-const exports46 = Array.isArray;
+const exports44 = Array.isArray;
 /**
  * Checks if array has a permutation.
  * @param {Array} x an array
@@ -821,14 +805,6 @@ function isUniqueOn(x, fn=null, ths=null) {
     }
   }
   return true;
-}
-/**
- * Gets last value.
- * @param {Array} x an array
- * @returns {*} last value
- */
-function last(x) {
-  return x[x.length-1];
 }
 /**
  * Updates values based on map function.
@@ -1364,14 +1340,6 @@ function swap(x, i, j) {
   return swap$(x.slice(), i, j);
 }
 /**
- * Gets values except first.
- * @param {Array} x an array
- * @returns {Array} except first
- */
-function tail(x) {
-  return x.slice(1);
-}
-/**
  * Gives union of an array with another.
  * @param {Array} x an array (updated)
  * @param {Iterable} y another array
@@ -1509,10 +1477,8 @@ exports.get = get;
 exports.getLerp = getLerp;
 exports.group = group;
 exports.groupOn = groupOn;
-exports.head = head;
 exports.infixes = infixes;
 exports.infix = infix;
-exports.init = init;
 exports.interleave = interleave;
 exports.intersection = intersection;
 exports.intersectionOn = intersectionOn;
@@ -1521,7 +1487,7 @@ exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
 exports.isInfix = isInfix;
 exports.isInfixOn = isInfixOn;
-exports.is = exports46;
+exports.is = exports44;
 exports.isPermutation = isPermutation;
 exports.isPermutationOn = isPermutationOn;
 exports.isPrefix = isPrefix;
@@ -1532,7 +1498,6 @@ exports.isSuffix = isSuffix;
 exports.isSuffixOn = isSuffixOn;
 exports.isUnique = isUnique;
 exports.isUniqueOn = isUniqueOn;
-exports.last = last;
 exports.map$ = map$;
 exports.max = max;
 exports.maxOn = maxOn;
@@ -1572,7 +1537,6 @@ exports.suffixes = suffixes;
 exports.suffix = suffix;
 exports.swap = swap;
 exports.swap$ = swap$;
-exports.tail = tail;
 exports.union = union;
 exports.union$ = union$;
 exports.unionOn = unionOn;
