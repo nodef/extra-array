@@ -1,10 +1,10 @@
 const length = require('./_length');
 
 /**
- * Keeps only the selected region.
+ * Gets a part of array.
  * @param {Array} x an array (updated)
  * @param {number} i start index (0)
- * @param {number} I end index (x.length)
+ * @param {number} I end index (end)
  * @returns {Array} x
  */
 function slice$(x, i=0, I=x.length) {

@@ -17,7 +17,7 @@ function subsequenceAny(x, r) {
 }
 
 /**
- * Gives an arbitrary subsequence.
+ * Picks an arbitrary subsequence.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1

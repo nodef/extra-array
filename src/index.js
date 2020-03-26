@@ -70,6 +70,7 @@ exports.search = require('./search');
 exports.searchRight = require('./searchRight');
 exports.set = require('./set');
 exports.set$ = require('./set$');
+exports.slice = require('./slice');
 exports.slice$ = require('./slice$');
 exports.sort = require('./sort');
 exports.sort$ = require('./sort$');

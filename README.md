@@ -53,7 +53,7 @@ array.bsearch([1, 3, 5, 7], 5);
 |                       | 
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
-| [slice$]              | Keeps only the selected region.
+| [slice$]              | Gets part of array.
 | [concat$]             | Appends arrays to the end.
 | [splice]              | Removes or replaces existing values.
 | [flat]                | Flattens nested array to given depth.

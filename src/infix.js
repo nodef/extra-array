@@ -1,7 +1,7 @@
 const random = require('./_random');
 
 /**
- * Gives an arbitrary infix.
+ * Picks an arbitrary infix.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
