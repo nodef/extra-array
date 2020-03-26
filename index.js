@@ -964,7 +964,7 @@ function permutation(x, n=-1, r=Math.random()) {
  * @param {number} i remove index
  * @param {number?} n number of values to remove (rest)
  * @param {...any} vs values to insert
- * @returns {Array<Array>} [removed, updated]
+ * @returns {Array<Array>} [removed, array]
  */
 function splice(x, i, n=x.length-i, ...vs) {
   var r = x.slice(i, i+n);
