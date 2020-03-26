@@ -4,7 +4,7 @@ const concat$ = require('./concat$');
  * Removes or replaces existing values.
  * @param {Array} x an array
  * @param {number} i remove index
- * @param {number?} n no. of values to remove
+ * @param {number?} n number of values to remove (rest)
  * @param {...any} vs values to insert
  * @returns {Array<Array>} [removed, updated]
  */

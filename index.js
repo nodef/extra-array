@@ -962,7 +962,7 @@ function permutation(x, n=-1, r=Math.random()) {
  * Removes or replaces existing values.
  * @param {Array} x an array
  * @param {number} i remove index
- * @param {number?} n no. of values to remove
+ * @param {number?} n number of values to remove (rest)
  * @param {...any} vs values to insert
  * @returns {Array<Array>} [removed, updated]
  */
@@ -1230,6 +1230,17 @@ function sortOn$(x, fn=null, ths=null) {
  */
 function sortOn(x, fn=null, ths=null) {
   return sortOn$(x.slice(), fn, ths);
+}
+/**
+ * Removes or replaces existing values.
+ * @param {Array} x an array (updated)
+ * @param {number} i remove index
+ * @param {number?} n number of values to remove (rest)
+ * @param {...any} vs values to insert
+ * @returns {Array} removed
+ */
+function splice$(x, i, n=x.length-i, ...vs) {
+  return x.splice(i, n, ...vs);
 }
 /**
  * Breaks array considering test as separator.
@@ -1530,6 +1541,7 @@ exports.sort$ = sort$;
 exports.sortOn = sortOn;
 exports.sortOn$ = sortOn$;
 exports.splice = splice;
+exports.splice$ = splice$;
 exports.split = split;
 exports.subsequence = subsequence;
 exports.subsequences = subsequences;

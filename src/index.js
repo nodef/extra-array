@@ -80,6 +80,7 @@ exports.sort$ = require('./sort$');
 exports.sortOn = require('./sortOn');
 exports.sortOn$ = require('./sortOn$');
 exports.splice = require('./splice');
+exports.splice$ = require('./splice$');
 exports.split = require('./split');
 exports.subsequence = require('./subsequence');
 exports.subsequences = require('./subsequences');
