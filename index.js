@@ -135,20 +135,19 @@ function concat$(x, ...ys) {
  * @returns {number} index
  */
 function index(x, i) {
-  return i<0? x.length+i:i;
+  return i<0? Math.max(x.length+i, 0) : Math.min(i, x.length);
 }
 /**
  * Gives absolute indices within array.
  * @param {Array} x an array
- * @param {number} i start index (+ve/-ve)
- * @param {number} I end index (+ve/-ve)
+ * @param {number} i start index +ve/-ve (0)
+ * @param {number} I end index +ve/-ve (end)
  * @returns {number} [start index, end index]
  */
-function region(x, i, I) {
-  return [
-    Math.max(index(x, i), 0),
-    Math.min(index(x, I), x.length)
-  ];
+function region(x, i=0, I=x.length) {
+  i = index(x, i);
+  I = Math.max(i, index(x, I));
+  return [i, I];
 }
 /**
  * Copies part of array to another.
@@ -156,7 +155,7 @@ function region(x, i, I) {
  * @param {Array} y source array
  * @param {number?} j write index (0)
  * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
+ * @param {number?} I read end index (end)
  * @returns {Array} x
  */
 function copy$(x, y, j=0, i=0, I=y.length) {
@@ -172,7 +171,7 @@ function copy$(x, y, j=0, i=0, I=y.length) {
  * @param {Array} y source array
  * @param {number?} j write index (0)
  * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
+ * @param {number?} I read end index (end)
  * @returns {Array}
  */
 function copy(x, y, j=0, i=0, I=y.length) {
@@ -1189,12 +1188,12 @@ function slice(x, i=0, I=x.length) {
   return x.slice(i, I);
 }
 /**
- * Gets length within array.
+ * Gets length of a part of array.
  * @param {Array} x an array
- * @param {number} i start index (+ve/-ve)
- * @param {number} I end index (+ve/-ve)
+ * @param {number} i start index +ve/-ve (0)
+ * @param {number} I end index +ve/-ve (end)
  */
-function length(x, i, I) {
+function length(x, i=0, I=x.length) {
   var [i, I] = region(x, i, I);
   return I-i;
 }

@@ -7,7 +7,7 @@ const region = require('./_region');
  * @param {Array} y source array
  * @param {number?} j write index (0)
  * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
+ * @param {number?} I read end index (end)
  * @returns {Array} x
  */
 function copy$(x, y, j=0, i=0, I=y.length) {

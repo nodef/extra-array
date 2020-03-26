@@ -3,7 +3,7 @@
  * @param {Array} x an array (updated)
  * @param {number} j write index
  * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
+ * @param {number?} I read end index (end)
  * @returns {Array} x
  */
 function copyWithin$(x, j, i=0, I=x.length) {
