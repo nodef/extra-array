@@ -178,6 +178,19 @@ function copy(x, y, j=0, i=0, I=y.length) {
   return copy$(x.slice(), y, j, i, I);
 }
 /**
+ * Counts values which satisfy a test.
+ * @param {Iterable} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {number}
+ */
+function count(x, fn, ths=null) {
+  var n = 0, i = -1;
+  for(var v of x)
+    if(fn.call(ths, v, ++i, x)) n++;
+  return n;
+}
+/**
  * Gives same value.
  * @param {*} v a value
  * @returns {*} v
@@ -192,7 +205,7 @@ function id(v) {
  * @param {object?} ths this argument
  * @returns {Map<any, number>}
  */
-function countAllOn(x, fn=null, ths=null) {
+function countOn(x, fn=null, ths=null) {
   var fn = fn||id;
   var m = new Map(), i = -1;
   for(var v of x) {
@@ -200,36 +213,6 @@ function countAllOn(x, fn=null, ths=null) {
     m.set((m.get(v1)||0) + 1);
   }
   return m;
-}
-/**
- * Counts occurrences of a value.
- * @param {Iterable} x an array
- * @param {*} v value
- * @param {function?} fn compare function (a, b)
- * @returns {number}
- */
-function count(x, v, fn=null) {
-  var fn = fn||cmp, n = 0;
-  for(var u of x)
-    if(fn(u, v)===0) n++;
-  return n;
-}
-/**
- * Counts occurrences of a value.
- * @param {Iterable} x an array
- * @param {*} v value
- * @param {function?} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {number}
- */
-function countOn(x, v, fn=null, ths=null) {
-  var fn = fn||id, i = -1, n = 0;
-  var v1 = fn.call(ths, v, 0, null);
-  for(var u of x) {
-    var u1 = fn.call(ths, u, ++i, x);
-    if(u1===v1) n++;
-  }
-  return n;
 }
 /**
  * Breaks array at given indices.
@@ -686,7 +669,7 @@ function isInfixOn(x, y, fn=null, ths=null) {
   }
   return false;
 }
-const exports48 = Array.isArray;
+const exports47 = Array.isArray;
 /**
  * Checks if array has a permutation.
  * @param {Array} x an array
@@ -1489,7 +1472,6 @@ exports.concat = concat;
 exports.concat$ = concat$;
 exports.copy = copy;
 exports.copy$ = copy$;
-exports.countAllOn = countAllOn;
 exports.count = count;
 exports.countOn = countOn;
 exports.cut = cut;
@@ -1523,7 +1505,7 @@ exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
 exports.isInfix = isInfix;
 exports.isInfixOn = isInfixOn;
-exports.is = exports48;
+exports.is = exports47;
 exports.isPermutation = isPermutation;
 exports.isPermutationOn = isPermutationOn;
 exports.isPrefix = isPrefix;
