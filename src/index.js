@@ -8,7 +8,6 @@ exports.concat = require('./concat');
 exports.concat$ = require('./concat$');
 exports.copy = require('./copy');
 exports.copy$ = require('./copy$');
-exports.countAllOn = require('./countAllOn');
 exports.count = require('./count');
 exports.countOn = require('./countOn');
 exports.cut = require('./cut');

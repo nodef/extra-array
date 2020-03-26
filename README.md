@@ -73,7 +73,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [range]               | Finds smallest and largest values.
 | [map]                 | Updates values based on map function.
 | [filter]              | Keeps the values which pass the test.
-| [count]               | Counts occurrences of similar value(s).
+| [count]               | Counts occurrences of value(s).
 | [partition]           | Segregates array keeping similar values together.
 | [group]               | Breaks array keeping similar values together.
 | [split]               | Breaks array considering test as separator.

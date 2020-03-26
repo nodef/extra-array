@@ -1,16 +1,14 @@
-const cmp = require('./_cmp');
-
 /**
- * Counts occurrences of a value.
+ * Counts values which satisfy a test.
  * @param {Iterable} x an array
- * @param {*} v value
- * @param {function?} fn compare function (a, b)
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
  * @returns {number}
  */
-function count(x, v, fn=null) {
-  var fn = fn||cmp, n = 0;
-  for(var u of x)
-    if(fn(u, v)===0) n++;
+function count(x, fn, ths=null) {
+  var n = 0, i = -1;
+  for(var v of x)
+    if(fn.call(ths, v, ++i, x)) n++;
   return n;
 }
 module.exports = count;
