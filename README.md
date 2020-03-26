@@ -77,21 +77,21 @@ array.bsearch([1, 3, 5, 7], 5);
 | [split]               | Breaks array considering test as separator.
 |                       | 
 | [unique]              | Removes duplicate elements.
-| [union]               | Gives union of first array with another.
-| [intersection]        | Gives values of an array present in another.
+| [union]               | Gives values present in any array.
+| [intersection]        | Gives values present in both arrays.
 | [difference]          | Gives values of an array not present in another.
 | [isUnique]            | Checks if there are no duplicate values.
 | [isDisjoint]          | Checks if arrays have no value in common.
 |                       | 
-| [prefix]              | Gives an arbitrary prefix.
-| [infix]               | Gives an arbitrary infix.
-| [suffix]              | Gives an arbitrary suffix.
-| [subsequence]         | Gives an arbitrary subsequence.
-| [permutation]         | Rearranges values in arbitrary order.
+| [prefix]              | Picks an arbitrary prefix.
+| [infix]               | Picks an arbitrary infix.
+| [suffix]              | Picks an arbitrary suffix.
+| [subsequence]         | Picks an arbitrary subsequence.
+| [permutation]         | Picks an arbitrary permutation.
 | [prefixes]            | Lists all possible prefixes.
 | [infixes]             | Lists all possible infixes.
 | [suffixes]            | Lists all possible suffixes.
-| [subsequences]        | Lists all possible partial sequences.
+| [subsequences]        | Lists all possible subsequences.
 | [permutations]        | Lists all possible arrangements.
 | [isPrefix]            | Checks if array starts with a prefix.
 | [isInfix]             | Checks if array contains an infix.

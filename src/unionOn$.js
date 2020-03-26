@@ -2,7 +2,7 @@ const uniques = require('./_uniques');
 const id = require('./_id');
 
 /**
- * Gives union of an array with another.
+ * Gives values present in any array.
  * @param {Array} x an array (updated)
  * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)

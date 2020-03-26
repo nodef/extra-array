@@ -1,7 +1,7 @@
 const cmp = require('./_cmp');
 
 /**
- * Gives values of an array present in another.
+ * Gives values present in both arrays.
  * @param {Iterable} x an array
  * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)

@@ -1,5 +1,5 @@
 /**
- * Lists all possible partial sequences.
+ * Lists all possible subsequences.
  * @param {Array} x an array
  * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...subsequences

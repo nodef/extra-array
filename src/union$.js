@@ -1,7 +1,7 @@
 const cmp = require('./_cmp');
 
 /**
- * Gives union of an array with another.
+ * Gives values present in any array.
  * @param {Array} x an array (updated)
  * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
