@@ -47,6 +47,9 @@ array.bsearch([1, 3, 5, 7], 5);
 | Method                | Action
 |-----------------------|-------
 | [is]                  | Checks if value is array.
+| [index]               | Gets zero-based index within array.
+| [swap]                | Exchanges two values.
+| [swap]                | Exchanges two values.
 | [get]                 | Gets value at index (+ve, -ve).
 | [set]                 | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.

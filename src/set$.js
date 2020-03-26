@@ -1,4 +1,4 @@
-const index = require('./_index');
+const index = require('./index?');
 
 /**
  * Sets value at index.

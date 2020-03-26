@@ -1,8 +1,8 @@
 /**
- * Gets absolute index within array.
+ * Gets zero-based index within array.
  * @param {Array} x an array
- * @param {number} i index (+ve/-ve)
- * @returns {number} index
+ * @param {number} i index +ve/-ve
+ * @returns {number}
  */
 function index(x, i) {
   return i<0? Math.max(x.length+i, 0) : Math.min(i, x.length);

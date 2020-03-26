@@ -1,4 +1,4 @@
-const index = require('./_index');
+const index = require('./index?');
 const region = require('./_region');
 
 /**

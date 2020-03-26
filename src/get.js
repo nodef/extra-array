@@ -1,4 +1,4 @@
-const index = require('./_index');
+const index = require('./index?');
 
 /**
  * Gets value at index (+ve, -ve).

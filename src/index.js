@@ -30,6 +30,7 @@ exports.get = require('./get');
 exports.getLerp = require('./getLerp');
 exports.group = require('./group');
 exports.groupOn = require('./groupOn');
+exports.index = require('./index?');
 exports.infixes = require('./infixes');
 exports.infix = require('./infix');
 exports.interleave = require('./interleave');
