@@ -15,7 +15,6 @@ exports.cutRight = require('./cutRight');
 exports.cycle = require('./cycle');
 exports.difference = require('./difference');
 exports.differenceOn = require('./differenceOn');
-exports.fill = require('./fill');
 exports.filter$ = require('./filter$');
 exports.findIndices = require('./findIndices');
 exports.findRight = require('./findRight');

@@ -52,7 +52,6 @@ array.bsearch([1, 3, 5, 7], 5);
 | [swap]                | Exchanges two values.
 |                       | 
 | [copy]                | Copies part of array to another.
-| [fill]                | Fills with given value.
 | [slice$]              | Keeps only the selected region.
 | [concat$]             | Appends arrays to the end.
 | [splice]              | Removes or replaces existing values.
