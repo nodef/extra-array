@@ -971,14 +971,6 @@ function* permutations(x, n=-1) {
     yield* permutationsOf(x, i);
 }
 /**
- * Removes last value.
- * @param {Array} x an array
- * @returns {Array} [value, array]
- */
-function pop(x) {
-  return [x[x.length-1], x.slice(0, -1)];
-}
-/**
  * Lists all possible prefixes.
  * @param {Array} x an array
  * @param {number} n number of values (-1 => any)
@@ -1000,15 +992,6 @@ function prefix(x, n=-1, r=Math.random()) {
   var X = x.length, rnd = random(r);
   var n = n>=0? n:Math.floor((X+1)*rnd());
   return n>X? null:x.slice(0, n);
-}
-/**
- * Adds values to the end. 
- * @param {Array} x an array
- * @param {...any} vs values to add
- * @returns {Array} pushed
- */
-function push(x, ...vs) {
-  return x.concat(vs);
 }
 /**
  * Finds smallest and largest values.
@@ -1150,14 +1133,6 @@ function set(x, i, v) {
 function set$(x, i, v) {
   x[index(x, i)] = v;
   return x;
-}
-/**
- * Removes first value.
- * @param {Array} x an array
- * @returns {Array} [value, array]
- */
-function shift(x) {
-  return [x[0], x.slice(1)];
 }
 /**
  * Gets length within array.
@@ -1414,15 +1389,6 @@ function uniqueOn(x, fn=null, ths=null) {
   return unionOn$([], x, fn, ths);
 }
 /**
- * Adds values to the start.
- * @param {Array} x an array
- * @param {...any} vs values to add
- * @returns {Array} unshifted
- */
-function unshift(x, ...vs) {
-  return concat$(vs, x);
-}
-/**
  * Gives passed values as array.
  * @param  {...any} vs values
  * @returns {Array}
@@ -1508,10 +1474,8 @@ exports.partitionOn = partitionOn;
 exports.permutation = permutation;
 exports.permutation$ = permutation$;
 exports.permutations = permutations;
-exports.pop = pop;
 exports.prefixes = prefixes;
 exports.prefix = prefix;
-exports.push = push;
 exports.range = range;
 exports.rangeOn = rangeOn;
 exports.repeat = repeat;
@@ -1523,7 +1487,6 @@ exports.search = search;
 exports.searchRight = searchRight;
 exports.set = set;
 exports.set$ = set$;
-exports.shift = shift;
 exports.slice$ = slice$;
 exports.sort = sort;
 exports.sort$ = sort$;
@@ -1543,5 +1506,4 @@ exports.unionOn = unionOn;
 exports.unionOn$ = unionOn$;
 exports.unique = unique;
 exports.uniqueOn = uniqueOn;
-exports.unshift = unshift;
 exports.zip = zip;

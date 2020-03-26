@@ -51,10 +51,6 @@ array.bsearch([1, 3, 5, 7], 5);
 | [set]                 | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.
 |                       | 
-| [push]                | Adds values to the end. 
-| [pop]                 | Removes last value.
-| [shift]               | Removes first value.
-| [unshift]             | Adds values to the start.
 | [copyWithin]          | Copies part of array within.
 | [copy]                | Copies part of array to another.
 | [fill]                | Fills with given value.
