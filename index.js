@@ -811,6 +811,16 @@ function isUniqueOn(x, fn=null, ths=null) {
 }
 /**
  * Updates values based on map function.
+ * @param {Array} x an array
+ * @param {function} fn map function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function map(x, fn, ths=null) {
+  return x.map(fn, ths);
+}
+/**
+ * Updates values based on map function.
  * @param {Array} x an array (updated)
  * @param {function} fn map function (v, i, x)
  * @param {object?} ths this argument
@@ -1478,6 +1488,7 @@ exports.isSuffix = isSuffix;
 exports.isSuffixOn = isSuffixOn;
 exports.isUnique = isUnique;
 exports.isUniqueOn = isUniqueOn;
+exports.map = map;
 exports.map$ = map$;
 exports.max = max;
 exports.maxOn = maxOn;

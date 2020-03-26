@@ -48,6 +48,7 @@ exports.isSuffix = require('./isSuffix');
 exports.isSuffixOn = require('./isSuffixOn');
 exports.isUnique = require('./isUnique');
 exports.isUniqueOn = require('./isUniqueOn');
+exports.map = require('./map');
 exports.map$ = require('./map$');
 exports.max = require('./max');
 exports.maxOn = require('./maxOn');

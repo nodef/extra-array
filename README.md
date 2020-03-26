@@ -54,7 +54,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
 | [slice]               | Gets a part of array.
-| [concat$]             | Appends arrays to the end.
+| [concat]              | Appends arrays to the end.
 | [splice]              | Removes or replaces existing values.
 | [flat]                | Flattens nested array to given depth.
 | [chunk]               | Breaks array into chunks of given size.
@@ -65,7 +65,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [interleave]          | Places values of an array between another.
 | [zip]                 | Combines values from n arrays, with a function.
 |                       | 
-| [map$]                | Updates values based on map function.
+| [map]                 | Updates values based on map function.
 | [filter$]             | Keeps the values which pass the test.
 | [min]                 | Finds smallest value.
 | [max]                 | Finds largest value.
@@ -116,7 +116,7 @@ array.bsearch([1, 3, 5, 7], 5);
 [bsearch]: https://github.com/nodef/extra-array/wiki/bsearch
 [chunk]: https://github.com/nodef/extra-array/wiki/chunk
 [compare]: https://github.com/nodef/extra-array/wiki/compare
-[concat$]: https://github.com/nodef/extra-array/wiki/concat$
+[concat]: https://github.com/nodef/extra-array/wiki/concat
 [copy]: https://github.com/nodef/extra-array/wiki/copy
 [copyWithin]: https://github.com/nodef/extra-array/wiki/copyWithin
 [count]: https://github.com/nodef/extra-array/wiki/count
@@ -146,7 +146,7 @@ array.bsearch([1, 3, 5, 7], 5);
 [isSuffix]: https://github.com/nodef/extra-array/wiki/isSuffix
 [isUnique]: https://github.com/nodef/extra-array/wiki/isUnique
 [last]: https://github.com/nodef/extra-array/wiki/last
-[map$]: https://github.com/nodef/extra-array/wiki/map$
+[map]: https://github.com/nodef/extra-array/wiki/map
 [max]: https://github.com/nodef/extra-array/wiki/max
 [min]: https://github.com/nodef/extra-array/wiki/min
 [partition]: https://github.com/nodef/extra-array/wiki/partition
