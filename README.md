@@ -47,12 +47,12 @@ array.bsearch([1, 3, 5, 7], 5);
 | Method                | Action
 |-----------------------|-------
 | [is]                  | Checks if value is array.
-| [index]               | Gets zero-based index within array.
-| [swap]                | Exchanges two values.
-| [swap]                | Exchanges two values.
 | [get]                 | Gets value at index (+ve, -ve).
 | [set]                 | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.
+| [index]               | Gets zero-based index.
+| [indexRange]          | Gets index range of part of array.
+| [length]              | Gets length of part of array.
 |                       | 
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
@@ -121,7 +121,6 @@ array.bsearch([1, 3, 5, 7], 5);
 [compare]: https://github.com/nodef/extra-array/wiki/compare
 [concat]: https://github.com/nodef/extra-array/wiki/concat
 [copy]: https://github.com/nodef/extra-array/wiki/copy
-[copyWithin]: https://github.com/nodef/extra-array/wiki/copyWithin
 [count]: https://github.com/nodef/extra-array/wiki/count
 [cut]: https://github.com/nodef/extra-array/wiki/cut
 [cycle]: https://github.com/nodef/extra-array/wiki/cycle
@@ -133,10 +132,10 @@ array.bsearch([1, 3, 5, 7], 5);
 [flat]: https://github.com/nodef/extra-array/wiki/flat
 [get]: https://github.com/nodef/extra-array/wiki/get
 [group]: https://github.com/nodef/extra-array/wiki/group
-[head]: https://github.com/nodef/extra-array/wiki/head
+[index]: https://github.com/nodef/extra-array/wiki/index
+[indexRange]: https://github.com/nodef/extra-array/wiki/indexRange
 [infix]: https://github.com/nodef/extra-array/wiki/infix
 [infixes]: https://github.com/nodef/extra-array/wiki/infixes
-[init]: https://github.com/nodef/extra-array/wiki/init
 [interleave]: https://github.com/nodef/extra-array/wiki/interleave
 [intersection]: https://github.com/nodef/extra-array/wiki/intersection
 [is]: https://github.com/nodef/extra-array/wiki/is
@@ -148,24 +147,21 @@ array.bsearch([1, 3, 5, 7], 5);
 [isSubsequence]: https://github.com/nodef/extra-array/wiki/isSubsequence
 [isSuffix]: https://github.com/nodef/extra-array/wiki/isSuffix
 [isUnique]: https://github.com/nodef/extra-array/wiki/isUnique
-[last]: https://github.com/nodef/extra-array/wiki/last
+[length]: https://github.com/nodef/extra-array/wiki/length
 [map]: https://github.com/nodef/extra-array/wiki/map
 [max]: https://github.com/nodef/extra-array/wiki/max
 [min]: https://github.com/nodef/extra-array/wiki/min
 [partition]: https://github.com/nodef/extra-array/wiki/partition
 [permutation]: https://github.com/nodef/extra-array/wiki/permutation
 [permutations]: https://github.com/nodef/extra-array/wiki/permutations
-[pop]: https://github.com/nodef/extra-array/wiki/pop
 [prefix]: https://github.com/nodef/extra-array/wiki/prefix
 [prefixes]: https://github.com/nodef/extra-array/wiki/prefixes
-[push]: https://github.com/nodef/extra-array/wiki/push
 [range]: https://github.com/nodef/extra-array/wiki/range
 [repeat]: https://github.com/nodef/extra-array/wiki/repeat
 [reverse]: https://github.com/nodef/extra-array/wiki/reverse
 [rotate]: https://github.com/nodef/extra-array/wiki/rotate
 [search]: https://github.com/nodef/extra-array/wiki/search
 [set]: https://github.com/nodef/extra-array/wiki/set
-[shift]: https://github.com/nodef/extra-array/wiki/shift
 [slice]: https://github.com/nodef/extra-array/wiki/slice
 [sort]: https://github.com/nodef/extra-array/wiki/sort
 [splice]: https://github.com/nodef/extra-array/wiki/splice
@@ -175,7 +171,6 @@ array.bsearch([1, 3, 5, 7], 5);
 [suffix]: https://github.com/nodef/extra-array/wiki/suffix
 [suffixes]: https://github.com/nodef/extra-array/wiki/suffixes
 [swap]: https://github.com/nodef/extra-array/wiki/swap
-[tail]: https://github.com/nodef/extra-array/wiki/tail
 [union]: https://github.com/nodef/extra-array/wiki/union
 [unique]: https://github.com/nodef/extra-array/wiki/unique
 [unshift]: https://github.com/nodef/extra-array/wiki/unshift

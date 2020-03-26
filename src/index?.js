@@ -1,7 +1,7 @@
 /**
- * Gets zero-based index within array.
+ * Gets zero-based index.
  * @param {Array} x an array
- * @param {number} i index +ve/-ve
+ * @param {number} i index (-ve: from right)
  * @returns {number}
  */
 function index(x, i) {

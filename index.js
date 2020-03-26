@@ -129,22 +129,22 @@ function concat$(x, ...ys) {
   return x;
 }
 /**
- * Gets zero-based index within array.
+ * Gets zero-based index.
  * @param {Array} x an array
- * @param {number} i index +ve/-ve
+ * @param {number} i index (-ve: from right)
  * @returns {number}
  */
 function index(x, i) {
   return i<0? Math.max(x.length+i, 0) : Math.min(i, x.length);
 }
 /**
- * Gives absolute indices within array.
+ * Gets index range of part of array.
  * @param {Array} x an array
- * @param {number} i start index +ve/-ve (0)
- * @param {number} I end index +ve/-ve (end)
+ * @param {number} i start index (-ve: from right) (0)
+ * @param {number} I end index (-ve: from right) (end)
  * @returns {number} [start index, end index]
  */
-function region(x, i=0, I=x.length) {
+function indexRange(x, i=0, I=x.length) {
   i = index(x, i);
   I = Math.max(i, index(x, I));
   return [i, I];
@@ -160,7 +160,7 @@ function region(x, i=0, I=x.length) {
  */
 function copy$(x, y, j=0, i=0, I=y.length) {
   var j = index(x, j);
-  var [i, I] = region(y, i, I);
+  var [i, I] = indexRange(y, i, I);
   for(; i<I; i++, j++)
     x[j] = y[i];
   return x;
@@ -840,6 +840,16 @@ function isUniqueOn(x, fn=null, ths=null) {
   return true;
 }
 /**
+ * Gets length of part of array.
+ * @param {Array} x an array
+ * @param {number} i start index (-ve: from right) (0)
+ * @param {number} I end index (-ve: from right) (0)
+ */
+function length(x, i=0, I=x.length) {
+  var [i, I] = indexRange(x, i, I);
+  return I-i;
+}
+/**
  * Updates values based on map function.
  * @param {Array} x an array
  * @param {function} fn map function (v, i, x)
@@ -1188,16 +1198,6 @@ function slice(x, i=0, I=x.length) {
   return x.slice(i, I);
 }
 /**
- * Gets length of a part of array.
- * @param {Array} x an array
- * @param {number} i start index +ve/-ve (0)
- * @param {number} I end index +ve/-ve (end)
- */
-function length(x, i=0, I=x.length) {
-  var [i, I] = region(x, i, I);
-  return I-i;
-}
-/**
  * Gets a part of array.
  * @param {Array} x an array (updated)
  * @param {number} i start index (0)
@@ -1512,6 +1512,7 @@ exports.getLerp = getLerp;
 exports.group = group;
 exports.groupOn = groupOn;
 exports.index = index;
+exports.indexRange = indexRange;
 exports.infixes = infixes;
 exports.infix = infix;
 exports.interleave = interleave;
@@ -1533,6 +1534,7 @@ exports.isSuffix = isSuffix;
 exports.isSuffixOn = isSuffixOn;
 exports.isUnique = isUnique;
 exports.isUniqueOn = isUniqueOn;
+exports.length = length;
 exports.map = map;
 exports.map$ = map$;
 exports.max = max;

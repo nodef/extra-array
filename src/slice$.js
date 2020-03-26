@@ -1,4 +1,4 @@
-const length = require('./_length');
+const length = require('./length');
 
 /**
  * Gets a part of array.

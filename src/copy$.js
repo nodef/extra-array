@@ -1,5 +1,5 @@
 const index = require('./index?');
-const region = require('./_region');
+const indexRange = require('./indexRange');
 
 /**
  * Copies part of array to another.
@@ -12,7 +12,7 @@ const region = require('./_region');
  */
 function copy$(x, y, j=0, i=0, I=y.length) {
   var j = index(x, j);
-  var [i, I] = region(y, i, I);
+  var [i, I] = indexRange(y, i, I);
   for(; i<I; i++, j++)
     x[j] = y[i];
   return x;
