@@ -53,17 +53,17 @@ array.bsearch([1, 3, 5, 7], 5);
 |                       | 
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
-| [slice]               | Gets a part of array.
 | [concat]              | Appends arrays to the end.
+| [slice]               | Gets a part of array.
 | [splice]              | Removes or replaces existing values.
 | [flat]                | Flattens nested array to given depth.
+| [cut]                 | Breaks array at/after given indices.
 | [chunk]               | Breaks array into chunks of given size.
 | [cycle]               | Gives values that cycle through an array.
 | [repeat]              | Repeats an array given times.
 | [reverse]             | Reverses the values.
 | [rotate]              | Rotates values in array.
 | [interleave]          | Places values of an array between another.
-| [cut]                 | Breaks array at/after given indices.
 |                       | 
 | [min]                 | Finds smallest value.
 | [max]                 | Finds largest value.
