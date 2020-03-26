@@ -370,11 +370,31 @@ function filter$(x, fn, ths=null) {
   return x;
 }
 /**
+ * Finds leftmost value passing the test.
+ * @param {Array} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {*}
+ */
+function find(x, fn, ths=null) {
+  return x.find(fn, ths);
+}
+/**
+ * Finds index of leftmost value passing the test.
+ * @param {Array} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {number} index of value, -1 if not found
+ */
+function findIndex(x, fn, ths=null) {
+  return x.findIndex(fn, ths);
+}
+/**
  * Finds indices of values passing the test.
  * @param {Iterable} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array<number>} [...indices]
+ * @returns {Array<number>}
  */
 function findIndices(x, fn, ths=null) {
   var a = [], i = -1;
@@ -383,16 +403,15 @@ function findIndices(x, fn, ths=null) {
   return a;
 }
 /**
- * Finds index of rightmost value passing the test.
+ * Finds rightmost value passing the test.
  * @param {Array} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
- * @returns {number} index of value, -1 if not found
+ * @returns {*}
  */
 function findRight(x, fn, ths=null) {
   for(var i=x.length-1; i>=0; i--)
-    if(fn.call(ths, x[i], i, x)) return i;
-  return -1;
+    if(fn.call(ths, x[i], i, x)) return x[i];
 }
 function flatTo(a, x, dep) {
   for(var v of x) {
@@ -548,7 +567,7 @@ function interleave(x, y, m=1, n=1) {
   return a;
 }
 /**
- * Gives values of an array present in another.
+ * Gives values present in both arrays.
  * @param {Iterable} x an array
  * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
@@ -563,7 +582,7 @@ function intersection(x, y, fn=null) {
   return a;
 }
 /**
- * Gives values of an array present in another.
+ * Gives values present in both arrays.
  * @param {Iterable} x an array
  * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
@@ -666,7 +685,7 @@ function isInfixOn(x, y, fn=null, ths=null) {
   }
   return false;
 }
-const exports46 = Array.isArray;
+const exports48 = Array.isArray;
 /**
  * Checks if array has a permutation.
  * @param {Array} x an array
@@ -1297,7 +1316,7 @@ function subsequence(x, n=-1, r=Math.random()) {
   return subsequenceAny(x, r);
 }
 /**
- * Lists all possible partial sequences.
+ * Lists all possible subsequences.
  * @param {Array} x an array
  * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...subsequences
@@ -1359,7 +1378,7 @@ function swap(x, i, j) {
   return swap$(x.slice(), i, j);
 }
 /**
- * Gives union of an array with another.
+ * Gives values present in any array.
  * @param {Array} x an array (updated)
  * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
@@ -1375,7 +1394,7 @@ function union$(x, y, fn=null) {
   return x;
 }
 /**
- * Gives union of an array with another.
+ * Gives values present in any array.
  * @param {Array} x an array
  * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
@@ -1385,7 +1404,7 @@ function union(x, y, fn=null) {
   return union$(x.slice(), y, fn);
 }
 /**
- * Gives union of an array with another.
+ * Gives values present in any array.
  * @param {Array} x an array (updated)
  * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
@@ -1402,7 +1421,7 @@ function unionOn$(x, y, fn=null, ths=null) {
   return x;
 }
 /**
- * Gives union of an array with another.
+ * Gives values present in any array.
  * @param {Array} x an array
  * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
@@ -1481,6 +1500,8 @@ exports.fill = fill;
 exports.fill$ = fill$;
 exports.filter = filter;
 exports.filter$ = filter$;
+exports.find = find;
+exports.findIndex = findIndex;
 exports.findIndices = findIndices;
 exports.findRight = findRight;
 exports.flat = flat;
@@ -1499,7 +1520,7 @@ exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
 exports.isInfix = isInfix;
 exports.isInfixOn = isInfixOn;
-exports.is = exports46;
+exports.is = exports48;
 exports.isPermutation = isPermutation;
 exports.isPermutationOn = isPermutationOn;
 exports.isPrefix = isPrefix;

@@ -3,7 +3,7 @@
  * @param {Iterable} x an array
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
- * @returns {Array<number>} [...indices]
+ * @returns {Array<number>}
  */
 function findIndices(x, fn, ths=null) {
   var a = [], i = -1;

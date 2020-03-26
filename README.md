@@ -63,18 +63,18 @@ array.bsearch([1, 3, 5, 7], 5);
 | [reverse]             | Reverses the values.
 | [rotate]              | Rotates values in array.
 | [interleave]          | Places values of an array between another.
-| [zip]                 | Combines values from n arrays, with a function.
+| [cut]                 | Breaks array at/after given indices.
 |                       | 
-| [map]                 | Updates values based on map function.
-| [filter]              | Keeps the values which pass the test.
 | [min]                 | Finds smallest value.
 | [max]                 | Finds largest value.
 | [range]               | Finds smallest and largest values.
+| [map]                 | Updates values based on map function.
+| [filter]              | Keeps the values which pass the test.
 | [count]               | Counts occurrences of value(s).
 | [partition]           | Breaks array into values, by test.
 | [group]               | Keeps similar values together and in order.
-| [cut]                 | Breaks array at/after given indices.
 | [split]               | Breaks array considering test as separator.
+| [zip]                 | Combines values from n arrays, with a function.
 |                       | 
 | [unique]              | Removes duplicate elements.
 | [union]               | Gives values present in any array.
@@ -103,8 +103,8 @@ array.bsearch([1, 3, 5, 7], 5);
 | [compare]             | Compares two arrays.
 | [search]              | Searches a value from left.
 | [bsearch]             | Binary searches value in sorted array.
-| [findRight]           | Finds index of rightmost value passing the test.
-| [findIndices]         | Finds indices of values passing the test.
+| [find]                | Finds index of left/rightmost value passing the test.
+| [findIndex]           | Finds index(es) of values passing the test.
 | [sort]                | Arranges values in an order.
 
 <br>
@@ -125,8 +125,8 @@ array.bsearch([1, 3, 5, 7], 5);
 [difference]: https://github.com/nodef/extra-array/wiki/difference
 [fill]: https://github.com/nodef/extra-array/wiki/fill
 [filter]: https://github.com/nodef/extra-array/wiki/filter
-[findIndices]: https://github.com/nodef/extra-array/wiki/findIndices
-[findRight]: https://github.com/nodef/extra-array/wiki/findRight
+[find]: https://github.com/nodef/extra-array/wiki/find
+[findIndex]: https://github.com/nodef/extra-array/wiki/findIndex
 [flat]: https://github.com/nodef/extra-array/wiki/flat
 [get]: https://github.com/nodef/extra-array/wiki/get
 [group]: https://github.com/nodef/extra-array/wiki/group
