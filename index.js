@@ -316,6 +316,28 @@ function differenceOn(x, y, fn=null, ths=null) {
   return a;
 }
 /**
+ * Fills with given value.
+ * @param {Array} x an array
+ * @param {*} v value
+ * @param {number?} i start index (0)
+ * @param {number?} I end index (x.length-1)
+ * @returns {Array}
+ */
+function fill(x, v, i=0, I=x.length) {
+  return x.slice().fill(v, i, I);
+}
+/**
+ * Fills with given value.
+ * @param {Array} x an array (updated)
+ * @param {*} v value
+ * @param {number?} i start index (0)
+ * @param {number?} I end index (end)
+ * @returns {Array} x
+ */
+function fill$(x, v, i=0, I=x.length) {
+  return x.fill(v, i, I);
+}
+/**
  * Keeps the values which pass the test.
  * @param {Array} x an array (updated)
  * @param {function} fn test function (v, i, x)
@@ -625,7 +647,7 @@ function isInfixOn(x, y, fn=null, ths=null) {
   }
   return false;
 }
-const exports42 = Array.isArray;
+const exports44 = Array.isArray;
 /**
  * Checks if array has a permutation.
  * @param {Array} x an array
@@ -1404,6 +1426,8 @@ exports.cutRight = cutRight;
 exports.cycle = cycle;
 exports.difference = difference;
 exports.differenceOn = differenceOn;
+exports.fill = fill;
+exports.fill$ = fill$;
 exports.filter$ = filter$;
 exports.findIndices = findIndices;
 exports.findRight = findRight;
@@ -1423,7 +1447,7 @@ exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
 exports.isInfix = isInfix;
 exports.isInfixOn = isInfixOn;
-exports.is = exports42;
+exports.is = exports44;
 exports.isPermutation = isPermutation;
 exports.isPermutationOn = isPermutationOn;
 exports.isPrefix = isPrefix;
