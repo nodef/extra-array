@@ -347,7 +347,17 @@ function fill$(x, v, i=0, I=x.length) {
   return x.fill(v, i, I);
 }
 /**
- * Keeps the values which pass the test.
+ * Keeps values which pass a test.
+ * @param {Array} x an array
+ * @param {function} fn test function (v, i, x)
+ * @param {object?} ths this argument
+ * @returns {Array}
+ */
+function filter(x, fn, ths=null) {
+  return x.filter(fn, ths);
+}
+/**
+ * Keeps values which pass a test.
  * @param {Array} x an array (updated)
  * @param {function} fn test function (v, i, x)
  * @param {object?} ths this argument
@@ -656,7 +666,7 @@ function isInfixOn(x, y, fn=null, ths=null) {
   }
   return false;
 }
-const exports45 = Array.isArray;
+const exports46 = Array.isArray;
 /**
  * Checks if array has a permutation.
  * @param {Array} x an array
@@ -1458,6 +1468,7 @@ exports.difference = difference;
 exports.differenceOn = differenceOn;
 exports.fill = fill;
 exports.fill$ = fill$;
+exports.filter = filter;
 exports.filter$ = filter$;
 exports.findIndices = findIndices;
 exports.findRight = findRight;
@@ -1477,7 +1488,7 @@ exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
 exports.isInfix = isInfix;
 exports.isInfixOn = isInfixOn;
-exports.is = exports45;
+exports.is = exports46;
 exports.isPermutation = isPermutation;
 exports.isPermutationOn = isPermutationOn;
 exports.isPrefix = isPrefix;

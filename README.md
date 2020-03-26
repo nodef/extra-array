@@ -66,7 +66,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [zip]                 | Combines values from n arrays, with a function.
 |                       | 
 | [map]                 | Updates values based on map function.
-| [filter$]             | Keeps the values which pass the test.
+| [filter]              | Keeps the values which pass the test.
 | [min]                 | Finds smallest value.
 | [max]                 | Finds largest value.
 | [range]               | Finds smallest and largest values.
@@ -124,7 +124,7 @@ array.bsearch([1, 3, 5, 7], 5);
 [cycle]: https://github.com/nodef/extra-array/wiki/cycle
 [difference]: https://github.com/nodef/extra-array/wiki/difference
 [fill]: https://github.com/nodef/extra-array/wiki/fill
-[filter$]: https://github.com/nodef/extra-array/wiki/filter$
+[filter]: https://github.com/nodef/extra-array/wiki/filter
 [findIndices]: https://github.com/nodef/extra-array/wiki/findIndices
 [findRight]: https://github.com/nodef/extra-array/wiki/findRight
 [flat]: https://github.com/nodef/extra-array/wiki/flat

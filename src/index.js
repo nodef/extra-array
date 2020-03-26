@@ -18,6 +18,7 @@ exports.difference = require('./difference');
 exports.differenceOn = require('./differenceOn');
 exports.fill = require('./fill');
 exports.fill$ = require('./fill$');
+exports.filter = require('./filter');
 exports.filter$ = require('./filter$');
 exports.findIndices = require('./findIndices');
 exports.findRight = require('./findRight');
