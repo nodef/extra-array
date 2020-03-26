@@ -72,8 +72,8 @@ array.bsearch([1, 3, 5, 7], 5);
 | [filter]              | Keeps the values which pass the test.
 | [count]               | Counts occurrences of value(s).
 | [partition]           | Breaks array into values, by test.
-| [group]               | Keeps similar values together and in order.
 | [split]               | Breaks array considering test as separator.
+| [group]               | Keeps similar values together and in order.
 | [zip]                 | Combines values from n arrays, with a function.
 |                       | 
 | [unique]              | Removes duplicate elements.
