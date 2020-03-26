@@ -4,6 +4,7 @@ exports.bsearch = require('./bsearch');
 exports.bsearchRight = require('./bsearchRight');
 exports.chunk = require('./chunk');
 exports.compare = require('./compare');
+exports.concat = require('./concat');
 exports.concat$ = require('./concat$');
 exports.copy = require('./copy');
 exports.copy$ = require('./copy$');

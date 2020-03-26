@@ -108,6 +108,15 @@ function compare(x, y, fn=null) {
 }
 /**
  * Appends arrays to the end.
+ * @param {Array} x an array
+ * @param {...Iterable} ys arrays to append
+ * @returns {Array}
+ */
+function concat(x, ...ys) {
+  return x.concat(...ys);
+}
+/**
+ * Appends arrays to the end.
  * @param {Array} x an array (updated)
  * @param {...Iterable} ys arrays to append
  * @returns {Array} x
@@ -489,7 +498,7 @@ function random(r) {
   }
 }
 /**
- * Gives an arbitrary infix.
+ * Picks an arbitrary infix.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
@@ -647,7 +656,7 @@ function isInfixOn(x, y, fn=null, ths=null) {
   }
   return false;
 }
-const exports44 = Array.isArray;
+const exports45 = Array.isArray;
 /**
  * Checks if array has a permutation.
  * @param {Array} x an array
@@ -919,7 +928,7 @@ function permutation$(x, n=-1, r=Math.random()) {
   return x;
 }
 /**
- * Rearranges values in arbitrary order.
+ * Picks an arbitrary permutation.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
@@ -976,7 +985,7 @@ function* prefixes(x, n=-1) {
     yield x.slice(0, i);
 }
 /**
- * Gives an arbitrary prefix.
+ * Picks an arbitrary prefix.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
@@ -1129,6 +1138,16 @@ function set$(x, i, v) {
   return x;
 }
 /**
+ * Gets a part of array.
+ * @param {Array} x an array
+ * @param {number} i start index (0)
+ * @param {number} I end index (end)
+ * @returns {Array}
+ */
+function slice(x, i=0, I=x.length) {
+  return x.slice(i, I);
+}
+/**
  * Gets length within array.
  * @param {Array} x an array
  * @param {number} i start index (+ve/-ve)
@@ -1139,10 +1158,10 @@ function length(x, i, I) {
   return I-i;
 }
 /**
- * Keeps only the selected region.
+ * Gets a part of array.
  * @param {Array} x an array (updated)
  * @param {number} i start index (0)
- * @param {number} I end index (x.length)
+ * @param {number} I end index (end)
  * @returns {Array} x
  */
 function slice$(x, i=0, I=x.length) {
@@ -1235,7 +1254,7 @@ function subsequenceAny(x, r) {
 }
 
 /**
- * Gives an arbitrary subsequence.
+ * Picks an arbitrary subsequence.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
@@ -1275,7 +1294,7 @@ function* suffixes(x, n=-1) {
     yield x.slice(i);
 }
 /**
- * Gives an arbitrary suffix.
+ * Picks an arbitrary suffix.
  * @param {Array} x an array
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
@@ -1415,6 +1434,7 @@ exports.bsearch = bsearch;
 exports.bsearchRight = bsearchRight;
 exports.chunk = chunk;
 exports.compare = compare;
+exports.concat = concat;
 exports.concat$ = concat$;
 exports.copy = copy;
 exports.copy$ = copy$;
@@ -1447,7 +1467,7 @@ exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
 exports.isInfix = isInfix;
 exports.isInfixOn = isInfixOn;
-exports.is = exports44;
+exports.is = exports45;
 exports.isPermutation = isPermutation;
 exports.isPermutationOn = isPermutationOn;
 exports.isPrefix = isPrefix;
@@ -1481,6 +1501,7 @@ exports.search = search;
 exports.searchRight = searchRight;
 exports.set = set;
 exports.set$ = set$;
+exports.slice = slice;
 exports.slice$ = slice$;
 exports.sort = sort;
 exports.sort$ = sort$;
