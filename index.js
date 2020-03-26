@@ -550,6 +550,8 @@ function infix(x, n=-1, r=Math.random()) {
 function interleave(x, y, m=1, n=1) {
   var X = x.length, Y = y.length;
   var i = 0, j = 0, a = [];
+  if(X===0) return y.slice();
+  if(Y===0) return x.slice();
   if(X>=Y) while(true) {
     for(var k=0; k<m && i<X; k++, i++)
       a.push(x[i]);
@@ -560,9 +562,9 @@ function interleave(x, y, m=1, n=1) {
   else while(true) {
     for(var k=0; k<m; k++, i=(i+1)%X)
       a.push(x[i]);
+    if(j===Y) break;
     for(var k=0; k<n && j<Y; k++, j++)
-      a.push(y[i]);
-    if(j===X) break;
+      a.push(y[j]);
   }
   return a;
 }
