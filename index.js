@@ -170,23 +170,6 @@ function copy(x, y, j=0, i=0, I=y.length) {
   return copy$(x.slice(), y, j, i, I);
 }
 /**
- * Copies part of array within.
- * @param {Array} x an array
- * @param {number} j write index
- * @param {number?} i read start index (0)
- * @param {number?} I read end index (x.length)
- * @returns {Array}
- */
-function copyWithin(x, j, i=0, I=x.length) {
-  var a = x.slice(0, j)
-  var num = Math.min(I-i, x.length-i);
-  for(var J=Math.min(j+num, x.length); j<J; j++, i++)
-    a[j] = x[i];
-  for(var J=x.length; j<J; j++)
-    a[j] = x[j];
-  return a;
-}
-/**
  * Gives same value.
  * @param {*} v a value
  * @returns {*} v
@@ -653,7 +636,7 @@ function isInfixOn(x, y, fn=null, ths=null) {
   }
   return false;
 }
-const exports44 = Array.isArray;
+const exports43 = Array.isArray;
 /**
  * Checks if array has a permutation.
  * @param {Array} x an array
@@ -1424,7 +1407,6 @@ exports.compare = compare;
 exports.concat$ = concat$;
 exports.copy = copy;
 exports.copy$ = copy$;
-exports.copyWithin = copyWithin;
 exports.countAllOn = countAllOn;
 exports.count = count;
 exports.countOn = countOn;
@@ -1453,7 +1435,7 @@ exports.isDisjointOn = isDisjointOn;
 exports.isEqual = isEqual;
 exports.isInfix = isInfix;
 exports.isInfixOn = isInfixOn;
-exports.is = exports44;
+exports.is = exports43;
 exports.isPermutation = isPermutation;
 exports.isPermutationOn = isPermutationOn;
 exports.isPrefix = isPrefix;

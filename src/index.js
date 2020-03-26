@@ -7,7 +7,6 @@ exports.compare = require('./compare');
 exports.concat$ = require('./concat$');
 exports.copy = require('./copy');
 exports.copy$ = require('./copy$');
-exports.copyWithin = require('./copyWithin');
 exports.countAllOn = require('./countAllOn');
 exports.count = require('./count');
 exports.countOn = require('./countOn');
