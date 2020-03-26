@@ -12,7 +12,7 @@ function* permutationsOf(x, n) {
 }
 
 /**
- * Lists all possible arrangements.
+ * Lists all possible permutations.
  * @param {Array} x an array
  * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...permutations

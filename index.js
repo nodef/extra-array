@@ -949,7 +949,7 @@ function partitionOn(x, fn=null, ths=null) {
   return m;
 }
 /**
- * Rearranges values in arbitrary order.
+ * Picks an arbitrary permutation.
  * @param {Array} x an array (updated)
  * @param {number?} n number of values (-1 => any)
  * @param {number?} r random seed 0->1
@@ -1002,7 +1002,7 @@ function* permutationsOf(x, n) {
 }
 
 /**
- * Lists all possible arrangements.
+ * Lists all possible permutations.
  * @param {Array} x an array
  * @param {number} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...permutations
