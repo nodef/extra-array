@@ -277,7 +277,7 @@ function difference(x, y, fn=null) {
 }
 /**
  * Gets unique set of values.
- * @param {Array} x an array
+ * @param {Iterable} x an iterable
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Set}
@@ -311,7 +311,7 @@ function differenceOn(x, y, fn=null, ths=null) {
  * @param {Array} x an array
  * @param {*} v value
  * @param {number?} i start index (0)
- * @param {number?} I end index (x.length-1)
+ * @param {number?} I end index (end)
  * @returns {Array}
  */
 function fill(x, v, i=0, I=x.length) {

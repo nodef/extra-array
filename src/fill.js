@@ -3,7 +3,7 @@
  * @param {Array} x an array
  * @param {*} v value
  * @param {number?} i start index (0)
- * @param {number?} I end index (x.length-1)
+ * @param {number?} I end index (end)
  * @returns {Array}
  */
 function fill(x, v, i=0, I=x.length) {
