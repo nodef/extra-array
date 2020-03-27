@@ -1,6 +1,6 @@
 /**
  * Gets unique set of values.
- * @param {Array} x an array
+ * @param {Iterable} x an iterable
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {Set}
