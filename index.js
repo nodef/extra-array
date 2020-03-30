@@ -587,7 +587,7 @@ function intersectionOn(x, y, fn=null, ths=null) {
  * @param {Iterable} x an array
  * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if disjoint
+ * @returns {boolean}
  */
 function isDisjoint(x, y, fn=null) {
   var fn = fn||cmp;
@@ -603,7 +603,7 @@ function isDisjoint(x, y, fn=null) {
  * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if disjoint
+ * @returns {boolean}
  */
 function isDisjointOn(x, y, fn=null, ths=null) {
   var s = uniques(x, fn, ths);

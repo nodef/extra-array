@@ -5,7 +5,7 @@ const cmp = require('./_cmp');
  * @param {Iterable} x an array
  * @param {Iterable} y another array
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if disjoint
+ * @returns {boolean}
  */
 function isDisjoint(x, y, fn=null) {
   var fn = fn||cmp;

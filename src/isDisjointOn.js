@@ -7,7 +7,7 @@ const id = require('./_id');
  * @param {Iterable} y another array
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
- * @returns {boolean} true if disjoint
+ * @returns {boolean}
  */
 function isDisjointOn(x, y, fn=null, ths=null) {
   var s = uniques(x, fn, ths);
