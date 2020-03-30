@@ -6,7 +6,6 @@ Methods look like:
 - `sortOn()`: accepts a map function *for faster comparision* (map).
 - `sortOn$()`: accepts a map function, modifies the array (map-update).
 
-
 I find this map-approach beautiful, which i learned from Haskell's `sortOn()`.
 You can notice that i have followed Javascript naming scheme as far as possible.
 Some names are borrowed from Haskell, Python, Java, Processing. Each method is

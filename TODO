@@ -1,3 +1,8 @@
+GENERATING DECLARATIONS
+index.d.ts
+
+GENERATING README
+
 SELECT/CHOOSE
 
 Selecting a random item from an array, with replacement. infix() might be
