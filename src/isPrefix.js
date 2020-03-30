@@ -3,7 +3,7 @@ const cmp = require('./_cmp');
 /**
  * Checks if array starts with a prefix.
  * @param {Array} x an array
- * @param {Array} y prefix?
+ * @param {Iterable} y prefix?
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
  */

@@ -3,7 +3,7 @@ const id = require('./_id');
 /**
  * Checks if array starts with a prefix.
  * @param {Array} x an array
- * @param {Array} y prefix?
+ * @param {Iterable} y prefix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {boolean}

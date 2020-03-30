@@ -2,10 +2,10 @@ const cmp = require('./_cmp');
 
 /**
  * Checks if array contains an infix.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y infix?
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if infix
+ * @returns {boolean}
  */
 function isInfix(x, y, fn=null) {
   if(y.length===0) return true;

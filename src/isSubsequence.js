@@ -2,7 +2,7 @@ const cmp = require('./_cmp');
 
 /**
  * Checks if array has a subsequence.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y subsequence?
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}

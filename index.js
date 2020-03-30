@@ -626,10 +626,10 @@ function isEqual(x, y, fn=null) {
 }
 /**
  * Checks if array contains an infix.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y infix?
  * @param {function?} fn compare function (a, b)
- * @returns {boolean} true if infix
+ * @returns {boolean}
  */
 function isInfix(x, y, fn=null) {
   if(y.length===0) return true;
@@ -647,7 +647,7 @@ function isInfix(x, y, fn=null) {
 }
 /**
  * Checks if array contains an infix.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y infix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
@@ -700,7 +700,7 @@ function isPermutationOn(x, y, fn=null, ths=null) {
 /**
  * Checks if array starts with a prefix.
  * @param {Array} x an array
- * @param {Array} y prefix?
+ * @param {Iterable} y prefix?
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
  */
@@ -713,7 +713,7 @@ function isPrefix(x, y, fn=null) {
 /**
  * Checks if array starts with a prefix.
  * @param {Array} x an array
- * @param {Array} y prefix?
+ * @param {Iterable} y prefix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {boolean}
@@ -729,7 +729,7 @@ function isPrefixOn(x, y, fn=null, ths=null) {
 }
 /**
  * Checks if array has a subsequence.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y subsequence?
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
@@ -744,7 +744,7 @@ function isSubsequence(x, y, fn=null) {
 }
 /**
  * Checks if array has a subsequence.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y subsequence?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
@@ -763,7 +763,7 @@ function isSubsequenceOn(x, y, fn=null, ths=null) {
 /**
  * Checks if array ends with a suffix.
  * @param {Array} x an array
- * @param {Array} y suffix?
+ * @param {Iterable} y suffix?
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
  */
@@ -776,7 +776,7 @@ function isSuffix(x, y, fn=null) {
 /**
  * Checks if array ends with a suffix.
  * @param {Array} x an array
- * @param {Array} y suffix?
+ * @param {Iterable} y suffix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {boolean}

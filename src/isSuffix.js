@@ -3,7 +3,7 @@ const cmp = require('./_cmp');
 /**
  * Checks if array ends with a suffix.
  * @param {Array} x an array
- * @param {Array} y suffix?
+ * @param {Iterable} y suffix?
  * @param {function?} fn compare function (a, b)
  * @returns {boolean}
  */

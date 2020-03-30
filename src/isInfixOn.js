@@ -2,7 +2,7 @@ const id = require('./_id');
 
 /**
  * Checks if array contains an infix.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y infix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument

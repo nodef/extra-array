@@ -2,7 +2,7 @@ const id = require('./_id');
 
 /**
  * Checks if array has a subsequence.
- * @param {Array} x an array
+ * @param {Iterable} x an array
  * @param {Array} y subsequence?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument

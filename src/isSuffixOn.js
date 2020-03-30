@@ -3,7 +3,7 @@ const id = require('./_id');
 /**
  * Checks if array ends with a suffix.
  * @param {Array} x an array
- * @param {Array} y suffix?
+ * @param {Iterable} y suffix?
  * @param {function?} fn map function (v, i, x)
  * @param {object?} ths this argument
  * @returns {boolean}
