@@ -1,16 +1,17 @@
 An [array] is a collection of values, stored contiguously.
-This was my attempt at a simpler array manipulation API. Most are immutable methods,
-and do not modify the arguments. Any that do *for performance reasons* end in **$**.
-Many methods, like `union()` also accept a *compare function*. More performant
-versions accept a *map function* instead to avoid *O(n²)* calls, and end with **On**.
+
+Methods look like:
+- `sort()`: dont modify the array itself (default).
+- `sort$()`: modifies the array *for performance reasons* (update).
+- `sortOn()`: accepts a map function *for faster comparision* (map).
+- `sortOn$()`: accepts a map function, modifies the array (map-update).
+
+
 I find this map-approach beautiful, which i learned from Haskell's `sortOn()`.
-
 You can notice that i have followed Javascript naming scheme as far as possible.
-Some names are borrowed from Haskell, Python, Java, Processing. They are grouped
-together by function, in reference below. Did i miss some really useful method?
-
-Each method is also available as separate package for use by bundling tools,
-like [browserify], [rollup], [uglify-js].
+Some names are borrowed from Haskell, Python, Java, Processing. Each method is
+also available as separate package for use by bundling tools, like [browserify],
+[rollup], [uglify-js].
 
 > Stability: Experimental.
 
