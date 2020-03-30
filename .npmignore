@@ -1,5 +1,6 @@
-# scripts
+# scripts, docs
 src/
+wiki/
 
 # build
 build.js
