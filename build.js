@@ -294,6 +294,17 @@ async function bundleMain() {
   fs.writeFileSync('index.js', data);
 };
 
+function replaceKeepBrackets(x, y) {
+  var s = new Set();
+  var words = x.split(/[\s\.]+/);
+  for(var w of words)
+    if(w.startsWith('[') && w.endsWith(']')) s.add(w.substring(1, w.length-1));
+  var words = y.split(/[\s\.]+/);
+  for(var w of new Set(words))
+    if(s.has(w)) y = y.replace(w, `[${w}]`);
+  return y;
+}
+
 // Reads JSDoc in js file.
 function getJsdoc(js) {
   var c = js.replace(/.*?(\/\*\*.*?\*\/).*/s, '$1');
@@ -323,7 +334,7 @@ function setWiki(md, o) {
     (o.returns? `// --> `+o.returns.description+'\n':'')+
     '```\n';
   md = md||'Blank.\n\n```javascript\n```\n';
-  md = md.replace(/^.*?\n/, o.description+'\n');
+  md = md.replace(/^.*?\n/, m => replaceKeepBrackets(m, o.description)+'\n');
   md = md.replace(/```javascript[\s\S]*?```\n/, def);
   return md;
 }
