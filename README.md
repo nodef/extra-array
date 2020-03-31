@@ -47,7 +47,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | Method                | Action
 |-----------------------|-------
 | [is]                  | Checks if value is array.
-| [get]                 | Gets value at index (+ve, -ve).
+| [get]                 | Gets value at index.
 | [set]                 | Sets value at index (+ve, -ve).
 | [swap]                | Exchanges two values.
 | [index]               | Gets zero-based index.
@@ -60,7 +60,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [slice]               | Gets a part of array.
 | [splice]              | Removes or replaces existing values.
 | [flat]                | Flattens nested array to given depth.
-| [cut]                 | Breaks array at/after given indices.
+| [cut]                 | Breaks array at given indices.
 | [chunk]               | Breaks array into chunks of given size.
 | [cycle]               | Gives values that cycle through an array.
 | [repeat]              | Repeats an array given times.
@@ -72,14 +72,14 @@ array.bsearch([1, 3, 5, 7], 5);
 | [max]                 | Finds largest value.
 | [range]               | Finds smallest and largest values.
 | [map]                 | Updates values based on map function.
-| [filter]              | Keeps the values which pass the test.
+| [filter]              | Keeps values which pass a test.
 | [count]               | Counts occurrences of value(s).
 | [partition]           | Segregates array keeping similar values together.
 | [group]               | Breaks array keeping similar values together.
 | [split]               | Breaks array considering test as separator.
 | [zip]                 | Combines values from n arrays, with a function.
 |                       | 
-| [unique]              | Removes duplicate elements.
+| [unique]              | Removes duplicate values.
 | [union]               | Gives values present in any array.
 | [intersection]        | Gives values present in both arrays.
 | [difference]          | Gives values of an array not present in another.
@@ -95,7 +95,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [infixes]             | Lists all possible infixes.
 | [suffixes]            | Lists all possible suffixes.
 | [subsequences]        | Lists all possible subsequences.
-| [permutations]        | Lists all possible arrangements.
+| [permutations]        | Lists all possible permutations.
 | [isPrefix]            | Checks if array starts with a prefix.
 | [isInfix]             | Checks if array contains an infix.
 | [isSuffix]            | Checks if array ends with a suffix.
@@ -105,8 +105,8 @@ array.bsearch([1, 3, 5, 7], 5);
 | [isEqual]             | Checks if two arrays are equal.
 | [compare]             | Compares two arrays.
 | [search]              | Searches a value from left.
-| [bsearch]             | Binary searches value in sorted array.
-| [find]                | Finds index of left/rightmost value passing the test.
+| [bsearch]             | Binary searches leftmost value in sorted array.
+| [find]                | Finds leftmost value passing the test.
 | [findIndex]           | Finds index(es) of values passing the test.
 | [sort]                | Arranges values in an order.
 

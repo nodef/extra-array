@@ -345,8 +345,8 @@ function setTable(md, os) {
   var top = md.substring(0, i);
   var tab = md.substring(i);
   var I = tab.search(/^[^\|]/m);
-  var tab = tab.substring(0, I);
   var bot = tab.substring(I);
+  var tab = tab.substring(0, I);
   var rrow = /^(\|\s+\[(.*?)\]\s+\|\s+)(.*?)\n/gm, m = null;
   while((m=rrow.exec(tab))!=null) {
     var description = os.has(m[2])? os.get(m[2]).description: m[3];
