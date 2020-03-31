@@ -338,7 +338,7 @@ function setTable(md, os) {
   var rrow = /^(\|\s+\[(.*?)\]\s+\|\s+)(.*?)\n/gm, m = null;
   while((m=rrow.exec(tab))!=null) {
     var description = os.has(m[2])? os.get(m[2]).description: m[3];
-    tab = tab.replace(m[0], m[1]+description+' (yay)\n');
+    tab = tab.replace(m[0], m[1]+description+'\n');
   }
   return top+tab+bot;
 }
