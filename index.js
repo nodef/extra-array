@@ -80,17 +80,8 @@ function bsearchRight(x, v, fn=null) {
 /**
  * Breaks array into chunks of given size.
  * @param {Array} x an array
- * @param {number?} n chunk size
+ * @param {number?} n chunk size (1)
  * @returns {Array<Array>} chunks
- * @example
- * const array = require('extra-array');
- * 
- * var x = [1, 2, 3, 4, 5];
- * array.chunk(x, 2);
- * // [ [ 1, 2 ], [ 3, 4 ], [ 5 ] ]
- * 
- * array.chunk(x, 3);
- * // [ [ 1, 2, 3 ], [ 4, 5 ] ]
  */
 function chunk(x, n=1) {
   var a = [];
@@ -150,8 +141,8 @@ function index(x, i) {
 /**
  * Gets index range of part of array.
  * @param {Array} x an array
- * @param {number} i start index (-ve: from right) (0)
- * @param {number} I end index (-ve: from right) (end)
+ * @param {number?} i start index (-ve: from right) (0)
+ * @param {number?} I end index (-ve: from right) (end)
  * @returns {number} [start index, end index]
  */
 function indexRange(x, i=0, I=x.length) {
@@ -423,19 +414,19 @@ function flat(x, dep=-1) {
   return flatTo([], x, dep);
 }
 /**
- * Gets value at index (+ve, -ve).
+ * Gets value at index.
  * @param {Array} x an array
  * @param {number} i index (-ve: from right)
- * @returns {*} value
+ * @returns {*}
  */
 function get(x, i) {
   return x[index(x, i)];
 }
 /**
- * Gets value at indices (+ve, -ve).
+ * Gets values at indices.
  * @param {Array} x an array
  * @param {Iterable<number>} is indices (-ve: from right)
- * @returns {*} [...values]
+ * @returns {Array}
  */
 function getAll(x, is) {
   var a = [];
@@ -447,7 +438,7 @@ function getAll(x, is) {
  * Gets value at fractional index.
  * @param {Array} x an array
  * @param {number} f fractional index 0->1
- * @returns {*} value
+ * @returns {*}
  */
 function getLerp(x, f) {
   var i = Math.floor(f * x.length);
@@ -493,7 +484,7 @@ function groupOn(x, fn=null, ths=null) {
 /**
  * Lists all possible infixes.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...infixes
  */
 function* infixes(x, n=-1) {
@@ -835,8 +826,8 @@ function isUniqueOn(x, fn=null, ths=null) {
 /**
  * Gets length of part of array.
  * @param {Array} x an array
- * @param {number} i start index (-ve: from right) (0)
- * @param {number} I end index (-ve: from right) (end)
+ * @param {number?} i start index (-ve: from right) (0)
+ * @param {number?} I end index (-ve: from right) (end)
  * @returns {number}
  */
 function length(x, i=0, I=x.length) {
@@ -1009,7 +1000,7 @@ function* permutationsOf(x, n) {
 /**
  * Lists all possible permutations.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...permutations
  */
 function* permutations(x, n=-1) {
@@ -1020,7 +1011,7 @@ function* permutations(x, n=-1) {
 /**
  * Lists all possible prefixes.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...prefixes
  */
 function* prefixes(x, n=-1) {
@@ -1184,8 +1175,8 @@ function set$(x, i, v) {
 /**
  * Gets a part of array.
  * @param {Array} x an array
- * @param {number} i start index (0)
- * @param {number} I end index (end)
+ * @param {number?} i start index (0)
+ * @param {number?} I end index (end)
  * @returns {Array}
  */
 function slice(x, i=0, I=x.length) {
@@ -1194,8 +1185,8 @@ function slice(x, i=0, I=x.length) {
 /**
  * Gets a part of array.
  * @param {Array} x an array (updated)
- * @param {number} i start index (0)
- * @param {number} I end index (end)
+ * @param {number?} i start index (0)
+ * @param {number?} I end index (end)
  * @returns {Array} x
  */
 function slice$(x, i=0, I=x.length) {
@@ -1215,7 +1206,7 @@ function sort$(x, fn=null) {
 /**
  * Arranges values in an order.
  * @param {Array} x an array
- * @param {function?} fc compare function (a, b)
+ * @param {function?} fn compare function (a, b)
  * @returns {Array}
  */
 function sort(x, fn=null) {
@@ -1313,7 +1304,7 @@ function subsequence(x, n=-1, r=Math.random()) {
 /**
  * Lists all possible subsequences.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...subsequences
  */
 function* subsequences(x, n=-1) {
@@ -1330,7 +1321,7 @@ function* subsequences(x, n=-1) {
 /**
  * Lists all possible suffixes.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...suffixes
  */
 function* suffixes(x, n=-1) {

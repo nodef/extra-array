@@ -318,7 +318,7 @@ function getJsdoc(js) {
   m = rreturns.exec(c);
   var returns = m? {type: m[1], description: m[2]}:null;
   var next = js.substring(js.indexOf(c)+c.length);
-  var name = next.replace(/.*?function\s+(.*?)\(.*/s, '$1');
+  var name = next.replace(/.*?function\*?\s+(.*?)\(.*/s, '$1');
   return {description, params, returns, name};
 }
 

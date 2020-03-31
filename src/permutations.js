@@ -14,7 +14,7 @@ function* permutationsOf(x, n) {
 /**
  * Lists all possible permutations.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...permutations
  */
 function* permutations(x, n=-1) {

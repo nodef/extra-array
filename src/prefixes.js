@@ -1,7 +1,7 @@
 /**
  * Lists all possible prefixes.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...prefixes
  */
 function* prefixes(x, n=-1) {

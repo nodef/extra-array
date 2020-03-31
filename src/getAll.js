@@ -1,10 +1,10 @@
 const get = require('./get');
 
 /**
- * Gets value at indices (+ve, -ve).
+ * Gets values at indices.
  * @param {Array} x an array
  * @param {Iterable<number>} is indices (-ve: from right)
- * @returns {*} [...values]
+ * @returns {Array}
  */
 function getAll(x, is) {
   var a = [];

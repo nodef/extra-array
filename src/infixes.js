@@ -1,7 +1,7 @@
 /**
  * Lists all possible infixes.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...infixes
  */
 function* infixes(x, n=-1) {

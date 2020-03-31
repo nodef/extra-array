@@ -1,7 +1,7 @@
 /**
  * Lists all possible suffixes.
  * @param {Array} x an array
- * @param {number} n number of values (-1 => any)
+ * @param {number?} n number of values (-1 => any)
  * @returns {Iterable<Array>} ...suffixes
  */
 function* suffixes(x, n=-1) {
