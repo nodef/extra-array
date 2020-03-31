@@ -124,7 +124,7 @@ function scatterPackage(pth, o) {
   var index = path.join(tmp, 'index'+ext);
   var json = path.join(tmp, 'package.json');
   o.package = o.package||toSnakeCase(nam);
-  o.readme = o.readme||fil;
+  o.readme = o.readme||fil.replace(/[?]+$/, '');
   downloadReadme(readme, o);
   o.description = o.description||readmeHeading(readme);
   scatterReadme(readme, o);

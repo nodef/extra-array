@@ -82,6 +82,15 @@ function bsearchRight(x, v, fn=null) {
  * @param {Array} x an array
  * @param {number?} n chunk size
  * @returns {Array<Array>} chunks
+ * @example
+ * const array = require('extra-array');
+ * 
+ * var x = [1, 2, 3, 4, 5];
+ * array.chunk(x, 2);
+ * // [ [ 1, 2 ], [ 3, 4 ], [ 5 ] ]
+ * 
+ * array.chunk(x, 3);
+ * // [ [ 1, 2, 3 ], [ 4, 5 ] ]
  */
 function chunk(x, n=1) {
   var a = [];
@@ -89,6 +98,7 @@ function chunk(x, n=1) {
     a.push(x.slice(i, i+n));
   return a;
 }
+
 /**
  * Compares two arrays.
  * @param {Array} x an array

@@ -288,10 +288,101 @@ async function bundle(fil, o) {
 };
 module.exports =  bundle;
 
+// Bundle main file.
+async function bundleMain() {
+  var data = await bundle('src/index.js', {dependencies: true});
+  fs.writeFileSync('index.js', data);
+};
+
+// Reads JSDoc in js file.
+function getJsdoc(js) {
+  var c = js.replace(/.*?(\/\*\*.*?\*\/).*/s, '$1');
+  var description = c.match(/\s+\*\s+(.*?)\n/)[1];
+  var rparam = /\s+\*\s+@param\s+(?:\{(.*?)\}\s+)?(.*?)\s+(.*?)\n/g;
+  var params = new Map(), m = null;
+  while((m=rparam.exec(c))!=null)
+    params.set(m[2], {type: m[1], description: m[3]});
+  var rreturns = /\s+\*\s+@returns\s+(?:\{(.*?)\}\s+)?(.*?)\n/;
+  m = rreturns.exec(c);
+  var returns = m? {type: m[1], description: m[2]}:null;
+  var next = js.substring(js.indexOf(c)+c.length);
+  var name = next.replace(/.*?function\s+(.*?)\(.*/s, '$1');
+  return {description, params, returns, name};
+}
+
+// Sets wiki from JSDoc.
+function setWiki(md, o) {
+  var pre = Math.max(...[...o.params.keys()].map(v => v.length));
+  var args = [...o.params].map(([k, v]) => v.type.endsWith('?')? `[${k}]`:k);
+  var pars = [...o.params].map(([k, v]) => `${k}:${' '.padEnd(pre)}${v.description}`);
+  var def =
+    '```javascript\n'+
+    `${o.package}.${o.name}(`+args.join(', ')+`);\n`+
+    pars.join('\n')+'\n'+
+    '```\n';
+  md = md||'Blank.\n\n```javascript\n```\n';
+  md = md.replace(/^.*?\n/, o.description+'\n');
+  md = md.replace(/```javascript[\s\S]*?```\n/, def);
+  return md;
+}
+
+// Sets README table from JSDoc.
+function setTable(md, os) {
+  var i = md.search(/\|\s+Method\s+\|/);
+  var top = md.substring(0, i);
+  var tab = md.substring(i);
+  var I = tab.search(/^[^\|]/m);
+  var tab = tab.substring(0, I);
+  var bot = tab.substring(I);
+  var rrow = /^(\|\s+\[(.*?)\]\s+\|\s+)(.*?)\n/gm, m = null;
+  while((m=rrow.exec(tab))!=null) {
+    var description = os.has(m[2])? os.get(m[2]).description: m[3];
+    tab = tab.replace(m[0], m[1]+description+' (yay)\n');
+  }
+  return top+tab+bot;
+}
+
+function getJsdocs(dir) {
+  var os = new Map();
+  for(var f of fs.readdirSync(dir)) {
+    if(!f.endsWith('.js')) continue;
+    if(f.startsWith('_')) continue;
+    if(f==='index.js') continue;
+    var name = f.replace(/[?]+\.js/, '');
+    var p = path.join(dir, f);
+    var js = fs.readFileSync(p, 'utf8');
+    os.set(name, getJsdoc(js));
+  }
+  return os;
+}
+
+function setWikis(dir, os, o) {
+  for(var f of fs.readdirSync(dir)) {
+    if(!f.endsWith('.md')) continue;
+    if(f.startsWith('_')) continue;
+    if(f==='Home.md') continue;
+    var name = f.replace('.md', '');
+    var p = path.join(dir, f);
+    var md = fs.readFileSync(p, 'utf8');
+    md = setWiki(md, Object.assign({}, o, os.get(name)));
+    fs.writeFileSync(p, md);
+  }
+}
+
+function setReadme(os) {
+  var p = 'README.md';
+  var md = fs.readFileSync(p, 'utf8');
+  md = setTable(md, os);
+  fs.writeFileSync(p, md);
+}
 
 // Run on shell.
 async function main() {
-  var data = await bundle('src/index.js', {dependencies: true});
-  fs.writeFileSync('index.js', data);
+  var pkg = path.basename(__dirname);
+  var o = {package: pkg.replace(/.*?-/, '')};
+  await bundleMain();
+  var os = getJsdocs('src');
+  setWikis('wiki', os, o);
+  setReadme(os);
 };
 main();
