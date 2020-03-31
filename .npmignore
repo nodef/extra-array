@@ -11,4 +11,5 @@ bundle.js
 # others
 unused/
 unused.js
+wait.d.ts
 TODO
