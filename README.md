@@ -48,7 +48,7 @@ array.bsearch([1, 3, 5, 7], 5);
 |-----------------------|-------
 | [is]                  | Checks if value is array.
 | [get]                 | Gets value at index.
-| [set]                 | Sets value at index (+ve, -ve).
+| [set]                 | Sets value at index.
 | [swap]                | Exchanges two values.
 | [index]               | Gets zero-based index.
 | [indexRange]          | Gets index range of part of array.
@@ -73,7 +73,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [range]               | Finds smallest and largest values.
 | [map]                 | Updates values based on map function.
 | [filter]              | Keeps values which pass a test.
-| [count]               | Counts occurrences of value(s).
+| [count]               | Counts values which satisfy a test.
 | [partition]           | Segregates array keeping similar values together.
 | [group]               | Breaks array keeping similar values together.
 | [split]               | Breaks array considering test as separator.
@@ -107,7 +107,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [search]              | Searches a value from left.
 | [bsearch]             | Binary searches leftmost value in sorted array.
 | [find]                | Finds leftmost value passing the test.
-| [findIndex]           | Finds index(es) of values passing the test.
+| [findIndex]           | Finds index of leftmost value passing the test.
 | [sort]                | Arranges values in an order.
 
 <br>
