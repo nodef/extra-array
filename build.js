@@ -297,6 +297,7 @@ async function bundleMain() {
 // Reads JSDoc in js file.
 function getJsdoc(js) {
   var c = js.replace(/.*?(\/\*\*.*?\*\/).*/s, '$1');
+  if(c.length===js.length) return null;
   var description = c.match(/\s+\*\s+(.*?)\n/)[1];
   var rparam = /\s+\*\s+@param\s+(?:\{(.*?)\}\s+)?(.*?)\s+(.*?)\n/g;
   var params = new Map(), m = null;
@@ -348,15 +349,17 @@ function getJsdocs(dir) {
     if(!f.endsWith('.js')) continue;
     if(f.startsWith('_')) continue;
     if(f==='index.js') continue;
-    var name = f.replace(/[?]+\.js/, '');
+    var name = f.replace(/[?]*\.js/, '');
     var p = path.join(dir, f);
     var js = fs.readFileSync(p, 'utf8');
-    os.set(name, getJsdoc(js));
+    var o = getJsdoc(js);
+    if(!o) { console.log('getJsdocs: no jsdoc for '+p); continue; }
+    os.set(name, o);
   }
   return os;
 }
 
-function setWikis(dir, os, o) {
+function setWikis(dir, os, ot) {
   for(var f of fs.readdirSync(dir)) {
     if(!f.endsWith('.md')) continue;
     if(f.startsWith('_')) continue;
@@ -364,7 +367,9 @@ function setWikis(dir, os, o) {
     var name = f.replace('.md', '');
     var p = path.join(dir, f);
     var md = fs.readFileSync(p, 'utf8');
-    md = setWiki(md, Object.assign({}, o, os.get(name)));
+    var o = os.get(name);
+    if(!o) { console.log('setWikis: no jsdoc for '+p); continue; }
+    md = setWiki(md, Object.assign({}, ot, o));
     fs.writeFileSync(p, md);
   }
 }
@@ -379,10 +384,10 @@ function setReadme(os) {
 // Run on shell.
 async function main() {
   var pkg = path.basename(__dirname);
-  var o = {package: pkg.replace(/.*?-/, '')};
+  var ot = {package: pkg.replace(/.*?-/, '')};
   await bundleMain();
   var os = getJsdocs('src');
-  setWikis('wiki', os, o);
+  setWikis('wiki', os, ot);
   setReadme(os);
 };
 main();
