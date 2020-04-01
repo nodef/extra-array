@@ -1,5 +1,5 @@
-const compare = require('./compare');
 const cmp = require('./_cmp');
+const isSubsequence = require('./isSubsequence');
 
 /**
  * Checks if array has a permutation.
@@ -12,6 +12,6 @@ function isPermutation(x, y, fn=null) {
   var fn = fn||cmp;
   var x1 = x.slice().sort(fn);
   var y1 = y.slice().sort(fn);
-  return compare(x1, y1, fn)===0;
+  return isSubsequence(x1, y1, fn);
 }
 module.exports = isPermutation;

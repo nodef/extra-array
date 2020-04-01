@@ -672,6 +672,21 @@ function isInfixOn(x, y, fn=null, ths=null) {
 }
 const exports47 = Array.isArray;
 /**
+ * Checks if array has a subsequence.
+ * @param {Iterable} x an array
+ * @param {Array} y subsequence?
+ * @param {function?} fn compare function (a, b)
+ * @returns {boolean}
+ */
+function isSubsequence(x, y, fn=null) {
+  if(y.length===0) return true;
+  var fn = fn||cmp;
+  var j = 0, J = y.length;
+  for(var u of x)
+    if(fn(u, y[j])===0 && (++j)===J) return true;
+  return false;
+}
+/**
  * Checks if array has a permutation.
  * @param {Array} x an array
  * @param {Array} y permutation?
@@ -682,7 +697,7 @@ function isPermutation(x, y, fn=null) {
   var fn = fn||cmp;
   var x1 = x.slice().sort(fn);
   var y1 = y.slice().sort(fn);
-  return compare(x1, y1, fn)===0;
+  return isSubsequence(x1, y1, fn);
 }
 /**
  * Checks if array has a permutation.
@@ -696,7 +711,7 @@ function isPermutationOn(x, y, fn=null, ths=null) {
   var fn = fn||id;
   var x1 = x.map(fn, ths).sort();
   var y1 = y.map(fn, ths).sort();
-  return compare(x1, y1)===0;
+  return isSubsequence(x1, y1);
 }
 /**
  * Checks if array starts with a prefix.
@@ -727,21 +742,6 @@ function isPrefixOn(x, y, fn=null, ths=null) {
     if(u1!==v1) return false;
   }
   return true;
-}
-/**
- * Checks if array has a subsequence.
- * @param {Iterable} x an array
- * @param {Array} y subsequence?
- * @param {function?} fn compare function (a, b)
- * @returns {boolean}
- */
-function isSubsequence(x, y, fn=null) {
-  if(y.length===0) return true;
-  var fn = fn||cmp;
-  var j = 0, J = y.length;
-  for(var u of x)
-    if(fn(u, y[j])===0 && (++j)===J) return true;
-  return false;
 }
 /**
  * Checks if array has a subsequence.
