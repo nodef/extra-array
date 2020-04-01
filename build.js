@@ -349,7 +349,7 @@ function setTable(md, os) {
   var tab = tab.substring(0, I);
   var rrow = /^(\|\s+\[(.*?)\]\s+\|\s+)(.*?)\n/gm, m = null;
   while((m=rrow.exec(tab))!=null) {
-    var description = os.has(m[2])? os.get(m[2]).description: m[3];
+    var description = os.get(m[2])? os.get(m[2]).description: m[3];
     tab = tab.replace(m[0], m[1]+description+'\n');
   }
   return top+tab+bot;
@@ -365,7 +365,7 @@ function getJsdocs(dir) {
     var p = path.join(dir, f);
     var js = fs.readFileSync(p, 'utf8');
     var o = getJsdoc(js);
-    if(!o) { console.log('getJsdocs: no jsdoc for '+p); continue; }
+    if(!o) { console.log('getJsdocs: no jsdoc for '+p); }
     os.set(name, o);
   }
   return os;
@@ -393,6 +393,18 @@ function setReadme(os) {
   fs.writeFileSync(p, md);
 }
 
+function setKeywords(os) {
+  var d = fs.readFileSync('package.json', 'utf8');
+  var p = JSON.parse(d), {keywords} = p;
+  for(var k of os.keys()) {
+    var i = keywords.indexOf(k);
+    if(i>=0) keywords.length = Math.min(keywords.length, i);
+  }
+  p.keywords = [...keywords, ...os.keys()];
+  var d = JSON.stringify(p, null, 2);
+  fs.writeFileSync('package.json', d);
+}
+
 // Run on shell.
 async function main() {
   var pkg = path.basename(__dirname);
@@ -401,5 +413,6 @@ async function main() {
   var os = getJsdocs('src');
   setWikis('wiki', os, ot);
   setReadme(os);
+  setKeywords(os);
 };
 main();
