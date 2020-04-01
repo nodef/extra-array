@@ -295,13 +295,12 @@ async function bundleMain() {
 };
 
 function replaceKeepBrackets(x, y) {
-  var s = new Set();
-  var words = x.split(/[\s\.]+/);
-  for(var w of words)
-    if(w.startsWith('[') && w.endsWith(']')) s.add(w.substring(1, w.length-1));
-  var words = y.split(/[\s\.]+/);
-  for(var w of new Set(words))
-    if(s.has(w)) y = y.replace(w, `[${w}]`);
+  var links = new Set();
+  var rref = /(.?)\[([\w\s\-$.]+)\](.?)/g, m = null;
+  while((m=rref.exec(x))!=null)
+    if(m[1]!=='!' && m[3]!=='(') links.add(m[2]);
+  for(var l of links)
+    y = y.replace(l, `[${l}]`);
   return y;
 }
 
