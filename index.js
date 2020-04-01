@@ -1083,13 +1083,13 @@ function reverse(x) {
   return x.slice().reverse();
 }
 /**
- * Gives positive modulus.
- * @param {number} m dividend
- * @param {number} n divisor
- * @returns {number} m % n
+ * Gets remainder of x/y with sign of y (floored division).
+ * @param {number} x dividend
+ * @param {number} y divisor
+ * @returns {number}
  */
-function modp(m, n) {
-  return (m % n + n) % n;
+function mod(x, y) {
+  return x - y*Math.floor(x/y);
 }
 /**
  * Rotates values in array.
@@ -1098,7 +1098,7 @@ function modp(m, n) {
  * @returns {Array} x
  */
 function rotate$(x, n) {
-  var n = modp(n, x.length);
+  var n = mod(n, x.length);
   var y = x.slice(-n);
   x.copyWithin(n, 0);
   return copy$(x, y);

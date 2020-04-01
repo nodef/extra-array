@@ -1,5 +1,5 @@
 const copy$ = require('./copy$');
-const modp = require('./_modp');
+const mod = require('@extra-math/mod');
 
 /**
  * Rotates values in array.
@@ -8,7 +8,7 @@ const modp = require('./_modp');
  * @returns {Array} x
  */
 function rotate$(x, n) {
-  var n = modp(n, x.length);
+  var n = mod(n, x.length);
   var y = x.slice(-n);
   x.copyWithin(n, 0);
   return copy$(x, y);
