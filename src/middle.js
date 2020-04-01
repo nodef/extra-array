@@ -6,6 +6,6 @@
  * @returns {Array}
  */
 function middle(x, i=0, n=1) {
-  return x.slice(x, i, i+n);
+  return x.slice(i, i+n);
 }
 module.exports = middle;
