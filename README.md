@@ -116,6 +116,11 @@ array.bsearch([1, 3, 5, 7], 5);
 
 > Browserified, minified version of this package is [extra-array.min].
 
+[array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+[browserify]: https://www.npmjs.com/package/browserify
+[rollup]: https://www.npmjs.com/package/rollup
+[uglify-js]: https://www.npmjs.com/package/uglify-js
+[extra-array.min]: https://www.npmjs.com/package/extra-array.min
 [bsearch]: https://github.com/nodef/extra-array/wiki/bsearch
 [chunk]: https://github.com/nodef/extra-array/wiki/chunk
 [compare]: https://github.com/nodef/extra-array/wiki/compare
@@ -174,10 +179,4 @@ array.bsearch([1, 3, 5, 7], 5);
 [union]: https://github.com/nodef/extra-array/wiki/union
 [unique]: https://github.com/nodef/extra-array/wiki/unique
 [unshift]: https://github.com/nodef/extra-array/wiki/unshift
-[zip]: https://github.com/nodef/extra-array/wiki/zip
-
-[array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
-[browserify]: https://www.npmjs.com/package/browserify
-[rollup]: https://www.npmjs.com/package/rollup
-[uglify-js]: https://www.npmjs.com/package/uglify-js
-[extra-array.min]: https://www.npmjs.com/package/extra-array.min
+[zip]: https://github.com/nodef/array/wiki/zip

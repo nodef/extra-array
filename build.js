@@ -339,6 +339,22 @@ function setWiki(md, o) {
   return md;
 }
 
+function setWikiLinks(md, o) {
+  var txt = md.replace(/```.*?```/gs, '');
+  var links = new Set();
+  var rref = /(.?)\[([\w\-$.]+)\]/g, m = null;
+  var rlink = /^\[([\w\-$.]+)\]\s*:\s*(.*?)$/gm, m = null;
+  while((m=rref.exec(txt))!=null)
+    if(m[1]!=='!') links.add(m[2]);
+  while((m=rlink.exec(txt))!=null)
+    links.delete(m[1]);
+  for(var l of links) {
+    console.log('setWikiLinks: '+l);
+    md = md+`[${l}]: https://github.com/${o.org}/${o.package}/wiki/${l}\n`;
+  }
+  return md;
+}
+
 // Sets README table from JSDoc.
 function setTable(md, os) {
   var i = md.search(/\|\s+Method\s+\|/);
@@ -382,14 +398,16 @@ function setWikis(dir, os, ot) {
     var o = os.get(name);
     if(!o) { console.log('setWikis: no jsdoc for '+p); continue; }
     md = setWiki(md, Object.assign({}, ot, o));
+    md = setWikiLinks(md, ot);
     fs.writeFileSync(p, md);
   }
 }
 
-function setReadme(os) {
+function setReadme(os, ot) {
   var p = 'README.md';
   var md = fs.readFileSync(p, 'utf8');
   md = setTable(md, os);
+  md = setWikiLinks(md, ot);
   fs.writeFileSync(p, md);
 }
 
@@ -401,18 +419,18 @@ function setKeywords(os) {
     if(i>=0) keywords.length = Math.min(keywords.length, i);
   }
   p.keywords = [...keywords, ...os.keys()];
-  var d = JSON.stringify(p, null, 2);
+  var d = JSON.stringify(p, null, 2)+'\n';
   fs.writeFileSync('package.json', d);
 }
 
 // Run on shell.
 async function main() {
   var pkg = path.basename(__dirname);
-  var ot = {package: pkg.replace(/.*?-/, '')};
+  var ot = {org: 'nodef', package: pkg.replace(/.*?-/, '')};
   await bundleMain();
   var os = getJsdocs('src');
   setWikis('wiki', os, ot);
-  setReadme(os);
+  setReadme(os, ot);
   setKeywords(os);
 };
 main();
