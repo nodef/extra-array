@@ -1,4 +1,5 @@
 GENERATING DECLARATIONS
+switching to TS
 index.d.ts
 
 SELECT/CHOOSE
@@ -39,3 +40,18 @@ ASYNC?
 - function.iterate
 - number.modp
 - string.splice
+
+##############
+
+- less specific regexp
+- general regexp: union difference
+- regexp union, optimize
+
+link to pkg, min
+
+##############
+
+animation games
+reward gaming from money earned
+or purchase KBC sort
+1+2+3+...10 = ?
