@@ -1,15 +1,15 @@
-# parts
+# Parts
 src/
+docs/
 wiki/
 .gitmodules
 
-# build
+# Build
 build.js
-bundle.js
+rollup.config.js
 .travis.yml
 
-# others
+# Others
 unused/
-unused.js
-wait.d.ts
+unused.*
 TODO
