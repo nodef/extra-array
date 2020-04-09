@@ -179,4 +179,4 @@ array.bsearch([1, 3, 5, 7], 5);
 [union]: https://github.com/nodef/extra-array/wiki/union
 [unique]: https://github.com/nodef/extra-array/wiki/unique
 [unshift]: https://github.com/nodef/extra-array/wiki/unshift
-[zip]: https://github.com/nodef/array/wiki/zip
+[zip]: https://github.com/nodef/extra-array/wiki/zip
