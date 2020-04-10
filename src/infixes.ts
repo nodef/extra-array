@@ -1,10 +1,10 @@
 /**
  * Lists all possible infixes.
- * @param {Array} x an array
- * @param {number?} n number of values (-1 => any)
- * @returns {Iterable<Array>} ...infixes
+ * @param x an array
+ * @param n number of values (-1 => any)
+ * @returns ...infixes
  */
-function* infixes(x, n=-1) {
+function* infixes<T>(x: T[], n: number=-1): Iterable<T[]> {
   if(n<=0) { yield []; if(n===0) return; }
   var X = x.length, N = Math.max(n, 1), dj = n<0? 1:X;
   for(var i=0, I=X-N+1; i<I; i++) {
@@ -12,4 +12,4 @@ function* infixes(x, n=-1) {
       yield x.slice(i, j);
   }
 }
-module.exports = infixes;
+export default infixes;

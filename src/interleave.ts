@@ -1,12 +1,11 @@
 /**
  * Places values of an array between another.
- * @param {Array} x an array
- * @param {Array} y another array
- * @param {number?} m number of values from x (1)
- * @param {number?} n number of values from y (1)
- * @returns {Array}
+ * @param x an array
+ * @param y another array
+ * @param m number of values from x (1)
+ * @param n number of values from y (1)
  */
-function interleave(x, y, m=1, n=1) {
+function interleave<T>(x: T[], y: T[], m: number=1, n: number=1): T[] {
   var X = x.length, Y = y.length;
   var i = 0, j = 0, a = [];
   if(X===0) return y.slice();
@@ -27,4 +26,4 @@ function interleave(x, y, m=1, n=1) {
   }
   return a;
 }
-module.exports = interleave;
+export default interleave;
