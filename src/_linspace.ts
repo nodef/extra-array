@@ -1,4 +1,4 @@
-const arange = require('./_arange');
+import arange from './_arange';
 
 /**
  * Returns evenly spaced values within given interval.
@@ -7,8 +7,8 @@ const arange = require('./_arange');
  * @param {number?} n no. of values in between (100)
  * @returns {Array}
  */
-function linspace(v, V, n=100) {
+function linspace(v: number, V: number, n: number=100): number[] {
   var stp = (V-v)/(n-1);
   return arange(v, V+stp, stp);
 }
-module.exports = linspace;
+export default linspace;
