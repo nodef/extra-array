@@ -1,4 +1,4 @@
-const copy$ = require('./copy$');
+import copy$ from './copy$';
 
 /**
  * Copies part of array to another.
@@ -9,7 +9,7 @@ const copy$ = require('./copy$');
  * @param {number?} I read end index (end)
  * @returns {Array}
  */
-function copy(x, y, j=0, i=0, I=y.length) {
+function copy<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.length): T[] {
   return copy$(x.slice(), y, j, i, I);
 }
-module.exports = copy;
+export default copy;

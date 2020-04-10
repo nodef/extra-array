@@ -1,4 +1,4 @@
-const index = require('./index?');
+import index from './index?';
 
 /**
  * Gets index range of part of array.
@@ -7,9 +7,9 @@ const index = require('./index?');
  * @param {number?} I end index (-ve: from right) (end)
  * @returns {number} [start index, end index]
  */
-function indexRange(x, i=0, I=x.length) {
+function indexRange<T>(x: T[], i: number=0, I: number=x.length): [number, number] {
   i = index(x, i);
   I = Math.max(i, index(x, I));
   return [i, I];
 }
-module.exports = indexRange;
+export default indexRange;

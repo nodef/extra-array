@@ -1,4 +1,5 @@
-const cmp = require('./_cmp');
+import cmp from './_cmp';
+import type {compareFn} from './_types';
 
 /**
  * Binary searches value in sorted array.
@@ -7,7 +8,7 @@ const cmp = require('./_cmp');
  * @param {function?} fn compare function (a, b)
  * @returns {number} index of value | ~(index of closest value)
  */
-function bsearchAny(x, v, fn=null) {
+function bsearchAny<T>(x: T[], v: T, fn: compareFn<T>=null): number {
   fn = fn||cmp;
   for(var i=0, I=x.length; i<I;) {
     var m = (i+I)>>>1;
@@ -18,4 +19,4 @@ function bsearchAny(x, v, fn=null) {
   }
   return ~i;
 }
-module.exports = bsearchAny;
+export default bsearchAny;
