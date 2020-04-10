@@ -2,8 +2,7 @@ import type {getFn} from './_types';
 
 /**
  * Gives a random number generator.
- * @param {number} r random seed 0->1
- * @returns {function}
+ * @param r random seed 0->1
  */
 function random(r: number): getFn<number> {
   var a = Math.floor(r * 2**31);

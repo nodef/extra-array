@@ -1,10 +1,10 @@
 /**
  * Breaks array after given indices.
- * @param {Array} x an array
- * @param {Iterable<number>} is split indices (sorted)
- * @returns {Array<Array>} [...pieces]
+ * @param x an array
+ * @param is split indices (sorted)
+ * @returns [...pieces]
  */
-function cutRight(x, is) {
+function cutRight<T>(x: T[], is: Iterable<number>): T[][] {
   var a = [], i = 0;
   for(var j of is) {
     j = j<0? x.length:j;
@@ -14,4 +14,4 @@ function cutRight(x, is) {
   a.push(x.slice(j+1));
   return a;
 }
-module.exports = cutRight;
+export default cutRight;

@@ -1,13 +1,12 @@
-import type {mapFn} from "./_types";
+import type {mapFn} from './_types';
 
 /**
  * Gets unique set of values.
- * @param {Iterable} x an iterable
- * @param {function?} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Set}
+ * @param x an iterable
+ * @param fn map function (v, i, x)
+ * @param ths this argument
  */
-function uniques<T, U>(x: T[], fn: mapFn<T, U>=null, ths: object=null): Set<T|U> {
+function uniques<T, U>(x: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null): Set<T|U> {
   if(!fn) return new Set(x);
   var s = new Set<U>(), i = -1;
   for(var v of x)
