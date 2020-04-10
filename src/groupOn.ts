@@ -1,13 +1,13 @@
-const id = require('./_id');
+import id from './_id';
+import type {mapFn} from './_types';
 
 /**
  * Breaks array keeping similar values together.
- * @param {Iterable} x an array
- * @param {function?} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array<Array>}
+ * @param x an array
+ * @param fn map function (v, i, x)
+ * @param ths this argument
  */
-function groupOn(x, fn=null, ths=null) {
+function groupOn<T, U>(x: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null): T[][] {
   var fn = fn||id;
   var a = [], b = [], i = -1;
   var u1 = fn.call(ths, x[0], 0, x);
@@ -20,4 +20,4 @@ function groupOn(x, fn=null, ths=null) {
   a.push(b);
   return a;
 }
-module.exports = groupOn;
+export default groupOn;

@@ -1,12 +1,12 @@
-const cmp = require('./_cmp');
+import cmp from './_cmp';
+import type {compareFn} from './_types';
 
 /**
  * Breaks array keeping similar values together.
- * @param {Iterable} x an array
- * @param {function?} fn compare function (a, b)
- * @returns {Array<Array>}
+ * @param x an array
+ * @param fn compare function (a, b)
  */
-function group(x, fn=null) {
+function group<T>(x: Iterable<T>, fn: compareFn<T>=null): T[][] {
   var fn = fn||cmp;
   var u = x[0], a = [], b = [];
   for(var v of x) {
@@ -17,4 +17,4 @@ function group(x, fn=null) {
   a.push(b);
   return a;
 }
-module.exports = group;
+export default group;
