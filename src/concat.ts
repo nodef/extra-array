@@ -8,4 +8,4 @@ import concat$ from './concat$';
 function concat<T>(x: T[], ...ys: Iterable<T>[]): T[] {
   return concat$(x.slice(), ...ys);
 }
-module.exports = concat;
+export default concat;

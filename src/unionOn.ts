@@ -1,14 +1,14 @@
-const unionOn$ = require('./unionOn$');
+import unionOn$ from './unionOn$';
+import type {mapFn} from './_types';
 
 /**
  * Gives values present in any array.
- * @param {Array} x an array
- * @param {Iterable} y another array
- * @param {function?} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Array}
+ * @param x an array
+ * @param y another array
+ * @param fn map function (v, i, x)
+ * @param ths this argument
  */
-function unionOn(x, y, fn=null, ths=null) {
+function unionOn<T, U>(x: T[], y: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null): T[] {
   return unionOn$(x.slice(), y, fn, ths);
 }
-module.exports = unionOn;
+export default unionOn;
