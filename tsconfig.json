@@ -7,6 +7,9 @@
     "sourceMap": true,
     "outDir": "build"
   },
+  "files": [
+    "src/index.ts"
+  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
