@@ -1,13 +1,14 @@
 # Parts
 src/
-docs/
 wiki/
 .gitmodules
 
 # Build
+build/
 build.js
-rollup.config.js
 .travis.yml
+tsconfig.json
+rollup.config.js
 
 # Others
 unused/

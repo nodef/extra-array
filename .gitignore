@@ -1,7 +1,9 @@
 # Generated files
-# *.js
+build/
 *.d.ts
 *.map
+example.js
+index.js
 
 # Logs
 logs

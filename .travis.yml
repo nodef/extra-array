@@ -5,6 +5,7 @@ before_install:
   - echo "access=public" >> ~/.npmrc
   - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
 before_script:
-  - npm install -g download-cli browserify uglify-es
+  - npm install -g typescript download-cli browserify uglify-es
+  - git submodule update --init
   - npm install
-script: node ./bundle
+script: npm run escatter
