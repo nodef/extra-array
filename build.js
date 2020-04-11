@@ -2,6 +2,6 @@ const build = require('extra-build');
 
 
 function main(a) {
-  build.update();
+  build.init();
 }
 if(require.main===module) main(process.argv);

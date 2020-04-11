@@ -6,7 +6,7 @@ import type {mapFn} from './_types';
  * @param fn map function (v, i, x)
  * @param ths this argument
  */
-function map<T, U>(x: T[], fn: mapFn<T, U>, ths: object=null): U[] {
+function map<T, U>(x: T[], fn: mapFn<T, U>, ths: object=null): (T|U)[] {
   return x.map(fn, ths);
 }
 export default map;

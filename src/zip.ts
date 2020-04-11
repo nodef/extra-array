@@ -8,7 +8,7 @@ import type {combineFn} from './_types';
  * @param ths this argument
  * @returns combined values
  */
-function zip<T, U>(xs: T[][], fn: combineFn<T, U>=null, ths: object=null): U[] {
+function zip<T, U>(xs: T[][], fn: combineFn=null, ths: object=null): U[] {
   var fn = fn||args;
   var a = [], A = 0;
   for(var r=0, R=xs.length; r<R; r++)
