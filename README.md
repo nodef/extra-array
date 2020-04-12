@@ -8,9 +8,12 @@ Methods look like:
 
 I find this map-approach beautiful, which i learned from Haskell's `sortOn()`.
 You can notice that i have followed Javascript naming scheme as far as possible.
-Some names are borrowed from Haskell, Python, Java, Processing. Each method is
-also available as separate package for use by bundling tools, like [browserify],
-[rollup], [uglify-js].
+Some names are borrowed from Haskell, Python, Java, Processing.
+
+Each method is also available as separate package for use by bundling tools,
+like [rollup], [browserify], [uglify-js]:
+- `@extra-array/sort`: es module
+- `@extra-array/sort.min`: browserified, minified
 
 > Stability: Experimental.
 
