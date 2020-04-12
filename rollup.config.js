@@ -5,7 +5,7 @@ export default {
   input: 'src/index.js',
   output: {
     dir: '.',
-    format: 'es'
+    format: 'cjs'
   },
   plugins: [resolve(), commonjs()]
 };
