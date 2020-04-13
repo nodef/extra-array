@@ -1,5 +1,9 @@
 An [array] is a collection of values, stored contiguously. [:running:] [:vhs:] [:package:] [:moon:]
 
+I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
+You can notice that i have followed Javascript naming scheme as far as possible.
+Some names are borrowed from Haskell, Python, Java, Processing.
+
 Methods look like:
 - `sort()`: dont modify the array itself (default).
 - `sort$()`: modifies the array *for performance reasons* (update).
@@ -9,10 +13,6 @@ Methods look like:
 Methods as separate packages:
 - `@extra-array/sort`: use [rollup] to bundle this es module.
 - `@extra-array/sort.min`: use in browser ([browserify], [uglify-js]).
-
-I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
-You can notice that i have followed Javascript naming scheme as far as possible.
-Some names are borrowed from Haskell, Python, Java, Processing.
 
 > Stability: Experimental.
 
