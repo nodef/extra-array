@@ -1,4 +1,4 @@
-An [array] is a collection of values, stored contiguously.
+An [array] is a collection of values, stored contiguously. [:running:] [:vhs:] [:package:] [:moon:]
 
 Methods look like:
 - `sort()`: dont modify the array itself (default).
@@ -182,3 +182,7 @@ array.bsearch([1, 3, 5, 7], 5);
 [unique]: https://github.com/nodef/extra-array/wiki/unique
 [unshift]: https://github.com/nodef/extra-array/wiki/unshift
 [zip]: https://github.com/nodef/extra-array/wiki/zip
+[:running:]: https://npm.runkit.com/extra-array
+[:vhs:]: https://asciinema.org/a/319460
+[:package:]: https://www.npmjs.com/package/extra-array
+[:moon:]: https://www.npmjs.com/package/extra-array.min
