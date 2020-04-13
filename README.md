@@ -79,7 +79,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [partition]           | Segregates array keeping similar values together.
 | [group]               | Breaks array keeping similar values together.
 | [split]               | Breaks array considering test as separator.
-| [zip]                 | Combines values from n arrays, with a function.
+| [zip]                 | Combines values from n arrays.
 |                       | 
 | [unique]              | Removes duplicate values.
 | [union]               | Gives values present in any array.
