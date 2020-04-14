@@ -88,21 +88,12 @@ array.bsearch([1, 3, 5, 7], 5);
 | [isUnique]            | Checks if there are no duplicate values.
 | [isDisjoint]          | Checks if arrays have no value in common.
 |                       | 
+| [value]               | Picks an arbitrary value.
 | [prefix]              | Picks an arbitrary prefix.
 | [infix]               | Picks an arbitrary infix.
 | [suffix]              | Picks an arbitrary suffix.
 | [subsequence]         | Picks an arbitrary subsequence.
 | [permutation]         | Picks an arbitrary permutation.
-| [prefixes]            | Lists all possible prefixes.
-| [infixes]             | Lists all possible infixes.
-| [suffixes]            | Lists all possible suffixes.
-| [subsequences]        | Lists all possible subsequences.
-| [permutations]        | Lists all possible permutations.
-| [isPrefix]            | Checks if array starts with a prefix.
-| [isInfix]             | Checks if array contains an infix.
-| [isSuffix]            | Checks if array ends with a suffix.
-| [isSubsequence]       | Checks if array has a subsequence.
-| [isPermutation]       | Checks if array has a permutation.
 |                       | 
 | [isEqual]             | Checks if two arrays are equal.
 | [compare]             | Compares two arrays.
@@ -184,3 +175,4 @@ array.bsearch([1, 3, 5, 7], 5);
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
 [size]: https://github.com/nodef/extra-array/wiki/size
+[value]: https://github.com/nodef/extra-array/wiki/value

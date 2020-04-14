@@ -1,15 +1,3 @@
-GENERATING DECLARATIONS
-switching to TS
-index.d.ts
-
-SELECT/CHOOSE
-
-Selecting a random item from an array, with replacement. infix() might be
-good enough for this?
-Selecting a random item from an array, without replacement. permutation()+pop()
-could be used for this?
-
-
 CARTESIAN PRODUCT
 
 - product/cartesianProduct
@@ -38,7 +26,6 @@ ASYNC?
 - object.zip
 - object.zip(deep)
 - function.iterate
-- number.modp
 - string.splice
 
 ##############
@@ -46,8 +33,6 @@ ASYNC?
 - less specific regexp
 - general regexp: union difference
 - regexp union, optimize
-
-link to pkg, min (emoji?)
 
 ##############
 
