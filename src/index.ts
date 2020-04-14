@@ -94,6 +94,7 @@ export {default as set$} from './set$';
 export {default as set} from './set';
 export {default as shift$} from './shift$';
 export {default as shift} from './shift';
+export {default as size} from './size';
 export {default as slice$} from './slice$';
 export {default as slice} from './slice';
 export {default as sort$} from './sort$';

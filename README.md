@@ -54,7 +54,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [swap]                | Exchanges two values.
 | [index]               | Gets zero-based index.
 | [indexRange]          | Gets index range of part of array.
-| [length]              | Gets length of part of array.
+| [size]                | Gets size of part of array.
 |                       | 
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
@@ -183,3 +183,4 @@ array.bsearch([1, 3, 5, 7], 5);
 [:vhs:]: https://asciinema.org/a/319460
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
+[size]: https://github.com/nodef/extra-array/wiki/size
