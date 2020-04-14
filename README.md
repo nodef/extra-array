@@ -142,7 +142,6 @@ array.bsearch([1, 3, 5, 7], 5);
 [isSubsequence]: https://github.com/nodef/extra-array/wiki/isSubsequence
 [isSuffix]: https://github.com/nodef/extra-array/wiki/isSuffix
 [isUnique]: https://github.com/nodef/extra-array/wiki/isUnique
-[length]: https://github.com/nodef/extra-array/wiki/length
 [map]: https://github.com/nodef/extra-array/wiki/map
 [max]: https://github.com/nodef/extra-array/wiki/max
 [min]: https://github.com/nodef/extra-array/wiki/min
@@ -170,9 +169,9 @@ array.bsearch([1, 3, 5, 7], 5);
 [unique]: https://github.com/nodef/extra-array/wiki/unique
 [unshift]: https://github.com/nodef/extra-array/wiki/unshift
 [zip]: https://github.com/nodef/extra-array/wiki/zip
+[size]: https://github.com/nodef/extra-array/wiki/size
+[value]: https://github.com/nodef/extra-array/wiki/value
 [:running:]: https://npm.runkit.com/extra-array
 [:vhs:]: https://asciinema.org/a/319460
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
-[size]: https://github.com/nodef/extra-array/wiki/size
-[value]: https://github.com/nodef/extra-array/wiki/value
