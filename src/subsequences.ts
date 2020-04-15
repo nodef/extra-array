@@ -4,7 +4,7 @@
  * @param n number of values (-1 => any)
  * @returns ...subsequences
  */
-function* subsequences<T>(x: T[], n: number=-1): Iterable<T[]> {
+function* subsequences<T>(x: T[], n: number=-1): IterableIterator<T[]> {
   var X = x.length;
   if(n>=X) { if(n===X) yield x; return; }
   if(n===0 || X===0) { yield []; return; }

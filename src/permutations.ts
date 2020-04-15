@@ -1,6 +1,6 @@
 import splice from './splice';
 
-function* permutationsOf<T>(x: T[], n: number): Iterable<T[]> {
+function* permutationsOf<T>(x: T[], n: number): IterableIterator<T[]> {
   if(x.length===0 || n===0) { yield []; return; }
   for(var i=x.length-1; i>=0; i--) {
     var y = splice(x, i, 1)[1];
@@ -17,7 +17,7 @@ function* permutationsOf<T>(x: T[], n: number): Iterable<T[]> {
  * @param n number of values (-1 => any)
  * @returns ...permutations
  */
-function* permutations<T>(x: T[], n: number=-1): Iterable<T[]> {
+function* permutations<T>(x: T[], n: number=-1): IterableIterator<T[]> {
   if(n>x.length) return;
   for(var i=n<0? 0:n, I=n<0? x.length:n; i<=I; i++)
     yield* permutationsOf(x, i);

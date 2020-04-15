@@ -3,7 +3,7 @@
  * @param x an array
  * @returns ...values
  */
-function* values<T>(x: T[]): Iterable<T> {
+function* values<T>(x: T[]): IterableIterator<T> {
   yield* x.values();
 }
 export default values;
