@@ -1,5 +1,5 @@
 import copy$ from './copy$';
-import mod from './_mod';
+import mod from '@extra-math/mod';
 
 /**
  * Rotates values in array.
