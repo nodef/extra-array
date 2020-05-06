@@ -4,6 +4,7 @@
  * @returns ...values
  */
 function* values<T>(x: T[]): IterableIterator<T> {
-  yield* x.values();
+  for(var v of x)
+    yield v;
 }
 export default values;

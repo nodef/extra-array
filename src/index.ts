@@ -26,6 +26,7 @@ export {default as findIndex} from './findIndex';
 export {default as findIndices} from './findIndices';
 export {default as findRight} from './findRight';
 export {default as flat} from './flat';
+export {default as forEach} from './forEach';
 export {default as get} from './get';
 export {default as getAll} from './getAll';
 export {default as group} from './group';
