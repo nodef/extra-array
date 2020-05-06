@@ -3,10 +3,10 @@ import type {mapFn} from './_types';
 
 /**
  * Segregates array keeping similar values together.
- * @param {Iterable} x an array
- * @param {function} fn map function (v, i, x)
- * @param {object?} ths this argument
- * @returns {Map<any, Array>} {key => values}
+ * @param x an array
+ * @param fn map function (v, i, x)
+ * @param ths this argument
+ * @returns Map {key => values}
  */
 function partitionOn<T, U>(x: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null): Map<U, T[]> {
   var fn = fn||id;
