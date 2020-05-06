@@ -58,7 +58,7 @@ array.bsearch([1, 3, 5, 7], 5);
 |                       | 
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
-| [concat]              | Appends arrays to the end.
+| [concat]              | Appends arrays together.
 | [slice]               | Gets a part of array.
 | [splice]              | Removes or replaces existing values.
 | [flat]                | Flattens nested array to given depth.

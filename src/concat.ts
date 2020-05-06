@@ -1,11 +1,10 @@
 import concat$ from './concat$';
 
 /**
- * Appends arrays to the end.
- * @param x an array
- * @param ys iterables to append
+ * Appends arrays together.
+ * @param xs arrays to append
  */
-function concat<T>(x: T[], ...ys: Iterable<T>[]): T[] {
-  return concat$(x.slice(), ...ys);
+function concat<T>(...xs: Iterable<T>[]): T[] {
+  return concat$([], ...xs);
 }
 export default concat;
