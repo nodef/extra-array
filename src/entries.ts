@@ -1,5 +1,5 @@
 /**
- * Gives index-value pairs.
+ * Lists index-value pairs.
  * @param x an array
  */
 function* entries<T>(x: Iterable<T>): IterableIterator<[number, T]> {

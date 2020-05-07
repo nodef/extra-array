@@ -1,5 +1,5 @@
 /**
- * Gives indices.
+ * Lists indices.
  * @param x an array
  */
 function* keys<T>(x: Iterable<T>): IterableIterator<number> {

@@ -1,15 +1,13 @@
+import iterableSome from '@extra-iterable/some';
 import type {testFn} from './_types';
 
 /**
- * Checks if atleast one value satisfies a test.
+ * Checks if any value satisfies a test.
  * @param x an array
  * @param fn test function (v, i, x)
  * @param ths this argument
  */
 function some<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null) {
-  var i = -1;
-  for(var v of x)
-    if(fn.call(ths, v, ++i, x)) return true;
-  return false;
+  return iterableSome(x, fn, ths);
 }
 export default some;

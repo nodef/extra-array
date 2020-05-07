@@ -1,3 +1,4 @@
+import iterableEvery from '@extra-iterable/every';
 import type {testFn} from './_types';
 
 /**
@@ -7,9 +8,6 @@ import type {testFn} from './_types';
  * @param ths this argument
  */
 function every<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null) {
-  var i = -1;
-  for(var v of x)
-    if(!fn.call(ths, v, ++i, x)) return false;
-  return true;
+  return iterableEvery(x, fn, ths);
 }
 export default every;

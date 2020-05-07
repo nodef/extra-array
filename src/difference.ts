@@ -2,7 +2,7 @@ import cmp from './_cmp';
 import type {compareFn} from './_types';
 
 /**
- * Gives values of an array not present in another.
+ * Gives values of array not present in another.
  * @param x an array
  * @param y another array
  * @param fn compare function (a, b)
