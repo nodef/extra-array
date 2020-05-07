@@ -11,7 +11,7 @@ import type {compareFn} from './_types';
 function compare<T>(x: T[], y: T[], fn: compareFn<T>=null): number {
   var fn = fn||cmp;
   var n = x.length - y.length;
-  if(n!==0) return n<0? -1:1;
+  if(n!==0) return Math.sign(n);
   for(var i=0, I=x.length; i<I; i++) {
     var c = fn(x[i], y[i]);
     if(c!==0) return c;

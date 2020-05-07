@@ -1,7 +1,7 @@
 /**
- * Appends arrays to the end.
+ * Appends arrays together.
  * @param x an array (updated)
- * @param ys iterables to append
+ * @param ys arrays to append
  * @returns x
  */
 function concat$<T>(x: T[], ...ys: Iterable<T>[]): T[] {

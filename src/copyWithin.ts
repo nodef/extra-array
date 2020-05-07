@@ -1,17 +1,17 @@
+import size from './size';
+
 /**
  * Copies part of array within.
  * @param x an array
- * @param j write index
+ * @param j write index (0)
  * @param i read start index (0)
  * @param I read end index (end)
  */
-function copyWithin<T>(x: T[], j: number, i: number=0, I: number=x.length): T[] {
-  var a = x.slice(0, j)
-  var num = Math.min(I-i, x.length-i);
-  for(var J=Math.min(j+num, x.length); j<J; j++, i++)
-    a[j] = x[i];
-  for(var J=x.length; j<J; j++)
-    a[j] = x[j];
-  return a;
+function copyWithin<T>(x: T[], j: number=0, i: number=0, I: number=x.length): T[] {
+  var I = i + Math.min(size(x, i, I), size(x, j));
+  var p = x.slice(0, j);
+  var q = x.slice(i, I);
+  var r = x.slice(j+q.length);
+  return p.concat(q, r);
 }
 export default copyWithin;
