@@ -1,3 +1,6 @@
+import iterableMap from '@extra-iterable/map';
+import cut from './cut';
+
 /**
  * Breaks array after given indices.
  * @param x an array
@@ -5,13 +8,6 @@
  * @returns [...pieces]
  */
 function cutRight<T>(x: T[], is: Iterable<number>): T[][] {
-  var a = [], i = 0;
-  for(var j of is) {
-    j = j<0? x.length:j;
-    a.push(x.slice(i, j+1));
-    i = j+1;
-  }
-  a.push(x.slice(j+1));
-  return a;
+  return cut(x, iterableMap(is, i => i+1));
 }
 export default cutRight;

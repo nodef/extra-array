@@ -1,3 +1,5 @@
+import index from './index!';
+
 /**
  * Breaks array at given indices.
  * @param x an array
@@ -5,13 +7,13 @@
  * @returns [...pieces]
  */
 function cut<T>(x: T[], is: Iterable<number>): T[][] {
-  var a = [], i = 0;
-  for(var j of is) {
-    j = j<0? 0:j;
-    a.push(x.slice(i, j));
-    i = j;
+  var a = [], j = 0;
+  for(var i of is) {
+    i = Math.max(j, index(x, i));
+    a.push(x.slice(j, i));
+    j = i;
   }
-  a.push(x.slice(j));
+  a.push(x.slice(i));
   return a;
 }
 export default cut;
