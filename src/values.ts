@@ -1,5 +1,5 @@
 /**
- * Lists all possible values.
+ * Lists all values.
  * @param x an array
  * @returns ...values
  */

@@ -2,9 +2,9 @@ import id from './_id';
 import type {mapFn} from './_types';
 
 /**
- * Combines values from n arrays.
- * @param xs n arrays
- * @param fn map function ([...vs], i, x)
+ * Combines values from arrays.
+ * @param xs arrays
+ * @param fn map function (vs, i, x)
  * @param ths this argument
  */
 function zip<T, U>(xs: T[][], fn: mapFn<T[], U>=null, ths: object=null): U[] {
