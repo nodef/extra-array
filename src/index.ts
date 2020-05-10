@@ -10,7 +10,7 @@ export {default as copy$} from './copy$';
 export {default as copy} from './copy';
 export {default as copyWithin$} from './copyWithin$';
 export {default as copyWithin} from './copyWithin';
-export {default as count} from '@extra-iterable/count';
+export {default as count} from './count';
 export {default as countOn} from './countOn';
 export {default as cut} from './cut';
 export {default as cutRight} from './cutRight';
