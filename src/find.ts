@@ -1,7 +1,7 @@
 import type {testFn} from './_types';
 
 /**
- * Finds leftmost value passing the test.
+ * Finds first value which satisfies a test.
  * @param x an array
  * @param fn test function (v, i, x)
  * @param ths this argument

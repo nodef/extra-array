@@ -2,7 +2,6 @@
  * Breaks array into chunks of given size.
  * @param x an array
  * @param n chunk size (1)
- * @returns chunks
  */
 function chunk<T>(x: T[], n: number=1): T[][] {
   var a = [];

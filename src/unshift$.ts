@@ -5,7 +5,7 @@
  * @returns x
  */
 function unshift$<T>(x: T[], ...vs: T[]): T[] {
-  Array.prototype.unshift.apply(x, vs);
+  x.unshift(...vs);
   return x;
 }
 export default unshift$;
