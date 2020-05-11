@@ -7,6 +7,13 @@ keys
 some
 zipLongest
 
+entries
+every
+forEach
+
+values
+keys
+
 algorithms
 index.d.ts (generated for exports?)
 
