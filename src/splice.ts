@@ -6,11 +6,8 @@ import concat$ from './concat$';
  * @param i remove index
  * @param n number of values to remove (rest)
  * @param vs values to insert
- * @returns [removed, array]
  */
-function splice<T>(x: T[], i: number, n: number=x.length-i, ...vs: T[]): [T[], T[]] {
-  var r = x.slice(i, i+n);
-  var u = concat$(x.slice(0, i), vs, x.slice(i+n));
-  return [r, u];
+function splice<T>(x: T[], i: number, n: number=x.length-i, ...vs: T[]): T[] {
+  return concat$(x.slice(0, i), vs, x.slice(i+n));
 }
 export default splice;
