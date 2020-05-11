@@ -1,3 +1,15 @@
+CODE
+flatMap
+includes
+intersperse
+join
+keys
+some
+zipLongest
+
+algorithms
+index.d.ts (generated for exports?)
+
 COMPLETION
 compare is not right
 entries

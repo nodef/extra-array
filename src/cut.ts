@@ -4,7 +4,6 @@ import index from './index!';
  * Breaks array at given indices.
  * @param x an array
  * @param is split indices (sorted)
- * @returns [...pieces]
  */
 function cut<T>(x: T[], is: Iterable<number>): T[][] {
   var a = [], j = 0;
