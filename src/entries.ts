@@ -1,10 +1,10 @@
+import iterableEntries from '@extra-iterable/entries';
+
 /**
- * Lists index-value pairs.
+ * Lists all index-value pairs.
  * @param x an array
  */
 function* entries<T>(x: Iterable<T>): IterableIterator<[number, T]> {
-  var i = -1;
-  for(var v of x)
-    yield [++i, v];
+  yield* iterableEntries(x);
 }
 export default entries;

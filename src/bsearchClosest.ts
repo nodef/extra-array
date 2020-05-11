@@ -9,9 +9,9 @@ import type {compareFn} from './_types';
  * @returns index of closest value
  */
 function bsearchClosest<T>(x: T[], v: T, fn: compareFn<T>=null): number {
-  fn = fn||cmp;
+  var fn = fn||cmp;
   for(var i=0, I=x.length; i<I;) {
-    var m = (i+I)>>>1;
+    var m = i+I >>> 1;
     var c = fn(x[m], v);
     if(c<0) i = m+1;
     else if(c>0) I = m;

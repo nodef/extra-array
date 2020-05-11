@@ -1,3 +1,4 @@
+import iterableFindIndex from '@extra-iterable/find-index';
 import type {testFn} from './_types';
 
 /**
@@ -7,7 +8,7 @@ import type {testFn} from './_types';
  * @param ths this argument
  * @returns index of value, -1 if not found
  */
-function findIndex<T>(x: T[], fn: testFn<T>, ths: object=null): number {
-  return x.findIndex(fn, ths);
+function findIndex<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): number {
+  return iterableFindIndex(x, fn, ths);
 }
 export default findIndex;

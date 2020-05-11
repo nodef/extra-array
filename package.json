@@ -1,6 +1,6 @@
 {
   "name": "extra-array",
-  "version": "2.7.3",
+  "version": "2.7.4",
   "description": "An array is a collection of values, stored contiguously.",
   "main": "index.js",
   "scripts": {
@@ -130,9 +130,18 @@
   "devDependencies": {
     "@extra-iterable/count": "^2.1.62",
     "@extra-iterable/count-on": "^2.1.62",
+    "@extra-iterable/entries": "^2.1.62",
     "@extra-iterable/every": "^2.1.62",
+    "@extra-iterable/find": "^2.1.62",
+    "@extra-iterable/find-index": "^2.1.62",
+    "@extra-iterable/find-right": "^2.1.62",
+    "@extra-iterable/for-each": "^2.1.62",
+    "@extra-iterable/is-disjoint": "^2.1.62",
+    "@extra-iterable/is-disjoint-on": "^2.1.62",
+    "@extra-iterable/keys": "^2.1.62",
     "@extra-iterable/map": "^2.1.62",
     "@extra-iterable/some": "^2.1.62",
+    "@extra-iterable/values": "^2.1.62",
     "@extra-math/mod": "^1.0.15",
     "extra-build": "^1.0.136"
   }

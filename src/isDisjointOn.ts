@@ -1,5 +1,4 @@
-import uniques from './_uniques';
-import id from './_id';
+import iterableIsDisjointOn from '@extra-iterable/is-disjoint-on';
 import type {mapFn} from './_types';
 
 /**
@@ -10,12 +9,6 @@ import type {mapFn} from './_types';
  * @param ths this argument
  */
 function isDisjointOn<T, U>(x: Iterable<T>, y: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null): boolean {
-  var s = uniques(x, fn, ths);
-  var fn = fn||id, i = -1;
-  for(var v of y) {
-    var v1 = fn.call(ths, v, ++i, y);
-    if(s.has(v1)) return false;
-  }
-  return true;
+  return iterableIsDisjointOn(x, y, fn, ths);
 }
 export default isDisjointOn;

@@ -1,3 +1,4 @@
+import iterableFindRight from '@extra-iterable/find-right';
 import type {testFn} from './_types';
 
 /**
@@ -6,8 +7,7 @@ import type {testFn} from './_types';
  * @param fn test function (v, i, x)
  * @param ths this argument
  */
-function findRight<T>(x: T[], fn: testFn<T>, ths: object=null): T {
-  for(var i=x.length-1; i>=0; i--)
-    if(fn.call(ths, x[i], i, x)) return x[i];
+function findRight<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): T {
+  return iterableFindRight(x, fn, ths);
 }
 export default findRight;

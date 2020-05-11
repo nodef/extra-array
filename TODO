@@ -1,5 +1,4 @@
 CODE
-flatMap
 includes
 intersperse
 join
@@ -16,6 +15,11 @@ keys
 
 algorithms
 index.d.ts (generated for exports?)
+
+cycle / sliceCycle / cycleFrom
+reverse ok - because slice is fast
+reverse$   - only reverse part of array
+what about merge kid?
 
 COMPLETION
 compare is not right

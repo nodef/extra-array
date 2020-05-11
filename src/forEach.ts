@@ -1,3 +1,4 @@
+import iterableForEach from '@extra-iterable/for-each';
 import type {calledFn} from './_types';
 
 /**
@@ -6,9 +7,7 @@ import type {calledFn} from './_types';
  * @param fn called function (v, i, x)
  * @param ths this argument
  */
-function forEach<T>(x: T[], fn: calledFn<T>, ths: object=null): void {
-  var i = -1;
-  for(var v of x)
-    fn.call(ths, v, ++i, x);
+function forEach<T>(x: Iterable<T>, fn: calledFn<T>, ths: object=null): void {
+  iterableForEach(x, fn, ths);
 }
 export default forEach;

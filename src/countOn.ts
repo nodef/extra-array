@@ -8,7 +8,7 @@ import type {mapFn} from './_types';
  * @param ths this argument
  * @returns Map {value => count}
  */
-function countOn<T, U>(x: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null): Map<T|U, number> {
+function countOn<T, U>(x: T[], fn: mapFn<T, U>=null, ths: object=null): Map<T|U, number> {
   return iterableCountOn(x, fn, ths);
 }
 export default countOn;

@@ -3,7 +3,7 @@ import splice from './splice';
 function* permutationsOf<T>(x: T[], n: number): IterableIterator<T[]> {
   if(x.length===0 || n===0) { yield []; return; }
   for(var i=x.length-1; i>=0; i--) {
-    var y = splice(x, i, 1)[1];
+    var y = splice(x, i, 1);
     for(var p of permutationsOf(y, n-1)) {
       p.push(x[i]);
       yield p;

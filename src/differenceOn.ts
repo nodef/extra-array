@@ -9,7 +9,7 @@ import type {mapFn} from './_types';
  * @param fn map function (v, i, x)
  * @param ths this argument
  */
-function differenceOn<T, U>(x: Iterable<T>, y: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null) {
+function differenceOn<T, U>(x: Iterable<T>, y: Iterable<T>, fn: mapFn<T, U>=null, ths: object=null): T[] {
   var fn = fn||id;
   var s = uniques(y, fn, ths);
   var a = [], i = -1;

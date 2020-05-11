@@ -1,4 +1,4 @@
-import cmp from './_cmp';
+import iterableIsDisjoint from '@extra-iterable/is-disjoint';
 import type {compareFn} from './_types';
 
 /**
@@ -8,11 +8,6 @@ import type {compareFn} from './_types';
  * @param fn compare function (a, b)
  */
 function isDisjoint<T>(x: Iterable<T>, y: Iterable<T>, fn: compareFn<T>=null): boolean {
-  var fn = fn||cmp;
-  for(var v of y) {
-    for(var u of x)
-      if(fn(u, v)===0) return false;
-  }
-  return true;
+  return iterableIsDisjoint(x, y, fn);
 }
 export default isDisjoint;
