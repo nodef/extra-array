@@ -64,7 +64,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [flat]                | Flattens nested array to given depth.
 | [cut]                 | Breaks array at given indices.
 | [chunk]               | Breaks array into chunks of given size.
-| [cycle]               | Gives values that cycle through an array.
+| [cycle]               | Gives values that cycle through array.
 | [repeat]              | Repeats an array given times.
 | [reverse]             | Reverses the values.
 | [rotate]              | Rotates values in array.
@@ -79,12 +79,12 @@ array.bsearch([1, 3, 5, 7], 5);
 | [partition]           | Segregates array keeping similar values together.
 | [group]               | Breaks array keeping similar values together.
 | [split]               | Breaks array considering test as separator.
-| [zip]                 | Combines values from n arrays.
+| [zip]                 | Combines values from arrays.
 |                       | 
 | [unique]              | Removes duplicate values.
 | [union]               | Gives values present in any array.
 | [intersection]        | Gives values present in both arrays.
-| [difference]          | Gives values of an array not present in another.
+| [difference]          | Gives values of array not present in another.
 | [isUnique]            | Checks if there are no duplicate values.
 | [isDisjoint]          | Checks if arrays have no value in common.
 |                       | 
@@ -99,7 +99,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [compare]             | Compares two arrays.
 | [search]              | Searches a value from left.
 | [bsearch]             | Binary searches leftmost value in sorted array.
-| [find]                | Finds leftmost value passing the test.
+| [find]                | Finds first value passing a test.
 | [findIndex]           | Finds index of leftmost value passing the test.
 | [sort]                | Arranges values in an order.
 
