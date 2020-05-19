@@ -3,9 +3,9 @@ import concat$ from './concat$';
 /**
  * Repeats an array given times.
  * @param x an array
- * @param n times
+ * @param n times (1)
  */
-function repeat<T>(x: T[], n: number): T[] {
+function repeat<T>(x: T[], n: number=1): T[] {
   for(var a=[]; n>0; n--)
     concat$(a, x);
   return a;

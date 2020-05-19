@@ -1,5 +1,3 @@
-import indexRange from './indexRange';
-
 /**
  * Fills with given value.
  * @param x an array (updated)
@@ -9,9 +7,6 @@ import indexRange from './indexRange';
  * @returns x
  */
 function fill$<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
-  var [i, I] = indexRange(x, i, I);
-  for(; i<I; i++)
-    x[i] = v;
-  return x;
+  return x.fill(v, i, I);
 }
 export default fill$;

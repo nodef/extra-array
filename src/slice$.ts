@@ -1,4 +1,4 @@
-import length from './length';
+import size from './size';
 
 /**
  * Gets a part of array.
@@ -9,7 +9,7 @@ import length from './length';
  */
 function slice$<T>(x: T[], i: number=0, I: number=x.length): T[] {
   x.copyWithin(0, i, I);
-  x.length = length(x, i, I);
+  x.length = size(x, i, I);
   return x;
 }
 export default slice$;

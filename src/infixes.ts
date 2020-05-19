@@ -2,7 +2,6 @@
  * Lists all possible infixes.
  * @param x an array
  * @param n number of values (-1 => any)
- * @returns ...infixes
  */
 function* infixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
   if(n<=0) { yield []; if(n===0) return; }

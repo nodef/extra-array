@@ -1,16 +1,15 @@
-import cmp from './_cmp';
-import type {compareFn} from './_types';
+import compare from './compare';
+import type {compareFn, mapFn} from './_types';
 
 /**
  * Checks if array ends with a suffix.
  * @param x an array
  * @param y suffix?
- * @param fn compare function (a, b)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
  */
-function isSuffix<T>(x: T[], y: T[], fn: compareFn<T>=null): boolean {
-  var fn = fn||cmp, i = x.length-y.length-1;
-  for(var v of y)
-    if(fn(x[++i], v)!==0) return false;
-  return true;
+function isSuffix<T, U=T>(x: T[], y: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
+  var Y = y.length;
+  return Y===0 || compare(x.slice(-Y), y, fc, fm)===0;
 }
 export default isSuffix;

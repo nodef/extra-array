@@ -1,10 +1,10 @@
 import permutation$ from './permutation$';
+import fromRange from './fromRange';
 import getAll from './getAll';
 import random from './_random';
-import arange from './_arange';
 
 function subsequenceNum<T>(x: T[], n: number, r: number): T[] {
-  var is = arange(0, x.length);
+  var is = fromRange(0, 1, x.length);
   permutation$(is, n, r).sort();
   return getAll(x, is);
 }

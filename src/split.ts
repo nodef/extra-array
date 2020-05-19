@@ -5,7 +5,6 @@ import type {testFn} from './_types';
  * @param x an array
  * @param fn test function (v, i, x)
  * @param ths this argument
- * @returns [...pieces]
  */
 function split<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): T[][] {
   var a = [], b = [], i = -1;

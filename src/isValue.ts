@@ -1,13 +1,14 @@
 import search from './search';
-import type {compareFn} from './_types';
+import type {compareFn, mapFn} from './_types';
 
 /**
  * Checks if array has a value.
  * @param x an array
  * @param v value?
- * @param fn compare function (a, b)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
  */
-function isValue<T>(x: T[], v: T, fn: compareFn<T>=null): boolean {
-  return search(x, v, fn) >= 0;
+function isValue<T, U=T>(x: T[], v: T, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
+  return search(x, v, fc, fm) >= 0;
 }
 export default isValue;

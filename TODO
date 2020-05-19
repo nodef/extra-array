@@ -1,58 +1,13 @@
+zipTill?
+number.index
+fromRange (might need to refactor arg order)
+- i, n
+- n, s
+
 CODE
 includes
-intersperse
 join
-keys
-some
-zipLongest
 
-entries
-every
-forEach
-
-values
-keys
-
-algorithms
-index.d.ts (generated for exports?)
-
-cycle / sliceCycle / cycleFrom
-reverse ok - because slice is fast
-reverse$   - only reverse part of array
-what about merge kid?
-
-COMPLETION
-compare is not right
-entries
-every
-forEach
-keys
-some
-values
-
-findIndexRight?
-
-JS+ES MODULE
-extra-array have js + es module
-to enable import one function
-
-SCATTER MODULE
-each scatter module have js script too for easy use
-but also include es for bundlers
-
-NOTES/ANIMATION FOR FUNCTION
-a picture is worth a thousand words
-
-BUILD GET JSDOC FROM PKG
-getting jsdoc from package for md
-
-HOME
-Why design choice?
-Baby steps is all that we need.
-
-CARTESIAN PRODUCT
-
-- product/cartesianProduct
 - permutation, infix bellshaped curve
 
 

@@ -1,4 +1,4 @@
-import iterableMap from '@extra-iterable/map';
+import map from '@extra-iterable/map';
 import cut from './cut';
 
 /**
@@ -7,6 +7,6 @@ import cut from './cut';
  * @param is split indices (sorted)
  */
 function cutRight<T>(x: T[], is: Iterable<number>): T[][] {
-  return cut(x, iterableMap(is, i => i+1));
+  return cut(x, map(is, i => i+1));
 }
 export default cutRight;

@@ -1,14 +1,15 @@
 import compare from './compare';
-import type {compareFn} from './_types';
+import type {compareFn, mapFn} from './_types';
 
 /**
  * Checks if two arrays are equal.
  * @param x an array
  * @param y another array
- * @param fn compare function (a, b)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
  */
-function isEqual<T>(x: T[], y: T[], fn: compareFn<T>=null): boolean {
+function isEqual<T, U=T>(x: T[], y: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
   var X = x.length, Y = y.length;
-  return X===Y && compare(x, y, fn)===0;
+  return X===Y && compare(x, y, fc, fm)===0;
 }
 export default isEqual;

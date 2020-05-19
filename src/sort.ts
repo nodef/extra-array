@@ -1,12 +1,13 @@
 import sort$ from './sort$';
-import type {compareFn} from './_types';
+import type {compareFn, mapFn} from './_types';
 
 /**
  * Arranges values in an order.
  * @param x an array
- * @param fn compare function (a, b)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
  */
-function sort<T>(x: T[], fn: compareFn<T>=null): T[] {
-  return sort$(x.slice(), fn);
+function sort<T, U=T>(x: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): T[] {
+  return sort$(x.slice(), fc, fm);
 }
 export default sort;

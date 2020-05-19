@@ -1,24 +1,14 @@
-import cmp from './_cmp';
-import type {compareFn} from './_types';
+import isInfix from '@extra-iterable/is-infix';
+import type {compareFn, mapFn} from './_types';
 
 /**
  * Checks if array contains an infix.
  * @param x an array
  * @param y infix?
- * @param fn compare function (a, b)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
  */
-function isInfix<T>(x: Iterable<T>, y: T[], fn: compareFn<T>=null): boolean {
-  if(y.length===0) return true;
-  var fn = fn||cmp;
-  var Y = y.length, J = 0;
-  var m = new Array(Y).fill(false);
-  for(var u of x) {
-    for(var j=J; j>0; j--)
-      m[j] = m[j-1] && fn(u, y[j])===0;
-    m[0] = fn(u, y[0])===0;
-    J = Math.min(J+1, Y-1);
-    if(m[Y-1]) return true;
-  }
-  return false;
+function isInfixDeclare<T, U=T>(x: Iterable<T>, y: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
+  return isInfix(x, y, fc, fm);
 }
 export default isInfix;

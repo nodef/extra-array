@@ -3,7 +3,7 @@ import index from './index!';
 /**
  * Sets value at index.
  * @param x an array (updated)
- * @param i index (-ve: from right)
+ * @param i index
  * @param v value
  * @returns x
  */

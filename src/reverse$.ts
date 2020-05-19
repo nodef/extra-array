@@ -1,8 +1,9 @@
 /**
  * Reverses the values.
- * @param x an array
+ * @param x an array (updated)
+ * @returns x
  */
 function reverse<T>(x: T[]): T[] {
-  return x.slice().reverse();
+  return x.reverse();
 }
 export default reverse;

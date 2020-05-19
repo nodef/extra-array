@@ -5,7 +5,7 @@ import rotate$ from './rotate$';
  * @param x an array
  * @param n rotate amount (-ve: left, +ve: right)
  */
-function rotate<T>(x: T[], n: number): T[] {
+function rotate<T>(x: T[], n: number=0): T[] {
   return rotate$(x.slice(), n);
 }
 export default rotate;

@@ -15,7 +15,6 @@ function* permutationsOf<T>(x: T[], n: number): IterableIterator<T[]> {
  * Lists all possible permutations.
  * @param x an array
  * @param n number of values (-1 => any)
- * @returns ...permutations
  */
 function* permutations<T>(x: T[], n: number=-1): IterableIterator<T[]> {
   if(n>x.length) return;

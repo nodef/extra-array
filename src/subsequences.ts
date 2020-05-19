@@ -2,7 +2,6 @@
  * Lists all possible subsequences.
  * @param x an array
  * @param n number of values (-1 => any)
- * @returns ...subsequences
  */
 function* subsequences<T>(x: T[], n: number=-1): IterableIterator<T[]> {
   var X = x.length;

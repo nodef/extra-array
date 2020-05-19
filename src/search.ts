@@ -1,17 +1,15 @@
-import cmp from './_cmp';
-import type {compareFn} from './_types';
+import search from '@extra-iterable/search';
+import type {compareFn, mapFn} from './_types';
 
 /**
  * Searches a value from left.
  * @param x an array
  * @param v search value
- * @param fn compare function (a, b)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
  * @returns index of value, -1 if not found
  */
-function search<T>(x: T[], v: T, fn: compareFn<T>=null): number {
-  var fn = fn||cmp;
-  for(var i=0, I=x.length; i<I; i++)
-    if(fn(x[i], v)===0) return i;
-  return -1;
+function searchDeclare<T, U=T>(x: T[], v: T, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): number {
+  return search(x, v, fc, fm);
 }
 export default search;

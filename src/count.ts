@@ -1,4 +1,4 @@
-import iterableCount from '@extra-iterable/count';
+import count from '@extra-iterable/count';
 import type {testFn} from './_types';
 
 /**
@@ -7,7 +7,7 @@ import type {testFn} from './_types';
  * @param fn test function (v, i, x)
  * @param ths this argument
  */
-function count<T>(x: T[], fn: testFn<T>, ths: object=null): number {
-  return iterableCount(x, fn, ths);
+function countDeclare<T>(x: T[], fn: testFn<T>, ths: object=null): number {
+  return count(x, fn, ths);
 }
 export default count;
