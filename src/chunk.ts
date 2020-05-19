@@ -1,10 +1,10 @@
 /**
  * Breaks array into chunks of given size.
  * @param x an array
- * @param s chunk step (1)
- * @param n chunk size (s)
+ * @param n chunk size (1)
+ * @param s chunk step (n)
  */
-function chunk<T>(x: T[], s: number=1, n: number=s): T[][] {
+function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
   var a = [];
   for(var i=0, I=x.length; i<I; i+=s)
     a.push(x.slice(i, i+n));

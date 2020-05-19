@@ -1,13 +1,13 @@
 /**
  * Generates array from given number range.
  * @param v start number
- * @param s step size (1)
  * @param V end number, excluding (v)
+ * @param s step size (1)
  */
-function fromRange(v: number, s: number=1, V: number=v): number[] {
+function fromRange(v: number, V: number=v, s: number=1): number[] {
   var a = [];
-  for(; v<V; v+=s)
-    a.push(v);
+  if(s>=0) { for(; v<V; v+=s) a.push(v); }
+  else { for(; v>V; v+=s) a.push(v); }
   return a;
 }
 export default fromRange;
