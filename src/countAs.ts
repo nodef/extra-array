@@ -1,4 +1,4 @@
-import countAs from '@extra-iterable/count-as';
+import iterableCountAs from '@extra-iterable/count-as';
 import type {mapFn} from './_types';
 
 /**
@@ -8,7 +8,7 @@ import type {mapFn} from './_types';
  * @param ths this argument
  * @returns Map {value => count}
  */
-function countAsDeclare<T, U=T>(x: Iterable<T>, fn: mapFn<T, T|U>=null, ths: object=null): Map<T|U, number> {
-  return countAs(x, fn, ths);
+function countAs<T, U=T>(x: Iterable<T>, fn: mapFn<T, T|U>=null, ths: object=null): Map<T|U, number> {
+  return iterableCountAs(x, fn, ths);
 }
 export default countAs;

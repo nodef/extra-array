@@ -1,4 +1,4 @@
-import isDisjoint from '@extra-iterable/is-disjoint';
+import iterableIsDisjoint from '@extra-iterable/is-disjoint';
 import type {compareFn, mapFn} from './_types';
 
 /**
@@ -8,7 +8,7 @@ import type {compareFn, mapFn} from './_types';
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  */
-function isDisjointDeclare<T, U=T>(x: Iterable<T>, y: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
-  return isDisjoint(x, y, fc, fm);
+function isDisjoint<T, U=T>(x: Iterable<T>, y: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
+  return iterableIsDisjoint(x, y, fc, fm);
 }
 export default isDisjoint;

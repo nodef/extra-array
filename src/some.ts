@@ -1,4 +1,4 @@
-import some from '@extra-iterable/some';
+import iterableSome from '@extra-iterable/some';
 import type {testFn} from './_types';
 
 /**
@@ -7,7 +7,7 @@ import type {testFn} from './_types';
  * @param fn test function (v, i ,x)
  * @param ths this argument
  */
-function someDeclare<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): boolean {
-  return some(x, fn, ths);
+function some<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): boolean {
+  return iterableSome(x, fn, ths);
 }
 export default some;

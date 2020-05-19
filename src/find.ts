@@ -1,4 +1,4 @@
-import find from '@extra-iterable/find';
+import iterableFind from '@extra-iterable/find';
 import type {testFn} from './_types';
 
 /**
@@ -7,7 +7,7 @@ import type {testFn} from './_types';
  * @param fn test function (v, i, x)
  * @param ths this argument
  */
-function findDeclare<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): T {
-  return find(x, fn, ths);
+function find<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): T {
+  return iterableFind(x, fn, ths);
 }
 export default find;

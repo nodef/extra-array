@@ -1,4 +1,4 @@
-import partitionAs from '@extra-iterable/partition-as';
+import iterablePartitionAs from '@extra-iterable/partition-as';
 import type {mapFn} from './_types';
 
 /**
@@ -8,7 +8,7 @@ import type {mapFn} from './_types';
  * @param ths this argument
  * @returns Map {key => values}
  */
-function partitionAsDeclare<T, U=T>(x: Iterable<T>, fn: mapFn<T, T|U>=null, ths: object=null): Map<T|U, T[]> {
-  return partitionAs(x, fn, ths);
+function partitionAs<T, U=T>(x: Iterable<T>, fn: mapFn<T, T|U>=null, ths: object=null): Map<T|U, T[]> {
+  return iterablePartitionAs(x, fn, ths);
 }
 export default partitionAs;

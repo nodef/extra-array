@@ -1,4 +1,4 @@
-import partition from '@extra-iterable/partition';
+import iterablePartition from '@extra-iterable/partition';
 import type {testFn} from './_types';
 
 /**
@@ -8,7 +8,7 @@ import type {testFn} from './_types';
  * @param ths this argument
  * @returns [satisfies, doesnt]
  */
-function partitionDeclare<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): [T[], T[]] {
-  return partition(x, fn, ths);
+function partition<T>(x: Iterable<T>, fn: testFn<T>, ths: object=null): [T[], T[]] {
+  return iterablePartition(x, fn, ths);
 }
 export default partition;

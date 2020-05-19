@@ -1,4 +1,4 @@
-import isUnique from '@extra-iterable/is-unique';
+import iterableIsUnique from '@extra-iterable/is-unique';
 import type {compareFn, mapFn} from './_types';
 
 
@@ -8,7 +8,7 @@ import type {compareFn, mapFn} from './_types';
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  */
-function isUniqueDeclare<T, U=T>(x: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
-  return isUnique(x, fc, fm);
+function isUnique<T, U=T>(x: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
+  return iterableIsUnique(x, fc, fm);
 }
 export default isUnique;
