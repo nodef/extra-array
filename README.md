@@ -1,18 +1,17 @@
 An [array] is a collection of values, stored contiguously. [:running:] [:vhs:] [:package:] [:moon:] [:ledger:]
 
+Methods as separate packages:
+- `@extra-array/swap`: use [rollup] to bundle this es module.
+- `@extra-array/swap.min`: use in browser ([browserify], [uglify-js]).
+
+Methods look like:
+- `swap()`: dont modify the array itself (default).
+- `swap$()`: modifies the array *for performance reasons* (update).
+
+Some methods accept a map function for *faster comparision* (like [unique]).
 I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
 You can notice that i have followed Javascript naming scheme as far as possible.
 Some names are borrowed from Haskell, Python, Java, Processing.
-
-Methods look like:
-- `sort()`: dont modify the array itself (default).
-- `sort$()`: modifies the array *for performance reasons* (update).
-- `sortOn()`: accepts a map function *for faster comparision* (map).
-- `sortOn$()`: accepts a map function, modifies the array (map-update).
-
-Methods as separate packages:
-- `@extra-array/sort`: use [rollup] to bundle this es module.
-- `@extra-array/sort.min`: use in browser ([browserify], [uglify-js]).
 
 > Stability: Experimental.
 
@@ -172,7 +171,7 @@ array.bsearch([1, 3, 5, 7], 5);
 [size]: https://github.com/nodef/extra-array/wiki/size
 [value]: https://github.com/nodef/extra-array/wiki/value
 [:running:]: https://npm.runkit.com/extra-array
-[:vhs:]: https://asciinema.org/a/319460
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
 [:ledger:]: https://unpkg.com/extra-array/
+[:vhs:]: https://asciinema.org/a/332017
