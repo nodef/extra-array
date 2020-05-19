@@ -1,14 +1,13 @@
-zipTill?
 number.index
 fromRange (might need to refactor arg order)
 - i, n
 - n, s
 
 CODE
-includes
-join
-
 - permutation, infix bellshaped curve
+
+ITERABLE
+- indexOf: no return type
 
 
 PARSE

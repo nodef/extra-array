@@ -11,14 +11,17 @@ import type {mapFn, tillFn} from './_types';
  */
 function zip<T, U=T[]>(xs: T[][], fm: mapFn<T[], T[]|U>=null, ft: tillFn=null, vd?: T): (T[]|U)[] {
   var fm = fm||id, ft = ft||some as tillFn;
-  var X = xs.length;
-  if(X===0) return;
-  var R = xs.length, a = [];
-  var C = Math.min(...xs.map(x => x.length));
-  for(var c=0; c<C; c++) {
-    for(var r=0, vs=[]; r<R; r++)
-      vs.push(xs[r][c]);
-    a.push(fm(vs, c, xs));
+  var X = xs.length, a = [];
+  if(X===0) return a;
+  var ds = new Array(X).fill(false);
+  var ls = xs.map(x => x.length);
+  for(var i=0;; i++) {
+    for(var j=0, vs=[]; j<X; j++) {
+      ds[j] = i<ls[j];
+      vs[j] = ds[j]? vd : xs[j][i];
+    }
+    if(ft(ds)) break;
+    a.push(fm(vs, i, null));
   }
   return a;
 }
