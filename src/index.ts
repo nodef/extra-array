@@ -1,3 +1,4 @@
+export {default as accumulate$} from './accumulate$';
 export {default as accumulate} from './accumulate';
 export {default as bsearch} from './bsearch';
 export {default as bsearchAny} from './bsearchAny';
