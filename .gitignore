@@ -4,6 +4,7 @@ build/
 *.map
 example.js
 index.js
+index.?js
 
 # Logs
 logs
