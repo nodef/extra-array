@@ -1,4 +1,4 @@
-An [array] is a collection of values, stored contiguously. [:running:] [:vhs:] [:package:] [:moon:]
+An [array] is a collection of values, stored contiguously. [:running:] [:vhs:] [:package:] [:moon:] [:ledger:]
 
 I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
 You can notice that i have followed Javascript naming scheme as far as possible.
@@ -68,7 +68,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [repeat]              | Repeats an array given times.
 | [reverse]             | Reverses the values.
 | [rotate]              | Rotates values in array.
-| [interleave]          | Places values of an array between another.
+| [interleave]          | Merges values from arrays.
 |                       | 
 | [min]                 | Finds smallest value.
 | [max]                 | Finds largest value.
@@ -76,7 +76,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [map]                 | Updates values based on map function.
 | [filter]              | Keeps values which pass a test.
 | [count]               | Counts values which satisfy a test.
-| [partition]           | Segregates array keeping similar values together.
+| [partition]           | Segregates values by test result.
 | [group]               | Breaks array keeping similar values together.
 | [split]               | Breaks array considering test as separator.
 | [zip]                 | Combines values from arrays.
@@ -100,7 +100,7 @@ array.bsearch([1, 3, 5, 7], 5);
 | [search]              | Searches a value from left.
 | [bsearch]             | Binary searches leftmost value in sorted array.
 | [find]                | Finds first value passing a test.
-| [findIndex]           | Finds index of leftmost value passing the test.
+| [findIndex]           | Finds index of leftmost value passing a test.
 | [sort]                | Arranges values in an order.
 
 <br>
@@ -175,3 +175,4 @@ array.bsearch([1, 3, 5, 7], 5);
 [:vhs:]: https://asciinema.org/a/319460
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
+[:ledger:]: https://unpkg.com/extra-array/
