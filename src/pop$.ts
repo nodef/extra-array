@@ -1,9 +1,9 @@
 /**
  * Removes last value.
  * @param x an array (updated)
- * @returns value
  */
-function pop$<T>(x: T[]): T {
-  return x.pop();
+function pop$<T>(x: T[]): T[] {
+  x.pop();
+  return x;
 }
 export default pop$;

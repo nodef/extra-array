@@ -17,7 +17,7 @@ function zip<T, U=T[]>(xs: T[][], fm: mapFn<T[], T[]|U>=null, ft: tillFn=null, v
   var ls = xs.map(x => x.length);
   for(var i=0;; i++) {
     for(var j=0, vs=[]; j<X; j++) {
-      ds[j] = i<ls[j];
+      ds[j] = i>=ls[j];
       vs[j] = ds[j]? vd : xs[j][i];
     }
     if(ft(ds)) break;

@@ -31,6 +31,6 @@ function bsearch<T, U=T>(x: T[], v: T, fc: compareFn<T|U>=null, fm: mapFn<T, T|U
     if(c<0) i = m+1;
     else    I = m;
   }
-  return i>=I || fc(fm(x[i], i, x), v1)!==0? ~i:i;
+  return i>=x.length || fc(fm(x[i], i, x), v1)!==0? ~i:i;
 }
 export default bsearch;
