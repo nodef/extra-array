@@ -1,26 +1,14 @@
-number.index
-
-chunk(x, n, s)
-cycle(x, i, n)
-intermix(x, y, m, n, s, t)
-fromRange(i, I, s)
-fromApply(fn, acc, n)
-
-copy(x, y, j, i, I, s)
-copyWithin(x, j, i, I, s)
-fill(x, v, i, I, s)
-
 CODE
 - permutation, infix bellshaped curve
 
-PARSE
-MOVE
+PARSE, MOVE
 https://www.npmjs.com/package/array-move
 https://www.npmjs.com/package/immutable-array-methods
 
 ASYNC?
 // https://github.com/flejz/array-reducer
 
+- number.index
 - object.from(keys, values, deep=false) // object.zip(deep)
 - object.fromentries
 - object.zip
