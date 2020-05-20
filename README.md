@@ -17,6 +17,8 @@ Some names are borrowed from Haskell, Python, Java, Processing.
 
 ```javascript
 const array = require('extra-array');
+// import * as array from 'extra-array';
+// import * as array from 'https://unpkg.com/extra-array@2.8.22/index.mjs'; (deno)
 
 array.get([1, 2, 3], -1);
 // 3
