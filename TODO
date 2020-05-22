@@ -1,5 +1,6 @@
 CODE
 - permutation, infix bellshaped curve
+- rotate (+ve: left, -ve: right)
 
 PARSE, MOVE
 https://www.npmjs.com/package/array-move
