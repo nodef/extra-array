@@ -5,8 +5,8 @@ Methods as separate packages:
 - `@extra-array/swap.min`: use in browser ([browserify], [uglify-js]).
 
 Methods look like:
-- `swap()`: dont modify the array itself (default).
-- `swap$()`: modifies the array *for performance reasons* (update).
+- `swap()`: doesn't modify the array itself (pure).
+- `swap$()`: modifies the array itself (update).
 
 Some methods accept a map function for *faster comparision* (like [unique]).
 I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
