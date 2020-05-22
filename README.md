@@ -36,12 +36,14 @@ array.bsearch([1, 3, 5, 7], 5);
 
 [...array.permutations([1, 2, 3])];
 // [
-//   [ 1, 2, 3 ],
-//   [ 2, 1, 3 ],
-//   [ 1, 3, 2 ],
-//   [ 3, 1, 2 ],
-//   [ 2, 3, 1 ],
-//   [ 3, 2, 1 ]
+//   [],          [ 1 ],
+//   [ 2 ],       [ 3 ],
+//   [ 1, 2 ],    [ 1, 3 ],
+//   [ 2, 1 ],    [ 2, 3 ],
+//   [ 3, 1 ],    [ 3, 2 ],
+//   [ 1, 2, 3 ], [ 1, 3, 2 ],
+//   [ 2, 1, 3 ], [ 2, 3, 1 ],
+//   [ 3, 1, 2 ], [ 3, 2, 1 ]
 // ]
 ```
 
@@ -176,4 +178,4 @@ array.bsearch([1, 3, 5, 7], 5);
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
 [:ledger:]: https://unpkg.com/extra-array/
-[:vhs:]: https://asciinema.org/a/332017
+[:vhs:]: https://asciinema.org/a/332964
