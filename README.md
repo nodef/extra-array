@@ -20,19 +20,21 @@ const array = require('extra-array');
 // import * as array from 'extra-array';
 // import * as array from 'https://unpkg.com/extra-array@2.8.22/index.mjs'; (deno)
 
-array.get([1, 2, 3], -1);
+var x = [1, 2, 3];
+array.get(x, -1);
 // 3
 
-var a = [1, 2, 3, 4];
-array.swap(a, 0, 1);
+var x = [1, 2, 3, 4];
+array.swap(x, 0, 1);
 // [2, 1, 3, 4]
 
-var a = [1, 2, 3, 4];
-array.rotate(a, 1);
+var x = [1, 2, 3, 4];
+array.rotate(x, 1);
 // [4, 1, 2, 3]
 
-array.bsearch([1, 3, 5, 7], 5);
-// 2                 ^ found
+var x = [1, 3, 5, 7];
+array.bsearch(x, 5);
+// 2           ^ found
 
 [...array.permutations([1, 2, 3])];
 // [
@@ -178,4 +180,4 @@ array.bsearch([1, 3, 5, 7], 5);
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
 [:ledger:]: https://unpkg.com/extra-array/
-[:vhs:]: https://asciinema.org/a/332964
+[:vhs:]: https://asciinema.org/a/332966
