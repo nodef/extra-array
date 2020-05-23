@@ -1,27 +1,15 @@
-CODE
-- permutation, infix bellshaped curve
-- rotate (+ve: left, -ve: right)
+INFIX
+Random infix does not follow a bellshaped distribution yet.
+Just a math function needs to be applied on random length, but which one?
+
+MINNTH, MAXNTH, SORTEDSLICE
+What if i need only the nth minimum, or only a part of the sorted array.
+Actually i need that for implementing ARRAYVIEW.
+[bag][nth] ...
 
 PARSE, MOVE
 https://www.npmjs.com/package/array-move
 https://www.npmjs.com/package/immutable-array-methods
 
 ASYNC?
-// https://github.com/flejz/array-reducer
-
-- number.index
-- object.from(keys, values, deep=false) // object.zip(deep)
-- object.fromentries
-- object.zip
-- object.zip(deep)
-- function.iterate
-- string.splice
-
-- less specific regexp
-- general regexp: union difference
-- regexp union, optimize
-
-animation games
-reward gaming from money earned
-or purchase KBC sort
-1+2+3+...10 = ?
+https://github.com/flejz/array-reducer
