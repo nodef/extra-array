@@ -10,6 +10,7 @@ Actually i need that for implementing ARRAYVIEW.
 PARSE, MOVE
 https://www.npmjs.com/package/array-move
 https://www.npmjs.com/package/immutable-array-methods
+https://github.com/75lb/array-tools#api-reference
 
 ASYNC?
 https://github.com/flejz/array-reducer
