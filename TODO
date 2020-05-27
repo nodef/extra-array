@@ -7,6 +7,9 @@ What if i need only the nth minimum, or only a part of the sorted array.
 Actually i need that for implementing ARRAYVIEW.
 [bag][nth] ...
 
+PAIR SORT
+instead of mapFn, provide pair array to define sort mapping.
+
 PARSE, MOVE
 https://www.npmjs.com/package/array-move
 https://www.npmjs.com/package/immutable-array-methods

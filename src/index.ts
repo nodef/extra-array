@@ -4,6 +4,8 @@ export {default as bsearch} from './bsearch';
 export {default as bsearchAny} from './bsearchAny';
 export {default as bsearchClosest} from './bsearchClosest';
 export {default as bsearchRight} from './bsearchRight';
+export {default as bubbleSort$} from './bubbleSort$';
+export {default as bubbleSort} from './bubbleSort';
 export {default as cartesianProduct} from './cartesianProduct';
 export {default as chunk} from './chunk';
 export {default as compare} from './compare';

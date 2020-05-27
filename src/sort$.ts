@@ -1,15 +1,16 @@
 import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
+import id from './_id';
 
 function sortCompare$<T>(x: T[], fn: compareFn<T>=null): T[] {
   return x.sort(fn||cmp);
 }
 
-function sortMap$<T, U=T>(x: T[], fn: mapFn<T, T|U>=null): T[] {
-  if(!fn) return x.sort(cmp);
+function sortDual$<T, U=T>(x: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): T[] {
+  var fc = fc||cmp, fm = fm||id;
   var m = new Map(), i = -1;
   for(var v of x)
-    m.set(v, fn(v, ++i, x));
+    m.set(v, fm(v, ++i, x));
   return x.sort((a, b) => cmp(m.get(a), m.get(b)));
 }
 
@@ -22,10 +23,7 @@ function sortMap$<T, U=T>(x: T[], fn: mapFn<T, T|U>=null): T[] {
  */
 function sort$<T, U=T>(x: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): T[] {
   var fc = fc||cmp;
-  if(!fm) return x.sort(fc);
-  var m = new Map(), i = -1;
-  for(var v of x)
-    m.set(v, fm(v, ++i, x));
-  return x.sort((a, b) => fc(m.get(a), m.get(b)));
+  if(fm) return sortDual$(x, fc, fm);
+  else return x.sort(fc);
 }
 export default sort$;
