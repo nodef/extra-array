@@ -107,6 +107,8 @@ export {default as rotate} from './rotate';
 export {default as search} from './search';
 export {default as searchAll} from './searchAll';
 export {default as searchRight} from './searchRight';
+export {default as selectionSort$} from './selectionSort$';
+export {default as selectionSort} from './selectionSort';
 export {default as set$} from './set$';
 export {default as set} from './set';
 export {default as shift$} from './shift$';
