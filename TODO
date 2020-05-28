@@ -8,7 +8,17 @@ Actually i need that for implementing ARRAYVIEW.
 [bag][nth] ...
 
 PAIR SORT
-instead of mapFn, provide pair array to define sort mapping.
+Instead of mapFn, provide pair array to define sort mapping.
+selectionSort, insertionSort, bubbleSort, mergeSort,
+quickSort, shellSort, radixSort, timSort, heapSort
+- [sorting-algorithms-rajan: @rajanmidun](https://www.npmjs.com/package/sorting-algorithms-rajan)
+// bubble, selection
+- [node-sort: @kevintcoughlin](https://www.npmjs.com/package/node-sort)
+// merge, quick, selection
+
+
+ISSORTED / SORTEDNESS
+Can be useful for implementing TimSort
 
 PARSE, MOVE
 https://www.npmjs.com/package/array-move
@@ -20,3 +30,6 @@ https://github.com/flejz/array-reducer
 
 MORE DATA STRUCTURES
 https://www.npmjs.com/package/ds.algo
+
+
+

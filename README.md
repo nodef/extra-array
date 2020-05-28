@@ -1,4 +1,4 @@
-An [array] is a collection of values, stored contiguously. [:running:] [:vhs:] [:package:] [:moon:] [:ledger:]
+An [array] is a collection of values, stored contiguously. [:running:] [:package:] [:moon:] [:ledger:]
 
 Methods as separate packages:
 - `@extra-array/swap`: use [rollup] to bundle this es module.
@@ -180,4 +180,3 @@ array.bsearch(x, 5);
 [:package:]: https://www.npmjs.com/package/extra-array
 [:moon:]: https://www.npmjs.com/package/extra-array.min
 [:ledger:]: https://unpkg.com/extra-array/
-[:vhs:]: https://asciinema.org/a/332966
