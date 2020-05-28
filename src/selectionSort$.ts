@@ -9,7 +9,7 @@ function selectionSortPair$<T, U=T>(x: T[], fc: compareFn<T|U>, m: (T|U)[]): T[]
       if(fc(m[l], m[j]) > 0) l = j;
     if(true) { var t = x[i]; x[i] = x[l]; x[l] = t; }
     if(diff) { var u = m[i]; m[i] = m[l]; m[l] = u; }
-}
+  }
   return x;
 }
 

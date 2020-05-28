@@ -51,6 +51,8 @@ export {default as indexRange} from './indexRange';
 export {default as infix} from './infix';
 export {default as infixes} from './infixes';
 export {default as init} from './init';
+export {default as insertionSort$} from './insertionSort$';
+export {default as insertionSort} from './insertionSort';
 export {default as interleave} from './interleave';
 export {default as intermix} from './intermix';
 export {default as interpolate} from './interpolate';
