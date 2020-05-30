@@ -39,3 +39,11 @@ https://github.com/flejz/array-reducer
 
 MORE DATA STRUCTURES
 https://www.npmjs.com/package/ds.algo
+
+
+foreach	array	foreach component + npm package
+linkedlistpup	array	Double linked list implementation with a similar API to the Java LinkedList class.
+find-array	array	Find and return right elements in an array.
+filter-collection	array	Install via npm: `npm i filter-collection`
+type-filter	array	filtering values by type
+find-array-duplicate	array	Find and return duplicated elements in an array.
