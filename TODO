@@ -36,7 +36,6 @@ MORE DATA STRUCTURES
 https://www.npmjs.com/package/ds.algo
 
 
-foreach	array	foreach component + npm package
 linkedlistpup	array	Double linked list implementation with a similar API to the Java LinkedList class.
 find-array	array	Find and return right elements in an array.
 filter-collection	array	Install via npm: `npm i filter-collection`
