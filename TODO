@@ -36,4 +36,6 @@ MORE DATA STRUCTURES
 https://www.npmjs.com/package/ds.algo
 
 
-find-array-duplicate	array	Find and return duplicated elements in an array.
+CONTIGUOUS DUPLICATE VS THROUGHOUT DUPLICATE
+find-array-duplicate
+array	Find and return duplicated elements in an array.
