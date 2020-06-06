@@ -36,5 +36,4 @@ MORE DATA STRUCTURES
 https://www.npmjs.com/package/ds.algo
 
 
-linkedlistpup	array	Double linked list implementation with a similar API to the Java LinkedList class.
 find-array-duplicate	array	Find and return duplicated elements in an array.
