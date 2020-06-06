@@ -1,12 +1,9 @@
 import random from './_random';
 
-function infixLength(X, r) {
+function infixLength(X: number, r: number): number {
   var C = 0.5*X*(X+1) +1;
-  var c = r*C;
   var n = 0.5*Math.sqrt(1+ 8*r*C) -0.5;
-  var x = X+1-Math.floor(n+1)
-  console.log(c.toFixed(2), ':', n.toFixed(2), ':', x);
-  return X+1-Math.floor(n+1);
+  return X+1 -Math.floor(n+1);
 }
 
 /**

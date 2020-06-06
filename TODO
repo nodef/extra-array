@@ -1,7 +1,3 @@
-INFIX
-Random infix does not follow a bellshaped distribution yet.
-Just a math function needs to be applied on random length, but which one?
-
 MINNTH, MAXNTH, SORTEDSLICE
 What if i need only the nth minimum, or only a part of the sorted array.
 Actually i need that for implementing ARRAYVIEW.
