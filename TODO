@@ -1,3 +1,14 @@
+
+
+ISSORTED / SORTEDNESS
+Can be useful for implementing TimSort
+
+PAIR SORT
+https://en.wikipedia.org/wiki/Sorting_algorithm
+https://www.npmjs.com/package/sort-algorithms-js
+https://dl.acm.org/doi/10.5555/1778580.1778601
+https://stackoverflow.com/questions/463105/in-place-radix-sort/474040#474040
+
 MINNTH, MAXNTH, SORTEDSLICE
 What if i need only the nth minimum, or only a part of the sorted array.
 Actually i need that for implementing ARRAYVIEW.
@@ -7,11 +18,6 @@ https://en.wikipedia.org/wiki/Quickselect
 https://stackoverflow.com/questions/34395680/what-is-the-fastest-way-to-find-nth-biggest-number-of-an-int-array
 https://www.geeksforgeeks.org/kth-smallestlargest-element-unsorted-array/
 
-PAIR SORT
-https://en.wikipedia.org/wiki/Sorting_algorithm
-https://www.npmjs.com/package/sort-algorithms-js
-https://dl.acm.org/doi/10.5555/1778580.1778601
-https://stackoverflow.com/questions/463105/in-place-radix-sort/474040#474040
 
 Instead of mapFn, provide pair array to define sort mapping.
 selectionSort, insertionSort, bubbleSort, mergeSort, (are all stable?)
@@ -20,10 +26,6 @@ quickSort, shellSort, radixSort, timSort, heapSort
 // bubble, selection
 - [node-sort: @kevintcoughlin](https://www.npmjs.com/package/node-sort)
 // merge, quick, selection
-
-
-ISSORTED / SORTEDNESS
-Can be useful for implementing TimSort
 
 PARSE, MOVE
 https://www.npmjs.com/package/array-move
