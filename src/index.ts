@@ -76,6 +76,7 @@ export {default as lastIndexOf} from './lastIndexOf';
 export {default as left$} from './left$';
 export {default as left} from './left';
 export {default as length} from './length';
+export {default as lists} from './lists';
 export {default as map$} from './map$';
 export {default as map} from './map';
 export {default as max} from './max';
