@@ -1,4 +1,4 @@
-import mod from '@extra-math/mod';
+import {mod} from 'extra-math';
 import copy$ from './copy$';
 
 /**
