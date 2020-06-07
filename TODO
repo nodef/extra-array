@@ -36,6 +36,15 @@ https://www.npmjs.com/package/array-move
 https://www.npmjs.com/package/immutable-array-methods
 https://github.com/75lb/array-tools#api-reference
 
+SUM, MEAN, MEDIAN, MODE (MAX, MIN, RANGE)
+https://sugarjs.com/docs/#/Array/most
+https://sugarjs.com/docs/#/Array/least
+
+REMOVE (DIFFERENCE?)
+https://sugarjs.com/docs/#/Array/remove
+
+CLONE
+https://sugarjs.com/docs/#/Array/clone
 
 CONTIGUOUS DUPLICATE VS THROUGHOUT DUPLICATE
 find-array-duplicate
