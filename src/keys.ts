@@ -1,4 +1,4 @@
-import iterableKeys from '@extra-iterable/keys';
+import {keys as iterableKeys} from 'extra-iterable';
 
 /**
  * Lists all indices.

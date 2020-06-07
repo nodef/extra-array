@@ -1,4 +1,4 @@
-import iterableForEach from '@extra-iterable/for-each';
+import {forEach as iterableForEach} from 'extra-iterable';
 import type {calledFn} from './_types';
 
 /**

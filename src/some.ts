@@ -1,4 +1,4 @@
-import iterableSome from '@extra-iterable/some';
+import {some as iterableSome} from 'extra-iterable';
 import type {testFn} from './_types';
 
 /**

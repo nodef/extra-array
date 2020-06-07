@@ -1,4 +1,4 @@
-import iterableSearch from '@extra-iterable/search';
+import {search as iterableSearch} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**

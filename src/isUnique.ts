@@ -1,4 +1,4 @@
-import iterableIsUnique from '@extra-iterable/is-unique';
+import {isUnique as iterableIsUnique} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 

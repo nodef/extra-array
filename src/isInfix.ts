@@ -1,4 +1,4 @@
-import iterableIsInfix from '@extra-iterable/is-infix';
+import {isInfix as iterableIsInfix} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**

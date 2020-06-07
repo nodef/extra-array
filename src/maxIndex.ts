@@ -1,4 +1,4 @@
-import iterableMaxIndex from '@extra-iterable/max-index';
+import {maxIndex as iterableMaxIndex} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**

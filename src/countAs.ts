@@ -1,4 +1,4 @@
-import iterableCountAs from '@extra-iterable/count-as';
+import {countAs as iterableCountAs} from 'extra-iterable';
 import type {mapFn} from './_types';
 
 /**

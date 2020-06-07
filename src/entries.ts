@@ -1,4 +1,4 @@
-import iterableEntries from '@extra-iterable/entries';
+import {entries as iterableEntries} from 'extra-iterable';
 import type {Entries} from './_types';
 
 /**

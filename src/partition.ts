@@ -1,4 +1,4 @@
-import iterablePartition from '@extra-iterable/partition';
+import {partition as iterablePartition} from 'extra-iterable';
 import type {testFn} from './_types';
 
 /**

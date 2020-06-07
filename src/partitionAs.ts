@@ -1,4 +1,4 @@
-import iterablePartitionAs from '@extra-iterable/partition-as';
+import {partitionAs as iterablePartitionAs} from 'extra-iterable';
 import type {mapFn} from './_types';
 
 /**

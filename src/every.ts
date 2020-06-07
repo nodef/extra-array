@@ -1,4 +1,4 @@
-import iterableEvery from '@extra-iterable/every';
+import {every as iterableEvery} from 'extra-iterable';
 import type {testFn} from './_types';
 
 /**

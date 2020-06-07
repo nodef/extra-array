@@ -1,4 +1,4 @@
-import iterableRange from '@extra-iterable/range';
+import {range as iterableRange} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**

@@ -1,4 +1,4 @@
-import iterableMax from '@extra-iterable/max';
+import {max as iterableMax} from 'extra-iterable';
 import {compareFn, mapFn} from './_types';
 
 /**

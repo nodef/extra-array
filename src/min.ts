@@ -1,4 +1,4 @@
-import iterableMin from '@extra-iterable/min';
+import {min as iterableMin} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**

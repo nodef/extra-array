@@ -1,4 +1,4 @@
-import iterableFind from '@extra-iterable/find';
+import {find as iterableFind} from 'extra-iterable';
 import type {testFn} from './_types';
 
 /**

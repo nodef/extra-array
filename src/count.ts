@@ -1,4 +1,4 @@
-import iterableCount from '@extra-iterable/count';
+import {count as iterableCount} from 'extra-iterable';
 import type {testFn} from './_types';
 
 /**

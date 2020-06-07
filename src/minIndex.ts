@@ -1,4 +1,4 @@
-import iterableMinIndex from '@extra-iterable/min-index';
+import {minIndex as iterableMinIndex} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**

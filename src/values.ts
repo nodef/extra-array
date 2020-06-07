@@ -1,4 +1,4 @@
-import iterableValues from '@extra-iterable/values';
+import {values as iterableValues} from 'extra-iterable';
 
 /**
  * Lists all values.

@@ -1,4 +1,4 @@
-import iterableIsDisjoint from '@extra-iterable/is-disjoint';
+import {isDisjoint as iterableIsDisjoint} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**

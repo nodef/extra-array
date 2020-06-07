@@ -1,4 +1,4 @@
-import map from '@extra-iterable/map';
+import {map} from 'extra-iterable';
 import cut from './cut';
 
 /**
