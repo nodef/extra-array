@@ -4,7 +4,7 @@ import getAll from './getAll';
 import random from './_random';
 
 function subsequenceNum<T>(x: T[], n: number, r: number): T[] {
-  var is = fromRange(0, 1, x.length);
+  var is = fromRange(0, x.length, 1);
   permutation$(is, n, r).sort();
   return getAll(x, is);
 }
