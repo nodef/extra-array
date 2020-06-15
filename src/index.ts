@@ -36,6 +36,7 @@ export {default as findRight} from './findRight';
 export {default as flat} from './flat';
 export {default as flatMap} from './flatMap';
 export {default as forEach} from './forEach';
+export {default as from$} from './from$';
 export {default as from} from './from';
 export {default as fromApply} from './fromApply';
 export {default as fromAuthor} from './fromAuthor';
