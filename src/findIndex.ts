@@ -1,4 +1,4 @@
-import {findIndex as iterableFindIndex} from 'extra-iterable';
+import {search as iterableSearch} from 'extra-iterable';
 import type {testFn} from './_types';
 
 /**
@@ -8,6 +8,6 @@ import type {testFn} from './_types';
  * @returns index of value, -1 if not found
  */
 function findIndex<T>(x: Iterable<T>, fn: testFn<T>): number {
-  return iterableFindIndex(x, fn);
+  return iterableSearch(x, fn);
 }
 export default findIndex;

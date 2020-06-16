@@ -1,4 +1,4 @@
-import {search as iterableSearch} from 'extra-iterable';
+import {searchValue as iterableSearchValue} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**
@@ -10,6 +10,6 @@ import type {compareFn, mapFn} from './_types';
  * @returns index of value, -1 if not found
  */
 function search<T, U=T>(x: Iterable<T>, v: T, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): number {
-  return iterableSearch(x, v, fc, fm);
+  return iterableSearchValue(x, v, fc, fm);
 }
 export default search;

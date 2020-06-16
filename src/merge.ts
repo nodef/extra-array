@@ -1,4 +1,4 @@
-import minIndex from './minIndex';
+import min from './min';
 import type {compareFn, mapFn} from './_types';
 
 /**
@@ -15,7 +15,7 @@ function merge<T, U=T>(xs: T[][], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=nul
   while(xs.length>0) {
     for(var i=0, I=xs.length, vs=[]; i<I; i++)
       vs[i] = xs[i][is[i]];
-    var i = minIndex(vs, fc, fm);
+    var i = min(vs, fc, fm)[0];
     a.push(vs[i]);
     if(++is[i]<xs[i].length) continue;
     xs.splice(i, 1);
