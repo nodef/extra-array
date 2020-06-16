@@ -2,26 +2,6 @@ import id from './_id';
 import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
-function isSubsequenceCompare<T>(x: Iterable<T>, y: T[], fn: compareFn<T>=null): boolean {
-  if(y.length===0) return true;
-  var fn = fn||cmp;
-  var j = 0, J = y.length;
-  for(var u of x)
-    if(fn(u, y[j])===0 && (++j)===J) return true;
-  return false;
-}
-
-function isSubsequenceMap<T, U=T>(x: Iterable<T>, y: T[], fn: mapFn<T, T|U>=null): boolean {
-  var fn = fn||id, i = -1;
-  var j = 0, J = y.length;
-  var y1 = y.map(fn);
-  for(var u of x) {
-    var u1 = fn(u, ++i, x);
-    if(u1===y1[j] && (++j)===J) return true;
-  }
-  return false;
-}
-
 /**
  * Checks if array has a subsequence.
  * @param x an array

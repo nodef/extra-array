@@ -2,16 +2,6 @@ import id from './_id';
 import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
-function compareCompare<T>(x: T[], y: T[], fn: compareFn<T>=null): number {
-  var fn = fn||cmp;
-  var X = x.length, Y = y.length;
-  for(var i=0, I=Math.min(X, Y); i<I; i++) {
-    var c = fn(x[i], y[i]);
-    if(c!==0) return c;
-  }
-  return Math.sign(X-Y);
-}
-
 /**
  * Compares two arrays.
  * @param x an array

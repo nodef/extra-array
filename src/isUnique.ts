@@ -1,7 +1,6 @@
 import {isUnique as iterableIsUnique} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
-
 /**
  * Checks if there are no duplicate values.
  * @param x an array

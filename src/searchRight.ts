@@ -2,13 +2,6 @@ import id from './_id';
 import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
-function searchRightCompare<T>(x: T[], v: T, fn: compareFn<T>=null): number {
-  var fn = fn||cmp;
-  for(var i=x.length-1; i>=0; i--)
-    if(fn(x[i], v)===0) return i;
-  return -1;
-}
-
 /**
  * Searches a value from right.
  * @param x an array

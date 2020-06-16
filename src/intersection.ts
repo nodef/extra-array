@@ -3,15 +3,6 @@ import cmp from './_cmp';
 import uniqueSet from './_uniqueSet';
 import type {compareFn, mapFn} from './_types';
 
-function intersectionCompare<T>(x: Iterable<T>, y: Iterable<T>, fn: compareFn<T>=null): T[] {
-  var fn = fn||cmp, a = [];
-  x: for(var u of x) {
-    for(var v of y)
-      if(fn(u, v)===0) { a.push(u); continue x; }
-  }
-  return a;
-}
-
 function intersectionMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fn: mapFn<T, T|U>=null): T[] {
   var s = uniqueSet(y, fn);
   var a = [], i = -1;

@@ -2,13 +2,6 @@ import id from './_id';
 import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
-function searchAllCompare<T>(x: T[], v: T, fn: compareFn<T>=null): number[] {
-  var fn = fn||cmp, a = [];
-  for(var i=0, I=x.length; i<I; i++)
-    if(fn(x[i], v)===0) a.push(i);
-  return a;
-}
-
 /**
  * Searches a value throughout.
  * @param x an array

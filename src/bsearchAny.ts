@@ -2,18 +2,6 @@ import id from './_id';
 import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
-function bsearchAnyCompare<T>(x: T[], v: T, fn: compareFn<T>=null): number {
-  var fn = fn||cmp;
-  for(var i=0, I=x.length; i<I;) {
-    var m = i+I >>> 1;
-    var c = fn(x[m], v);
-    if(c<0) i = m+1;
-    else if(c>0) I = m;
-    else return m;
-  }
-  return ~i;
-}
-
 /**
  * Binary searches value in sorted array.
  * @param x an array (sorted)
