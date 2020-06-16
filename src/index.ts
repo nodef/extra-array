@@ -135,7 +135,6 @@ export {default as take} from './take';
 export {default as takeWhile} from './takeWhile';
 export {default as union$} from './union$';
 export {default as union} from './union';
-export {default as unique} from './unique';
 export {default as unshift$} from './unshift$';
 export {default as unshift} from './unshift';
 export {default as value} from './value';
