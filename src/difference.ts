@@ -1,6 +1,6 @@
 import id from './_id';
 import cmp from './_cmp';
-import uniques from './_uniques';
+import uniqueSet from './_uniqueSet';
 import type {compareFn, mapFn} from './_types';
 
 function differenceCompare<T>(x: Iterable<T>, y: Iterable<T>, fn: compareFn<T>=null): T[] {
@@ -14,7 +14,7 @@ function differenceCompare<T>(x: Iterable<T>, y: Iterable<T>, fn: compareFn<T>=n
 }
 
 function differenceMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fn: mapFn<T, T|U>=null): T[] {
-  var s = uniques(y, fn);
+  var s = uniqueSet(y, fn);
   var a = [], i = -1;
   var fn = fn||id;
   for(var u of x) {

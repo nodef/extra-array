@@ -1,6 +1,6 @@
 import id from './_id';
 import cmp from './_cmp';
-import uniques from './_uniques';
+import uniqueSet from './_uniqueSet';
 import type {compareFn, mapFn} from './_types';
 
 function unionCompare$<T>(x: T[], y: Iterable<T>, fn: compareFn<T>=null): T[] {
@@ -14,7 +14,7 @@ function unionCompare$<T>(x: T[], y: Iterable<T>, fn: compareFn<T>=null): T[] {
 }
 
 function unionMap$<T, U=T>(x: T[], y: Iterable<T>, fn: mapFn<T, T|U>=null): T[] {
-  var s = uniques(x, fn);
+  var s = uniqueSet(x, fn);
   var fn = fn||id, i = -1;
   for(var v of y) {
     var v1 = fn(v, ++i, y);
