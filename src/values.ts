@@ -1,10 +1,8 @@
-import {values as iterableValues} from 'extra-iterable';
-
 /**
  * Lists all values.
  * @param x an array
  */
-function* values<T>(x: Iterable<T>): IterableIterator<T> {
-  yield* iterableValues(x);
+function* values<T>(x: T[]): IterableIterator<T> {
+  yield* x;
 }
 export default values;
