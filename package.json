@@ -1,6 +1,6 @@
 {
   "name": "extra-array",
-  "version": "2.9.9",
+  "version": "2.9.10",
   "description": "An array is a collection of values, stored contiguously.",
   "main": "index.js",
   "module": "index.mjs",
