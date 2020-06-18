@@ -4,9 +4,9 @@ import type {testFn} from './_types';
 /**
  * Checks if all values satisfy a test.
  * @param x an array
- * @param fn test function (v, i ,x)
+ * @param ft test function (v, i ,x)
  */
-function every<T>(x: T[], fn: testFn<T>): boolean {
-  return iterableEvery(x, fn);
+function every<T>(x: T[], ft: testFn<T>): boolean {
+  return iterableEvery(x, ft);
 }
 export default every;

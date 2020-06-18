@@ -4,9 +4,9 @@ import type {testFn} from './_types';
 /**
  * Finds first value passing a test.
  * @param x an array
- * @param fn test function (v, i, x)
+ * @param ft test function (v, i, x)
  */
-function find<T>(x: Iterable<T>, fn: testFn<T>): T {
-  return iterableFind(x, fn);
+function find<T>(x: Iterable<T>, ft: testFn<T>): T {
+  return iterableFind(x, ft);
 }
 export default find;

@@ -4,10 +4,10 @@ import type {testFn} from './_types';
 /**
  * Finds index of leftmost value passing a test.
  * @param x an array
- * @param fn test function (v, i, x)
+ * @param ft test function (v, i, x)
  * @returns index of value, -1 if not found
  */
-function findIndex<T>(x: Iterable<T>, fn: testFn<T>): number {
-  return iterableSearch(x, fn);
+function findIndex<T>(x: Iterable<T>, ft: testFn<T>): number {
+  return iterableSearch(x, ft);
 }
 export default findIndex;

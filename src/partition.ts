@@ -4,10 +4,10 @@ import type {testFn} from './_types';
 /**
  * Segregates values by test result.
  * @param x an array
- * @param fn test function (v, i, x)
+ * @param ft test function (v, i, x)
  * @returns [satisfies, doesnt]
  */
-function partition<T>(x: Iterable<T>, fn: testFn<T>): [T[], T[]] {
-  return iterablePartition(x, fn);
+function partition<T>(x: Iterable<T>, ft: testFn<T>): [T[], T[]] {
+  return iterablePartition(x, ft);
 }
 export default partition;

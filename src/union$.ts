@@ -3,11 +3,11 @@ import cmp from './_cmp';
 import uniqueSet from './_uniqueSet';
 import type {compareFn, mapFn} from './_types';
 
-function unionMap$<T, U=T>(x: T[], y: Iterable<T>, fn: mapFn<T, T|U>=null): T[] {
-  var s = uniqueSet(x, fn);
-  var fn = fn||id, i = -1;
+function unionMap$<T, U=T>(x: T[], y: Iterable<T>, fm: mapFn<T, T|U>=null): T[] {
+  var s = uniqueSet(x, fm);
+  var fm = fm||id, i = -1;
   for(var v of y) {
-    var v1 = fn(v, ++i, y);
+    var v1 = fm(v, ++i, y);
     if(!s.has(v1)) { x.push(v); s.add(v1); }
   }
   return x;

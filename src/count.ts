@@ -4,9 +4,9 @@ import type {testFn} from './_types';
 /**
  * Counts values which satisfy a test.
  * @param x an array
- * @param fn test function (v, i, x)
+ * @param ft test function (v, i, x)
  */
-function count<T>(x: T[], fn: testFn<T>): number {
-  return iterableCount(x, fn);
+function count<T>(x: T[], ft: testFn<T>): number {
+  return iterableCount(x, ft);
 }
 export default count;

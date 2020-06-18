@@ -4,10 +4,10 @@ import type {mapFn} from './_types';
 /**
  * Counts occurrences of values.
  * @param x an array
- * @param fn map function (v, i, x)
+ * @param fm map function (v, i, x)
  * @returns Map {value => count}
  */
-function countAs<T, U=T>(x: Iterable<T>, fn: mapFn<T, T|U>=null): Map<T|U, number> {
-  return iterableCountAs(x, fn);
+function countAs<T, U=T>(x: Iterable<T>, fm: mapFn<T, T|U>=null): Map<T|U, number> {
+  return iterableCountAs(x, fm);
 }
 export default countAs;
