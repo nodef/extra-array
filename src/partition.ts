@@ -1,4 +1,3 @@
-import {partition as iterablePartition} from 'extra-iterable';
 import type {testFn} from './_types';
 
 /**
@@ -8,6 +7,11 @@ import type {testFn} from './_types';
  * @returns [satisfies, doesnt]
  */
 function partition<T>(x: Iterable<T>, ft: testFn<T>): [T[], T[]] {
-  return iterablePartition(x, ft);
+  var t: T[] = [], f: T[] = [], i = -1;
+  for(var v of x) {
+    if(ft(v, ++i, x)) t.push(v);
+    else f.push(v);
+  }
+  return [t, f];
 }
 export default partition;
