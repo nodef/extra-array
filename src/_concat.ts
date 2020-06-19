@@ -1,7 +1,7 @@
 import concat$ from './concat$';
 
 /**
- * Appends arrays together.
+ * Appends values from arrays.
  * @param xs arrays
  */
 function concat<T>(...xs: Iterable<T>[]): T[] {

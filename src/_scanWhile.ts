@@ -6,8 +6,10 @@ import type {testFn} from './_types';
  * @param ft test function (v, i, x)
  * @returns index where test fails
  */
-function scanWhile<T>(x: T[], ft: testFn<T>): number {
-  for(var i=0, I=x.length; i<I; i++)
-  return iterableScanWhile(x, ft);
+function scanWhile<T>(x: Iterable<T>, ft: testFn<T>): number {
+  var i = -1;
+  for(var v of x)
+    if(!ft(v, ++i, x)) return i;
+  return ++i;
 }
 export default scanWhile;

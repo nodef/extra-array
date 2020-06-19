@@ -17,3 +17,4 @@ function accumulate$<T>(x: T[], fr: reduceFn<T, T>, acc?: T): T[] {
   return x;
 }
 export default accumulate$;
+// TODO

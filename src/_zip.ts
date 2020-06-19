@@ -1,11 +1,11 @@
-import some from './some';
 import id from './_id';
+import some from './some';
 import type {mapFn, tillFn} from './_types';
 
 /**
  * Combines values from arrays.
  * @param xs arrays
- * @param fm map function (vs, i, xs)
+ * @param fm map function (vs, i)
  * @param ft till function (dones) (some)
  * @param vd default value
  */

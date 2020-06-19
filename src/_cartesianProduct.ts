@@ -4,10 +4,10 @@ import type {mapFn} from './_types';
 /**
  * Lists cartesian product of arrays.
  * @param xs arrays
- * @param fn map function (vs, i, xs)
+ * @param fm map function (vs, i)
  */
-function cartesianProduct<T, U=T>(xs: T[][], fn: mapFn<T[], T[]|U>=null): (T[]|U)[] {
-  var fn = fn||id;
+function cartesianProduct<T, U=T>(xs: T[][], fm: mapFn<T[], T[]|U>=null): (T[]|U)[] {
+  var fm = fm||id;
   var X = xs.length, a = [];
   if(X===0) return a;
   var is = new Array(X).fill(0);
@@ -16,7 +16,7 @@ function cartesianProduct<T, U=T>(xs: T[][], fn: mapFn<T[], T[]|U>=null): (T[]|U
   for(var i=0;; i++) {
     for(var j=0, vs=[]; j<X; j++)
       vs.push(xs[j][is[j]]);
-    a.push(fn(vs, i, null));
+    a.push(fm(vs, i, null));
     for(var r=X-1; r>=0; r--) {
       if(++is[r]<ls[r]) break;
       is[r] = 0;
@@ -26,3 +26,4 @@ function cartesianProduct<T, U=T>(xs: T[][], fn: mapFn<T[], T[]|U>=null): (T[]|U
   return a;
 }
 export default cartesianProduct;
+// TODO

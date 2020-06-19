@@ -1,8 +1,8 @@
 import type {testFn} from './_types';
 
 /**
- * Scans while a test passes, from right.
- * @param x an iterable
+ * Scans from right, while a test passes.
+ * @param x an array
  * @param ft test function (v, i, x)
  * @returns first index where test passes till end
  */

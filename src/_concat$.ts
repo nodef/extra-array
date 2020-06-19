@@ -1,5 +1,5 @@
 /**
- * Appends arrays to the end.
+ * Appends values from arrays.
  * @param x an array (updated)
  * @param ys arrays to append
  * @returns x
