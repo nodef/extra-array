@@ -1,5 +1,5 @@
 /**
- * Adds values to the left.
+ * Adds values to the start.
  * @param x an array (updated)
  * @param vs values to add
  * @returns x

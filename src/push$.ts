@@ -5,7 +5,7 @@
  * @returns x
  */
 function push$<T>(x: T[], ...vs: T[]): T[] {
-  Array.prototype.push.apply(x, vs);
+  x.push(...vs);
   return x;
 }
 export default push$;
