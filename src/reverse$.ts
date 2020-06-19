@@ -1,5 +1,5 @@
 /**
- * Reverses the values.
+ * Reverses the array.
  * @param x an array (updated)
  * @returns x
  */

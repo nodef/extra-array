@@ -1,7 +1,7 @@
 import type {testFn} from './_types';
 
 /**
- * Extracts values till a test passes.
+ * Keeps values from left, while a test passes.
  * @param x an array
  * @param ft test function (v, i, x)
  */

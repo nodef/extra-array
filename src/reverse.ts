@@ -1,5 +1,5 @@
 /**
- * Reverses the values.
+ * Reverses the array.
  * @param x an array
  */
 function reverse<T>(x: T[]): T[] {

@@ -1,5 +1,5 @@
 /**
- * Gets values from the right.
+ * Gets values from right.
  * @param x an array
  * @param n number of values (1)
  */

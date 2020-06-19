@@ -1,5 +1,5 @@
 /**
- * Extracts values from array.
+ * Keeps first n values only.
  * @param x an array
  * @param n number of values (1)
  */

@@ -1,5 +1,5 @@
 /**
- * Drops values from array.
+ * Discards first n values only.
  * @param x an array
  * @param n number of values (1)
  */
