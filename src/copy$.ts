@@ -7,7 +7,7 @@ import indexRange from './indexRange';
  * @param y source array
  * @param j write index (0)
  * @param i read start index (0)
- * @param I read end index (end)
+ * @param I read end index (X)
  * @returns x
  */
 function copy$<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.length): T[] {

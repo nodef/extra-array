@@ -6,7 +6,7 @@ import copy$ from './copy$';
  * @param y source array
  * @param j write index (0)
  * @param i read start index (0)
- * @param I read end index (end)
+ * @param I read end index (X)
  */
 function copy<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.length): T[] {
   return copy$(x.slice(), y, j, i, I);

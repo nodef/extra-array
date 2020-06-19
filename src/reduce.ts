@@ -8,6 +8,6 @@ import type {reduceFn} from './_types';
  */
 function reduce<T, U=T>(x: T[], fr: reduceFn<T, T|U>, acc?: T|U): T|U {
   var init = arguments.length <= 2;
-  return init? x.reduce(fr as any) : x.reduce(fr as any, acc);
+  return init? x.reduce(fr as any) : x.reduce(fr, acc);
 }
 export default reduce;

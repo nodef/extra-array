@@ -1,4 +1,4 @@
-import {max as iterableMax} from 'extra-iterable';
+import range from './range';
 import {compareFn, mapFn} from './_types';
 
 /**
@@ -9,6 +9,6 @@ import {compareFn, mapFn} from './_types';
  * @returns [index, value]
  */
 function max<T, U=T>(x: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): [number, T] {
-  return iterableMax(x, fc, fm);
+  return range(x, fc, fm)[1];
 }
 export default max;

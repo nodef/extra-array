@@ -1,4 +1,4 @@
-import {min as iterableMin} from 'extra-iterable';
+import range from './range';
 import type {compareFn, mapFn} from './_types';
 
 /**
@@ -9,6 +9,6 @@ import type {compareFn, mapFn} from './_types';
  * @returns [index, value]
  */
 function min<T, U=T>(x: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): [number, T] {
-  return iterableMin(x, fc, fm);
+  return range(x, fc, fm)[0];
 }
 export default min;
