@@ -3,7 +3,7 @@
  * @param x an array (updated)
  * @param v value
  * @param i start index (0)
- * @param I end index (end)
+ * @param I end index (X)
  * @returns x
  */
 function fill$<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
