@@ -5,10 +5,8 @@
  * @returns x
  */
 function concat$<T>(x: T[], ...ys: Iterable<T>[]): T[] {
-  for(var y of ys) {
-    if(Array.isArray(y)) Array.prototype.push.apply(x, y);
-    else for(var v of y) x.push(v);
-  }
+  for(var y of ys)
+    x.push(...y);
   return x;
 }
 export default concat$;
