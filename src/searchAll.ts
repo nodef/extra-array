@@ -5,10 +5,10 @@ import type {testFn} from './_types';
  * @param x an array
  * @param ft test function (v, i, x)
  */
-function findIndices<T>(x: Iterable<T>, ft: testFn<T>): number[] {
+function searchAll<T>(x: Iterable<T>, ft: testFn<T>): number[] {
   var a = [], i = -1;
   for(var v of x)
     if(ft(v, ++i, x)) a.push(i);
   return a;
 }
-export default findIndices;
+export default searchAll;
