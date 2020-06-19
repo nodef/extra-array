@@ -1,9 +1,6 @@
-UNSTABLE FUNCTIONS
-- find*, search*, bsearch* (key, value) (any, closest)
-- max*, min*, range* (key, value) (nth)
-- *sort (stable?, select?)
-- intermix? (generic)
-- 
+COMPARE, MAP
+or mapFn, compareFn?
+
 ISSORTED / SORTEDNESS
 Can be useful for implementing TimSort
 
