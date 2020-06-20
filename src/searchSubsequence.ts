@@ -3,7 +3,7 @@ import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
 /**
- * Checks if array has a subsequence.
+ * Finds first index of a subsequence.
  * @param x an array
  * @param y subsequence?
  * @param fc compare function (a, b)
