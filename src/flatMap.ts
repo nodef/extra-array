@@ -7,6 +7,7 @@ import type {mapFn, testFn} from './_types';
  * Flattens nested array, based on map function.
  * @param x an array
  * @param fm map function (v, i, x)
+ * @param ft test function (v, i, x)
  */
 function flatMap(x: Iterable<any>, fm: mapFn<any, any>=null, ft: testFn<any>=null): any[] {
   var fm = fm||id, ft = ft||is;
