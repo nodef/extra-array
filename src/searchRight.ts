@@ -1,7 +1,7 @@
 import type {testFn} from './_types';
 
 /**
- * Finds last index of value passing a test.
+ * Finds index of last value passing a test.
  * @param x an array
  * @param ft test function (v, i, x)
  * @returns index of value, -1 if not found

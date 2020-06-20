@@ -3,7 +3,7 @@ import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
 /**
- * Finds from left, index of a value.
+ * Finds first index of a value.
  * @param x an iterable
  * @param v search value
  * @param fc compare function (a, b)
