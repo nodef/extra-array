@@ -1,4 +1,4 @@
-import search from './search';
+import searchValue from './searchValue';
 import type {compareFn, mapFn} from './_types';
 
 /**
@@ -9,6 +9,6 @@ import type {compareFn, mapFn} from './_types';
  * @param fm map function (v, i, x)
  */
 function isValue<T, U=T>(x: Iterable<T>, v: T, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
-  return search(x, v, fc, fm) >= 0;
+  return searchValue(x, v, fc, fm) >= 0;
 }
 export default isValue;

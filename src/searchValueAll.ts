@@ -3,14 +3,13 @@ import cmp from './_cmp';
 import type {compareFn, mapFn} from './_types';
 
 /**
- * Searches a value throughout.
+ * Finds indices of value.
  * @param x an array
  * @param v search value
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
- * @returns indices of value
  */
-function searchAll<T, U=T>(x: Iterable<T>, v: T, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): number[] {
+function searchValueAll<T, U=T>(x: Iterable<T>, v: T, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): number[] {
   var fc = fc||cmp, fm = fm||id;
   var v1 = fm(v, 0, null);
   var a = [], i = -1;
@@ -20,4 +19,4 @@ function searchAll<T, U=T>(x: Iterable<T>, v: T, fc: compareFn<T|U>=null, fm: ma
   }
   return a;
 }
-export default searchAll;
+export default searchValueAll;

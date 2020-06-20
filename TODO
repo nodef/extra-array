@@ -1,3 +1,17 @@
+NAMES?
+// searchValueR
+// searchValueA
+// searchValueRight
+
+// search
+// searchR
+// searchA
+// searchRight
+
+// scanWhile
+// scanWhileR
+// scanWhileRight
+
 PERMUTATION LENGTH
 
 COMPARE, MAP
