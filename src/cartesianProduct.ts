@@ -26,4 +26,3 @@ function cartesianProduct<T, U=T>(xs: T[][], fm: mapFn<T[], T[]|U>=null): (T[]|U
   return a;
 }
 export default cartesianProduct;
-// TODO
