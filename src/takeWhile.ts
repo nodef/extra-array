@@ -1,3 +1,4 @@
+import scanWhile from'./scanWhile';
 import type {testFn} from './_types';
 
 /**
@@ -5,12 +6,7 @@ import type {testFn} from './_types';
  * @param x an array
  * @param ft test function (v, i, x)
  */
-function takeWhile<T>(x: Iterable<T>, ft: testFn<T>): T[] {
-  var a = [], i = -1;
-  for(var v of x) {
-    if(!ft(v, ++i, x)) break;
-    a.push(v);
-  }
-  return a;
+function takeWhile<T>(x: T[], ft: testFn<T>): T[] {
+  return x.slice(0, scanWhile(x, ft));
 }
 export default takeWhile;
