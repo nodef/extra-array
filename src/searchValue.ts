@@ -4,7 +4,7 @@ import type {compareFn, mapFn} from './_types';
 
 /**
  * Finds first index of a value.
- * @param x an iterable
+ * @param x an array
  * @param v search value
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)

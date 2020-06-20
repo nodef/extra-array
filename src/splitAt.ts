@@ -1,6 +1,6 @@
 /**
  * Breaks iterable considering indices as separator.
- * @param x an iterable
+ * @param x an array
  * @param is indices (sorted)
  */
 function splitAt<T>(x: Iterable<T>, is: number[]): T[][] {

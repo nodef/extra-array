@@ -2,7 +2,7 @@ import type {mapFn} from './_types';
 
 /**
  * Gets unique set of values.
- * @param x an iterable
+ * @param x aan array
  * @param fm map function (v, i, x)
  */
 function uniqueSet<T, U=T>(x: Iterable<T>, fm: mapFn<T, T|U>=null): Set<T|U> {
