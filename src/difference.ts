@@ -3,12 +3,12 @@ import cmp from './_cmp';
 import uniqueSet from './_uniqueSet';
 import type {compareFn, mapFn} from './_types';
 
-function differenceMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fn: mapFn<T, T|U>=null): T[] {
-  var s = uniqueSet(y, fn);
+function differenceMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fm: mapFn<T, T|U>=null): T[] {
+  var s = uniqueSet(y, fm);
+  var fm = fm||id;
   var a = [], i = -1;
-  var fn = fn||id;
   for(var u of x) {
-    var u1 = fn(u, ++i, x);
+    var u1 = fm(u, ++i, x);
     if(!s.has(u1)) a.push(u);
   }
   return a;
@@ -16,13 +16,12 @@ function differenceMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fn: mapFn<T, T|U>
 
 function differenceDual<T, U=T>(x: Iterable<T>, y: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): T[] {
   var fc = fc||cmp, fm = fm||id;
+  var y1 = [...y].map(fm);
   var a = [], i = -1;
   x: for(var u of x) {
     var u1 = fm(u, ++i, x), j = -1;
-    for(var v of y) {
-      var v1 = fm(v, ++j, y);
+    for(var v1 of y1)
       if(fc(u1, v1)===0) continue x;
-    }
     a.push(u);
   }
   return a;

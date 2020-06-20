@@ -5,8 +5,8 @@ import type {compareFn, mapFn} from './_types';
 
 function intersectionMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fm: mapFn<T, T|U>=null): T[] {
   var s = uniqueSet(y, fm);
-  var a = [], i = -1;
   var fm = fm||id;
+  var a = [], i = -1;
   for(var u of x) {
     var u1 = fm(u, ++i, x);
     if(s.has(u1)) a.push(u);
@@ -16,13 +16,12 @@ function intersectionMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fm: mapFn<T, T|
 
 function intersectionDual<T, U=T>(x: Iterable<T>, y: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): T[] {
   var fc = fc||cmp, fm = fm||id;
+  var y1 = [...y].map(fm);
   var a = [], i = -1;
   x: for(var u of x) {
-    var u1 = fm(u, ++i, x), j = -1;
-    for(var v of y) {
-      var v1 = fm(v, ++j, y);
+    var u1 = fm(u, ++i, x);
+    for(var v1 of y1)
       if(fc(u1, v1)===0) { a.push(u); continue x; }
-    }
   }
   return a;
 }
