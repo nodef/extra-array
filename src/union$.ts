@@ -8,20 +8,18 @@ function unionMap$<T, U=T>(x: T[], y: Iterable<T>, fm: mapFn<T, T|U>=null): T[] 
   var fm = fm||id, i = -1;
   for(var v of y) {
     var v1 = fm(v, ++i, y);
-    if(!s.has(v1)) { x.push(v); s.add(v1); }
+    if(!s.has(v1)) x.push(v);
   }
   return x;
 }
 
 function unionDual$<T, U=T>(x: T[], y: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): T[] {
   var fc = fc||cmp, fm = fm||id;
-  var j = -1;
+  var x1 = x.map(fm), j = -1;
   y: for(var v of y) {
-    var v1 = fm(v, ++j, y), i = -1;
-    for(var u of x) {
-      var u1 = fm(u, ++i, x);
+    var v1 = fm(v, ++j, y);
+    for(var u1 of x1)
       if(fc(u1, v1)===0) continue y;
-    }
     x.push(v);
   }
   return x;
