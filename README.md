@@ -59,25 +59,25 @@ array.bsearch(x, 5);
 | [swap]                | Exchanges two values.
 | [index]               | Gets zero-based index.
 | [indexRange]          | Gets index range of part of array.
-| [size]                | Gets size of part of array.
+| [size]                | Counts the number of values.
 |                       | 
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
-| [concat]              | Appends arrays together.
+| [concat]              | Appends values from arrays.
 | [slice]               | Gets a part of array.
 | [splice]              | Removes or replaces existing values.
 | [flat]                | Flattens nested array to given depth.
-| [cut]                 | Breaks array at given indices.
+| [cut]                 | Breaks array when test passes.
 | [chunk]               | Breaks array into chunks of given size.
 | [cycle]               | Gives values that cycle through array.
 | [repeat]              | Repeats an array given times.
-| [reverse]             | Reverses the values.
+| [reverse]             | Reverses the array.
 | [rotate]              | Rotates values in array.
 | [interleave]          | Merges values from arrays.
 |                       | 
 | [min]                 | Finds smallest value.
-| [max]                 | Finds largest value.
-| [range]               | Finds smallest and largest values.
+| [max]                 | Finds largest entry.
+| [range]               | Finds smallest and largest entries.
 | [map]                 | Updates values based on map function.
 | [filter]              | Keeps values which pass a test.
 | [count]               | Counts values which satisfy a test.
@@ -102,7 +102,7 @@ array.bsearch(x, 5);
 |                       | 
 | [isEqual]             | Checks if two arrays are equal.
 | [compare]             | Compares two arrays.
-| [search]              | Searches a value from left.
+| [search]              | Finds index of first value passing a test.
 | [bsearch]             | Binary searches leftmost value in sorted array.
 | [find]                | Finds first value passing a test.
 | [findIndex]           | Finds index of leftmost value passing a test.
