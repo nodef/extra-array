@@ -77,6 +77,8 @@ export {default as map} from './map';
 export {default as max} from './max';
 export {default as middle} from './middle';
 export {default as min} from './min';
+export {default as moveWithin$} from './moveWithin$';
+export {default as moveWithin} from './moveWithin';
 export {default as partition} from './partition';
 export {default as partitionAs} from './partitionAs';
 export {default as permutation$} from './permutation$';
