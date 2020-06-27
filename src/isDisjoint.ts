@@ -1,10 +1,10 @@
 import id from './_id';
 import cmp from './_cmp';
-import uniqueSet from './_uniqueSet';
+import {from as setFrom} from 'extra-set';
 import type {compareFn, mapFn} from './_types';
 
 function isDisjointMap<T, U=T>(x: Iterable<T>, y: Iterable<T>, fm: mapFn<T, T|U>=null): boolean {
-  var s = uniqueSet(y, fm);
+  var s = setFrom(y, fm);
   var fm = fm||id, i = -1;
   for(var u of x) {
     var u1 = fm(u, ++i, x);

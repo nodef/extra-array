@@ -1,10 +1,10 @@
 import id from './_id';
 import cmp from './_cmp';
-import uniqueSet from './_uniqueSet';
+import {from as setFrom} from 'extra-set';
 import type {compareFn, mapFn} from './_types';
 
 function unionMap$<T, U=T>(x: T[], y: Iterable<T>, fm: mapFn<T, T|U>=null): T[] {
-  var s = uniqueSet(x, fm);
+  var s = setFrom(x, fm);
   var fm = fm||id, i = -1;
   for(var v of y) {
     var v1 = fm(v, ++i, y);
