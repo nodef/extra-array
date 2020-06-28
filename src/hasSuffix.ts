@@ -8,8 +8,8 @@ import type {compareFn, mapFn} from './_types';
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  */
-function isSuffix<T, U=T>(x: T[], y: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
+function hasSuffix<T, U=T>(x: T[], y: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
   var Y = y.length;
   return Y===0 || compare(x.slice(-Y), y, fc, fm)===0;
 }
-export default isSuffix;
+export default hasSuffix;

@@ -8,8 +8,8 @@ import type {compareFn, mapFn} from './_types';
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  */
-function isPrefix<T, U=T>(x: T[], y: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
+function hasPrefix<T, U=T>(x: T[], y: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
   var Y = y.length;
   return Y===0 || compare(x.slice(0, Y), y, fc, fm)===0;
 }
-export default isPrefix;
+export default hasPrefix;
