@@ -66,6 +66,7 @@ export {default as isEmpty} from './isEmpty';
 export {default as isEqual} from './isEqual';
 export {default as isUnique} from './isUnique';
 export {default as join} from './join';
+export {default as key} from './key';
 export {default as keys} from './keys';
 export {default as last} from './last';
 export {default as lastIndexOf} from './lastIndexOf';
