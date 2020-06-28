@@ -9,7 +9,7 @@ import getPath from './getPath';
  * @returns x
  */
 function removePath$(x: any[], p: number[]): any[] {
-  var y = getPath(x, p.slice(-1));
+  var y = getPath(x, p.slice(0, -1));
   if(is(y)) y.splice(last(p), 1);
   return x;
 }
