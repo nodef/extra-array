@@ -1,4 +1,4 @@
-import {isInfix as iterableIsInfix} from 'extra-iterable';
+import {hasInfix as iterableHasInfix} from 'extra-iterable';
 import type {compareFn, mapFn} from './_types';
 
 /**
@@ -9,6 +9,6 @@ import type {compareFn, mapFn} from './_types';
  * @param fm map function (v, i, x)
  */
 function hasInfix<T, U=T>(x: Iterable<T>, y: Iterable<T>, fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): boolean {
-  return iterableIsInfix(x, y, fc, fm);
+  return iterableHasInfix(x, y, fc, fm);
 }
 export default hasInfix;
