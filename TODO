@@ -18,3 +18,7 @@ PARSE, OTHERS
 
 INDEX -VE
 - moveWithin
+
+knuth-shuffle-seeded
+Description
+The Fisher-Yates (aka Knuth) shuffle for Node.js, with seeding support
