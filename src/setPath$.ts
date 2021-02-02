@@ -1,7 +1,7 @@
-import is from './is';
-import set$ from './set$';
-import last from './last';
-import getPath from './getPath';
+import is from "./is";
+import set$ from "./set$";
+import last from "./last";
+import getPath from "./getPath";
 
 /**
  * Sets value at path in a nested array.

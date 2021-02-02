@@ -1,5 +1,5 @@
-import hasSubsequence from './hasSubsequence';
-import type {compareFn, mapFn} from './_types';
+import hasSubsequence from "./hasSubsequence";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Checks if array has a permutation.

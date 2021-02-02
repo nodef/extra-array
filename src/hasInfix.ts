@@ -1,5 +1,5 @@
-import {hasInfix as iterableHasInfix} from 'extra-iterable';
-import type {compareFn, mapFn} from './_types';
+import {hasInfix as iterableHasInfix} from "extra-iterable";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Checks if array contains an infix.

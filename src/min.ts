@@ -1,5 +1,5 @@
-import range from './range';
-import type {compareFn, mapFn} from './_types';
+import range from "./range";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Finds smallest value.

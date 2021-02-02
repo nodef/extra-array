@@ -1,5 +1,5 @@
-import union$ from './union$';
-import type {compareFn, mapFn} from './_types';
+import union$ from "./union$";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Gives values present in any array.

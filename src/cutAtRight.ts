@@ -1,4 +1,4 @@
-import cutAt from './cutAt';
+import cutAt from "./cutAt";
 
 /**
  * Breaks array after given indices.

@@ -1,5 +1,5 @@
-import scanUntilRight from'./scanUntilRight';
-import type {testFn} from './_types';
+import scanUntilRight from"./scanUntilRight";
+import type {testFn} from "./_types";
 
 /**
  * Discards values from right, while a test passes.

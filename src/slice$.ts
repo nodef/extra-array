@@ -1,4 +1,4 @@
-import size from './size';
+import size from "./size";
 
 /**
  * Gets a part of array.

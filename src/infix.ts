@@ -1,4 +1,4 @@
-import random from './_random';
+import random from "./_random";
 
 function infixLength(X: number, r: number): number {
   var C = 0.5*X*(X+1) +1;

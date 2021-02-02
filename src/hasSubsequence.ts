@@ -1,5 +1,5 @@
-import searchSubsequence from './searchSubsequence';
-import type {compareFn, mapFn} from './_types';
+import searchSubsequence from "./searchSubsequence";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Checks if array has a subsequence.

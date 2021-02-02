@@ -1,4 +1,4 @@
-import copy$ from './copy$';
+import copy$ from "./copy$";
 
 /**
  * Moves part of array within.

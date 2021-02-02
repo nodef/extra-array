@@ -1,5 +1,5 @@
-import {searchInfix as iterableSearchInfix} from 'extra-iterable';
-import type {compareFn, mapFn} from './_types';
+import {searchInfix as iterableSearchInfix} from "extra-iterable";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Finds first index of an infix.

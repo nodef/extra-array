@@ -1,7 +1,7 @@
-import permutation$ from './permutation$';
-import fromRange from './fromRange';
-import getAll from './getAll';
-import random from './_random';
+import permutation$ from "./permutation$";
+import fromRange from "./fromRange";
+import getAll from "./getAll";
+import random from "./_random";
 
 function subsequenceNum<T>(x: T[], n: number, r: number): T[] {
   var is = fromRange(0, x.length, 1);

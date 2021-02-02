@@ -1,4 +1,4 @@
-import size from './size'
+import size from "./size"
 
 /**
  * Counts the number of values.

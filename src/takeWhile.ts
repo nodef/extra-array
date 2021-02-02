@@ -1,5 +1,5 @@
-import scanWhile from'./scanWhile';
-import type {testFn} from './_types';
+import scanWhile from"./scanWhile";
+import type {testFn} from "./_types";
 
 /**
  * Keeps values from left, while a test passes.

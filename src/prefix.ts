@@ -1,4 +1,4 @@
-import random from './_random';
+import random from "./_random";
 
 /**
  * Picks an arbitrary prefix.

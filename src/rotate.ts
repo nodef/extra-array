@@ -1,5 +1,5 @@
-import {mod} from 'extra-math';
-import concat$ from './concat$';
+import {mod} from "extra-math";
+import concat$ from "./concat$";
 
 /**
  * Rotates values in array.

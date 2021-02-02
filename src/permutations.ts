@@ -1,4 +1,4 @@
-import splice from './splice';
+import splice from "./splice";
 
 function* permutationsOf<T>(x: T[], n: number): IterableIterator<T[]> {
   var X = x.length;

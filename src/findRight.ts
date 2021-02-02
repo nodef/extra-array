@@ -1,4 +1,4 @@
-import type {testFn} from './_types';
+import type {testFn} from "./_types";
 
 /**
  * Finds last value passing a test.

@@ -1,4 +1,4 @@
-import indexRange from './indexRange';
+import indexRange from "./indexRange";
 
 /**
  * Counts the number of values.

@@ -1,5 +1,5 @@
-import {searchInfixAll as iterableSearchInfixAll} from 'extra-iterable';
-import type {compareFn, mapFn} from './_types';
+import {searchInfixAll as iterableSearchInfixAll} from "extra-iterable";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Finds indices of an infix.

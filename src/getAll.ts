@@ -1,4 +1,4 @@
-import get from './get';
+import get from "./get";
 
 /**
  * Gets values at indices.

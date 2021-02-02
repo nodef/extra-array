@@ -1,4 +1,4 @@
-import permutation$ from './permutation$';
+import permutation$ from "./permutation$";
 
 /**
  * Picks an arbitrary permutation.

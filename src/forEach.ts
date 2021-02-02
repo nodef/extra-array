@@ -1,4 +1,4 @@
-import type {calledFn} from './_types';
+import type {calledFn} from "./_types";
 
 /**
  * Calls a function for each value.

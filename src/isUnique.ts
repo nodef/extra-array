@@ -1,6 +1,6 @@
-import id from './_id';
-import cmp from './_cmp';
-import type {compareFn, mapFn} from './_types';
+import id from "./_id";
+import cmp from "./_cmp";
+import type {compareFn, mapFn} from "./_types";
 
 function isUniqueMap<T, U=T>(x: Iterable<T>, fm: mapFn<T, T|U>=null): boolean {
   var fm = fm||id;

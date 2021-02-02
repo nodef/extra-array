@@ -1,6 +1,6 @@
-import cmp from './_cmp';
-import type {compareFn, mapFn} from './_types';
-import id from './_id';
+import cmp from "./_cmp";
+import type {compareFn, mapFn} from "./_types";
+import id from "./_id";
 
 function sortDual$<T, U=T>(x: T[], fc: compareFn<T|U>=null, fm: mapFn<T, T|U>=null): T[] {
   var fc = fc||cmp, fm = fm||id;

@@ -1,5 +1,5 @@
-import index from './index!';
-import indexRange from './indexRange';
+import index from "./index!";
+import indexRange from "./indexRange";
 
 /**
  * Copies part of array to another.

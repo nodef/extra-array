@@ -10,9 +10,9 @@ Some names are borrowed from Haskell, Python, Java, Processing.
 <br>
 
 ```javascript
-const array = require('extra-array');
-// import * as array from 'extra-array';
-// import * as array from 'https://unpkg.com/extra-array@2.10.15/index.mjs'; (deno)
+const array = require("extra-array");
+// import * as array from "extra-array";
+// import * as array from "https://unpkg.com/extra-array@2.10.15/index.mjs"; (deno)
 
 var x = [1, 2, 3];
 array.get(x, -1);

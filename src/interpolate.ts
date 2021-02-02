@@ -1,4 +1,4 @@
-import type {combineFn} from './_types';
+import type {combineFn} from "./_types";
 
 /**
  * Estimates new values between existing ones.

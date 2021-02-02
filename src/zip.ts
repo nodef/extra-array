@@ -1,6 +1,6 @@
-import id from './_id';
-import some from './some';
-import type {mapFn, tillFn} from './_types';
+import id from "./_id";
+import some from "./some";
+import type {mapFn, tillFn} from "./_types";
 
 /**
  * Combines values from arrays.

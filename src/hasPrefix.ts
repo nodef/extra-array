@@ -1,5 +1,5 @@
-import compare from './compare';
-import type {compareFn, mapFn} from './_types';
+import compare from "./compare";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Checks if array starts with a prefix.

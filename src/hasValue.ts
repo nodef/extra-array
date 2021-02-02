@@ -1,5 +1,5 @@
-import searchValue from './searchValue';
-import type {compareFn, mapFn} from './_types';
+import searchValue from "./searchValue";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Checks if array has a value.

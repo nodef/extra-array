@@ -1,6 +1,6 @@
-import id from './_id';
-import cmp from './_cmp';
-import type {compareFn, mapFn} from './_types';
+import id from "./_id";
+import cmp from "./_cmp";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Breaks array keeping similar values together.

@@ -1,5 +1,5 @@
-import {searchInfixRight as iterableSearchInfixRight} from 'extra-iterable';
-import type {compareFn, mapFn} from './_types';
+import {searchInfixRight as iterableSearchInfixRight} from "extra-iterable";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Finds last index of an infix.

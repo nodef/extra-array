@@ -1,4 +1,4 @@
-import type {getFn} from './_types';
+import type {getFn} from "./_types";
 
 /**
  * Gives a random number generator.

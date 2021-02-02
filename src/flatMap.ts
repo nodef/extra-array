@@ -1,7 +1,7 @@
-import id from './_id';
-import is from './is';
-import concat$ from './concat$';
-import type {mapFn, testFn} from './_types';
+import id from "./_id";
+import is from "./is";
+import concat$ from "./concat$";
+import type {mapFn, testFn} from "./_types";
 
 /**
  * Flattens nested array, based on map function.

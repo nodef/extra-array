@@ -1,6 +1,6 @@
-import is from './is';
-import last from './last';
-import getPath from './getPath';
+import is from "./is";
+import last from "./last";
+import getPath from "./getPath";
 
 /**
  * Removes value at path in a nested array.

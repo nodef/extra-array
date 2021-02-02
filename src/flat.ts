@@ -1,6 +1,6 @@
-import id from './_id';
-import is from './is';
-import type {mapFn, testFn} from './_types';
+import id from "./_id";
+import is from "./is";
+import type {mapFn, testFn} from "./_types";
 
 function flatTo(x: Iterable<any>, n: number, fm: mapFn<any, any>, ft: testFn<any>, a: any[]): any[] {
   var i = -1;

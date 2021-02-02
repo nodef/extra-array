@@ -1,7 +1,7 @@
-import id from './_id';
-import cmp from './_cmp';
-import {from as setFrom} from 'extra-set';
-import type {compareFn, mapFn} from './_types';
+import id from "./_id";
+import cmp from "./_cmp";
+import {from as setFrom} from "extra-set";
+import type {compareFn, mapFn} from "./_types";
 
 function unionMap$<T, U=T>(x: T[], y: Iterable<T>, fm: mapFn<T, T|U>=null): T[] {
   var s = setFrom(x, fm);

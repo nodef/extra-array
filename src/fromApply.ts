@@ -1,4 +1,4 @@
-import type {mapFn} from './_types';
+import type {mapFn} from "./_types";
 
 /**
  * Generates array from function application.

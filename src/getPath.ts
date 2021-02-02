@@ -1,4 +1,4 @@
-import is from './is';
+import is from "./is";
 
 /**
  * Gets value at path in a nested array.

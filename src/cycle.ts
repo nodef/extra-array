@@ -1,5 +1,5 @@
-import index from './index!';
-import concat$ from './concat$';
+import index from "./index!";
+import concat$ from "./concat$";
 
 /**
  * Gives values that cycle through array.

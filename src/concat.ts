@@ -1,4 +1,4 @@
-import concat$ from './concat$';
+import concat$ from "./concat$";
 
 /**
  * Appends values from arrays.

@@ -1,5 +1,5 @@
-import sort$ from './sort$';
-import type {compareFn, mapFn} from './_types';
+import sort$ from "./sort$";
+import type {compareFn, mapFn} from "./_types";
 
 /**
  * Arranges values in an order.

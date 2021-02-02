@@ -1,4 +1,4 @@
-import type {testFn} from './_types';
+import type {testFn} from "./_types";
 
 function everyBool<T>(x: T[]): boolean {
   for(var i=0, I=x.length; i<I; i++)
