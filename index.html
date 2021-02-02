@@ -1,0 +1,1224 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>extra-array</title><meta name="description" content="Documentation for extra-array"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/search.js" id="tsd-search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">extra-array</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<h2>extra-array</h2></div>
+<div class="tsd-panel tsd-typography"><p>An <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a> is a collection of values, stored contiguously.<br>
+📦 <a href="https://www.npmjs.com/package/extra-array">Node.js</a>,
+🌐 <a href="https://www.npmjs.com/package/extra-array.web">Web</a>,
+📜 <a href="https://unpkg.com/extra-array/">Files</a>,
+📰 <a href="https://nodef.github.io/extra-array/">Docs</a>,
+📘 <a href="https://github.com/nodef/extra-array/wiki/">Wiki</a>.</p>
+<br>
+
+
+<p>This package includes comprehensive set of array functions with which you can
+<strong>generate</strong> an array, <strong>clone</strong> it, query <strong>about</strong> it, get non-negative
+<strong>indices</strong>, manage its <strong>length</strong>, <strong>get/set</strong> elements, fully or partially
+<strong>sort</strong> it, obtain <strong>minimum(s)/maximum(s)</strong>, <strong>compare</strong> it with another
+array, get a <strong>part</strong> of it, <strong>search a value</strong>, obtain all possible
+<strong>arrangements</strong> or <strong>random arrangements</strong>, <strong>find</strong> an element, <strong>take/drop</strong>
+elements or <strong>scan</strong> from its beginning or its end, <strong>search</strong> the index of a
+part of it, perform <strong>functional</strong> operations, <strong>flatten</strong> multi-level arrays,
+obtain <strong>prefix sum</strong>, <strong>manipulate</strong> it in various ways, <strong>count/partition</strong>
+elements, <strong>split</strong> it, <strong>concatenate/join</strong> multiple arrays, <strong>rearrange</strong>
+elements within it, or performing <strong>set operations</strong> upon it.</p>
+<p>We use a consistent naming scheme that helps you quickly identify the functions
+you need. All functions except <code>from*()</code> take array as 1st parameter. Some
+functions operate on a specified range in the array and are called <code>ranged*()</code>,
+such as <code>rangedPartialSort()</code>. Functions like <code>swap()</code> are pure and do not
+modify the array itself, while functions like <code>swap$()</code> <em>do modify (update)</em> the
+array itself. Some functions accept a map function for <em>faster comparison</em>, such
+as <code>unique()</code>. Further, functions which return an iterable instead of an array
+are prefixed with <code>i</code>, such as <code>isubsequences()</code>. We borrow some names from
+other programming languages such as <em>Haskell</em>, <em>Python</em>, <em>Java</em>, and
+<em>Processing</em>.</p>
+<p>With this package, you can simplify the implementation of complex algorithms,
+and be able to achieve your goals faster, regardless of your level of expertise.
+Try it out today and discover how it can transform your development experience!
+This package is available in <em>Node.js</em> and <em>Web</em> formats. To use it on the web,
+simply use the <code>extra_array</code> global variable after loading with a <code>&lt;script&gt;</code> tag
+from the <a href="https://cdn.jsdelivr.net/npm/extra-array.web/index.js">jsDelivr CDN</a>.</p>
+<blockquote>
+<p>Stability: <a href="https://www.youtube.com/watch?v=L1j93RnIxEo">Experimental</a>.</p>
+</blockquote>
+<blockquote>
+<p>NOTE: The use of negative indices in certain functions such as <code>slice()</code> is
+provided as a convenience for access elements from the end of the array.
+However, negative indices can be thought of as referring to a virtual mirrored
+version of the original array, which can be counter-intuitive and make it
+harder to reason about the behavior of functions that use them. We are working
+on a solution to this problem. Any suggestions are welcome.</p>
+</blockquote>
+<br>
+
+<pre><code class="language-javascript"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">xarray</span><span class="hl-1"> = </span><span class="hl-3">require</span><span class="hl-1">(</span><span class="hl-4">&#39;extra-array&#39;</span><span class="hl-1">);</span><br/><span class="hl-5">// import * as xarray from &quot;extra-array&quot;;</span><br/><span class="hl-5">// import * as xarray from &quot;https://unpkg.com/extra-array/index.mjs&quot;; (deno)</span><br/><br/><span class="hl-0">var</span><span class="hl-1"> </span><span class="hl-6">x</span><span class="hl-1"> = [</span><span class="hl-7">1</span><span class="hl-1">, </span><span class="hl-7">2</span><span class="hl-1">, </span><span class="hl-7">3</span><span class="hl-1">];</span><br/><span class="hl-6">xarray</span><span class="hl-1">.</span><span class="hl-3">get</span><span class="hl-1">(</span><span class="hl-6">x</span><span class="hl-1">, -</span><span class="hl-7">1</span><span class="hl-1">);</span><br/><span class="hl-5">// → 3</span><br/><br/><span class="hl-0">var</span><span class="hl-1"> </span><span class="hl-6">x</span><span class="hl-1"> = [</span><span class="hl-7">1</span><span class="hl-1">, </span><span class="hl-7">2</span><span class="hl-1">, </span><span class="hl-7">3</span><span class="hl-1">, </span><span class="hl-7">4</span><span class="hl-1">];</span><br/><span class="hl-6">xarray</span><span class="hl-1">.</span><span class="hl-3">swap</span><span class="hl-1">(</span><span class="hl-6">x</span><span class="hl-1">, </span><span class="hl-7">0</span><span class="hl-1">, </span><span class="hl-7">1</span><span class="hl-1">);</span><br/><span class="hl-5">// → [ 2, 1, 3, 4 ]</span><br/><br/><span class="hl-0">var</span><span class="hl-1"> </span><span class="hl-6">x</span><span class="hl-1"> = [</span><span class="hl-7">1</span><span class="hl-1">, </span><span class="hl-7">2</span><span class="hl-1">, </span><span class="hl-7">3</span><span class="hl-1">, </span><span class="hl-7">4</span><span class="hl-1">];</span><br/><span class="hl-6">xarray</span><span class="hl-1">.</span><span class="hl-3">rotate</span><span class="hl-1">(</span><span class="hl-6">x</span><span class="hl-1">, </span><span class="hl-7">1</span><span class="hl-1">);</span><br/><span class="hl-5">// → [ 2, 3, 4, 1 ]</span><br/><br/><span class="hl-6">xarray</span><span class="hl-1">.</span><span class="hl-3">permutations</span><span class="hl-1">([</span><span class="hl-7">1</span><span class="hl-1">, </span><span class="hl-7">2</span><span class="hl-1">, </span><span class="hl-7">3</span><span class="hl-1">]);</span><br/><span class="hl-5">// → [</span><br/><span class="hl-5">//   [],          [ 1 ],</span><br/><span class="hl-5">//   [ 2 ],       [ 3 ],</span><br/><span class="hl-5">//   [ 1, 2 ],    [ 1, 3 ],</span><br/><span class="hl-5">//   [ 2, 1 ],    [ 2, 3 ],</span><br/><span class="hl-5">//   [ 3, 1 ],    [ 3, 2 ],</span><br/><span class="hl-5">//   [ 1, 2, 3 ], [ 1, 3, 2 ],</span><br/><span class="hl-5">//   [ 2, 1, 3 ], [ 2, 3, 1 ],</span><br/><span class="hl-5">//   [ 3, 1, 2 ], [ 3, 2, 1 ]</span><br/><span class="hl-5">// ]</span>
+</code><button>Copy</button></pre>
+<br>
+<br>
+
+
+
+<a id="md:index" class="tsd-anchor"></a><h2><a href="#md:index">Index</a></h2><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/fromRange">fromRange</a></td>
+<td>Generate array from given number range.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/fromInvocation">fromInvocation</a></td>
+<td>Generate array from repeated function invocation.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/fromApplication">fromApplication</a></td>
+<td>Generate array from repeated function application.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/fromIterable">fromIterable</a></td>
+<td>Convert an iterable to array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/fromIterable$">fromIterable$</a></td>
+<td>Convert an iterable to array!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/shallowClone">shallowClone</a></td>
+<td>Shallow clone an array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/deepClone">deepClone</a></td>
+<td>Deep clone an array.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/is">is</a></td>
+<td>Check if value is an array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/keys">keys</a></td>
+<td>Obtain all indices.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/values">values</a></td>
+<td>Get all values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/entries">entries</a></td>
+<td>Obtain all index-value pairs.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/index">index</a></td>
+<td>Get zero-based index for an element in array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/indexRange">indexRange</a></td>
+<td>Get zero-based index range for part of array.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/isEmpty">isEmpty</a></td>
+<td>Check if an array is empty.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/length">length</a></td>
+<td>Find the length of an array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/resize$">resize$</a></td>
+<td>Resize an array to given length!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/clear$">clear$</a></td>
+<td>Remove all elements from an array!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/get">get</a></td>
+<td>Get value at index.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/getAll">getAll</a></td>
+<td>Get values at indices.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/getPath">getPath</a></td>
+<td>Get value at path in a nested array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasPath">hasPath</a></td>
+<td>Check if nested array has a path.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/set">set</a></td>
+<td>Set value at index.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/set$">set$</a></td>
+<td>Set value at index!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/setPath$">setPath$</a></td>
+<td>Set value at path in a nested array!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/swap">swap</a></td>
+<td>Exchange two values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/swap$">swap$</a></td>
+<td>Exchange two values!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/swapRanges">swapRanges</a></td>
+<td>Exchange two ranges of values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/swapRanges$">swapRanges$</a></td>
+<td>Exchange two ranges of values!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/remove">remove</a></td>
+<td>Remove value at index.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/remove$">remove$</a></td>
+<td>Remove value at index!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/removePath$">removePath$</a></td>
+<td>Remove value at path in a nested array!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/isSorted">isSorted</a></td>
+<td>Examine if array is sorted.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasUnsortedValue">hasUnsortedValue</a></td>
+<td>Examine if array has an unsorted value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchUnsortedValue">searchUnsortedValue</a></td>
+<td>Find first index of an unsorted value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/sort">sort</a></td>
+<td>Arrange values in order.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/sort$">sort$</a></td>
+<td>Arrange values in order!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/partialSort">partialSort</a></td>
+<td>Partially arrange values in order.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/partialSort$">partialSort$</a></td>
+<td>Partially arrange values in order!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/minimum">minimum</a></td>
+<td>Find first smallest value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/minimumEntry">minimumEntry</a></td>
+<td>Find first smallest entry.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/maximum">maximum</a></td>
+<td>Find first largest value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/maximumEntry">maximumEntry</a></td>
+<td>Find first largest entry.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/range">range</a></td>
+<td>Find smallest and largest values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/rangeEntries">rangeEntries</a></td>
+<td>Find smallest and largest entries.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/minimums">minimums</a></td>
+<td>Find smallest values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/minimumEntries">minimumEntries</a></td>
+<td>Find smallest entries.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/maximums">maximums</a></td>
+<td>Find largest values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/maximumEntries">maximumEntries</a></td>
+<td>Find largest entries.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchMinimumValue">searchMinimumValue</a></td>
+<td>Find first index of minimum value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchMaximumValue">searchMaximumValue</a></td>
+<td>Find first index of maximum value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchMinimumValues">searchMinimumValues</a></td>
+<td>Find indices of minimum values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchMaximumValues">searchMaximumValues</a></td>
+<td>Find indices of maximum values.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/isEqual">isEqual</a></td>
+<td>Examine if two arrays are equal.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/compare">compare</a></td>
+<td>Compare two arrays (lexicographically).</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/head">head</a></td>
+<td>Get first value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/tail">tail</a></td>
+<td>Get values except first.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/init">init</a></td>
+<td>Get values except last.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/last">last</a></td>
+<td>Get last value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/middle">middle</a></td>
+<td>Get values from middle.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/slice">slice</a></td>
+<td>Get part of an array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/slice$">slice$</a></td>
+<td>Get part of an array!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/includes">includes</a></td>
+<td>Check if array has a value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasValue">hasValue</a></td>
+<td>Examine if array has a value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchValue">searchValue</a></td>
+<td>Find first index of a value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchValueRight">searchValueRight</a></td>
+<td>Find last index of a value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchValueAll">searchValueAll</a></td>
+<td>Find indices of value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchAdjacentDuplicateValue">searchAdjacentDuplicateValue</a></td>
+<td>Find first index of an adjacent duplicate value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchMismatchedValue">searchMismatchedValue</a></td>
+<td>Find first index where two arrays differ.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasPrefix">hasPrefix</a></td>
+<td>Examine if array starts with a prefix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasSuffix">hasSuffix</a></td>
+<td>Examine if array ends with a suffix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasInfix">hasInfix</a></td>
+<td>Examine if array contains an infix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasSubsequence">hasSubsequence</a></td>
+<td>Examine if array has a subsequence.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/hasPermutation">hasPermutation</a></td>
+<td>Examine if array has a permutation.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/prefixes">prefixes</a></td>
+<td>Obtain all possible prefixes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/suffixes">suffixes</a></td>
+<td>Obtain all possible suffixes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/infixes">infixes</a></td>
+<td>Obtain all possible infixes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/subsequences">subsequences</a></td>
+<td>Obtain all possible subsequences.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/permutations">permutations</a></td>
+<td>Obtain all possible permutations.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchInfix">searchInfix</a></td>
+<td>Find first index of an infix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchInfixRight">searchInfixRight</a></td>
+<td>Find last index of an infix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchInfixAll">searchInfixAll</a></td>
+<td>Find indices of an infix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchSubsequence">searchSubsequence</a></td>
+<td>Find first index of a subsequence.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/randomValue">randomValue</a></td>
+<td>Pick an arbitrary value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/randomPrefix">randomPrefix</a></td>
+<td>Pick an arbitrary prefix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/randomSuffix">randomSuffix</a></td>
+<td>Pick an arbitrary suffix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/randomInfix">randomInfix</a></td>
+<td>Pick an arbitrary infix.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/randomSubsequence">randomSubsequence</a></td>
+<td>Pick an arbitrary subsequence.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/randomPermutation">randomPermutation</a></td>
+<td>Pick an arbitrary permutation.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/randomPermutation$">randomPermutation$</a></td>
+<td>Pick an arbitrary permutation!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/find">find</a></td>
+<td>Find first value passing a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/findRight">findRight</a></td>
+<td>Find last value passing a test.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/take">take</a></td>
+<td>Keep first n values only.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/takeRight">takeRight</a></td>
+<td>Keep last n values only.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/takeWhile">takeWhile</a></td>
+<td>Keep values from left, while a test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/takeWhileRight">takeWhileRight</a></td>
+<td>Keep values from right, while a test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/drop">drop</a></td>
+<td>Discard first n values only.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/dropRight">dropRight</a></td>
+<td>Discard last n values only.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/dropWhile">dropWhile</a></td>
+<td>Discard values from left, while a test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/dropWhileRight">dropWhileRight</a></td>
+<td>Discard values from right, while a test passes.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/scanWhile">scanWhile</a></td>
+<td>Scan from left, while a test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/scanWhileRight">scanWhileRight</a></td>
+<td>Scan from right, while a test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/scanUntil">scanUntil</a></td>
+<td>Scan from left, until a test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/scanUntilRight">scanUntilRight</a></td>
+<td>Scan from right, until a test passes.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/indexOf">indexOf</a></td>
+<td>Find first index of a value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/lastIndexOf">lastIndexOf</a></td>
+<td>Find last index of a value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/search">search</a></td>
+<td>Find index of first value passing a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchRight">searchRight</a></td>
+<td>Find index of last value passing a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/searchAll">searchAll</a></td>
+<td>Find indices of values passing a test.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/forEach">forEach</a></td>
+<td>Call a function for each value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/some">some</a></td>
+<td>Examine if any value satisfies a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/every">every</a></td>
+<td>Examine if all values satisfy a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/map">map</a></td>
+<td>Transform values of an array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/map$">map$</a></td>
+<td>Transform values of an array!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/reduce">reduce</a></td>
+<td>Reduce values of array to a single value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/reduceRight">reduceRight</a></td>
+<td>Reduce values from right, to a single value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/filter">filter</a></td>
+<td>Keep values which pass a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/filter$">filter$</a></td>
+<td>Keep values which pass a test!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/filterAt">filterAt</a></td>
+<td>Keep values at given indices.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/reject">reject</a></td>
+<td>Discard values which pass a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/reject$">reject$</a></td>
+<td>Discard values which pass a test!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/rejectAt">rejectAt</a></td>
+<td>Discard values at given indices.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/flat">flat</a></td>
+<td>Flatten nested array to given depth.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/flatMap">flatMap</a></td>
+<td>Flatten nested array, based on map function.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/exclusiveScan">exclusiveScan</a></td>
+<td>Perform exclusive prefix scan from left to right.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/exclusiveScan$">exclusiveScan$</a></td>
+<td>Perform exclusive prefix scan from left to right!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/inclusiveScan">inclusiveScan</a></td>
+<td>Perform inclusive prefix scan from left to right.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/inclusiveScan$">inclusiveScan$</a></td>
+<td>Perform inclusive prefix scan from left to right!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/adjacentCombine">adjacentCombine</a></td>
+<td>Combine adjacent values of an array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/adjacentCombine$">adjacentCombine$</a></td>
+<td>Combine adjacent values of an array!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/intersperse">intersperse</a></td>
+<td>Place a separator between every value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/interpolate">interpolate</a></td>
+<td>Estimate new values between existing ones.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/intermix">intermix</a></td>
+<td>Place values of an array between another.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/interleave">interleave</a></td>
+<td>Place values from iterables alternately.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/zip">zip</a></td>
+<td>Combine values from arrays.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/fill">fill</a></td>
+<td>Fill with given value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/fill$">fill$</a></td>
+<td>Fill with given value!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/push">push</a></td>
+<td>Add value to the end.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/push$">push$</a></td>
+<td>Add values to the end!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/pop">pop</a></td>
+<td>Remove last value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/pop$">pop$</a></td>
+<td>Remove last value!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/shift">shift</a></td>
+<td>Remove first value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/shift$">shift$</a></td>
+<td>Remove first value!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/unshift">unshift</a></td>
+<td>Add values to the start.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/unshift$">unshift$</a></td>
+<td>Add values to the start!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/copy">copy</a></td>
+<td>Copy part of array to another.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/copy$">copy$</a></td>
+<td>Copy part of array to another!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/copyWithin">copyWithin</a></td>
+<td>Copy part of array within.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/copyWithin$">copyWithin$</a></td>
+<td>Copy part of array within!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/moveWithin">moveWithin</a></td>
+<td>Move part of array within.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/moveWithin$">moveWithin$</a></td>
+<td>Move part of array within!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/splice">splice</a></td>
+<td>Remove or replace existing values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/splice$">splice$</a></td>
+<td>Remove or replace existing values!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/count">count</a></td>
+<td>Count values which satisfy a test.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/countEach">countEach</a></td>
+<td>Count occurrences of each distinct value.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/partition">partition</a></td>
+<td>Segregate values by test result.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/partitionEach">partitionEach</a></td>
+<td>Segregate each distinct value.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/split">split</a></td>
+<td>Break array considering test as separator.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/splitAt">splitAt</a></td>
+<td>Break array considering indices as separator.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/cut">cut</a></td>
+<td>Break array when test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/cutRight">cutRight</a></td>
+<td>Break array after test passes.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/cutAt">cutAt</a></td>
+<td>Break array at given indices.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/cutAtRight">cutAtRight</a></td>
+<td>Break array after given indices.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/group">group</a></td>
+<td>Keep similar values together and in order.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/chunk">chunk</a></td>
+<td>Break array into chunks of given size.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/concat">concat</a></td>
+<td>Append values from arrays.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/concat$">concat$</a></td>
+<td>Append values from arrays!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/join">join</a></td>
+<td>Join values together into a string.</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/cycle">cycle</a></td>
+<td>Obtain values that cycle through array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/repeat">repeat</a></td>
+<td>Repeat an array given times.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/reverse">reverse</a></td>
+<td>Reverse the values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/reverse$">reverse$</a></td>
+<td>Reverse the values!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/rotate">rotate</a></td>
+<td>Rotate values in array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/rotate$">rotate$</a></td>
+<td>Rotate values in array!</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/isUnique">isUnique</a></td>
+<td>Examine if there are no duplicate values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/isDisjoint">isDisjoint</a></td>
+<td>Examine if arrays have no value in common.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/unique">unique</a></td>
+<td>Remove duplicate values.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/union">union</a></td>
+<td>Obtain values present in any array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/union$">union$</a></td>
+<td>Obtain values present in any array!</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/intersection">intersection</a></td>
+<td>Obtain values present in both arrays.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/difference">difference</a></td>
+<td>Obtain values not present in another array.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/symmetricDifference">symmetricDifference</a></td>
+<td>Obtain values not present in both arrays.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nodef/extra-array/wiki/cartesianProduct">cartesianProduct</a></td>
+<td>Obtain cartesian product of arrays.</td>
+</tr>
+</tbody></table>
+<br>
+<br>
+
+
+<a id="md:references" class="tsd-anchor"></a><h2><a href="#md:references">References</a></h2><ul>
+<li><a href="https://wcipeg.com/wiki/Prefix_sum_array_and_difference_array">Prefix sum array and difference array : Woburn C.I. PEGWiki</a></li>
+<li><a href="https://stackoverflow.com/q/7053902/1413259">How to get the count of each distinct value in a column?</a></li>
+<li><a href="https://stackoverflow.com/a/51550649/1413259">How to add region in java script file, visual studio</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence">Operator precedence - JavaScript : MDN Web Docs</a></li>
+<li><a href="https://numpy.org/doc/stable/reference/generated/numpy.partition.html">numpy.partition - NumPy Manual</a></li>
+</ul>
+<br>
+<br>
+
+
+<p><a href="https://www.youtube.com/watch?v=VYOOiIJeBOA"><img src="https://img.youtube.com/vi/VYOOiIJeBOA/maxresdefault.jpg" alt=""></a><br>
+<a href="https://nodef.github.io"><img src="https://img.shields.io/badge/org-nodef-green?logo=Org" alt="ORG"></a>
+<a href="https://zenodo.org/badge/latestdoi/133759104"><img src="https://zenodo.org/badge/133759104.svg" alt="DOI"></a>
+<a href="https://coveralls.io/github/nodef/extra-array?branch=master"><img src="https://coveralls.io/repos/github/nodef/extra-array/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://codeclimate.com/github/nodef/extra-array/test_coverage"><img src="https://api.codeclimate.com/v1/badges/77adb3752d187f463f25/test_coverage" alt="Test Coverage"></a>
+<img src="https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/extra-array" alt=""></p>
+</div></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)" id="icon-chevronDown"></path></svg>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>On This Page</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li>
+<ul>
+<li><a href="#md:index"><span>Index</span></a></li>
+<li>
+<ul>
+<li><a href="#md:references"><span>References</span></a></li></ul></li></ul></li></ul></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>extra-<wbr/>array</span></a>
+<ul class="tsd-small-nested-navigation">
+<li><a href="modules.html#accumulate"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-8388608"><rect fill="var(--color-icon-background)" stroke="#FF4D82" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M10.354 17V8.24H13.066C13.586 8.24 14.042 8.348 14.434 8.564C14.826 8.772 15.13 9.064 15.346 9.44C15.562 9.816 15.67 10.256 15.67 10.76C15.67 11.352 15.514 11.86 15.202 12.284C14.898 12.708 14.482 13 13.954 13.16L15.79 17H14.518L12.838 13.28H11.434V17H10.354ZM11.434 12.308H13.066C13.514 12.308 13.874 12.168 14.146 11.888C14.418 11.6 14.554 11.224 14.554 10.76C14.554 10.288 14.418 9.912 14.146 9.632C13.874 9.352 13.514 9.212 13.066 9.212H11.434V12.308Z" fill="var(--color-text)"></path></g></svg><span>accumulate</span></a></li>
+<li><a href="modules.html#allOf"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>all<wbr/>Of</span></a></li>
+<li><a href="modules.html#anyOf"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>any<wbr/>Of</span></a></li>
+<li><a href="modules.html#append"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>append</span></a></li>
+<li><a href="modules.html#append_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>append$</span></a></li>
+<li><a href="modules.html#at"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>at</span></a></li>
+<li><a href="modules.html#back"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>back</span></a></li>
+<li><a href="modules.html#clone"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>clone</span></a></li>
+<li><a href="modules.html#countAs"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>count<wbr/>As</span></a></li>
+<li><a href="modules.html#endsWith"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>ends<wbr/>With</span></a></li>
+<li><a href="modules.html#findAll"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>find<wbr/>All</span></a></li>
+<li><a href="modules.html#findIndex"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>find<wbr/>Index</span></a></li>
+<li><a href="modules.html#findLastIndex"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>find<wbr/>Last<wbr/>Index</span></a></li>
+<li><a href="modules.html#first"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>first</span></a></li>
+<li><a href="modules.html#from"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>from</span></a></li>
+<li><a href="modules.html#from_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>from$</span></a></li>
+<li><a href="modules.html#fromApply"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>from<wbr/>Apply</span></a></li>
+<li><a href="modules.html#fromCall"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>from<wbr/>Call</span></a></li>
+<li><a href="modules.html#front"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>front</span></a></li>
+<li><a href="modules.html#groupToMap"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>group<wbr/>To<wbr/>Map</span></a></li>
+<li><a href="modules.html#infix"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>infix</span></a></li>
+<li><a href="modules.html#left"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>left</span></a></li>
+<li><a href="modules.html#max"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>max</span></a></li>
+<li><a href="modules.html#maxEntry"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>max<wbr/>Entry</span></a></li>
+<li><a href="modules.html#min"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>min</span></a></li>
+<li><a href="modules.html#minEntry"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>min<wbr/>Entry</span></a></li>
+<li><a href="modules.html#partitionAs"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>partition<wbr/>As</span></a></li>
+<li><a href="modules.html#permutation"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>permutation</span></a></li>
+<li><a href="modules.html#permutation_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>permutation$</span></a></li>
+<li><a href="modules.html#permute_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>permute$</span></a></li>
+<li><a href="modules.html#popBack"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>pop<wbr/>Back</span></a></li>
+<li><a href="modules.html#popBack_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>pop<wbr/>Back$</span></a></li>
+<li><a href="modules.html#popFront"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>pop<wbr/>Front</span></a></li>
+<li><a href="modules.html#popFront_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>pop<wbr/>Front$</span></a></li>
+<li><a href="modules.html#prefix"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>prefix</span></a></li>
+<li><a href="modules.html#prepend"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>prepend</span></a></li>
+<li><a href="modules.html#prepend_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>prepend$</span></a></li>
+<li><a href="modules.html#pushBack"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>push<wbr/>Back</span></a></li>
+<li><a href="modules.html#pushBack_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>push<wbr/>Back$</span></a></li>
+<li><a href="modules.html#pushFront"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>push<wbr/>Front</span></a></li>
+<li><a href="modules.html#pushFront_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>push<wbr/>Front$</span></a></li>
+<li><a href="modules.html#right"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>right</span></a></li>
+<li><a href="modules.html#searchAdjacentDuplicate"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>search<wbr/>Adjacent<wbr/>Duplicate</span></a></li>
+<li><a href="modules.html#searchMismatch"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>search<wbr/>Mismatch</span></a></li>
+<li><a href="modules.html#shuffle_"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>shuffle$</span></a></li>
+<li><a href="modules.html#size"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>size</span></a></li>
+<li><a href="modules.html#startsWith"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>starts<wbr/>With</span></a></li>
+<li><a href="modules.html#subsequence"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>subsequence</span></a></li>
+<li><a href="modules.html#suffix"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>suffix</span></a></li>
+<li><a href="modules.html#toReversed"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>to<wbr/>Reversed</span></a></li>
+<li><a href="modules.html#toSorted"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>to<wbr/>Sorted</span></a></li>
+<li><a href="modules.html#toSpliced"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>to<wbr/>Spliced</span></a></li>
+<li><a href="modules.html#value"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>value</span></a></li>
+<li><a href="modules.html#with"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8388608"></use></svg><span>with</span></a></li>
+<li><a href="types/CombineFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4194304"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-type-alias)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)"></path></g></svg><span>Combine<wbr/>Function</span></a></li>
+<li><a href="types/CompareFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Compare<wbr/>Function</span></a></li>
+<li><a href="types/EndFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>End<wbr/>Function</span></a></li>
+<li><a href="types/Entries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Entries</span></a></li>
+<li><a href="types/IEntries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>IEntries</span></a></li>
+<li><a href="types/ILists.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>ILists</span></a></li>
+<li><a href="types/Lists.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Lists</span></a></li>
+<li><a href="types/MapFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Map<wbr/>Function</span></a></li>
+<li><a href="types/ProcessFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Process<wbr/>Function</span></a></li>
+<li><a href="types/ReadFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Read<wbr/>Function</span></a></li>
+<li><a href="types/ReduceFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Reduce<wbr/>Function</span></a></li>
+<li><a href="types/SwapFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Swap<wbr/>Function</span></a></li>
+<li><a href="types/TestFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Test<wbr/>Function</span></a></li>
+<li><a href="functions/adjacentCombine.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-64"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)"></path></g></svg><span>adjacent<wbr/>Combine</span></a></li>
+<li><a href="functions/adjacentCombine_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>adjacent<wbr/>Combine$</span></a></li>
+<li><a href="functions/cartesianProduct.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>cartesian<wbr/>Product</span></a></li>
+<li><a href="functions/chunk.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>chunk</span></a></li>
+<li><a href="functions/clear_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>clear$</span></a></li>
+<li><a href="functions/compare.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare</span></a></li>
+<li><a href="functions/concat.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>concat</span></a></li>
+<li><a href="functions/concat_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>concat$</span></a></li>
+<li><a href="functions/copy.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>copy</span></a></li>
+<li><a href="functions/copy_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>copy$</span></a></li>
+<li><a href="functions/copyWithin.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>copy<wbr/>Within</span></a></li>
+<li><a href="functions/copyWithin_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>copy<wbr/>Within$</span></a></li>
+<li><a href="functions/count.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>count</span></a></li>
+<li><a href="functions/countEach.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>count<wbr/>Each</span></a></li>
+<li><a href="functions/cut.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>cut</span></a></li>
+<li><a href="functions/cutAt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>cut<wbr/>At</span></a></li>
+<li><a href="functions/cutAtRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>cut<wbr/>At<wbr/>Right</span></a></li>
+<li><a href="functions/cutRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>cut<wbr/>Right</span></a></li>
+<li><a href="functions/cycle.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>cycle</span></a></li>
+<li><a href="functions/deepClone.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>deep<wbr/>Clone</span></a></li>
+<li><a href="functions/difference.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>difference</span></a></li>
+<li><a href="functions/drop.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>drop</span></a></li>
+<li><a href="functions/dropRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>drop<wbr/>Right</span></a></li>
+<li><a href="functions/dropWhile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>drop<wbr/>While</span></a></li>
+<li><a href="functions/dropWhileRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>drop<wbr/>While<wbr/>Right</span></a></li>
+<li><a href="functions/entries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>entries</span></a></li>
+<li><a href="functions/every.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>every</span></a></li>
+<li><a href="functions/exclusiveScan.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>exclusive<wbr/>Scan</span></a></li>
+<li><a href="functions/exclusiveScan_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>exclusive<wbr/>Scan$</span></a></li>
+<li><a href="functions/fill.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>fill</span></a></li>
+<li><a href="functions/fill_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>fill$</span></a></li>
+<li><a href="functions/filter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>filter</span></a></li>
+<li><a href="functions/filter_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>filter$</span></a></li>
+<li><a href="functions/filterAt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>filter<wbr/>At</span></a></li>
+<li><a href="functions/find.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>find</span></a></li>
+<li><a href="functions/findRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>find<wbr/>Right</span></a></li>
+<li><a href="functions/flat.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>flat</span></a></li>
+<li><a href="functions/flatMap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>flat<wbr/>Map</span></a></li>
+<li><a href="functions/forEach.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>for<wbr/>Each</span></a></li>
+<li><a href="functions/fromApplication.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>from<wbr/>Application</span></a></li>
+<li><a href="functions/fromInvocation.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>from<wbr/>Invocation</span></a></li>
+<li><a href="functions/fromIterable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>from<wbr/>Iterable</span></a></li>
+<li><a href="functions/fromIterable_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>from<wbr/>Iterable$</span></a></li>
+<li><a href="functions/fromRange.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>from<wbr/>Range</span></a></li>
+<li><a href="functions/get.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get</span></a></li>
+<li><a href="functions/getAll.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>All</span></a></li>
+<li><a href="functions/getPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Path</span></a></li>
+<li><a href="functions/group.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>group</span></a></li>
+<li><a href="functions/hasInfix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Infix</span></a></li>
+<li><a href="functions/hasPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Path</span></a></li>
+<li><a href="functions/hasPermutation.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Permutation</span></a></li>
+<li><a href="functions/hasPrefix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Prefix</span></a></li>
+<li><a href="functions/hasSubsequence.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Subsequence</span></a></li>
+<li><a href="functions/hasSuffix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Suffix</span></a></li>
+<li><a href="functions/hasUnsortedValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Unsorted<wbr/>Value</span></a></li>
+<li><a href="functions/hasValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>has<wbr/>Value</span></a></li>
+<li><a href="functions/head.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>head</span></a></li>
+<li><a href="functions/ientries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ientries</span></a></li>
+<li><a href="functions/iinfixes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>iinfixes</span></a></li>
+<li><a href="functions/ikeys.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ikeys</span></a></li>
+<li><a href="functions/includes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>includes</span></a></li>
+<li><a href="functions/inclusiveScan.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>inclusive<wbr/>Scan</span></a></li>
+<li><a href="functions/inclusiveScan_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>inclusive<wbr/>Scan$</span></a></li>
+<li><a href="functions/index.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>index</span></a></li>
+<li><a href="functions/indexOf.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>index<wbr/>Of</span></a></li>
+<li><a href="functions/indexRange.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>index<wbr/>Range</span></a></li>
+<li><a href="functions/infixes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>infixes</span></a></li>
+<li><a href="functions/init.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>init</span></a></li>
+<li><a href="functions/interleave.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>interleave</span></a></li>
+<li><a href="functions/intermix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>intermix</span></a></li>
+<li><a href="functions/interpolate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>interpolate</span></a></li>
+<li><a href="functions/intersection.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>intersection</span></a></li>
+<li><a href="functions/intersperse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>intersperse</span></a></li>
+<li><a href="functions/ipermutations.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ipermutations</span></a></li>
+<li><a href="functions/iprefixes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>iprefixes</span></a></li>
+<li><a href="functions/is.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is</span></a></li>
+<li><a href="functions/isDisjoint.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Disjoint</span></a></li>
+<li><a href="functions/isEmpty.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Empty</span></a></li>
+<li><a href="functions/isEqual.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Equal</span></a></li>
+<li><a href="functions/isSorted.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Sorted</span></a></li>
+<li><a href="functions/isUnique.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Unique</span></a></li>
+<li><a href="functions/isubsequences.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>isubsequences</span></a></li>
+<li><a href="functions/isuffixes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>isuffixes</span></a></li>
+<li><a href="functions/ivalues.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ivalues</span></a></li>
+<li><a href="functions/join.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>join</span></a></li>
+<li><a href="functions/keys.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>keys</span></a></li>
+<li><a href="functions/last.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>last</span></a></li>
+<li><a href="functions/lastIndexOf.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>last<wbr/>Index<wbr/>Of</span></a></li>
+<li><a href="functions/length.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>length</span></a></li>
+<li><a href="functions/map.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>map</span></a></li>
+<li><a href="functions/map_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>map$</span></a></li>
+<li><a href="functions/maximum.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>maximum</span></a></li>
+<li><a href="functions/maximumEntries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>maximum<wbr/>Entries</span></a></li>
+<li><a href="functions/maximumEntry.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>maximum<wbr/>Entry</span></a></li>
+<li><a href="functions/maximums.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>maximums</span></a></li>
+<li><a href="functions/middle.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>middle</span></a></li>
+<li><a href="functions/minimum.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>minimum</span></a></li>
+<li><a href="functions/minimumEntries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>minimum<wbr/>Entries</span></a></li>
+<li><a href="functions/minimumEntry.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>minimum<wbr/>Entry</span></a></li>
+<li><a href="functions/minimums.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>minimums</span></a></li>
+<li><a href="functions/moveWithin.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>move<wbr/>Within</span></a></li>
+<li><a href="functions/moveWithin_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>move<wbr/>Within$</span></a></li>
+<li><a href="functions/partialSort.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>partial<wbr/>Sort</span></a></li>
+<li><a href="functions/partialSort_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>partial<wbr/>Sort$</span></a></li>
+<li><a href="functions/partition.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>partition</span></a></li>
+<li><a href="functions/partitionEach.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>partition<wbr/>Each</span></a></li>
+<li><a href="functions/permutations.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>permutations</span></a></li>
+<li><a href="functions/pop.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pop</span></a></li>
+<li><a href="functions/pop_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pop$</span></a></li>
+<li><a href="functions/prefixes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>prefixes</span></a></li>
+<li><a href="functions/push.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>push</span></a></li>
+<li><a href="functions/push_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>push$</span></a></li>
+<li><a href="functions/randomInfix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Infix</span></a></li>
+<li><a href="functions/randomPermutation.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Permutation</span></a></li>
+<li><a href="functions/randomPermutation_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Permutation$</span></a></li>
+<li><a href="functions/randomPrefix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Prefix</span></a></li>
+<li><a href="functions/randomSubsequence.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Subsequence</span></a></li>
+<li><a href="functions/randomSuffix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Suffix</span></a></li>
+<li><a href="functions/randomValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Value</span></a></li>
+<li><a href="functions/range.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>range</span></a></li>
+<li><a href="functions/rangeEntries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>range<wbr/>Entries</span></a></li>
+<li><a href="functions/rangedPartialSort.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ranged<wbr/>Partial<wbr/>Sort</span></a></li>
+<li><a href="functions/rangedPartialSort_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ranged<wbr/>Partial<wbr/>Sort$</span></a></li>
+<li><a href="functions/rangedSort.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ranged<wbr/>Sort</span></a></li>
+<li><a href="functions/rangedSort_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ranged<wbr/>Sort$</span></a></li>
+<li><a href="functions/reduce.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>reduce</span></a></li>
+<li><a href="functions/reduceRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>reduce<wbr/>Right</span></a></li>
+<li><a href="functions/reject.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>reject</span></a></li>
+<li><a href="functions/reject_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>reject$</span></a></li>
+<li><a href="functions/rejectAt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>reject<wbr/>At</span></a></li>
+<li><a href="functions/remove.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove</span></a></li>
+<li><a href="functions/remove_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove$</span></a></li>
+<li><a href="functions/removePath_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove<wbr/>Path$</span></a></li>
+<li><a href="functions/repeat.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>repeat</span></a></li>
+<li><a href="functions/resize_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>resize$</span></a></li>
+<li><a href="functions/reverse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>reverse</span></a></li>
+<li><a href="functions/reverse_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>reverse$</span></a></li>
+<li><a href="functions/rotate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>rotate</span></a></li>
+<li><a href="functions/rotate_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>rotate$</span></a></li>
+<li><a href="functions/scanUntil.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>scan<wbr/>Until</span></a></li>
+<li><a href="functions/scanUntilRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>scan<wbr/>Until<wbr/>Right</span></a></li>
+<li><a href="functions/scanWhile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>scan<wbr/>While</span></a></li>
+<li><a href="functions/scanWhileRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>scan<wbr/>While<wbr/>Right</span></a></li>
+<li><a href="functions/search.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search</span></a></li>
+<li><a href="functions/searchAdjacentDuplicateValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Adjacent<wbr/>Duplicate<wbr/>Value</span></a></li>
+<li><a href="functions/searchAll.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>All</span></a></li>
+<li><a href="functions/searchInfix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Infix</span></a></li>
+<li><a href="functions/searchInfixAll.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Infix<wbr/>All</span></a></li>
+<li><a href="functions/searchInfixRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Infix<wbr/>Right</span></a></li>
+<li><a href="functions/searchMaximumValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Maximum<wbr/>Value</span></a></li>
+<li><a href="functions/searchMaximumValues.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Maximum<wbr/>Values</span></a></li>
+<li><a href="functions/searchMinimumValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Minimum<wbr/>Value</span></a></li>
+<li><a href="functions/searchMinimumValues.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Minimum<wbr/>Values</span></a></li>
+<li><a href="functions/searchMismatchedValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Mismatched<wbr/>Value</span></a></li>
+<li><a href="functions/searchRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Right</span></a></li>
+<li><a href="functions/searchSubsequence.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Subsequence</span></a></li>
+<li><a href="functions/searchUnsortedValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Unsorted<wbr/>Value</span></a></li>
+<li><a href="functions/searchValue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Value</span></a></li>
+<li><a href="functions/searchValueAll.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Value<wbr/>All</span></a></li>
+<li><a href="functions/searchValueRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>search<wbr/>Value<wbr/>Right</span></a></li>
+<li><a href="functions/set.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set</span></a></li>
+<li><a href="functions/set_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set$</span></a></li>
+<li><a href="functions/setPath_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Path$</span></a></li>
+<li><a href="functions/shallowClone.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>shallow<wbr/>Clone</span></a></li>
+<li><a href="functions/shift.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>shift</span></a></li>
+<li><a href="functions/shift_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>shift$</span></a></li>
+<li><a href="functions/slice.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>slice</span></a></li>
+<li><a href="functions/slice_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>slice$</span></a></li>
+<li><a href="functions/some.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>some</span></a></li>
+<li><a href="functions/sort.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>sort</span></a></li>
+<li><a href="functions/sort_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>sort$</span></a></li>
+<li><a href="functions/splice.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>splice</span></a></li>
+<li><a href="functions/splice_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>splice$</span></a></li>
+<li><a href="functions/split.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>split</span></a></li>
+<li><a href="functions/splitAt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>split<wbr/>At</span></a></li>
+<li><a href="functions/subsequences.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>subsequences</span></a></li>
+<li><a href="functions/suffixes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>suffixes</span></a></li>
+<li><a href="functions/swap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>swap</span></a></li>
+<li><a href="functions/swap_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>swap$</span></a></li>
+<li><a href="functions/swapRanges.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>swap<wbr/>Ranges</span></a></li>
+<li><a href="functions/swapRanges_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>swap<wbr/>Ranges$</span></a></li>
+<li><a href="functions/symmetricDifference.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>symmetric<wbr/>Difference</span></a></li>
+<li><a href="functions/tail.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>tail</span></a></li>
+<li><a href="functions/take.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>take</span></a></li>
+<li><a href="functions/takeRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>take<wbr/>Right</span></a></li>
+<li><a href="functions/takeWhile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>take<wbr/>While</span></a></li>
+<li><a href="functions/takeWhileRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>take<wbr/>While<wbr/>Right</span></a></li>
+<li><a href="functions/union.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>union</span></a></li>
+<li><a href="functions/union_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>union$</span></a></li>
+<li><a href="functions/unique.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>unique</span></a></li>
+<li><a href="functions/unshift.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>unshift</span></a></li>
+<li><a href="functions/unshift_.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>unshift$</span></a></li>
+<li><a href="functions/values.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>values</span></a></li>
+<li><a href="functions/zip.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>zip</span></a></li></ul></nav></div></div></div>
+<div class="tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div></body></html>
