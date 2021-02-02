@@ -1,12 +1,4 @@
-An [array] is a collection of values, stored contiguously. [:running:] [:vhs:] [:package:] [:moon:] [:ledger:]
-
-Methods as separate packages:
-- `@extra-array/swap`: use [rollup] to bundle this es module.
-- `@extra-array/swap.min`: use in browser ([browserify], [uglify-js]).
-
-Methods look like:
-- `swap()`: doesn't modify the array itself (pure).
-- `swap$()`: modifies the array itself (update).
+An [array] is a collection of values, stored contiguously.
 
 Some methods accept a map function for *faster comparision* (like [unique]).
 I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
@@ -15,10 +7,12 @@ Some names are borrowed from Haskell, Python, Java, Processing.
 
 > Stability: Experimental.
 
+<br>
+
 ```javascript
 const array = require('extra-array');
 // import * as array from 'extra-array';
-// import * as array from 'https://unpkg.com/extra-array@2.8.22/index.mjs'; (deno)
+// import * as array from 'https://unpkg.com/extra-array@2.10.15/index.mjs'; (deno)
 
 var x = [1, 2, 3];
 array.get(x, -1);
@@ -49,7 +43,11 @@ array.bsearch(x, 5);
 // ]
 ```
 
-### reference
+<br>
+<br>
+
+
+## Index
 
 | Method                | Action
 |-----------------------|-------
@@ -109,8 +107,9 @@ array.bsearch(x, 5);
 | [sort]                | Arranges values in an order.
 
 <br>
+<br>
 
-[![nodef](https://merferry.glitch.me/card/extra-array.svg)](https://nodef.github.io)
+[![](https://img.youtube.com/vi/VYOOiIJeBOA/maxresdefault.jpg)](https://www.youtube.com/watch?v=VYOOiIJeBOA)
 
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 [browserify]: https://www.npmjs.com/package/browserify
