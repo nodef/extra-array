@@ -1,4 +1,12 @@
-An [array] is a collection of values, stored contiguously.
+An [array] is a collection of values, stored contiguously.<br>
+:package: [NPM](https://www.npmjs.com/package/extra-array),
+:smiley_cat: [GitHub](https://github.com/orgs/nodef/packages?repo_name=extra-array),
+:running: [RunKit](https://npm.runkit.com/extra-array),
+:vhs: [Asciinema](undefined),
+:moon: [Minified](https://www.npmjs.com/package/extra-array.min),
+:scroll: [Files](https://unpkg.com/extra-array/),
+:newspaper: [JSDoc](https://nodef.github.io/extra-array/),
+:blue_book: [Wiki](https://github.com/nodef/extra-array/wiki/).
 
 Some methods accept a map function for *faster comparision* (like [unique]).
 I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
@@ -175,8 +183,3 @@ array.bsearch(x, 5);
 [zip]: https://github.com/nodef/extra-array/wiki/zip
 [size]: https://github.com/nodef/extra-array/wiki/size
 [value]: https://github.com/nodef/extra-array/wiki/value
-[:running:]: https://npm.runkit.com/extra-array
-[:package:]: https://www.npmjs.com/package/extra-array
-[:moon:]: https://www.npmjs.com/package/extra-array.min
-[:ledger:]: https://unpkg.com/extra-array/
-[:vhs:]: https://asciinema.org/a/337172
