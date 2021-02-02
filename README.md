@@ -60,7 +60,7 @@ array.bsearch(x, 5);
 | [index]               | Gets zero-based index.
 | [indexRange]          | Gets index range of part of array.
 | [size]                | Counts the number of values.
-|                       | 
+|                       |
 | [fill]                | Fills with given value.
 | [copy]                | Copies part of array to another.
 | [concat]              | Appends values from arrays.
@@ -74,7 +74,7 @@ array.bsearch(x, 5);
 | [reverse]             | Reverses the array.
 | [rotate]              | Rotates values in array.
 | [interleave]          | Merges values from arrays.
-|                       | 
+|                       |
 | [min]                 | Finds smallest value.
 | [max]                 | Finds largest entry.
 | [range]               | Finds smallest and largest entries.
@@ -85,21 +85,21 @@ array.bsearch(x, 5);
 | [group]               | Breaks array keeping similar values together.
 | [split]               | Breaks array considering test as separator.
 | [zip]                 | Combines values from arrays.
-|                       | 
+|                       |
 | [unique]              | Removes duplicate values.
 | [union]               | Gives values present in any array.
 | [intersection]        | Gives values present in both arrays.
 | [difference]          | Gives values of array not present in another.
 | [isUnique]            | Checks if there are no duplicate values.
 | [isDisjoint]          | Checks if arrays have no value in common.
-|                       | 
+|                       |
 | [value]               | Picks an arbitrary value.
 | [prefix]              | Picks an arbitrary prefix.
 | [infix]               | Picks an arbitrary infix.
 | [suffix]              | Picks an arbitrary suffix.
 | [subsequence]         | Picks an arbitrary subsequence.
 | [permutation]         | Picks an arbitrary permutation.
-|                       | 
+|                       |
 | [isEqual]             | Checks if two arrays are equal.
 | [compare]             | Compares two arrays.
 | [search]              | Finds index of first value passing a test.
