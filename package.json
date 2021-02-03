@@ -1,6 +1,6 @@
 {
   "name": "extra-array",
-  "version": "2.10.14",
+  "version": "2.10.15",
   "description": "An array is a collection of values, stored contiguously.",
   "main": "index.js",
   "module": "index.mjs",
@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/nodef/extra-array#readme",
   "devDependencies": {
-    "extra-build": "^1.3.24",
+    "extra-build": "^1.3.26",
     "extra-iterable": "^2.5.14",
-    "extra-math": "^1.1.15",
+    "extra-math": "^1.1.16",
     "extra-set": "^2.2.5"
   }
 }
