@@ -13,6 +13,14 @@ I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
 You can notice that i have followed Javascript naming scheme as far as possible.
 Some names are borrowed from Haskell, Python, Java, Processing.
 
+Methods as separate packages:
+- `@extra-array/swap`: use [rollup] to bundle this es module.
+- `@extra-array/swap.min`: use in browser ([browserify], [uglify-js]).
+
+Methods look like:
+- `swap()`: doesn't modify the array itself (pure).
+- `swap$()`: modifies the array itself (update).
+
 > Stability: Experimental.
 
 <br>
@@ -120,6 +128,9 @@ array.bsearch(x, 5);
 [![](https://img.youtube.com/vi/VYOOiIJeBOA/maxresdefault.jpg)](https://www.youtube.com/watch?v=VYOOiIJeBOA)
 
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+[browserify]: https://www.npmjs.com/package/browserify
+[rollup]: https://www.npmjs.com/package/rollup
+[uglify-js]: https://www.npmjs.com/package/uglify-js
 [bsearch]: https://github.com/nodef/extra-array/wiki/bsearch
 [chunk]: https://github.com/nodef/extra-array/wiki/chunk
 [compare]: https://github.com/nodef/extra-array/wiki/compare
