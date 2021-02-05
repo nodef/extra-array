@@ -8,18 +8,19 @@ An [array] is a collection of values, stored contiguously.<br>
 :newspaper: [JSDoc](https://nodef.github.io/extra-array/),
 :blue_book: [Wiki](https://github.com/nodef/extra-array/wiki/).
 
-Some methods accept a map function for *faster comparision* (like [unique]).
-I find the map-approach beautiful, which i learned from Haskell's `sortOn()`.
-You can notice that i have followed Javascript naming scheme as far as possible.
+All functions except `from*()` take array as 1st parameter. Some methods
+accept a map function for *faster comparision* (like [unique]). I find the
+map-approach beautiful, which i learned from Haskell's `sortOn()`. You can
+notice that i have followed Javascript naming scheme as far as possible.
 Some names are borrowed from Haskell, Python, Java, Processing.
-
-Methods as separate packages:
-- `@extra-array/swap`: use [rollup] to bundle this es module.
-- `@extra-array/swap.min`: use in browser ([browserify], [uglify-js]).
 
 Methods look like:
 - `swap()`: doesn't modify the array itself (pure).
 - `swap$()`: modifies the array itself (update).
+
+Methods as separate packages:
+- `@extra-array/swap`: use [rollup] to bundle this es module.
+- `@extra-array/swap.min`: use in browser ([browserify], [uglify-js]).
 
 > Stability: Experimental.
 

@@ -1,4 +1,4 @@
-TESTS, EXAMPLE
+TESTS
 
 SORTS, IN PAIR, ISSORTED
 Instead of mapFn, provide pair array to define sort mapping.
