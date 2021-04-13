@@ -8,6 +8,7 @@
     "require": "./index.js",
     "import": "./index.mjs"
   },
+  "sideEffects": false,
   "scripts": {
     "test": "exit",
     "build": "ebuild export+main+example+wiki+readme --wikiExample=false --asciinema=false",
