@@ -2,7 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 
 export default [{
-  input: "src/index.js",
+  input: ".build/index.js",
   output: {
     file: "index.js",
     format: "cjs",
@@ -10,7 +10,7 @@ export default [{
   },
   plugins: [resolve(), commonjs()]
 }, {
-  input: "src/index.js",
+  input: ".build/index.js",
   output: {
     file: "index.mjs",
     format: "es",
