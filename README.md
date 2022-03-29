@@ -12,7 +12,7 @@ All functions except `from*()` take array as 1st parameter. Some methods
 accept a map function for *faster comparision* (like [unique]). I find the
 map-approach beautiful, which i learned from Haskell's `sortOn()`. You can
 notice that i have followed Javascript naming scheme as far as possible.
-Some names are borrowed from Haskell, Python, Java, Processing.
+Some names are borrowed from Haskell, [Python](https://www.scaler.com/topics/python/), [Java](https://www.scaler.com/topics/java/), Processing.
 
 Methods look like:
 - `swap()`: doesn't modify the array itself (pure).
