@@ -8,7 +8,7 @@ An [array] is a collection of values, stored contiguously.<br>
 :newspaper: [JSDoc](https://nodef.github.io/extra-array/),
 :blue_book: [Wiki](https://github.com/nodef/extra-array/wiki/).
 
-All functions except `from*()` take array as 1st parameter. Some methods
+All functions except `from*()` take [array](https://www.interviewbit.com/problems/make-equal-elements-array/) as 1st parameter. Some methods
 accept a map function for *faster comparision* (like [unique]). I find the
 map-approach beautiful, which i learned from Haskell's `sortOn()`. You can
 notice that i have followed Javascript naming scheme as far as possible.
