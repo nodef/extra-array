@@ -9,7 +9,7 @@
     "sourceMap": true,
     "outDir": ".build"
   },
-  "files": [
-    "src/index.ts"
-  ]
+  "include": [
+    "src/**/*"
+  ],
 }
