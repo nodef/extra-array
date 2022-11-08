@@ -1,6 +1,13 @@
+NAMING
+- keys(), keyList()
+- push(), push$(), pushTo$()
+
+
 TESTS
 
+
 SORTS, IN PAIR, ISSORTED
+
 Instead of mapFn, provide pair array to define sort mapping.
 selectionSort, insertionSort, bubbleSort, mergeSort, (are all stable?)
 quickSort, shellSort, radixSort, timSort, heapSort
@@ -9,14 +16,18 @@ https://www.npmjs.com/package/sort-algorithms-js
 https://dl.acm.org/doi/10.5555/1778580.1778601
 https://stackoverflow.com/questions/463105/in-place-radix-sort/474040#474040
 
+
 MINNTH, MAXNTH, SORTEDSLICE (ARRAYVIEW)
+
 Need only part of sorted array? [bag][nth] ...
 Selection algorithm: Quickselect
 https://stackoverflow.com/questions/34395680/what-is-the-fastest-way-to-find-nth-biggest-number-of-an-int-array
 https://www.geeksforgeeks.org/kth-smallestlargest-element-unsorted-array/
 
+
 PARSE, OTHERS
 - (fm, fc)?
+
 
 INDEX -VE
 - moveWithin
