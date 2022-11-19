@@ -5,16 +5,6 @@ import {
   IDENTITY,
   COMPARE,
 } from "extra-function";
-import {
-  rangeEntries     as iterableRangeEntries,
-  searchInfix      as iterableSearchInfix,
-  searchInfixRight as iterableSearchInfixRight,
-  searchInfixAll   as iterableSearchInfixAll,
-  hasInfix         as iterableHasInfix,
-} from "extra-iterable";
-import {
-  from as setFrom,
-} from "extra-set";
 
 
 
@@ -100,7 +90,7 @@ export type ReduceFunction<T, U> = (acc: U, v: T, i: number, x: T[]) => U;
  * @param dones iᵗʰ array done?
  * @returns combined array done?
  */
-export type EndFunction = (dones: boolean[]) => boolean;
+export type TestEndFunction = (dones: boolean[]) => boolean;
 
 
 
@@ -111,17 +101,31 @@ export type EndFunction = (dones: boolean[]) => boolean;
 // HELPERS
 // -------
 
-/**
- * Gives a random number generator.
- * @param r random seed 0->1
- */
-function random(r: number): ReadFunction<number> {
-  var a = Math.floor(r * 2**31);
-  return function(): number {
-    var t = a += 0x6D2B79F5;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+// Convert an array to set, using a map function.
+function toSet<T, U>(x: T[], fm: MapFunction<T, U>): Set<U> {
+  var a = new Set<U>();
+  for (var i=0, I=x.length; i<I; ++i)
+    a.add(fm(x[i], i, x));
+  return a;
+}
+
+
+// Find indices of an infix as a list.
+function* searchInfixAllList<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): IterableIterator<number> {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var y1 = [...map(y, fm)];
+  var Y  = y1.length;
+  if (Y===0) { yield* fromRange(0, x.length); return; }
+  var m  = new Array(Y).fill(false);
+  var i  = -1, J = 0;
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    for (var j=J; j>0; --j)
+      m[j] = m[j-1] && fc(wx, y1[j])===0;
+    m[0] = fc(wx, y1[0])===0;
+    J = Math.min(J+1, Y-1);
+    if (m[Y-1]) yield i-Y+1;
   }
 }
 
@@ -201,7 +205,7 @@ export function from$<T>(x: Iterable<T>): T[] {
  * @param v start number
  * @param V end number, excluding
  * @param dv step size [1]
- * @returns v, v+dv, v+2dv, ...
+ * @returns [v, v+dv, v+2dv, ...]
  */
 export function fromRange(v: number, V: number, dv: number=1): number[] {
   var n = (V - v)/dv, a = [];
@@ -262,12 +266,12 @@ export function compare<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
   var X  = x.length;
   var Y  = y.length;
   for (var i=0, I=Math.min(X, Y); i<I; ++i) {
-    var u1 = fm(x[i], i, x);
-    var v1 = fm(y[i], i, y);
-    var c  = fc(u1, v1);
+    var wx = fm(x[i], i, x);
+    var wy = fm(y[i], i, y);
+    var c  = fc(wx, wy);
     if (c!==0) return c;
   }
-  return Math.sign(X - Y);
+  return Math.sign(X-Y);
 }
 
 
@@ -277,7 +281,7 @@ export function compare<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
  * @param y another array
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
- * @returns x=y?
+ * @returns x = y?
  */
 export function isEqual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
   var X = x.length, Y = y.length;
@@ -294,7 +298,7 @@ export function isEqual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
  * Get zero-based index for element in array.
  * @param x an array
  * @param i index (-ve: from right)
- * @returns i' | x[i'] = x[i]; i'>=0
+ * @returns i' | x[i'] = x[i]; i' ∈ [0, |x|)
  */
 export function index<T>(x: T[], i: number): number {
   var X = x.length;
@@ -306,8 +310,8 @@ export function index<T>(x: T[], i: number): number {
  * Get index range for part of array.
  * @param x an array
  * @param i start index (-ve: from right) [0]
- * @param I end index (-ve: from right) [END]
- * @returns [start_index, end_index]
+ * @param I end index (-ve: from right) [|x|]
+ * @returns [i', I'] | i' ≤ I'; i', I' ∈ [0, |x|)
  */
 export function indexRange<T>(x: T[], i: number=0, I: number=x.length): [number, number] {
   var X = x.length;
@@ -332,7 +336,7 @@ export {length as size};
 
 
 /**
- * Check is an array is empty.
+ * Check if an array is empty.
  * @param x an array
  * @returns |x| = 0?
  */
@@ -382,7 +386,7 @@ export function getPath(x: any[], p: number[]): any {
 
 
 /**
- * Checks if nested array has a path.
+ * Check if nested array has a path.
  * @param x a nested array
  * @param p path
  * @returns x[i₀][i₁][...] exists? | [i₀, i₁, ...] = p
@@ -477,7 +481,7 @@ export function remove<T>(x: T[], i: number): T[] {
  * Remove value at index.
  * @param x an array (updated)
  * @param i index
- * @returns x \\ x[i]
+ * @returns x \\: [i]
  */
 export function remove$<T>(x: T[], i: number): T[] {
   x.splice(i, 1);
@@ -489,7 +493,7 @@ export function remove$<T>(x: T[], i: number): T[] {
  * Remove value at path in a nested array.
  * @param x a nested array (updated)
  * @param p path
- * @returns x \\ x[i₀][i₁][...] | [i₀, i₁, ...] = p
+ * @returns x \\: [i₀][i₁][...] | [i₀, i₁, ...] = p
  */
 export function removePath$(x: any[], p: number[]): any[] {
   var y = getPath(x, p.slice(0, -1));
@@ -527,8 +531,8 @@ export function countAs<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Ma
   var fm = fm || IDENTITY;
   var i  = -1, a = new Map();
   for (var v of x) {
-    var v1 = fm(v, ++i, x);
-    a.set(v1, (a.get(v1) || 0) + 1);
+    var w = fm(v, ++i, x);
+    a.set(w, (a.get(w) || 0) + 1);
   }
   return a;
 }
@@ -605,15 +609,17 @@ export function range<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
 export function rangeEntries<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [[number, T], [number, T]] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var mi = -1, mu: T, mv: T|U;
-  var ni = -1, nu: T, nv: T|U;
-  var i  = -1;
-  for (var u of x) {
-    var v = fm(u, ++i, x);
-    if (i===0 || fc(v, mv)<0) { mi = i; mu = u; mv = v; }
-    if (i===0 || fc(v, nv)>0) { ni = i; nu = u; nv = v; }
+  var X  = x.length;
+  if (X===0) return [[-1, undefined], [-1, undefined]];
+  var v  = x[0], w = fm(v, 0, x);
+  var mi = 0, mv = v, mw = w;
+  var ni = 0, nv = v, nw = w;
+  for (var i=1; i<X; ++i) {
+    var v = x[i], w = fm(v, i, x);
+    if (fc(w, mw)<0) { mi = i; mv = v; mw = w; }
+    if (fc(w, nw)>0) { ni = i; nv = v; nw = w; }
   }
-  return [[mi, mu], [ni, nu]];
+  return [[mi, mv], [ni, nv]];
 }
 
 
@@ -691,7 +697,7 @@ export function init<T>(x: T[]): T[] {
 
 
 /**
- * Gets value from middle.
+ * Get values from middle.
  * @param x an array
  * @param i start index
  * @param n number of values [1]
@@ -833,15 +839,23 @@ export function* suffixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
  * @param n number of values [-1 ⇒ any]
  * @returns [], x[0..1], x[0..2], ..., x[1..2], ... if n<0; only of length n otherwise
  */
-export function* infixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
+export function infixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
+  if (n>=0) return infixesFixed(x, n);
+  else      return infixesAll(x);
+}
+
+function* infixesFixed<T>(x: T[], n: number): IterableIterator<T[]> {
   var X = x.length;
   if (n>X)   return;
-  if (n<=0)  yield [];
-  if (n===0) return;
-  var dj = n<0? 1 : X;
-  var N  = Math.max(n, 1);
-  for (var i=0, I=X-N+1; i<I; ++i) {
-    for (var j=i+N; j<=X; j+=dj)
+  if (n===0) { yield []; return; }
+  for (var i=0, I=X-n+1; i<I; ++i)
+    yield x.slice(i, i+n);
+}
+
+function* infixesAll<T>(x: T[]): IterableIterator<T[]> {
+  var X = x.length; yield [];
+  for (var i=0; i<X; ++i) {
+    for (var j=i+1; j<=X; ++j)
       yield x.slice(i, j);
   }
 }
@@ -856,8 +870,8 @@ export function* infixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
 export function* subsequences<T>(x: T[], n: number=-1): IterableIterator<T[]> {
   var X = x.length;
   if (n>X) return;
-  if (n===X)           { yield x;  return; }
-  if (n===0 || X===0)  { yield []; return; }
+  if (n===X)          { yield x;  return; }
+  if (n===0 || X===0) { yield []; return; }
   var y = x.slice(0, -1);
   yield* subsequences(y, n);
   for (var s of subsequences(y, n-1)) {
@@ -879,15 +893,15 @@ export function* permutations<T>(x: T[], n: number=-1): IterableIterator<T[]> {
   var i = n<0? 0 : n;
   var I = n<0? X : n
   for (; i<=I; ++i)
-    yield* permutationsFixedLength(x, i);
+    yield* permutationsFixed(x, i);
 }
 
-function* permutationsFixedLength<T>(x: T[], n: number): IterableIterator<T[]> {
+function* permutationsFixed<T>(x: T[], n: number): IterableIterator<T[]> {
   var X = x.length;
   if (X===0 || n===0) { yield []; return; }
   for (var i=0; i<X; ++i) {
     var y = splice(x, i, 1);
-    for (var p of permutationsFixedLength(y, n-1))
+    for (var p of permutationsFixed(y, n-1))
       yield [x[i], ...p];
   }
 }
@@ -896,7 +910,7 @@ function* permutationsFixedLength<T>(x: T[], n: number): IterableIterator<T[]> {
 /**
  * Pick an arbitrary value.
  * @param x an array
- * @param fr random number generator ([0, 1])
+ * @param fr random number generator ([0, 1))
  * @returns x[i] | i ∈ 0..|x|
  */
 export function randomValue<T>(x: T[], fr: ReadFunction<number> | null=Math.random): T {
@@ -910,51 +924,52 @@ export {randomValue as value};  // DEPRECATED
  * Pick an arbitrary prefix.
  * @param x an array
  * @param n number of values [-1 ⇒ any]
- * @param fr random number generator ([0, 1])
+ * @param fr random number generator ([0, 1))
  * @returns x[..i] if n<0; x[..n] otherwise | i ∈ 0..|x|
  */
 export function randomPrefix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
   var X = x.length;
   if (n>X) return null;
-  var n = n>=0? n : Math.min(Math.floor((X+1)*fr()), X);
+  var n = n>=0? n : Math.floor((X+1)*fr());
   return x.slice(0, n);
 }
-export {randomPrefix as prefix};
+export {randomPrefix as prefix};  // DEPRECATED
 
 
 /**
  * Pick an arbitrary suffix.
  * @param x an array
  * @param n number of values [-1 ⇒ any]
- * @param fr random number generator ([0, 1])
+ * @param fr random number generator ([0, 1))
  * @returns x[|x|-i..] if n<0; x[|x|-n..] otherwise | i ∈ 0..|x|
  */
 export function randomSuffix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
   var X = x.length;
   if (n>X) return null;
-  var n = n>=0? n : Math.min(Math.floor((X+1)*fr()), X);
+  var n = n>=0? n : Math.floor((X+1)*fr());
   return x.slice(X-n);
 }
-export {randomSuffix as suffix};
+export {randomSuffix as suffix};  // DEPRECATED
 
 
 /**
  * Pick an arbitrary infix.
  * @param x an array
  * @param n number of values [-1 ⇒ any]
- * @param fr random number generator ([0, 1])
+ * @param fr random number generator ([0, 1))
  * @returns x[i..j] if n<0; x[i..i+n] otherwise | i, j ∈ 0..|x|
  */
-export function infix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
+export function randomInfix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
   var X = x.length;
   if (n>X) return null;
-  var n = n>=0? n : infixLength(X, fr());
-  var i = Math.min(Math.floor((X+1-n)*fr()), X);
+  var n = n>=0? n : randomInfixLength(X, fr());
+  var i = Math.floor((X+1-n)*fr());
   return x.slice(i, i+n);
 }
+export {randomInfix as infix};  // DEPRECATED
 
 // Not all infix lengths are equally proable.
-function infixLength(X: number, r: number): number {
+function randomInfixLength(X: number, r: number): number {
   var C = 0.5 * X*(X+1) + 1;
   var n = 0.5 * Math.sqrt(1 + 8*r*C) - 0.5;
   return X+1  - Math.floor(n+1);
@@ -965,26 +980,27 @@ function infixLength(X: number, r: number): number {
  * Pick an arbitrary subsequence.
  * @param x an array
  * @param n number of values [-1 ⇒ any]
- * @param fr random number generator ([0, 1])
+ * @param fr random number generator ([0, 1))
  * @returns x[i, j, ...] | [i, j, ...] = is; |is| = |x| if n<0 else n
  */
-export function subsequence<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
+export function randomSubsequence<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
   var X = x.length;
-  if (n>X) return null;
-  if (n>=0) return subsequenceFixedLength(x, n, fr);
-  else      return subsequenceAnyLength(x, fr);
+  if (n>X)  return null;
+  if (n>=0) return randomSubsequenceFixed(x, n, fr);
+  else      return randomSubsequenceAll(x, fr);
 }
+export {randomSubsequence as subsequence};  // DEPRECATED
 
-function subsequenceFixedLength<T>(x: T[], n: number, fr: ReadFunction<number>): T[] {
+function randomSubsequenceFixed<T>(x: T[], n: number, fr: ReadFunction<number>): T[] {
   var is = fromRange(0, x.length);
-  permutation$(is, n, fr).sort();
+  randomPermutation$(is, n, fr).sort();
   return getAll(x, is);
 }
 
-function subsequenceAnyLength<T>(x: T[], fr: ReadFunction<number>): T[] {
+function randomSubsequenceAll<T>(x: T[], fr: ReadFunction<number>): T[] {
   var a = [];
   for (var v of x)
-    if (fr()<=0.5) a.push(v);
+    if (fr()<0.5) a.push(v);
   return a;
 }
 
@@ -993,36 +1009,38 @@ function subsequenceAnyLength<T>(x: T[], fr: ReadFunction<number>): T[] {
  * Pick an arbitrary permutation.
  * @param x an array
  * @param n number of values [-1 ⇒ any]
- * @param fr random number generator ([0, 1])
+ * @param fr random number generator ([0, 1))
  * @returns x' | x' = x; values are randomly shuffled
  */
-export function permutation<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
+export function randomPermutation<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
   var X = x.length;
   if (n>X) return null;
-  return permutation$(x.slice(), n, fr);
+  return randomPermutation$(x.slice(), n, fr);
 }
+export {randomPermutation as permutation};  // DEPRECATED
 
 
 /**
  * Pick an arbitrary permutation.
  * @param x an array (updated)
  * @param n number of values [-1 ⇒ any]
- * @param fr random number generator ([0, 1])
+ * @param fr random number generator ([0, 1))
  * @returns x | values are randomly shuffled
  */
-export function permutation$<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
+export function randomPermutation$<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
   var X = x.length;
   if (n>X) return x;
-  var n = n>=0? n : Math.min(Math.floor((X+1)*fr()), X);
+  var n = n>=0? n : Math.floor((X+1)*fr());
   for (var i=0; i<n; ++i) {
-    var j = i + Math.min(Math.floor((X-i)*fr()), X-1);
+    var j = i + Math.floor((X-i)*fr());
     var t = x[i]; x[i] = x[j]; x[j] = t;
   }
   x.length = n;
   return x;
 }
-export {permutation$ as permute$};
-export {permutation$ as shuffle$};
+export {randomPermutation$ as permutation$};  // DEPRECATED
+export {randomPermutation$ as permute$};
+export {randomPermutation$ as shuffle$};
 
 
 
@@ -1192,10 +1210,10 @@ export function searchAll<T>(x: T[], ft: TestFunction<T>): number[] {
 export function searchValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var v1 = fm(v, 0, null), i = -1;
-  for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    if (fc(u1, v1)===0) return i;
+  var w  = fm(v, 0, null), i = -1;
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (fc(wx, w)===0) return i;
   }
   return -1;
 }
@@ -1212,10 +1230,10 @@ export function searchValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | nul
 export function searchValueRight<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var v1 = fm(v, 0, null);
+  var w = fm(v, 0, null);
   for (var i=x.length-1; i>=0; --i) {
-    var u1 = fm(x[i], i, x);
-    if (fc(u1, v1)===0) return i;
+    var wx = fm(x[i], i, x);
+    if (fc(wx, w)===0) return i;
   }
   return -1;
 }
@@ -1232,11 +1250,11 @@ export function searchValueRight<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> 
 export function searchValueAll<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var v1 = fm(v, 0, null);
+  var w = fm(v, 0, null);
   var i = -1, a = [];
-  for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    if (fc(u1, v1)===0) a.push(i);
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (fc(wx, w)===0) a.push(i);
   }
   return a;
 }
@@ -1251,7 +1269,9 @@ export function searchValueAll<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | 
  * @returns first i | x[i..i+|y|] = y else -1
  */
 export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  return iterableSearchInfix(x, y, fc, fm);
+  for (var i of searchInfixAllList(x, y, fc, fm))
+    return i;
+  return -1;
 }
 
 
@@ -1264,7 +1284,10 @@ export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | n
  * @returns first i | x[i..i+|y|] = y else -1
  */
 export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  return iterableSearchInfixRight(x, y, fc, fm);
+  var a = -1;
+  for (var i of searchInfixAllList(x, y, fc, fm))
+    a = i;
+  return a;
 }
 
 
@@ -1277,14 +1300,14 @@ export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U
  * @returns i₀, i₁, ... | x[j..j+|y|] = y; j ∈ [i₀, i₁, ...]
  */
 export function searchInfixAll<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  return [...iterableSearchInfixAll(x, y, fc, fm)];
+  return [...searchInfixAllList(x, y, fc, fm)];
 }
 
 
 /**
  * Find first index of a subsequence.
  * @param x an array
- * @param y subsequence?
+ * @param y search subsequence
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  * @returns start index of subsequence, -1 if not found
@@ -1294,9 +1317,9 @@ export function searchSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|
   var fm = fm || IDENTITY;
   var y1 = [...y].map(fm), Y = y1.length;
   var a = -1, i = -1, j = 0;
-  for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    if (fc(u1, y1[j])!==0) continue;
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (fc(wx, y1[j])!==0) continue;
     if (a<0) a = i;
     if (++j>=Y) return a;
   }
@@ -1354,7 +1377,7 @@ export function hasSuffix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nul
  * @returns x[i..I] = y for some i, I?
  */
 export function hasInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  return iterableHasInfix(x, y, fc, fm);
+  return searchInfix(x, y, fc, fm) >= 0;
 }
 
 
@@ -1441,6 +1464,17 @@ function everyBoolean<T>(x: T[]): boolean {
 
 /**
  * Transform values of an array.
+ * @param x an array
+ * @param fm map function (v, i, x)
+ * @returns [fm(v₀), fm(v₁), ...] | vᵢ ∈ x
+ */
+export function map<T, U=T>(x: T[], fm: MapFunction<T, T|U>): (T|U)[] {
+  return x.map(fm);
+}
+
+
+/**
+ * Transform values of an array.
  * @param x an array (updated)
  * @param fm map function (v, i, x)
  * @returns x = [fm(v₀), fm(v₁), ...]; vᵢ ∈ x
@@ -1449,17 +1483,6 @@ export function map$<T>(x: T[], fm: MapFunction<T, T>): T[] {
   for (var i=0, I=x.length; i<I; ++i)
     x[i] = fm(x[i], i, x);
   return x;
-}
-
-
-/**
- * Transform values of an array.
- * @param x an array
- * @param fm map function (v, i, x)
- * @returns [fm(v₀), fm(v₁), ...] | vᵢ ∈ x
- */
-export function map<T, U=T>(x: T[], fm: MapFunction<T, T|U>): (T|U)[] {
-  return x.map(fm);
 }
 
 
@@ -1611,9 +1634,9 @@ export function flat(x: any[], n: number=-1, fm: MapFunction<any, any> | null=nu
 function flatTo$(a: any[], x: any[], n: number, fm: MapFunction<any, any>, ft: TestFunction<any>): any[] {
   var i = -1;
   for (var v of x) {
-    var v1 = fm(v, ++i, x);
-    if (n!==0 && ft(v1, i, x)) flatTo$(a, v, n-1, fm, ft);
-    else a.push(v1);
+    var w = fm(v, ++i, x);
+    if (n!==0 && ft(w, i, x)) flatTo$(a, v, n-1, fm, ft);
+    else a.push(w);
   }
   return a;
 }
@@ -1631,9 +1654,9 @@ export function flatMap(x: any[], fm: MapFunction<any, any> | null=null, ft: Tes
   var ft = ft || is;
   var i = -1, a = [];
   for (var v of x) {
-    var v1 = fm(v, ++i, x);
-    if (ft(v1, i, x)) concat$(a, v1);
-    else a.push(v1);
+    var w = fm(v, ++i, x);
+    if (ft(w, i, x)) concat$(a, w);
+    else a.push(w);
   }
   return a;
 }
@@ -1647,9 +1670,9 @@ export function flatMap(x: any[], fm: MapFunction<any, any> | null=null, ft: Tes
  * @param vd default value
  * @returns [fm([x₀[0], x₁[0], ...]), fm([x₀[1], x₁[1], ...]), ...]
  */
-export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null, fe: EndFunction=null, vd?: T): (T[]|U)[] {
+export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null, fe: TestEndFunction=null, vd?: T): (T[]|U)[] {
   var fm = fm || IDENTITY;
-  var fe = fe || some as EndFunction;
+  var fe = fe || some as TestEndFunction;
   var X = xs.length, a = [];
   if (X===0) return a;
   var ds = new Array(X).fill(false);
@@ -1673,19 +1696,6 @@ export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null
 
 /**
  * Fill with given value.
- * @param x an array (updated)
- * @param v value
- * @param i start index [0]
- * @param I end index [|x|]
- * @returns x | x[i..I] = v
- */
-export function fill$<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
-  return x.fill(v, i, I);
-}
-
-
-/**
- * Fill with given value.
  * @param x an array
  * @param v value
  * @param i start index [0]
@@ -1694,6 +1704,19 @@ export function fill$<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
  */
 export function fill<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
   return x.slice().fill(v, i, I);
+}
+
+
+/**
+ * Fill with given value.
+ * @param x an array (updated)
+ * @param v value
+ * @param i start index [0]
+ * @param I end index [|x|]
+ * @returns x | x[i..I] = v
+ */
+export function fill$<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
+  return x.fill(v, i, I);
 }
 
 
@@ -1731,6 +1754,17 @@ function sortDual$<T, U=T>(x: T[], fc: CompareFunction<T|U>, fm: MapFunction<T, 
 
 
 /**
+ * Add value to the end.
+ * @param x an array
+ * @param vs values to add
+ * @returns [...x, ...vs]
+ */
+export function push<T>(x: T[], ...vs: T[]): T[] {
+  return x.concat(vs);
+}
+
+
+/**
  * Add values to the end.
  * @param x an array (updated)
  * @param vs values to add
@@ -1739,17 +1773,6 @@ function sortDual$<T, U=T>(x: T[], fc: CompareFunction<T|U>, fm: MapFunction<T, 
 export function push$<T>(x: T[], ...vs: T[]): T[] {
   x.push(...vs);
   return x;
-}
-
-
-/**
- * Add value to the end.
- * @param x an array
- * @param vs values to add
- * @returns [...x, ...vs]
- */
-export function push<T>(x: T[], ...vs: T[]): T[] {
-  return x.concat(vs);
 }
 
 
@@ -1797,6 +1820,17 @@ export function shift$<T>(x: T[]): T[] {
 
 /**
  * Add values to the start.
+ * @param x an array
+ * @param vs values to add
+ * @returns [...vs, ...x]
+ */
+export function unshift<T>(x: Iterable<T>, ...vs: T[]): T[] {
+  return concat$(vs, x);
+}
+
+
+/**
+ * Add values to the start.
  * @param x an array (updated)
  * @param vs values to add
  * @returns x = [...vs, ...x]
@@ -1804,17 +1838,6 @@ export function shift$<T>(x: T[]): T[] {
 export function unshift$<T>(x: T[], ...vs: T[]): T[] {
   x.unshift(...vs);
   return x;
-}
-
-
-/**
- * Add values to the start.
- * @param x an array
- * @param vs values to add
- * @returns [...vs, ...x]
- */
-export function unshift<T>(x: Iterable<T>, ...vs: T[]): T[] {
-  return concat$(vs, x);
 }
 
 
@@ -1948,13 +1971,13 @@ export function splice$<T>(x: T[], i: number, n: number=x.length-i, ...vs: T[]):
 /**
  * Break array considering test as separator.
  * @param x an array
- * @param fn test function (v, i, x)
+ * @param ft test function (v, i, x)
  * @returns x[j..k] ⧺ x[l..m] ⧺ ... | ft(x[i]) = true; i = 0..j / k..l / ...
  */
-export function split<T>(x: T[], fn: TestFunction<T>): T[][] {
+export function split<T>(x: T[], ft: TestFunction<T>): T[][] {
   var i = -1, a = [], b = [];
   for (var v of x) {
-    if (!fn(v, ++i, x))  b.push(v);
+    if (!ft(v, ++i, x))  b.push(v);
     else if (b.length) { a.push(b); b = []; }
   }
   if (b.length) a.push(b);
@@ -2054,13 +2077,13 @@ export function cutAtRight<T>(x: T[], is: number[]): T[][] {
 export function group<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[][] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var a = [], b = [];
-  var u1: T|U, i = -1;
+  var a  = [], b = [];
+  var u: T|U,  i = -1;
   for (var v of x) {
-    var v1 = fm(v, ++i, x);
-    if (i===0 || fc(u1, v1)===0) b.push(v);
+    var w = fm(v, ++i, x);
+    if (i===0 || fc(u, w)===0) b.push(v);
     else { a.push(b); b = [v]; }
-    u1 = v1;
+    u = w;
   }
   a.push(b);
   return a;
@@ -2091,11 +2114,11 @@ export function partition<T>(x: T[], ft: TestFunction<T>): [T[], T[]] {
  */
 export function partitionAs<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Map<T|U, T[]> {
   var fm = fm || IDENTITY;
-  var a = new Map(), i = -1;
+  var i  = -1, a = new Map();
   for (var v of x) {
-    var v1 = fm(v, ++i, x);
-    if (!a.has(v1)) a.set(v1, []);
-    a.get(v1).push(v);
+    var w = fm(v, ++i, x);
+    if (!a.has(w)) a.set(w, []);
+    a.get(w).push(v);
   }
   return a;
 }
@@ -2238,7 +2261,11 @@ export function interpolate<T>(x: T[], fc: CombineFunction<T>): T[] {
 export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=m, t: number=n): T[] {
   var X = x.length, Y = y.length, a = [];
   for (var i=0, j=0; i<X; i+=s) {
-    if (i>0) { for(var k=j, K=k+n; k<K; ++k) a.push(y[k % Y]); j += t; }
+    if (i>0) {
+      for (var k=j, K=k+n; k<K; ++k)
+        a.push(y[k % Y]);
+      j += t;
+    }
     concat$(a, x.slice(i, i+m));
   }
   return a;
@@ -2266,7 +2293,6 @@ export function interleave<T>(xs: T[][]): T[] {
 
 // COMBINE
 // -------
-
 
 /**
  * Append values from arrays.
@@ -2321,11 +2347,11 @@ export function isUnique<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, f
 
 function isUniqueMap<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): boolean {
   var fm = fm || IDENTITY;
-  var s = new Set(), i = -1;
+  var s  = new Set(), i = -1;
   for (var v of x) {
-    var v1 = fm(v, ++i, x);
-    if (s.has(v1)) return false;
-    s.add(v1);
+    var w = fm(v, ++i, x);
+    if (s.has(w)) return false;
+    s.add(w);
   }
   return true;
 }
@@ -2334,9 +2360,9 @@ function isUniqueDual<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
   var x1 = [...x].map(fm);
-  for (var u1 of x1) {
-    for (var v1 of x1)
-      if (fc(u1, v1)===0) return false;
+  for (var wx of x1) {
+    for (var wy of x1)
+      if (fc(wx, wy)===0) return false;
   }
   return true;
 }
@@ -2356,11 +2382,11 @@ export function isDisjoint<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 }
 
 function isDisjointMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): boolean {
-  var s  = setFrom(y, fm);
-  var fm = fm || IDENTITY, i = -1;
-  for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    if (s.has(u1)) return false;
+  var fm = fm || IDENTITY;
+  var s  = toSet(y, fm), i = -1;
+  for (var v of x) {
+    var w = fm(v, ++i, x);
+    if (s.has(w)) return false;
   }
   return true;
 }
@@ -2369,10 +2395,10 @@ function isDisjointDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
   var y1 = [...y].map(fm), i = -1;
-  for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    for (var v1 of y1)
-      if (fc(u1, v1)===0) return false;
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    for (var wy of y1)
+      if (fc(wx, wy)===0) return false;
   }
   return true;
 }
@@ -2390,14 +2416,14 @@ export function unique<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm:
   else    return uniqueMap (x, fm);
 }
 
-function uniqueMap<T, U=T>(x: T[], fn: MapFunction<T, T|U> | null=null): T[] {
-  var fn = fn || IDENTITY;
-  var s = new Set();
-  var a = [], i = -1;
+function uniqueMap<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): T[] {
+  var fm = fm || IDENTITY;
+  var s  = new Set();
+  var i  = -1, a = [];
   for (var v of x) {
-    var v1 = fn(v, ++i, x);
-    if (s.has(v1)) continue;
-    s.add(v1); a.push(v);
+    var w = fm(v, ++i, x);
+    if (s.has(w)) continue;
+    s.add(w); a.push(v);
   }
   return a;
 }
@@ -2405,12 +2431,12 @@ function uniqueMap<T, U=T>(x: T[], fn: MapFunction<T, T|U> | null=null): T[] {
 function uniqueDual<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var s = [], a = [], i = -1;
-  x: for (var v of x) {
-    var v1 = fm(v, ++i, x);
-    for (var u1 of s)
-      if (fc(u1, v1)===0) continue x;
-    s.push(v1); a.push(v);
+  var i  = -1, s = [], a = [];
+  x: for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    for (var ws of s)
+      if (fc(ws, wx)===0) continue x;
+    s.push(wx); a.push(vx);
   }
   return a;
 }
@@ -2443,11 +2469,11 @@ export function union$<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=n
 }
 
 function unionMap$<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
-  var s  = setFrom(x, fm);
-  var fm = fm || IDENTITY, i = -1;
-  for (var v of y) {
-    var v1 = fm(v, ++i, y);
-    if (!s.has(v1)) x.push(v);
+  var fm = fm || IDENTITY;
+  var s  = toSet(x, fm), i = -1;
+  for (var vy of y) {
+    var wy = fm(vy, ++i, y);
+    if (!s.has(wy)) x.push(vy);
   }
   return x;
 }
@@ -2455,12 +2481,12 @@ function unionMap$<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null):
 function unionDual$<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var x1 = x.map(fm), j = -1;
-  y: for (var v of y) {
-    var v1 = fm(v, ++j, y);
-    for (var u1 of x1)
-      if (fc(u1, v1)===0) continue y;
-    x.push(v);
+  var x1 = x.map(fm), i = -1;
+  y: for (var vy of y) {
+    var wy = fm(vy, ++i, y);
+    for (var wx of x1)
+      if (fc(wx, wy)===0) continue y;
+    x.push(vy);
   }
   return x;
 }
@@ -2480,12 +2506,12 @@ export function intersection<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | 
 }
 
 function intersectionMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
-  var s = setFrom(y, fm);
   var fm = fm || IDENTITY;
-  var a = [], i = -1;
-  for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    if (s.has(u1)) a.push(u);
+  var s  = toSet(y, fm);
+  var i  = -1, a = [];
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (s.has(wx)) a.push(vx);
   }
   return a;
 }
@@ -2494,11 +2520,11 @@ function intersectionDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nul
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
   var y1 = [...y].map(fm);
-  var a = [], i = -1;
-  x: for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    for (var v1 of y1)
-      if (fc(u1, v1)===0) { a.push(u); continue x; }
+  var i  = -1, a = [];
+  x: for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    for (var wy of y1)
+      if (fc(wx, wy)===0) { a.push(vx); continue x; }
   }
   return a;
 }
@@ -2518,12 +2544,12 @@ export function difference<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 }
 
 function differenceMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
-  var s = setFrom(y, fm);
   var fm = fm || IDENTITY;
-  var a = [], i = -1;
-  for (var u of x) {
-    var u1 = fm(u, ++i, x);
-    if (!s.has(u1)) a.push(u);
+  var s  = toSet(y, fm);
+  var i  = -1, a = [];
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (!s.has(wx)) a.push(vx);
   }
   return a;
 }
@@ -2532,12 +2558,12 @@ function differenceDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
   var y1 = [...y].map(fm);
-  var a = [], i = -1;
-  x: for (var u of x) {
-    var u1 = fm(u, ++i, x), j = -1;
-    for (var v1 of y1)
-      if (fc(u1, v1)===0) continue x;
-    a.push(u);
+  var i  = -1, a  = [];
+  x: for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    for (var wy of y1)
+      if (fc(wx, wy)===0) continue x;
+    a.push(vx);
   }
   return a;
 }
@@ -2567,16 +2593,16 @@ export function symmetricDifference<T, U=T>(x: T[], y: T[], fc: CompareFunction<
  */
 export function cartesianProduct<T, U=T>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null): (T[]|U)[] {
   var fm = fm || IDENTITY;
-  var X  = xs.length, a = [];
-  if (X===0) return a;
-  var is = new Array(X).fill(0);
+  var XS = xs.length, a = [];
+  if (XS===0) return a;
+  var is = new Array(XS).fill(0);
   var ls = xs.map(x => x.length);
   if (ls.some(l => l===0)) return a;
   for (var i=0;; ++i) {
-    for (var j=0, vs=[]; j<X; ++j)
+    for (var j=0, vs=[]; j<XS; ++j)
       vs.push(xs[j][is[j]]);
     a.push(fm(vs, i, null));
-    for (var r=X-1; r>=0; --r) {
+    for (var r=XS-1; r>=0; --r) {
       if (++is[r]<ls[r]) break;
       is[r] = 0;
     }
