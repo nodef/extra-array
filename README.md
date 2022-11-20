@@ -27,7 +27,7 @@ Methods as separate packages:
 <br>
 
 ```javascript
-const array = require("extra-array");
+const array = require('extra-array');
 // import * as array from "extra-array";
 // import * as array from "https://unpkg.com/extra-array@2.10.15/index.mjs"; (deno)
 
@@ -37,18 +37,18 @@ array.get(x, -1);
 
 var x = [1, 2, 3, 4];
 array.swap(x, 0, 1);
-// [2, 1, 3, 4]
+// → [2, 1, 3, 4]
 
 var x = [1, 2, 3, 4];
 array.rotate(x, 1);
-// [4, 1, 2, 3]
+// → [4, 1, 2, 3]
 
 var x = [1, 3, 5, 7];
 array.bsearch(x, 5);
 // 2           ^ found
 
 [...array.permutations([1, 2, 3])];
-// [
+// → [
 //   [],          [ 1 ],
 //   [ 2 ],       [ 3 ],
 //   [ 1, 2 ],    [ 1, 3 ],
@@ -108,12 +108,12 @@ array.bsearch(x, 5);
 | [isUnique]     | Checks if there are no duplicate values.        |
 | [isDisjoint]   | Checks if arrays have no value in common.       |
 |                |
-| [value]        | Picks an arbitrary value.                       |
-| [prefix]       | Picks an arbitrary prefix.                      |
-| [infix]        | Picks an arbitrary infix.                       |
-| [suffix]       | Picks an arbitrary suffix.                      |
-| [subsequence]  | Picks an arbitrary subsequence.                 |
-| [permutation]  | Picks an arbitrary permutation.                 |
+| [randomValue]        | Picks an arbitrary value.                       |
+| [randomPrefix]       | Picks an arbitrary prefix.                      |
+| [randomInfix]        | Picks an arbitrary infix.                       |
+| [randomSuffix]       | Picks an arbitrary suffix.                      |
+| [randomSubsequence]  | Picks an arbitrary subsequence.                 |
+| [randomPermutation]  | Picks an arbitrary permutation.                 |
 |                |
 | [isEqual]      | Checks if two arrays are equal.                 |
 | [compare]      | Compares two arrays.                            |
@@ -150,7 +150,7 @@ array.bsearch(x, 5);
 [group]: https://github.com/nodef/extra-array/wiki/group
 [index]: https://github.com/nodef/extra-array/wiki/index
 [indexRange]: https://github.com/nodef/extra-array/wiki/indexRange
-[infix]: https://github.com/nodef/extra-array/wiki/infix
+[randomInfix]: https://github.com/nodef/extra-array/wiki/infix
 [interleave]: https://github.com/nodef/extra-array/wiki/interleave
 [intersection]: https://github.com/nodef/extra-array/wiki/intersection
 [is]: https://github.com/nodef/extra-array/wiki/is
@@ -161,8 +161,8 @@ array.bsearch(x, 5);
 [max]: https://github.com/nodef/extra-array/wiki/max
 [min]: https://github.com/nodef/extra-array/wiki/min
 [partition]: https://github.com/nodef/extra-array/wiki/partition
-[permutation]: https://github.com/nodef/extra-array/wiki/permutation
-[prefix]: https://github.com/nodef/extra-array/wiki/prefix
+[randomPermutation]: https://github.com/nodef/extra-array/wiki/permutation
+[randomPrefix]: https://github.com/nodef/extra-array/wiki/prefix
 [range]: https://github.com/nodef/extra-array/wiki/range
 [repeat]: https://github.com/nodef/extra-array/wiki/repeat
 [reverse]: https://github.com/nodef/extra-array/wiki/reverse
@@ -173,11 +173,11 @@ array.bsearch(x, 5);
 [sort]: https://github.com/nodef/extra-array/wiki/sort
 [splice]: https://github.com/nodef/extra-array/wiki/splice
 [split]: https://github.com/nodef/extra-array/wiki/split
-[subsequence]: https://github.com/nodef/extra-array/wiki/subsequence
-[suffix]: https://github.com/nodef/extra-array/wiki/suffix
+[randomSubsequence]: https://github.com/nodef/extra-array/wiki/subsequence
+[randomSuffix]: https://github.com/nodef/extra-array/wiki/suffix
 [swap]: https://github.com/nodef/extra-array/wiki/swap
 [union]: https://github.com/nodef/extra-array/wiki/union
 [unique]: https://github.com/nodef/extra-array/wiki/unique
 [zip]: https://github.com/nodef/extra-array/wiki/zip
 [size]: https://github.com/nodef/extra-array/wiki/size
-[value]: https://github.com/nodef/extra-array/wiki/value
+[randomValue]: https://github.com/nodef/extra-array/wiki/value
