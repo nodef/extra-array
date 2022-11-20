@@ -145,7 +145,7 @@ function updateReadme(ds) {
   var dm = new Map(ds.map(d => [d.name, d]));
   var txt = build.readFileText('README.md');
   txt = build.wikiUpdateIndex(txt, dm, readmeDescription);
-  txt = build.wikiUpdateLinkReferences(txt, dm, {owner, repo});
+  txt = build.wikiUpdateLinkReferences(txt, dm, {owner, repo, useWiki: true});
   build.writeFileText('README.md', txt);
 }
 
