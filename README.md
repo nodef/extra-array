@@ -246,6 +246,7 @@ array.rotate(x, 1);
 
 [![](https://img.youtube.com/vi/VYOOiIJeBOA/maxresdefault.jpg)](https://www.youtube.com/watch?v=VYOOiIJeBOA)<br>
 [![ORG](https://img.shields.io/badge/org-nodef-green?logo=Org)](https://nodef.github.io)
+[![DOI](https://zenodo.org/badge/133759104.svg)](https://zenodo.org/badge/latestdoi/133759104)
 [![Coverage Status](https://coveralls.io/repos/github/nodef/extra-array/badge.svg?branch=master)](https://coveralls.io/github/nodef/extra-array?branch=master)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/77adb3752d187f463f25/test_coverage)](https://codeclimate.com/github/nodef/extra-array/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/77adb3752d187f463f25/maintainability)](https://codeclimate.com/github/nodef/extra-array/maintainability)

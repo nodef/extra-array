@@ -1,0 +1,11 @@
+
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Sahu
+    given-names: Subhajit
+    orcid: https://orcid.org/0000-0001-5140-6578
+title: "nodef/extra-array: A collection of functions for working with Arrays"
+version: 3.1.0
+doi: 10.5281/zenodo.7339658
+date-released: 2022-11-20
