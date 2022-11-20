@@ -1,19 +1,26 @@
-An [array] is a collection of values, stored contiguously.<br>
+A collection of functions for working with Arrays.<br>
 📦 [Node.js](https://www.npmjs.com/package/extra-array),
 🌐 [Web](https://www.npmjs.com/package/extra-array.web),
 📜 [Files](https://unpkg.com/extra-array/),
 📰 [Docs](https://nodef.github.io/extra-array/),
 📘 [Wiki](https://github.com/nodef/extra-array/wiki/).
 
-All functions except `from*()` take array as 1st parameter. Some methods
-accept a map function for *faster comparision* (like [unique]). I find the
-map-approach beautiful, which i learned from Haskell's `sortOn()`. You can
-notice that i have followed Javascript naming scheme as far as possible.
-Some names are borrowed from Haskell, Python, Java, Processing.
+An [Array] is a collection of values, stored contiguously. This package includes
+common array functions related to querying **about** arrays, **generating**
+them, **comparing** one with another, finding their **length**, **getting** and
+**setting** elements, obtaining its **properties**, getting a **part** of it,
+**rearranging** elements in it, **finding** an element of a subset of elements
+in it, performing **functional** operations, **manipulating** it in various
+ways, **combining** together arrays or its elements, of performing **set**
+**operations** upon it.
 
-Methods look like:
-- `swap()`: doesn't modify the array itself (pure).
-- `swap$()`: modifies the array itself (update).
+All functions except `from*()` take array as 1st parameter. Methods like
+`swap()` are pure and do not modify the array itself, while methods like
+`swap$()` *do modify (update)* the array itself. Some methods accept a map
+function for *faster comparision* (like [unique]). I find the map-approach
+beautiful, which I learned from Haskell's `sortOn()`. You can notice that I have
+followed Javascript naming scheme as far as possible. Some names are borrowed
+from Haskell, Python, Java, Processing.
 
 This package is available in *Node.js* and *Web* formats. The web format
 is exposed as `extra_array` standalone variable and can be loaded from
@@ -21,7 +28,7 @@ is exposed as `extra_array` standalone variable and can be loaded from
 
 > Stability: [Experimental](https://www.youtube.com/watch?v=L1j93RnIxEo).
 
-[array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+[Array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 [jsDelivr CDN]: https://cdn.jsdelivr.net/npm/extra-array.web/index.js
 
 <br>
