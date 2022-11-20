@@ -267,6 +267,11 @@ test("isEqual", () => {
 });
 
 
+
+
+// LENGTH
+// ------
+
 test("index", () => {
   var x = [2, 4, 6, 8];
   var a = index(x, 1);
@@ -309,6 +314,11 @@ test("isEmpty", () => {
   expect(a).toBe(true);
 });
 
+
+
+
+// GET/SET
+// -------
 
 test("get", () => {
   var x = [2, 4, 6, 8];
@@ -429,6 +439,11 @@ test("removePath$", () => {
 });
 
 
+
+
+// PROPERTY
+// --------
+
 test("count", () => {
   var x = [1, 1, 2, 2, 4];
   var a = count(x, v => v % 2 === 1);
@@ -513,6 +528,11 @@ test("rangeEntries", () => {
   expect(a).toStrictEqual([[0, 1], [3, -4]]);
 });
 
+
+
+
+// PART
+// ----
 
 test("slice", () => {
   var x = [1, 2, 3, 4, 5];
@@ -651,6 +671,11 @@ test("dropWhileRight", () => {
   expect(a).toStrictEqual([1, 2, 3]);
 });
 
+
+
+
+// ARRANGEMENTS
+// ------------
 
 test("prefixes", () => {
   var a = prefixes([1, 2]);
@@ -794,6 +819,11 @@ test("randomPermutation$", () => {
   expect(a.length).toBe(3);
 });
 
+
+
+
+// FIND
+// ----
 
 test("includes", () => {
   var x = [1, 2, -3];
@@ -1087,6 +1117,11 @@ test("hasPermutation", () => {
 });
 
 
+
+
+// FUNCTIONAL
+// ----------
+
 test("forEach", () => {
   var x = [1, 2, -3, -4];
   var a: number[] = [];
@@ -1250,6 +1285,11 @@ test("zip", () => {
   expect(a).toStrictEqual([[1, 4], [2, 5], [3, 0]]);  // (first)
 });
 
+
+
+
+// MANIPULATION
+// ------------
 
 test("fill", () => {
   var x = [1, 2, 3, 4];
@@ -1685,6 +1725,11 @@ test("interleave", () => {
 });
 
 
+
+
+// COMBINE
+// -------
+
 test("concat", () => {
   var x = [1, 2];
   var y = [3, 4];
@@ -1715,6 +1760,11 @@ test("join", () => {
   expect(a).toBe("1 : 2");
 });
 
+
+
+
+// SET OPERATIONS
+// --------------
 
 test("isUnique", () => {
   var x = [1, 2, -1, -2];
