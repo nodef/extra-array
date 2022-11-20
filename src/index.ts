@@ -298,11 +298,11 @@ export function isEqual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
  * Get zero-based index for element in array.
  * @param x an array
  * @param i index (-ve: from right)
- * @returns i' | x[i'] = x[i]; i' ∈ [0, |x|)
+ * @returns i' | x[i'] = x[i]; i' ∈ [0, |x|]
  */
 export function index<T>(x: T[], i: number): number {
   var X = x.length;
-  return i>=0? Math.min(i, X-1) : Math.max(X+i, 0);
+  return i>=0? Math.min(i, X) : Math.max(X+i, 0);
 }
 
 
@@ -311,12 +311,12 @@ export function index<T>(x: T[], i: number): number {
  * @param x an array
  * @param i start index (-ve: from right) [0]
  * @param I end index (-ve: from right) [|x|]
- * @returns [i', I'] | i' ≤ I'; i', I' ∈ [0, |x|)
+ * @returns [i', I'] | i' ≤ I'; i', I' ∈ [0, |x|]
  */
 export function indexRange<T>(x: T[], i: number=0, I: number=x.length): [number, number] {
   var X = x.length;
-  var i = i>=0? Math.min(i, X-1) : Math.max(X+i, 0);
-  var I = I>=0? Math.min(I, X-1) : Math.max(X+I, 0);
+  var i = i>=0? Math.min(i, X) : Math.max(X+i, 0);
+  var I = I>=0? Math.min(I, X) : Math.max(X+I, 0);
   return [i, Math.max(i, I)];
 }
 
@@ -783,7 +783,7 @@ export function dropRight<T>(x: T[], n: number=1): T[] {
  * @returns x[T..] | ft(x[i]) = true ∀ i ∈ [0, T-1] & ft(x[T]) = false
  */
 export function dropWhile<T>(x: T[], ft: TestFunction<T>): T[] {
-  return x.slice(scanUntil(x, ft));
+  return x.slice(scanWhile(x, ft));
 }
 
 
@@ -794,7 +794,7 @@ export function dropWhile<T>(x: T[], ft: TestFunction<T>): T[] {
  * @returns x[0..T-1] | ft(x[i]) = true ∀ i ∈ [T, |x|-1] & ft(x[T-1]) = false
  */
 export function dropWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
-  return x.slice(0, scanUntilRight(x, ft));
+  return x.slice(0, scanWhileRight(x, ft));
 }
 
 
@@ -1518,6 +1518,18 @@ export function reduceRight<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|
 
 /**
  * Keep values which pass a test.
+ * @param x an array
+ * @param ft test function (v, i, x)
+ * @returns [v₀, v₁, ...] | ft(vᵢ) = true; vᵢ ∈ x
+ */
+export function filter<T>(x: T[], ft: TestFunction<T>): T[] {
+  return x.filter(ft);
+}
+export {filter as findAll};
+
+
+/**
+ * Keep values which pass a test.
  * @param x an array (updated)
  * @param ft test function (v, i, x)
  * @returns x = [v₀, v₁, ...] | ft(vᵢ) = true; vᵢ ∈ x
@@ -1528,18 +1540,6 @@ export function filter$<T>(x: T[], ft: TestFunction<T>): T[] {
   x.length = j;
   return x;
 }
-
-
-/**
- * Keep values which pass a test.
- * @param x an array
- * @param ft test function (v, i, x)
- * @returns [v₀, v₁, ...] | ft(vᵢ) = true; vᵢ ∈ x
- */
-export function filter<T>(x: T[], ft: TestFunction<T>): T[] {
-  return x.filter(ft);
-}
-export {filter as findAll};
 
 
 /**
@@ -1558,20 +1558,6 @@ export function filterAt<T>(x: T[], is: number[]): T[] {
 
 /**
  * Discard values which pass a test.
- * @param x an array (updated)
- * @param ft test function (v, i, x)
- * @returns x = [v₀, v₁, ...] | ft(vᵢ) = false; vᵢ ∈ x
- */
-export function reject$<T>(x: T[], ft: TestFunction<T>): T[] {
-  for (var i=0, j=0, I=x.length; i<I; ++i)
-    if (!ft(x[i], i, x)) x[j++] = x[i];
-  x.length = j;
-  return x;
-}
-
-
-/**
- * Discard values which pass a test.
  * @param x an array
  * @param ft test function (v, i, x)
  * @returns [v₀, v₁, ...] | ft(vᵢ) = false; vᵢ ∈ x
@@ -1581,6 +1567,20 @@ export function reject<T>(x: T[], ft: TestFunction<T>): T[] {
   for (var v of x)
     if (!ft(v, ++i, x)) a.push(v);
   return a;
+}
+
+
+/**
+ * Discard values which pass a test.
+ * @param x an array (updated)
+ * @param ft test function (v, i, x)
+ * @returns x = [v₀, v₁, ...] | ft(vᵢ) = false; vᵢ ∈ x
+ */
+export function reject$<T>(x: T[], ft: TestFunction<T>): T[] {
+  for (var i=0, j=0, I=x.length; i<I; ++i)
+    if (!ft(x[i], i, x)) x[j++] = x[i];
+  x.length = j;
+  return x;
 }
 
 
