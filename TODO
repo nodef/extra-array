@@ -1,7 +1,3 @@
-TESTS
-- == => ===
-- Category header
-
 NAMING
 - keys(), keyList()
 - push(), push$(), pushTo$()
