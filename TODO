@@ -35,3 +35,38 @@ INDEX -VE
 knuth-shuffle-seeded
 Description
 The Fisher-Yates (aka Knuth) shuffle for Node.js, with seeding support
+
+
+
+
+
+// HELPERS
+// -------
+
+// Convert an array to set, using a map function.
+function setFrom<T, U>(x: T[], fm: MapFunction<T, U>): Set<U> {
+  var a = new Set<U>();
+  for (var i=0, I=x.length; i<I; ++i)
+    a.add(fm(x[i], i, x));
+  return a;
+}
+
+
+// Find indices of an infix as a list.
+function* iterableSearchInfixAll<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): IterableIterator<number> {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var y1 = [...map(y, fm)];
+  var Y  = y1.length;
+  if (Y===0) { yield* fromRange(0, x.length); return; }
+  var m  = new Array(Y).fill(false);
+  var i  = -1, J = 0;
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    for (var j=J; j>0; --j)
+      m[j] = m[j-1] && fc(wx, y1[j])===0;
+    m[0] = fc(wx, y1[0])===0;
+    J = Math.min(J+1, Y-1);
+    if (m[Y-1]) yield i-Y+1;
+  }
+}

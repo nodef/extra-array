@@ -5,6 +5,12 @@ import {
   IDENTITY,
   COMPARE,
 } from "extra-function";
+import {
+  searchInfixAll as iterableSearchInfixAll,
+} from "extra-iterable";
+import {
+  from as setFrom,
+} from "extra-set";
 
 
 
@@ -90,47 +96,13 @@ export type ReduceFunction<T, U> = (acc: U, v: T, i: number, x: T[]) => U;
  * @param dones iᵗʰ array done?
  * @returns combined array done?
  */
-export type TestEndFunction = (dones: boolean[]) => boolean;
+export type EndFunction = (dones: boolean[]) => boolean;
 
 
 
 
 // METHODS
 // =======
-
-// HELPERS
-// -------
-
-// Convert an array to set, using a map function.
-function toSet<T, U>(x: T[], fm: MapFunction<T, U>): Set<U> {
-  var a = new Set<U>();
-  for (var i=0, I=x.length; i<I; ++i)
-    a.add(fm(x[i], i, x));
-  return a;
-}
-
-
-// Find indices of an infix as a list.
-function* searchInfixAllList<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): IterableIterator<number> {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var y1 = [...map(y, fm)];
-  var Y  = y1.length;
-  if (Y===0) { yield* fromRange(0, x.length); return; }
-  var m  = new Array(Y).fill(false);
-  var i  = -1, J = 0;
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    for (var j=J; j>0; --j)
-      m[j] = m[j-1] && fc(wx, y1[j])===0;
-    m[0] = fc(wx, y1[0])===0;
-    J = Math.min(J+1, Y-1);
-    if (m[Y-1]) yield i-Y+1;
-  }
-}
-
-
-
 
 // ABOUT
 // -----
@@ -1269,7 +1241,7 @@ export function searchValueAll<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | 
  * @returns first i | x[i..i+|y|] = y else -1
  */
 export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  for (var i of searchInfixAllList(x, y, fc, fm))
+  for (var i of iterableSearchInfixAll(x, y, fc, fm))
     return i;
   return -1;
 }
@@ -1285,7 +1257,7 @@ export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | n
  */
 export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
   var a = -1;
-  for (var i of searchInfixAllList(x, y, fc, fm))
+  for (var i of iterableSearchInfixAll(x, y, fc, fm))
     a = i;
   return a;
 }
@@ -1300,7 +1272,7 @@ export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U
  * @returns i₀, i₁, ... | x[j..j+|y|] = y; j ∈ [i₀, i₁, ...]
  */
 export function searchInfixAll<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  return [...searchInfixAllList(x, y, fc, fm)];
+  return [...iterableSearchInfixAll(x, y, fc, fm)];
 }
 
 
@@ -1670,9 +1642,9 @@ export function flatMap(x: any[], fm: MapFunction<any, any> | null=null, ft: Tes
  * @param vd default value
  * @returns [fm([x₀[0], x₁[0], ...]), fm([x₀[1], x₁[1], ...]), ...]
  */
-export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null, fe: TestEndFunction=null, vd?: T): (T[]|U)[] {
+export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null, fe: EndFunction=null, vd?: T): (T[]|U)[] {
   var fm = fm || IDENTITY;
-  var fe = fe || some as TestEndFunction;
+  var fe = fe || some as EndFunction;
   var X = xs.length, a = [];
   if (X===0) return a;
   var ds = new Array(X).fill(false);
@@ -2383,7 +2355,7 @@ export function isDisjoint<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 
 function isDisjointMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): boolean {
   var fm = fm || IDENTITY;
-  var s  = toSet(y, fm), i = -1;
+  var s  = setFrom(y, fm), i = -1;
   for (var v of x) {
     var w = fm(v, ++i, x);
     if (s.has(w)) return false;
@@ -2470,7 +2442,7 @@ export function union$<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=n
 
 function unionMap$<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
   var fm = fm || IDENTITY;
-  var s  = toSet(x, fm), i = -1;
+  var s  = setFrom(x, fm), i = -1;
   for (var vy of y) {
     var wy = fm(vy, ++i, y);
     if (!s.has(wy)) x.push(vy);
@@ -2507,7 +2479,7 @@ export function intersection<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | 
 
 function intersectionMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
   var fm = fm || IDENTITY;
-  var s  = toSet(y, fm);
+  var s  = setFrom(y, fm);
   var i  = -1, a = [];
   for (var vx of x) {
     var wx = fm(vx, ++i, x);
@@ -2545,7 +2517,7 @@ export function difference<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 
 function differenceMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
   var fm = fm || IDENTITY;
-  var s  = toSet(y, fm);
+  var s  = setFrom(y, fm);
   var i  = -1, a = [];
   for (var vx of x) {
     var wx = fm(vx, ++i, x);
