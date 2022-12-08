@@ -535,7 +535,7 @@ export function min<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: Ma
 
 /**
  * Find smallest entry.
- * @param x an iterable
+ * @param x an array
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  * @returns [min_index, min_value]
@@ -559,7 +559,7 @@ export function max<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: Ma
 
 /**
  * Find largest entry.
- * @param x an iterable
+ * @param x an array
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  * @returns [max_index, max_value]
@@ -571,7 +571,7 @@ export function maxEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, f
 
 /**
  * Find smallest and largest values.
- * @param x an iterable
+ * @param x an array
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
  * @returns [min_value, max_value]
