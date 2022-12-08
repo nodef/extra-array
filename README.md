@@ -215,7 +215,7 @@ array.rotate(x, 1);
 | [partition] | Segregate values by test result. |
 | [partitionAs] | Segregate values by similarity. |
 | [chunk] | Break array into chunks of given size. |
-| [cycle] | Give values that cycle through array. |
+| [cycle] | Obtain values that cycle through array. |
 | [repeat] | Repeat an array given times. |
 | [reverse] | Reverse the values. |
 | [reverse$] | Reverse the values. |
@@ -233,11 +233,11 @@ array.rotate(x, 1);
 | [isUnique] | Check if there are no duplicate values. |
 | [isDisjoint] | Check if arrays have no value in common. |
 | [unique] | Remove duplicate values. |
-| [union] | Give values present in any array. |
-| [union$] | Give values present in any array. |
-| [intersection] | Gives values present in both arrays. |
-| [difference] | Give values not present in another array. |
-| [symmetricDifference] | Give values not present in both arrays. |
+| [union] | Obtain values present in any array. |
+| [union$] | Obtain values present in any array. |
+| [intersection] | Obtain values present in both arrays. |
+| [difference] | Obtain values not present in another array. |
+| [symmetricDifference] | Obtain values not present in both arrays. |
 | [cartesianProduct] | List cartesian product of arrays. |
 
 <br>

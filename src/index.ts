@@ -2123,7 +2123,7 @@ export function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
 
 
 /**
- * Give values that cycle through array.
+ * Obtain values that cycle through array.
  * @param x an array
  * @param i start index [0]
  * @param n number of values [|x|]
@@ -2426,7 +2426,7 @@ function uniqueDual<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: Ma
 
 
 /**
- * Give values present in any array.
+ * Obtain values present in any array.
  * @param x an array
  * @param y another array
  * @param fc compare function (a, b)
@@ -2439,7 +2439,7 @@ export function union<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=nu
 
 
 /**
- * Give values present in any array.
+ * Obtain values present in any array.
  * @param x an array (updated)
  * @param y another array
  * @param fc compare function (a, b)
@@ -2476,7 +2476,7 @@ function unionDual$<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null
 
 
 /**
- * Gives values present in both arrays.
+ * Obtain values present in both arrays.
  * @param x an array
  * @param y another array
  * @param fc compare function (a, b)
@@ -2514,7 +2514,7 @@ function intersectionDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nul
 
 
 /**
- * Give values not present in another array.
+ * Obtain values not present in another array.
  * @param x an array
  * @param y another array
  * @param fc compare function (a, b)
@@ -2553,7 +2553,7 @@ function differenceDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
 
 
 /**
- * Give values not present in both arrays.
+ * Obtain values not present in both arrays.
  * @param x an array
  * @param y another array
  * @param fc compare function (a, b)
