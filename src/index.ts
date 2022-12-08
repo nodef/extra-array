@@ -1,16 +1,12 @@
-import {
-  mod,
-} from "extra-math";
+import {mod} from "extra-math";
 import {
   IDENTITY,
   COMPARE,
 } from "extra-function";
 import {
+  MapFunction    as IterableMapFunction,
   searchInfixAll as iterableSearchInfixAll,
 } from "extra-iterable";
-import {
-  from as setFrom,
-} from "extra-set";
 
 
 
@@ -103,6 +99,21 @@ export type EndFunction = (dones: boolean[]) => boolean;
 
 // METHODS
 // =======
+
+// HELPERS
+// -------
+
+/** Convert an iterable to set. */
+function toSet<T, U=T>(x: Iterable<T>, fm: IterableMapFunction<T, U> | null=null): Set<T|U> {
+  if (!fm) return new Set(x);
+  var a = new Set<U>(), i = -1;
+  for (var v of x)
+    a.add(fm(v, ++i, x));
+  return a;
+}
+
+
+
 
 // ABOUT
 // -----
@@ -2355,7 +2366,7 @@ export function isDisjoint<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 
 function isDisjointMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): boolean {
   var fm = fm || IDENTITY;
-  var s  = setFrom(y, fm), i = -1;
+  var s  = toSet(y, fm), i = -1;
   for (var v of x) {
     var w = fm(v, ++i, x);
     if (s.has(w)) return false;
@@ -2442,7 +2453,7 @@ export function union$<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=n
 
 function unionMap$<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
   var fm = fm || IDENTITY;
-  var s  = setFrom(x, fm), i = -1;
+  var s  = toSet(x, fm), i = -1;
   for (var vy of y) {
     var wy = fm(vy, ++i, y);
     if (!s.has(wy)) x.push(vy);
@@ -2479,7 +2490,7 @@ export function intersection<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | 
 
 function intersectionMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
   var fm = fm || IDENTITY;
-  var s  = setFrom(y, fm);
+  var s  = toSet(y, fm);
   var i  = -1, a = [];
   for (var vx of x) {
     var wx = fm(vx, ++i, x);
@@ -2517,7 +2528,7 @@ export function difference<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 
 function differenceMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
   var fm = fm || IDENTITY;
-  var s  = setFrom(y, fm);
+  var s  = toSet(y, fm);
   var i  = -1, a = [];
   for (var vx of x) {
     var wx = fm(vx, ++i, x);
