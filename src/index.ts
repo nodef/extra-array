@@ -646,6 +646,8 @@ export function slice$<T>(x: T[], i: number=0, I: number=x.length): T[] {
 export function head<T>(x: T[], vd?: T): T {
   return x.length>0? x[0] : vd;
 }
+export {head as front};
+export {head as first};
 
 
 /**
@@ -657,6 +659,7 @@ export function head<T>(x: T[], vd?: T): T {
 export function last<T>(x: T[], vd?: T): T {
   return x.length>0? x[x.length-1] : vd;
 }
+export {last as back};
 
 
 /**
