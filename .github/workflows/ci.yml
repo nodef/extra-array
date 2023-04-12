@@ -7,6 +7,9 @@ on:
     tags:
       - '!*'  # Do not execute on tags
 env:
+  NAME:  ${{vars.NAME}}
+  EMAIL: ${{vars.EMAIL}}
+  NPM_TOKEN:    ${{secrets.NPM_TOKEN}}
   GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
   CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
   FORCE_COLOR: 1
@@ -55,8 +58,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 18.x
-      - run: git clone https://${GITHUB_TOKEN}@github.com/nodef/deploy "$HOME/deploy"
-      - run: bash "$HOME/deploy/setup.sh"
+      - uses: nodef/git-config.action@v1.0.0
       - run: npm i -g typescript typedoc
       - run: npm ci
       - run: npm run publish-docs
@@ -71,8 +73,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 18.x
-      - run: git clone https://${GITHUB_TOKEN}@github.com/nodef/deploy "$HOME/deploy"
-      - run: bash "$HOME/deploy/setup.sh"
+      - uses: nodef/npm-config.action@v1.0.0
+        with:
+          entries: access = public
       - run: npm i -g typescript rollup typedoc browserify terser
       - run: npm ci
       - run: npm run publish-packages

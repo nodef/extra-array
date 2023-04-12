@@ -1,18 +1,17 @@
-A collection of functions for working with Arrays.<br>
+An [Array] is a collection of values, stored contiguously.<br>
 📦 [Node.js](https://www.npmjs.com/package/extra-array),
 🌐 [Web](https://www.npmjs.com/package/extra-array.web),
 📜 [Files](https://unpkg.com/extra-array/),
 📰 [Docs](https://nodef.github.io/extra-array/),
 📘 [Wiki](https://github.com/nodef/extra-array/wiki/).
 
-An [Array] is a collection of values, stored contiguously. This package includes
-common array functions related to querying **about** arrays, **generating**
-them, **comparing** one with another, finding their **length**, **getting** and
-**setting** elements, obtaining its **properties**, getting a **part** of it,
-**rearranging** elements in it, **finding** an element of a subset of elements
-in it, performing **functional** operations, **manipulating** it in various
-ways, **combining** together arrays or its elements, of performing **set**
-**operations** upon it.
+This package includes common array functions related to querying **about**
+arrays, **generating** them, **comparing** one with another, finding their
+**length**, **getting** and **setting** elements, obtaining its **properties**,
+getting a **part** of it, **rearranging** elements in it, **finding** an element
+of a subset of elements in it, performing **functional** operations,
+**manipulating** it in various ways, **combining** together arrays or its
+elements, of performing **set operations** upon it.
 
 All functions except `from*()` take array as 1st parameter. Methods like
 `swap()` are pure and do not modify the array itself, while methods like
@@ -22,9 +21,9 @@ beautiful, which I learned from Haskell's `sortOn()`. You can notice that I have
 followed Javascript naming scheme as far as possible. Some names are borrowed
 from Haskell, Python, Java, Processing.
 
-This package is available in *Node.js* and *Web* formats. The web format
-is exposed as `extra_array` standalone variable and can be loaded from
-[jsDelivr CDN].
+This package is available in *Node.js* and *Web* formats. To use it on the web,
+simply use the `extra_array` global variable after loading with a `<script>`
+tag from the [jsDelivr CDN].
 
 > Stability: [Experimental](https://www.youtube.com/watch?v=L1j93RnIxEo).
 
@@ -34,23 +33,23 @@ is exposed as `extra_array` standalone variable and can be loaded from
 <br>
 
 ```javascript
-const array = require('extra-array');
-// import * as array from "extra-array";
-// import * as array from "https://unpkg.com/extra-array/index.mjs"; (deno)
+const xarray = require('extra-array');
+// import * as xarray from "extra-array";
+// import * as xarray from "https://unpkg.com/extra-array/index.mjs"; (deno)
 
 var x = [1, 2, 3];
-array.get(x, -1);
+xarray.get(x, -1);
 // → 3
 
 var x = [1, 2, 3, 4];
-array.swap(x, 0, 1);
+xarray.swap(x, 0, 1);
 // → [2, 1, 3, 4]
 
 var x = [1, 2, 3, 4];
-array.rotate(x, 1);
+xarray.rotate(x, 1);
 // → [4, 1, 2, 3]
 
-[...array.permutations([1, 2, 3])];
+[...xarray.permutations([1, 2, 3])];
 // → [
 //   [],          [ 1 ],
 //   [ 2 ],       [ 3 ],
