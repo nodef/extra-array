@@ -27,7 +27,7 @@ import {
   remove$,
   removePath$,
   count,
-  countAs,
+  countEach,
   min,
   minEntry,
   max,
@@ -131,7 +131,7 @@ import {
   cutAtRight,
   group,
   partition,
-  partitionAs,
+  partitionEach,
   chunk,
   cycle,
   repeat,
@@ -453,12 +453,12 @@ test("count", () => {
 });
 
 
-test("countAs", () => {
+test("countEach", () => {
   var x = [1, 1, 2, 2, 4];
-  var a = countAs(x);
+  var a = countEach(x);
   expect(a).toStrictEqual(new Map([[1, 2], [2, 2], [4, 1]]));
   var x = [1, 2, 3, 4];
-  var a = countAs(x, v => v % 2);
+  var a = countEach(x, v => v % 2);
   expect(a).toStrictEqual(new Map([[1, 2], [0, 2]]));
 });
 
@@ -1327,6 +1327,7 @@ test("sort", () => {
 });
 
 
+// TODO: Check various array lengths.
 test("sort$", () => {
   var x = [-2, -3, 1, 4];
   var a = sort$(x);
@@ -1602,12 +1603,12 @@ test("partition", () => {
 });
 
 
-test("partitionAs", () => {
+test("partitionEach", () => {
   var x = [1, 2, 3, 4];
-  var a = partitionAs(x, v => v % 2 == 0);
+  var a = partitionEach(x, v => v % 2 == 0);
   expect(a).toStrictEqual(new Map([[false, [1, 3]], [true, [2, 4]]]));
   var x = [1, 2, 3, 4, 5];
-  var b = partitionAs(x, v => v % 3);
+  var b = partitionEach(x, v => v % 3);
   expect(b).toStrictEqual(new Map([[1, [1, 4]], [2, [2, 5]], [0, [3]]]));
 });
 

@@ -1,7 +1,7 @@
 {
   "name": "extra-array",
-  "version": "3.1.11",
-  "description": "An Array is a collection of values, stored contiguously.",
+  "version": "4.0.1",
+  "description": "An array is a collection of values, stored contiguously.",
   "main": "index.js",
   "module": "index.mjs",
   "sideEffects": false,
@@ -32,12 +32,10 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
-    "@types/jest": "^29.5.0",
+    "@types/jest": "^29.5.1",
     "extra-build": "^2.2.42",
     "extra-function": "^1.1.32",
-    "extra-iterable": "^3.2.13",
     "extra-math": "^1.3.55",
-    "extra-set": "^3.1.6",
     "jest": "^29.5.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-dts": "^5.3.0",

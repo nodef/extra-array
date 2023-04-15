@@ -1,12 +1,4 @@
-NAMING
-- keys(), keyList()
-- push(), push$(), pushTo$()
-
-
-TESTS
-
-
-SORTS, IN PAIR, ISSORTED
+SORTS, IN PAIR
 
 Instead of mapFn, provide pair array to define sort mapping.
 selectionSort, insertionSort, bubbleSort, mergeSort, (are all stable?)
@@ -32,41 +24,74 @@ PARSE, OTHERS
 INDEX -VE
 - moveWithin
 
-knuth-shuffle-seeded
-Description
-The Fisher-Yates (aka Knuth) shuffle for Node.js, with seeding support
 
+OLD SORT ALGORITHMS
 
-
-
-
-// HELPERS
-// -------
-
-// Convert an array to set, using a map function.
-function setFrom<T, U>(x: T[], fm: MapFunction<T, U>): Set<U> {
-  var a = new Set<U>();
-  for (var i=0, I=x.length; i<I; ++i)
-    a.add(fm(x[i], i, x));
-  return a;
+/**
+ * Arrange values in order!
+ * @param x an array (updated!)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function bubbleSort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;  // TODO: use map function
+  var fs = fs || swap$;
+  var X  = x.length;
+  for (var i=0; i<X-1; ++i) {
+    for (var j=i+1; j<X; ++j)
+      if (fc(x[i], x[j]) > 0) fs(x, i, j);
+  }
+  return x;
 }
 
 
-// Find indices of an infix as a list.
-function* iterableSearchInfixAll<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): IterableIterator<number> {
+/**
+ * Arrange values in order!
+ * @param x an array (updated!)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function selectionSort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
   var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var y1 = [...map(y, fm)];
-  var Y  = y1.length;
-  if (Y===0) { yield* fromRange(0, x.length); return; }
-  var m  = new Array(Y).fill(false);
-  var i  = -1, J = 0;
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    for (var j=J; j>0; --j)
-      m[j] = m[j-1] && fc(wx, y1[j])===0;
-    m[0] = fc(wx, y1[0])===0;
-    J = Math.min(J+1, Y-1);
-    if (m[Y-1]) yield i-Y+1;
+  var fm = fm || IDENTITY;  // TODO: use map function
+  var fs = fs || swap$;
+  var X  = x.length;
+  for (var i=0; i<X-1; ++i) {
+    var l = i;
+    for (var j=i+1; j<X; ++j)
+      if (fc(x[l], x[j]) > 0) l = j;
+    fs(x, i, l);
   }
+  return x;
+}
+
+
+// TODO: Check if this is correct!
+/**
+ * Arrange values in order!
+ * @param x an array (updated!)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function insertionSortOld$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;  // TODO: use map function
+  var fs = fs || swap$;     // TODO: use swap function
+  var X  = x.length;
+  for (var i=X-2; i>=0; --i) {
+    var xv = x[i], mv = x[i];
+    for (var j=i+1; j<X; j++) {
+      if (fc(mv, x[j]) <= 0) break;
+      x[j-1] = x[j];
+    }
+    x[j-1] = xv;
+  }
+  return x;
 }

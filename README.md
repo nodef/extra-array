@@ -1,4 +1,4 @@
-An [Array] is a collection of values, stored contiguously.<br>
+An [array] is a collection of values, stored contiguously.<br>
 📦 [Node.js](https://www.npmjs.com/package/extra-array),
 🌐 [Web](https://www.npmjs.com/package/extra-array.web),
 📜 [Files](https://unpkg.com/extra-array/),
@@ -27,7 +27,7 @@ tag from the [jsDelivr CDN].
 
 > Stability: [Experimental](https://www.youtube.com/watch?v=L1j93RnIxEo).
 
-[Array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+[array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 [jsDelivr CDN]: https://cdn.jsdelivr.net/npm/extra-array.web/index.js
 
 <br>
@@ -49,7 +49,7 @@ var x = [1, 2, 3, 4];
 xarray.rotate(x, 1);
 // → [4, 1, 2, 3]
 
-[...xarray.permutations([1, 2, 3])];
+xarray.permutations([1, 2, 3]);
 // → [
 //   [],          [ 1 ],
 //   [ 2 ],       [ 3 ],
@@ -70,54 +70,66 @@ xarray.rotate(x, 1);
 
 | Property | Description |
 |  ----  |  ----  |
-| [is] | Check if value is an array. |
-| [keys] | List all indices. |
-| [values] | List all values. |
-| [entries] | List all index-value pairs. |
-|  |  |
-| [from] | Convert an iterable to array. |
-| [from$] | Convert an iterable to array. |
+| [fromIterable] | Convert an iterable to array. |
+| [fromIterable$] | Convert an iterable to array! |
 | [fromRange] | Generate array from given number range. |
 | [fromInvocation] | Generate array from repeated function invocation. |
 | [fromApplication] | Generate array from repeated function application. |
 |  |  |
-| [compare] | Compare two arrays (lexicographically). |
-| [isEqual] | Check if two arrays are equal. |
+| [shallowClone] | Shallow clone an array. |
+| [deepClone] | Deep clone an array. |
 |  |  |
-| [index] | Get zero-based index for element in array. |
-| [indexRange] | Get index range for part of array. |
+| [is] | Check if value is an array. |
+| [isSorted] | Examine if array is sorted. |
+| [keys] | Obtain all indices. |
+| [values] | Get all values. |
+| [values$] | Get all values! |
+| [entries] | Obtain all index-value pairs. |
+| [ikeys] | List all indices. |
+| [ivalues] | List all values. |
+| [ientries] | List all index-value pairs. |
+|  |  |
+| [index] | Get zero-based index for an element in array. |
+| [indexRange] | Get zero-based index range for part of array. |
 | [length] | Find the length of an array. |
 | [isEmpty] | Check if an array is empty. |
+| [resize$] | Resize an array to given length! |
+| [clear$] | Remove all elements from an array! |
 |  |  |
 | [get] | Get value at index. |
 | [getAll] | Get values at indices. |
 | [getPath] | Get value at path in a nested array. |
 | [hasPath] | Check if nested array has a path. |
 | [set] | Set value at index. |
-| [set$] | Set value at index. |
-| [setPath$] | Set value at path in a nested array. |
+| [set$] | Set value at index! |
+| [setPath$] | Set value at path in a nested array! |
 | [swap] | Exchange two values. |
-| [swap$] | Exchange two values. |
+| [swap$] | Exchange two values! |
+| [swapRanges] | Exchange two ranges of values. |
+| [swapRanges$] | Exchange two ranges of values! |
 | [remove] | Remove value at index. |
-| [remove$] | Remove value at index. |
-| [removePath$] | Remove value at path in a nested array. |
+| [remove$] | Remove value at index! |
+| [removePath$] | Remove value at path in a nested array! |
 |  |  |
 | [count] | Count values which satisfy a test. |
-| [countAs] | Count occurrences of values. |
-| [min] | Find smallest value. |
-| [minEntry] | Find smallest entry. |
-| [max] | Find largest value. |
-| [maxEntry] | Find largest entry. |
+| [countEach] | Count occurrences of each distinct value. |
+| [min] | Find first smallest value. |
+| [minEntry] | Find first smallest entry. |
+| [max] | Find first largest value. |
+| [maxEntry] | Find first largest entry. |
 | [range] | Find smallest and largest values. |
 | [rangeEntries] | Find smallest and largest entries. |
 |  |  |
-| [slice] | Get part of an array. |
-| [slice$] | Get part of an array. |
+| [compare] | Compare two arrays (lexicographically). |
+| [isEqual] | Examine if two arrays are equal. |
+|  |  |
 | [head] | Get first value. |
 | [last] | Get last value. |
+| [middle] | Get values from middle. |
 | [tail] | Get values except first. |
 | [init] | Get values except last. |
-| [middle] | Get values from middle. |
+| [slice] | Get part of an array. |
+| [slice$] | Get part of an array! |
 | [take] | Keep first n values only. |
 | [takeRight] | Keep last n values only. |
 | [takeWhile] | Keep values from left, while a test passes. |
@@ -127,18 +139,23 @@ xarray.rotate(x, 1);
 | [dropWhile] | Discard values from left, while a test passes. |
 | [dropWhileRight] | Discard values from right, while a test passes. |
 |  |  |
-| [prefixes] | List all possible prefixes. |
-| [suffixes] | List all possible suffixes. |
-| [infixes] | List all possible infixes. |
-| [subsequences] | List all possible subsequences. |
-| [permutations] | List all possible permutations. |
+| [prefixes] | Obtain all possible prefixes. |
+| [suffixes] | Obtain all possible suffixes. |
+| [infixes] | Obtain all possible infixes. |
+| [subsequences] | Obtain all possible subsequences. |
+| [permutations] | Obtain all possible permutations. |
+| [iprefixes] | List all possible prefixes. |
+| [isuffixes] | List all possible suffixes. |
+| [iinfixes] | List all possible infixes. |
+| [isubsequences] | List all possible subsequences. |
+| [ipermutations] | List all possible permutations. |
 | [randomValue] | Pick an arbitrary value. |
 | [randomPrefix] | Pick an arbitrary prefix. |
 | [randomSuffix] | Pick an arbitrary suffix. |
 | [randomInfix] | Pick an arbitrary infix. |
 | [randomSubsequence] | Pick an arbitrary subsequence. |
 | [randomPermutation] | Pick an arbitrary permutation. |
-| [randomPermutation$] | Pick an arbitrary permutation. |
+| [randomPermutation$] | Pick an arbitrary permutation! |
 |  |  |
 | [includes] | Check if array has a value. |
 | [indexOf] | Find first index of a value. |
@@ -155,29 +172,41 @@ xarray.rotate(x, 1);
 | [searchValue] | Find first index of a value. |
 | [searchValueRight] | Find last index of a value. |
 | [searchValueAll] | Find indices of value. |
+| [searchMinimumValue] | Find first index of minimum value. |
+| [searchMaximumValue] | Find first index of maximum value. |
+| [searchUnsortedValue] | Find first index of an unsorted value. |
+| [searchAdjacentDuplicateValue] | Find first index of an adjacent duplicate value. |
+| [searchMismatchedValue] | Find first index where two arrays differ. |
 | [searchInfix] | Find first index of an infix. |
 | [searchInfixRight] | Find last index of an infix. |
 | [searchInfixAll] | Find indices of an infix. |
 | [searchSubsequence] | Find first index of a subsequence. |
-| [hasValue] | Check if array has a value. |
-| [hasPrefix] | Check if array starts with a prefix. |
-| [hasSuffix] | Check if array ends with a suffix. |
-| [hasInfix] | Check if array contains an infix. |
-| [hasSubsequence] | Check if array has a subsequence. |
-| [hasPermutation] | Check if array has a permutation. |
+| [hasValue] | Examine if array has a value. |
+| [hasUnsortedValue] | Examine if array has an unsorted value. |
+| [hasPrefix] | Examine if array starts with a prefix. |
+| [hasSuffix] | Examine if array ends with a suffix. |
+| [hasInfix] | Examine if array contains an infix. |
+| [hasSubsequence] | Examine if array has a subsequence. |
+| [hasPermutation] | Examine if array has a permutation. |
 |  |  |
 | [forEach] | Call a function for each value. |
-| [some] | Check if any value satisfies a test. |
-| [every] | Check if all values satisfy a test. |
+| [some] | Examine if any value satisfies a test. |
+| [every] | Examine if all values satisfy a test. |
 | [map] | Transform values of an array. |
-| [map$] | Transform values of an array. |
+| [map$] | Transform values of an array! |
 | [reduce] | Reduce values of array to a single value. |
 | [reduceRight] | Reduce values from right, to a single value. |
+| [exclusiveScan] | Perform exclusive prefix scan from left to right. |
+| [exclusiveScan$] | Perform exclusive prefix scan from left to right! |
+| [inclusiveScan] | Perform inclusive prefix scan from left to right. |
+| [inclusiveScan$] | Perform inclusive prefix scan from left to right! |
+| [adjacentCombine] | Combine adjacent values of an array. |
+| [adjacentCombine$] | Combine adjacent values of an array! |
 | [filter] | Keep values which pass a test. |
-| [filter$] | Keep values which pass a test. |
+| [filter$] | Keep values which pass a test! |
 | [filterAt] | Keep values at given indices. |
 | [reject] | Discard values which pass a test. |
-| [reject$] | Discard values which pass a test. |
+| [reject$] | Discard values which pass a test! |
 | [rejectAt] | Discard values at given indices. |
 | [accumulate] | Produce accumulating values. |
 | [flat] | Flatten nested array to given depth. |
@@ -185,25 +214,23 @@ xarray.rotate(x, 1);
 | [zip] | Combine values from arrays. |
 |  |  |
 | [fill] | Fill with given value. |
-| [fill$] | Fill with given value. |
-| [sort] | Arrange values in order. |
-| [sort$] | Arrange values in order. |
+| [fill$] | Fill with given value! |
 | [push] | Add value to the end. |
-| [push$] | Add values to the end. |
+| [push$] | Add values to the end! |
 | [pop] | Remove last value. |
-| [pop$] | Remove last value. |
+| [pop$] | Remove last value! |
 | [shift] | Remove first value. |
-| [shift$] | Remove first value. |
+| [shift$] | Remove first value! |
 | [unshift] | Add values to the start. |
-| [unshift$] | Add values to the start. |
+| [unshift$] | Add values to the start! |
 | [copy] | Copy part of array to another. |
-| [copy$] | Copy part of array to another. |
+| [copy$] | Copy part of array to another! |
 | [copyWithin] | Copy part of array within. |
-| [copyWithin$] | Copy part of array within. |
+| [copyWithin$] | Copy part of array within! |
 | [moveWithin] | Move part of array within. |
-| [moveWithin$] | Move part of array within. |
+| [moveWithin$] | Move part of array within! |
 | [splice] | Remove or replace existing values. |
-| [splice$] | Remove or replace existing values. |
+| [splice$] | Remove or replace existing values! |
 | [split] | Break array considering test as separator. |
 | [splitAt] | Break array considering indices as separator. |
 | [cut] | Break array when test passes. |
@@ -212,32 +239,49 @@ xarray.rotate(x, 1);
 | [cutAtRight] | Break array after given indices. |
 | [group] | Keep similar values together and in order. |
 | [partition] | Segregate values by test result. |
-| [partitionAs] | Segregate values by similarity. |
+| [partitionEach] | Segregate each distinct value. |
 | [chunk] | Break array into chunks of given size. |
 | [cycle] | Obtain values that cycle through array. |
 | [repeat] | Repeat an array given times. |
 | [reverse] | Reverse the values. |
-| [reverse$] | Reverse the values. |
+| [reverse$] | Reverse the values! |
 | [rotate] | Rotate values in array. |
-| [rotate$] | Rotate values in array. |
+| [rotate$] | Rotate values in array! |
 | [intersperse] | Place a separator between every value. |
 | [interpolate] | Estimate new values between existing ones. |
 | [intermix] | Place values of an array between another. |
 | [interleave] | Place values from iterables alternately. |
 |  |  |
 | [concat] | Append values from arrays. |
-| [concat$] | Append values from arrays. |
+| [concat$] | Append values from arrays! |
 | [join] | Join values together into a string. |
 |  |  |
-| [isUnique] | Check if there are no duplicate values. |
-| [isDisjoint] | Check if arrays have no value in common. |
+| [isUnique] | Examine if there are no duplicate values. |
+| [isDisjoint] | Examine if arrays have no value in common. |
 | [unique] | Remove duplicate values. |
 | [union] | Obtain values present in any array. |
-| [union$] | Obtain values present in any array. |
+| [union$] | Obtain values present in any array! |
 | [intersection] | Obtain values present in both arrays. |
 | [difference] | Obtain values not present in another array. |
 | [symmetricDifference] | Obtain values not present in both arrays. |
-| [cartesianProduct] | List cartesian product of arrays. |
+| [cartesianProduct] | Obtain cartesian product of arrays. |
+|  |  |
+| [sort] | Arrange values in order. |
+| [sort$] | Arrange values in order! |
+| [partialSort] | Partially arrange values in order. |
+| [partialSort$] | Partially arrange values in order! |
+
+<br>
+<br>
+
+
+## References
+
+- [Prefix sum array and difference array : Woburn C.I. PEGWiki](https://wcipeg.com/wiki/Prefix_sum_array_and_difference_array)
+- [How to get the count of each distinct value in a column?](https://stackoverflow.com/q/7053902/1413259)
+- [How to add region in java script file, visual studio](https://stackoverflow.com/a/51550649/1413259)
+- [Operator precedence - JavaScript : MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence)
+- [numpy.partition - NumPy Manual](https://numpy.org/doc/stable/reference/generated/numpy.partition.html)
 
 <br>
 <br>
@@ -255,8 +299,8 @@ xarray.rotate(x, 1);
 [keys]: https://github.com/nodef/extra-array/wiki/keys
 [values]: https://github.com/nodef/extra-array/wiki/values
 [entries]: https://github.com/nodef/extra-array/wiki/entries
-[from]: https://github.com/nodef/extra-array/wiki/from
-[from$]: https://github.com/nodef/extra-array/wiki/from$
+[fromIterable]: https://github.com/nodef/extra-array/wiki/fromIterable
+[fromIterable$]: https://github.com/nodef/extra-array/wiki/fromIterable$
 [fromRange]: https://github.com/nodef/extra-array/wiki/fromRange
 [fromInvocation]: https://github.com/nodef/extra-array/wiki/fromInvocation
 [fromApplication]: https://github.com/nodef/extra-array/wiki/fromApplication
@@ -279,7 +323,7 @@ xarray.rotate(x, 1);
 [remove$]: https://github.com/nodef/extra-array/wiki/remove$
 [removePath$]: https://github.com/nodef/extra-array/wiki/removePath$
 [count]: https://github.com/nodef/extra-array/wiki/count
-[countAs]: https://github.com/nodef/extra-array/wiki/countAs
+[countEach]: https://github.com/nodef/extra-array/wiki/countEach
 [min]: https://github.com/nodef/extra-array/wiki/min
 [minEntry]: https://github.com/nodef/extra-array/wiki/minEntry
 [max]: https://github.com/nodef/extra-array/wiki/max
@@ -383,7 +427,7 @@ xarray.rotate(x, 1);
 [cutAtRight]: https://github.com/nodef/extra-array/wiki/cutAtRight
 [group]: https://github.com/nodef/extra-array/wiki/group
 [partition]: https://github.com/nodef/extra-array/wiki/partition
-[partitionAs]: https://github.com/nodef/extra-array/wiki/partitionAs
+[partitionEach]: https://github.com/nodef/extra-array/wiki/partitionEach
 [chunk]: https://github.com/nodef/extra-array/wiki/chunk
 [cycle]: https://github.com/nodef/extra-array/wiki/cycle
 [repeat]: https://github.com/nodef/extra-array/wiki/repeat
@@ -407,3 +451,34 @@ xarray.rotate(x, 1);
 [difference]: https://github.com/nodef/extra-array/wiki/difference
 [symmetricDifference]: https://github.com/nodef/extra-array/wiki/symmetricDifference
 [cartesianProduct]: https://github.com/nodef/extra-array/wiki/cartesianProduct
+[shallowClone]: https://github.com/nodef/extra-array/wiki/shallowClone
+[deepClone]: https://github.com/nodef/extra-array/wiki/deepClone
+[isSorted]: https://github.com/nodef/extra-array/wiki/isSorted
+[ikeys]: https://github.com/nodef/extra-array/wiki/ikeys
+[values$]: https://github.com/nodef/extra-array/wiki/values$
+[ivalues]: https://github.com/nodef/extra-array/wiki/ivalues
+[ientries]: https://github.com/nodef/extra-array/wiki/ientries
+[resize$]: https://github.com/nodef/extra-array/wiki/resize$
+[clear$]: https://github.com/nodef/extra-array/wiki/clear$
+[countEach]: https://github.com/nodef/extra-array/wiki/countEach
+[iprefixes]: https://github.com/nodef/extra-array/wiki/iprefixes
+[isuffixes]: https://github.com/nodef/extra-array/wiki/isuffixes
+[iinfixes]: https://github.com/nodef/extra-array/wiki/iinfixes
+[isubsequences]: https://github.com/nodef/extra-array/wiki/isubsequences
+[ipermutations]: https://github.com/nodef/extra-array/wiki/ipermutations
+[searchUnsortedValue]: https://github.com/nodef/extra-array/wiki/searchUnsortedValue
+[hasUnsortedValue]: https://github.com/nodef/extra-array/wiki/hasUnsortedValue
+[swapRanges]: https://github.com/nodef/extra-array/wiki/swapRanges
+[swapRanges$]: https://github.com/nodef/extra-array/wiki/swapRanges$
+[searchAdjacentDuplicateValue]: https://github.com/nodef/extra-array/wiki/searchAdjacentDuplicateValue
+[searchMismatchedValue]: https://github.com/nodef/extra-array/wiki/searchMismatchedValue
+[exclusiveScan]: https://github.com/nodef/extra-array/wiki/exclusiveScan
+[exclusiveScan$]: https://github.com/nodef/extra-array/wiki/exclusiveScan$
+[inclusiveScan]: https://github.com/nodef/extra-array/wiki/inclusiveScan
+[inclusiveScan$]: https://github.com/nodef/extra-array/wiki/inclusiveScan$
+[adjacentCombine]: https://github.com/nodef/extra-array/wiki/adjacentCombine
+[searchMinimumValue]: https://github.com/nodef/extra-array/wiki/searchMinimumValue
+[searchMaximumValue]: https://github.com/nodef/extra-array/wiki/searchMaximumValue
+[adjacentCombine$]: https://github.com/nodef/extra-array/wiki/adjacentCombine$
+[partialSort]: https://github.com/nodef/extra-array/wiki/partialSort
+[partialSort$]: https://github.com/nodef/extra-array/wiki/partialSort$
