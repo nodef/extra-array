@@ -285,16 +285,6 @@ export function values<T>(x: T[]): T[] {
 
 
 /**
- * Get all values!
- * @param x an array
- * @returns x (reference!)
- */
-export function values$<T>(x: T[]): T[] {
-  return x;
-}
-
-
-/**
  * List all values.
  * @param x an array
  * @returns v₀, v₁, ... | vᵢ = x[i]
@@ -673,10 +663,11 @@ export {countEach as countAs};  // DEPRECATED
  * @param fm map function (v, i, x)
  * @returns v | v ≤ vᵢ; vᵢ ∈ x
  */
-export function min<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T {
+export function minimum<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T {
   var i = searchMinimumValue(x, fc, fm);
   return x[i];
 }
+export {minimum as min};
 
 
 /**
@@ -686,10 +677,11 @@ export function min<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: Ma
  * @param fm map function (v, i, x)
  * @returns [min_index, min_value]
  */
-export function minEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T] {
+export function minimumEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T] {
   var i = searchMinimumValue(x, fc, fm);
   return [i, x[i]];
 }
+export {minimumEntry as minEntry};
 
 
 /**
@@ -699,10 +691,11 @@ export function minEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, f
  * @param fm map function (v, i, x)
  * @returns v | v ≥ vᵢ; vᵢ ∈ x
  */
-export function max<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T {
+export function maximum<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T {
   var i = searchMaximumValue(x, fc, fm);
   return x[i];
 }
+export {maximum as max};
 
 
 /**
@@ -712,10 +705,11 @@ export function max<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: Ma
  * @param fm map function (v, i, x)
  * @returns [max_index, max_value]
  */
-export function maxEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T] {
+export function maximumEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T] {
   var i = searchMaximumValue(x, fc, fm);
   return [i, x[i]];
 }
+export {maximumEntry as maxEntry};
 
 
 /**
@@ -752,6 +746,62 @@ export function rangeEntries<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=nul
     if (fc(w, nw)>0) { ni = i; nv = v; nw = w; }
   }
   return [[mi, mv], [ni, nv]];
+}
+
+
+/**
+ * Find smallest values.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns n smallest values in ascending order
+ */
+export function minimums<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
+  var is = searchMinimumValues(x, n, fc, fm);
+  return is.map(i => x[i]);
+}
+
+
+/**
+ * Find smallest entries.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns n smallest entries in ascending order
+ */
+export function minimumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T][] {
+  var is = searchMinimumValues(x, n, fc, fm);
+  return is.map(i => [i, x[i]]);
+}
+
+
+/**
+ * Find largest values.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns n largest values in descending order
+ */
+export function maximums<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
+  var is = searchMaximumValues(x, n, fc, fm);
+  return is.map(i => x[i]);
+}
+
+
+/**
+ * Find largest entries.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns n largest entries in descending order
+ */
+export function maximumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T][] {
+  var is = searchMaximumValues(x, n, fc, fm);
+  return is.map(i => [i, x[i]]);
 }
 // #endregion
 
@@ -1495,6 +1545,52 @@ export function searchMaximumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | nu
     if (fc(w, nw)>0) { ni = i; nw = w; }
   }
   return ni;
+}
+
+
+/**
+ * Find indices of minimum values.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns indices of minimum values in ascending order
+ */
+export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  // Create a max heap of indices.
+  var IH = Math.min(n, X);
+  var ih = fromRange(0, IH);
+  buildMaxHeap$(ih, 0, IH, fc, i => fm(x[i], i, x), swapRaw$);
+  var wr = fm(x[ih[0]], ih[0], x);
+  // Search for minimum values, and update heap.
+  for (var i=n; i<X; ++i) {
+    var w = fm(x[i], i, x);
+    if (fc(w, wr) >= 0) continue;
+    ih[0] = i;
+    maxHeapify$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swapRaw$);
+    var wr = fm(x[ih[0]], ih[0], x);
+  }
+  // Sort max heap in ascending order.
+  ih.sort((i, j) => fc(fm(x[i], i, x), fm(x[j], j, x)));
+  return ih;
+}
+
+
+/**
+ * Find indices of maximum values.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns indices of maximum values in descending order
+ */
+export function searchMaximumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  var fc = fc || COMPARE;
+  var fd = (a: T|U, b: T|U) => -fc(a, b);
+  return searchMinimumValues(x, n, fd, fm);
 }
 
 
@@ -3272,13 +3368,43 @@ function buildReverseMinHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareF
  */
 function reverseMinHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
   var s  = r;         // Index of smallest value
-  var lt = 2*r - I;   // Reverse of lt = 2*r+1
-  var rt = lt  - 1;   // Reverse of rt = 2*r+2
+  var lt = 2*r - I;   // Left child,  reverse of lt = 2*r+1
+  var rt = lt  - 1;   // Right child, reverse of rt = 2*r+2
   if (lt>=i && fc(fm(x[lt], lt, x), fm(x[s], s, x)) < 0) s = lt;  // Left child is smaller?
   if (rt>=i && fc(fm(x[rt], rt, x), fm(x[s], s, x)) < 0) s = rt;  // Right child is smaller?
   if (s !== r) {     // Smallest is not root?
     fs(x, s, r);     // Swap root with smallest
     reverseMinHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
+  }
+}
+
+
+// Build a max-heap, where root node is the smallest and placed at the beginning.
+function buildMaxHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+  for (var r=i+Math.floor((I-i)/2)-1; r>=i; --r)
+    maxHeapify$(x, i, I, r, fc, fm, fs);
+}
+
+
+/**
+ * Max-heapify values, such that root node is the largest and placed at the beginning.
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param r root index
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ */
+function maxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+  var s  = r;         // Index of largest value
+  var lt = 2*r - i + 1;  // Left child,  like lt = 2*r+1
+  var rt = lt  + 1;      // Right child, like rt = 2*r+2
+  if (lt<I && fc(fm(x[lt], lt, x), fm(x[s], s, x)) > 0) s = lt;  // Left child  is larger?
+  if (rt<I && fc(fm(x[rt], rt, x), fm(x[s], s, x)) > 0) s = rt;  // Right child is larger?
+  if (s !== r) {     // Largest is not root?
+    fs(x, s, r);     // Swap root with largest
+    maxHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
   }
 }
 

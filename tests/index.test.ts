@@ -76,6 +76,7 @@ import {
   searchValue,
   searchValueRight,
   searchValueAll,
+  searchMinimumValues,
   searchInfix,
   searchInfixRight,
   searchInfixAll,
@@ -980,6 +981,13 @@ test("searchValueAll", () => {
   expect(a).toStrictEqual([1, 3]);
   var a = searchValueAll(x, 2, null, v => Math.abs(v));
   expect(a).toStrictEqual([1, 3]);
+});
+
+
+test("searchMinimumValues", () => {
+  var x = [2, 5, 3, 1, 4];
+  var a = searchMinimumValues(x, 3);
+  expect(a).toStrictEqual([3, 0, 2]);
 });
 
 
