@@ -100,7 +100,7 @@ import {
   reject,
   reject$,
   rejectAt,
-  accumulate,
+  inclusiveScan,
   flat,
   flatMap,
   zip,
@@ -1247,11 +1247,11 @@ test("rejectAt", () => {
 });
 
 
-test("accumulate", () => {
+test("inclusiveScan", () => {
   var x = [1, 2, 3, 4];
-  var a = accumulate(x, (acc, v) => acc+v);
+  var a = inclusiveScan(x, (acc, v) => acc+v);
   expect(a).toStrictEqual([1, 3, 6, 10]);
-  var a = accumulate(x, (acc, v) => acc+v, 100);
+  var a = inclusiveScan(x, (acc, v) => acc+v, 100);
   expect(a).toStrictEqual([101, 103, 106, 110]);
 });
 

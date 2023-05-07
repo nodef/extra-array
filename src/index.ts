@@ -131,28 +131,6 @@ function toSet<T, U=T>(x: T[], fm: MapFunction<T, U> | null=null): Set<T|U> {
 // ----------------
 
 /**
- * Convert an iterable to array.
- * @param x an iterable
- * @returns x as array
- */
-export function fromIterable<T>(x: Iterable<T>): T[] {
-  return [...x];
-}
-export {fromIterable as from};
-
-
-/**
- * Convert an iterable to array!
- * @param x an iterable (updatable if array!)
- * @returns x as array
- */
-export function fromIterable$<T>(x: Iterable<T>): T[] {
-  return Array.isArray(x)? x : [...x];
-}
-export {fromIterable$ as from$};
-
-
-/**
  * Generate array from given number range.
  * @param v start number
  * @param V end number, excluding
@@ -197,6 +175,28 @@ export function fromApplication<T>(fm: MapFunction<T, T>, v: T, n: number): T[] 
   return a;
 }
 export {fromApplication as fromApply};
+
+
+/**
+ * Convert an iterable to array.
+ * @param x an iterable
+ * @returns x as array
+ */
+export function fromIterable<T>(x: Iterable<T>): T[] {
+  return [...x];
+}
+export {fromIterable as from};
+
+
+/**
+ * Convert an iterable to array!
+ * @param x an iterable (updatable if array!)
+ * @returns x as array
+ */
+export function fromIterable$<T>(x: Iterable<T>): T[] {
+  return Array.isArray(x)? x : [...x];
+}
+export {fromIterable$ as from$};
 // #endregion
 
 
@@ -239,18 +239,6 @@ export function deepClone<T>(x: T[]): T[] {
  */
 export function is(v: any): v is any[] {
   return Array.isArray(v);
-}
-
-
-/**
- * Examine if array is sorted.
- * @param x an array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x is sorted?
- */
-export function isSorted<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  return searchUnsortedValue(x, fc, fm) === -1;
 }
 
 
@@ -317,8 +305,8 @@ export function ientries<T>(x: T[]): IEntries<T> {
 
 
 
-// #region LENGTH
-// --------------
+// #region INDEX
+// -------------
 
 /**
  * Get zero-based index for an element in array.
@@ -345,6 +333,22 @@ export function indexRange<T>(x: T[], i: number=0, I: number=x.length): [number,
   var I = I>=0? Math.min(I, X) : Math.max(X+I, 0);
   return [i, Math.max(i, I)];
 }
+// #endregion
+
+
+
+
+// #region LENGTH
+// --------------
+
+/**
+ * Check if an array is empty.
+ * @param x an array
+ * @returns |x| = 0?
+ */
+export function isEmpty<T>(x: T[]): boolean {
+  return x.length===0;
+}
 
 
 /**
@@ -359,16 +363,6 @@ export function length<T>(x: T[], i: number=0, I: number=x.length): number {
   return I-i;
 }
 export {length as size};
-
-
-/**
- * Check if an array is empty.
- * @param x an array
- * @returns |x| = 0?
- */
-export function isEmpty<T>(x: T[]): boolean {
-  return x.length===0;
-}
 
 
 /**
@@ -621,40 +615,345 @@ export function removePath$(x: any[], p: number[]): any[] {
 
 
 
-// #region PROPERTY
-// ----------------
+// #region SORT
+// ------------
 
 /**
- * Count values which satisfy a test.
+ * Examine if array is sorted.
  * @param x an array
- * @param ft test function (v, i, x)
- * @returns Σtᵢ | tᵢ = 1 if ft(vᵢ) else 0; vᵢ ∈ x
- */
-export function count<T>(x: T[], ft: TestFunction<T>): number {
-  var i = -1, a = 0;
-  for (var v of x)
-    if (ft(v, ++i, x)) ++a;
-  return a;
-}
-
-
-/**
- * Count occurrences of each distinct value.
- * @param x an array
+ * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
- * @returns Map \{value ⇒ count\}
+ * @returns x is sorted?
  */
-export function countEach<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Map<T|U, number> {
-  var fm = fm || IDENTITY;
-  var i  = -1, a = new Map();
-  for (var v of x) {
-    var w = fm(v, ++i, x);
-    a.set(w, (a.get(w) || 0) + 1);
-  }
-  return a;
+export function isSorted<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  return searchUnsortedValue(x, fc, fm) === -1;
 }
-export {countEach as countAs};  // DEPRECATED
 
+
+/**
+ * Examine if array has an unsorted value.
+ * @param x an array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns x is not sorted?
+ */
+export function hasUnsortedValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  return searchUnsortedValue(x, fc, fm) >= 0;
+}
+
+
+/**
+ * Find first index of an unsorted value.
+ * @param x an array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns index of first unsorted value, -1 if sorted
+ */
+export function searchUnsortedValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  if (X<=1) return -1;
+  var w0 = fm(x[0], 0, x);
+  for (var i=1; i<X; ++i) {
+    var w = fm(x[i], i, x);
+    if (fc(w0, w)>0) return i;
+    w0 = w;
+  }
+  return -1;
+}
+
+
+/**
+ * Arrange values in order.
+ * @param x an array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x' | x' = x; x'[i] ≤ x'[j] ∀ i ≤ j
+ */
+export function sort<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  return sort$(x.slice(), fc, fm, fs);
+}
+export {sort as toSorted};
+
+
+/**
+ * Arrange values in order!
+ * @param x an array (updated!)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+export function sort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  var fc = fc || COMPARE;
+  if (!fm && !fs) return x.sort(fc);
+  var X  = x.length;
+  var fm = fm || IDENTITY;
+  var fs = fs || swapRaw$;
+  return partialIntroSort$(x, 0, X, X, fc, fm, fs);
+}
+
+
+/**
+ * Partially arrange values in order.
+ * @param x an array
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x' | x' = x; x'[i] ≤ x'[j] ∀ i ≤ j
+ */
+export function partialSort<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  return partialSort$(x.slice(), i, I, n, fc, fm, fs);
+}
+
+
+/**
+ * Partially arrange values in order!
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+export function partialSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var fs = fs || swapRaw$;
+  // TODO: Check various sort functions.
+  return partialIntroSort$(x, i, I, n, fc, fm, fs);
+}
+
+
+/**
+ * Partially arrange values in order!
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function partialIntroSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  var d = Math.floor(Math.log2(I-i)*2);  // Maximum depth of recursion
+  var s = 16;                            // When to switch to insertion sort
+  return partialIntroSortHelper$(x, i, I, d, s, n, fc, fm, fs);
+}
+
+
+// Partially arrange values in order with hybrid quick sort, heap sort, and insertion sort.
+function partialIntroSortHelper$<T, U=T>(x: T[], i: number, I: number, d: number, s: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  if (n<=0 || I-i<=1) return x;                     // Nothing to sort
+  if (I-i<=s) return partialInsertionSort$(x, i, I, n, fc, fm, fs);  // Insertion sort
+  if (d<=0)   return partialHeapSort$(x, i, I, n, fc, fm, fs);       // Heap sort
+  var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
+  var p = quickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
+  partialIntroSortHelper$(x, i,   p, d, s, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
+  partialIntroSortHelper$(x, p+1, I, d, s, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
+  return x;
+}
+
+
+/**
+ * Partially arrange values in order!
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function partialQuickSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  if (n<=0 || I-i<=1) return x;                         // Nothing to sort
+  var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
+  var p = quickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
+  partialQuickSort$(x, i,   p, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
+  partialQuickSort$(x, p+1, I, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
+  return x;
+}
+
+
+// TODO: Make this a generic function.
+// Partition the array into two parts, such that values in the first part are less than values in the second part.
+function quickSortPartition$<T, U=T>(x: T[], i: number, I: number, p: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): number {
+  var wp = fm(x[p], p, x);  // Pivot value
+  var j  = i-1;   // Last index of values ≤ pivot
+  fs(x, p, I-1);  // Move pivot to end
+  for (var k=i; k<I-1; ++k) {
+    var wk = fm(x[k], k, x);
+    if (fc(wk, wp) > 0) continue;
+    fs(x, ++j, k);  // Move value ≤ pivot to left
+  }
+  fs(x, ++j, I-1);  // Move pivot to middle
+  return j;  // Return pivot index
+}
+
+
+/**
+ * Partially arrange values in order!
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function partialHeapSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  buildReverseMinHeap$(x, i, I, fc, fm, fs);
+  for (var r=I-1; n>0 && i<I; ++i, --n) {
+    fs(x, i, r);  // Move root to the beginning
+    reverseMinHeapify$(x, i+1, I, r, fc, fm, fs);  // Rebuild heap
+  }
+  return x;
+}
+
+
+// Build a reverse min-heap, where root node is the smallest and placed at the end.
+function buildReverseMinHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+  for (var r=I-Math.floor((I-i)/2); r<I; ++r)  // Reverse of r = X/2-1 .. 0
+    reverseMinHeapify$(x, i, I, r, fc, fm, fs);
+}
+
+
+/**
+ * Reverse min-heapify values, such that root node is the smallest and placed at the end.
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param r root index
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ */
+function reverseMinHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+  var s  = r;         // Index of smallest value
+  var lt = 2*r - I;   // Left child,  reverse of lt = 2*r+1
+  var rt = lt  - 1;   // Right child, reverse of rt = 2*r+2
+  if (lt>=i && fc(fm(x[lt], lt, x), fm(x[s], s, x)) < 0) s = lt;  // Left child is smaller?
+  if (rt>=i && fc(fm(x[rt], rt, x), fm(x[s], s, x)) < 0) s = rt;  // Right child is smaller?
+  if (s !== r) {     // Smallest is not root?
+    fs(x, s, r);     // Swap root with smallest
+    reverseMinHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
+  }
+}
+
+
+// Build a max-heap, where root node is the smallest and placed at the beginning.
+function buildMaxHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+  for (var r=i+Math.floor((I-i)/2)-1; r>=i; --r)
+    maxHeapify$(x, i, I, r, fc, fm, fs);
+}
+
+
+/**
+ * Max-heapify values, such that root node is the largest and placed at the beginning.
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param r root index
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ */
+function maxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+  var s  = r;         // Index of largest value
+  var lt = 2*r - i + 1;  // Left child,  like lt = 2*r+1
+  var rt = lt  + 1;      // Right child, like rt = 2*r+2
+  if (lt<I && fc(fm(x[lt], lt, x), fm(x[s], s, x)) > 0) s = lt;  // Left child  is larger?
+  if (rt<I && fc(fm(x[rt], rt, x), fm(x[s], s, x)) > 0) s = rt;  // Right child is larger?
+  if (s !== r) {     // Largest is not root?
+    fs(x, s, r);     // Swap root with largest
+    maxHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
+  }
+}
+
+
+/**
+ * Partially arrange values in order!
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param n minimum number of values to sort (ignored)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function partialInsertionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  // NOTE: Insertion sort does not support partial sorting, so we ignore n.
+  if (fs===swapRaw$) return partialInsertionSortSwapless$(x, i, I, n, fc, fm, fs);
+  else               return partialInsertionSortSwap$    (x, i, I, n, fc, fm, fs);
+}
+
+
+// Sort values in order with swap-enabled version of insertion sort.
+function partialInsertionSortSwap$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  for (var j=i+1; j<I; ++j) {
+    var key  = x[j];
+    var wkey = fm(key, j, x);
+    for (var k=j-1; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
+      fs(x, k, k+1);
+  }
+  return x;
+}
+
+
+// Sort values in order with swapless version of insertion sort.
+function partialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  for (var j=i+1; j<I; ++j) {
+    var key  = x[j];
+    var wkey = fm(key, j, x);
+    for (var k=j-1; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
+      x[k+1] = x[k];
+    x[k+1] = key;
+  }
+  return x;
+}
+
+
+/**
+ * Partially arrange values in order!
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+function partialSelectionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  for (var j=i; n>0 && j<I; ++j, --n) {
+    var l  = j;
+    var wl = fm(x[l], l, x);
+    for (var k=j+1; k<I; ++k) {
+      var wk = fm(x[k], k, x);
+      if (fc(wl, wk) > 0) { l = k; wl = wk; }
+    }
+    fs(x, j, l);
+  }
+  return x;
+}
+// #endregion
+
+
+
+
+// #region MINIMUM/MAXIMUM
+// -----------------------
 
 /**
  * Find first smallest value.
@@ -803,6 +1102,137 @@ export function maximumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<T|
   var is = searchMaximumValues(x, n, fc, fm);
   return is.map(i => [i, x[i]]);
 }
+
+
+/**
+ * Find first index of minimum value.
+ * @param x an array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns first index of minimum value, -1 if empty
+ */
+export function searchMinimumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  if (X===0) return -1;
+  var mi = 0, mw = fm(x[0], 0, x);
+  for (var i=1; i<X; ++i) {
+    var w = fm(x[i], i, x);
+    if (fc(w, mw)<0) { mi = i; mw = w; }
+  }
+  return mi;
+}
+
+
+/**
+ * Find first index of maximum value.
+ * @param x an array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns first index of maximum value, -1 if empty
+ */
+export function searchMaximumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  if (X===0) return -1;
+  var ni = 0, nw = fm(x[0], 0, x);
+  for (var i=1; i<X; ++i) {
+    var w = fm(x[i], i, x);
+    if (fc(w, nw)>0) { ni = i; nw = w; }
+  }
+  return ni;
+}
+
+
+/**
+ * Find indices of minimum values.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns indices of minimum values in ascending order
+ */
+export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  // Create a max heap of indices.
+  var IH = Math.min(n, X);
+  var ih = fromRange(0, IH);
+  buildMaxHeap$(ih, 0, IH, fc, i => fm(x[i], i, x), swapRaw$);
+  var wr = fm(x[ih[0]], ih[0], x);
+  // Search for minimum values, and update heap.
+  for (var i=n; i<X; ++i) {
+    var w = fm(x[i], i, x);
+    if (fc(w, wr) >= 0) continue;
+    ih[0] = i;
+    maxHeapify$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swapRaw$);
+    var wr = fm(x[ih[0]], ih[0], x);
+  }
+  // Sort max heap in ascending order.
+  ih.sort((i, j) => fc(fm(x[i], i, x), fm(x[j], j, x)));
+  return ih;
+}
+
+
+/**
+ * Find indices of maximum values.
+ * @param x an array
+ * @param n number of values
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns indices of maximum values in descending order
+ */
+export function searchMaximumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  var fc = fc || COMPARE;
+  var fd = (a: T|U, b: T|U) => -fc(a, b);
+  return searchMinimumValues(x, n, fd, fm);
+}
+// #endregion
+
+
+
+
+// #region COMPARE
+// ---------------
+
+/**
+ * Examine if two arrays are equal.
+ * @param x an array
+ * @param y another array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns x = y?
+ */
+export function isEqual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  var X = x.length, Y = y.length;
+  return X===Y && compare(x, y, fc, fm)===0;
+}
+
+
+/**
+ * Compare two arrays (lexicographically).
+ * @param x an array
+ * @param y another array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns x<y: -ve, x=y: 0, x>y: +ve
+ */
+export function compare<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  var Y  = y.length;
+  for (var i=0, I=Math.min(X, Y); i<I; ++i) {
+    var wx = fm(x[i], i, x);
+    var wy = fm(y[i], i, y);
+    var c  = fc(wx, wy);
+    if (c!==0) return c;
+  }
+  return Math.sign(X-Y);
+}
 // #endregion
 
 
@@ -822,6 +1252,26 @@ export function head<T>(x: T[], vd?: T): T {
 }
 export {head as front};
 export {head as first};
+
+
+/**
+ * Get values except first.
+ * @param x an array
+ * @returns x[1..|x|]
+ */
+export function tail<T>(x: T[]): T[] {
+  return x.slice(1);
+}
+
+
+/**
+ * Get values except last.
+ * @param x an array
+ * @returns x[0..|x|-1]
+ */
+export function init<T>(x: T[]): T[] {
+  return x.slice(0, -1);
+}
 
 
 /**
@@ -849,26 +1299,6 @@ export function middle<T>(x: T[], i: number, n: number=1): T[] {
 
 
 /**
- * Get values except first.
- * @param x an array
- * @returns x[1..|x|]
- */
-export function tail<T>(x: T[]): T[] {
-  return x.slice(1);
-}
-
-
-/**
- * Get values except last.
- * @param x an array
- * @returns x[0..|x|-1]
- */
-export function init<T>(x: T[]): T[] {
-  return x.slice(0, -1);
-}
-
-
-/**
  * Get part of an array.
  * @param x an array
  * @param i start index [0]
@@ -892,96 +1322,144 @@ export function slice$<T>(x: T[], i: number=0, I: number=x.length): T[] {
   x.length = length(x, i, I);
   return x;
 }
+// #endregion
 
 
-/**
- * Keep first n values only.
- * @param x an array
- * @param n number of values [1]
- * @returns x[0..n]
- */
-export function take<T>(x: T[], n: number=1): T[] {
-  return x.slice(0, n);
-}
-export {take as left};
 
+
+// #region SEARCH VALUE
+// --------------------
 
 /**
- * Keep last n values only.
+ * Check if array has a value.
  * @param x an array
- * @param n number of values [1]
- * @returns x[0..n]
+ * @param v search value
+ * @param i start index [0]
+ * @returns v ∈ x[i..]?
  */
-export function takeRight<T>(x: T[], n: number=1): T[] {
-  return x.slice(x.length-n);
-}
-export {takeRight as right};
-
-
-/**
- * Keep values from left, while a test passes.
- * @param x an array
- * @param ft test function (v, i, x)
- * @returns x[0..T-1] | ft(x[i]) = true ∀ i ∈ [0, T-1] & ft(x[T]) = false
- */
-export function takeWhile<T>(x: T[], ft: TestFunction<T>): T[] {
-  return x.slice(0, scanWhile(x, ft));
+export function includes<T>(x: T[], v: T, i: number=0): boolean {
+  return x.includes(v, i);
 }
 
 
 /**
- * Keep values from right, while a test passes.
+ * Examine if array has a value.
  * @param x an array
- * @param ft test function (v, i, x)
- * @returns x[T..] | ft(x[i]) = true ∀ i ∈ [T, |x|-1] & ft(x[T-1]) = false
+ * @param v search value
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns v ∈ x?
  */
-export function takeWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
-  return x.slice(scanWhileRight(x, ft));
+export function hasValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  return searchValue(x, v, fc, fm) >= 0;
 }
 
 
 /**
- * Discard first n values only.
+ * Find first index of a value.
  * @param x an array
- * @param n number of values [1]
- * @returns x[n..]
+ * @param v search value
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns first index of value, -1 if not found
  */
-export function drop<T>(x: T[], n: number=1): T[] {
-  return x.slice(n);
+export function searchValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var w  = fm(v, 0, null), i = -1;
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (fc(wx, w)===0) return i;
+  }
+  return -1;
 }
 
 
 /**
- * Discard last n values only.
+ * Find last index of a value.
  * @param x an array
- * @param n number of values [1]
- * @returns x[0..-n]
+ * @param v search value
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns last index of value, -1 if not found
  */
-export function dropRight<T>(x: T[], n: number=1): T[] {
-  return x.slice(0, x.length-n);
+export function searchValueRight<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var w = fm(v, 0, null);
+  for (var i=x.length-1; i>=0; --i) {
+    var wx = fm(x[i], i, x);
+    if (fc(wx, w)===0) return i;
+  }
+  return -1;
 }
 
 
 /**
- * Discard values from left, while a test passes.
+ * Find indices of value.
  * @param x an array
- * @param ft test function (v, i, x)
- * @returns x[T..] | ft(x[i]) = true ∀ i ∈ [0, T-1] & ft(x[T]) = false
+ * @param v search value
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns indices of value
  */
-export function dropWhile<T>(x: T[], ft: TestFunction<T>): T[] {
-  return x.slice(scanWhile(x, ft));
+export function searchValueAll<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var w = fm(v, 0, null);
+  var i = -1, a = [];
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (fc(wx, w)===0) a.push(i);
+  }
+  return a;
 }
 
 
 /**
- * Discard values from right, while a test passes.
+ * Find first index of an adjacent duplicate value.
  * @param x an array
- * @param ft test function (v, i, x)
- * @returns x[0..T-1] | ft(x[i]) = true ∀ i ∈ [T, |x|-1] & ft(x[T-1]) = false
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns index of first adjacent duplicate value, -1 if none
  */
-export function dropWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
-  return x.slice(0, scanWhileRight(x, ft));
+export function searchAdjacentDuplicateValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  if (X<=1) return -1;
+  var w0 = fm(x[0], 0, x);
+  for (var i=1; i<X; ++i) {
+    var w = fm(x[i], i, x);
+    if (fc(w0, w)===0) return i;
+    w0 = w;
+  }
+  return -1;
 }
+export {searchAdjacentDuplicateValue as searchAdjacentDuplicate};
+
+
+/**
+ * Find first index where two arrays differ.
+ * @param x an array
+ * @param y another array
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns first index where x[i] ≠ y[i], or -1
+ */
+export function searchMismatchedValue<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X  = x.length;
+  var Y  = y.length;
+  for (var i=0, I=Math.min(X, Y); i<I; ++i) {
+    var wx = fm(x[i], i, x);
+    var wy = fm(y[i], i, y);
+    if (fc(wx, wy)!==0) return i;
+  }
+  return X===Y? -1 : I;
+}
+export {searchMismatchedValue as searchMismatch};
 // #endregion
 
 
@@ -989,6 +1467,77 @@ export function dropWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
 
 // #region ARRANGEMENTS
 // --------------------
+
+/**
+ * Examine if array starts with a prefix.
+ * @param x an array
+ * @param y search prefix
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns x[0..|y|] = y?
+ */
+export function hasPrefix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  var Y = y.length;
+  return Y===0 || compare(x.slice(0, Y), y, fc, fm)===0;
+}
+export {hasPrefix as startsWith};
+
+
+/**
+ * Examine if array ends with a suffix.
+ * @param x an array
+ * @param y search suffix
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns x[|x|-|y|..] = y?
+ */
+export function hasSuffix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  var Y = y.length;
+  return Y===0 || compare(x.slice(-Y), y, fc, fm)===0;
+}
+export {hasSuffix as endsWith};
+
+
+/**
+ * Examine if array contains an infix.
+ * @param x an array
+ * @param y search infix
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns x[i..I] = y for some i, I?
+ */
+export function hasInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  return searchInfix(x, y, fc, fm) >= 0;
+}
+
+
+/**
+ * Examine if array has a subsequence.
+ * @param x an array
+ * @param y search subsequence
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns x[i₀] ⧺ x[i₁] ⧺ ... = y, for some i₀, i₁, ...? | i₀ < i₁ < ...
+ */
+export function hasSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  return searchSubsequence(x, y, fc, fm) >= 0;
+}
+
+
+/**
+ * Examine if array has a permutation.
+ * @param x an array
+ * @param y search permutation
+ * @param fc map function (v, i, x)
+ * @param fm compare function (a, b)
+ * @returns x contains a shuffled version of y?
+ */
+export function hasPermutation<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
+  var x1 = fm? x.map(fm) : x.slice();
+  var y1 = fm? y.map(fm) : y.slice();
+  return hasSubsequence(x1.sort(), y1.sort(), fc, fm);
+}
+
 
 /**
  * Obtain all possible prefixes.
@@ -1150,6 +1699,100 @@ function* ipermutationsFixed<T>(x: T[], n: number): IterableIterator<T[]> {
 
 
 /**
+ * Find first index of an infix.
+ * @param x an array
+ * @param y search infix
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns first i | x[i..i+|y|] = y else -1
+ */
+export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X = x.length, Y = y.length;
+  for (var i=0; i<=X-Y; ++i)
+    if (isInfixAt(x, y, i, fc, fm)) return i;
+  return -1;
+}
+
+
+/**
+ * Find last index of an infix.
+ * @param x an array
+ * @param y search infix
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns first i | x[i..i+|y|] = y else -1
+ */
+export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X = x.length, Y = y.length;
+  for (var i=X-Y; i>=0; --i)
+    if (isInfixAt(x, y, i, fc, fm)) return i;
+  return -1;
+}
+
+
+/**
+ * Find indices of an infix.
+ * @param x an array
+ * @param y search infix
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns i₀, i₁, ... | x[j..j+|y|] = y; j ∈ [i₀, i₁, ...]
+ */
+export function searchInfixAll<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var X = x.length, Y = y.length, a = [];
+  for (var i=0; i<=X-Y; ++i)
+    if (isInfixAt(x, y, i, fc, fm)) a.push(i);
+  return a;
+}
+
+
+function isInfixAt<T, U=T>(x: T[], y: T[], i: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>): boolean {
+  var Y = y.length;
+  for (var j=0; j<Y; ++j) {
+    var wx = fm(x[i+j], i+j, x);
+    var wy = fm(y[j], j, y);
+    if (fc(wx, wy)!==0) return false;
+  }
+  return true;
+}
+
+
+/**
+ * Find first index of a subsequence.
+ * @param x an array
+ * @param y search subsequence
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @returns start index of subsequence, -1 if not found
+ */
+export function searchSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var y1 = [...y].map(fm), Y = y1.length;
+  var a = -1, i = -1, j = 0;
+  for (var vx of x) {
+    var wx = fm(vx, ++i, x);
+    if (fc(wx, y1[j])!==0) continue;
+    if (a<0) a = i;
+    if (++j>=Y) return a;
+  }
+  return -1;
+}
+// #endregion
+
+
+
+
+// #region RANDOM ARRANGEMENTS
+// ---------------------------
+
+/**
  * Pick an arbitrary value.
  * @param x an array
  * @param fr random number generator ([0, 1))
@@ -1293,42 +1936,6 @@ export {randomPermutation$ as shuffle$};
 // ------------
 
 /**
- * Check if array has a value.
- * @param x an array
- * @param v search value
- * @param i start index [0]
- * @returns v ∈ x[i..]?
- */
-export function includes<T>(x: T[], v: T, i: number=0): boolean {
-  return x.includes(v, i);
-}
-
-
-/**
- * Find first index of a value.
- * @param x an array
- * @param v search value
- * @param i start index [0]
- * @returns index of v in x[i..] if found else -1
- */
-export function indexOf<T>(x: T[], v: T, i: number=0): number {
-  return x.indexOf(v, i);
-}
-
-
-/**
- * Find last index of a value.
- * @param x an array
- * @param v search value
- * @param i start index [|x|-1]
- * @returns last index of v in x[0..i] if found else -1
- */
-export function lastIndexOf<T>(x: T[], v: T, i: number=x.length-1) {
-  return x.lastIndexOf(v, i);
-}
-
-
-/**
  * Find first value passing a test.
  * @param x an array
  * @param ft test function (v, i, x)
@@ -1349,7 +1956,108 @@ export function findRight<T>(x: T[], ft: TestFunction<T>): T {
   for (var i=x.length-1; i>=0; --i)
     if (ft(x[i], i, x)) return x[i];
 }
+// #endregion
 
+
+
+// #region TAKE/DROP
+// -----------------
+
+/**
+ * Keep first n values only.
+ * @param x an array
+ * @param n number of values [1]
+ * @returns x[0..n]
+ */
+export function take<T>(x: T[], n: number=1): T[] {
+  return x.slice(0, n);
+}
+export {take as left};
+
+
+/**
+ * Keep last n values only.
+ * @param x an array
+ * @param n number of values [1]
+ * @returns x[0..n]
+ */
+export function takeRight<T>(x: T[], n: number=1): T[] {
+  return x.slice(x.length-n);
+}
+export {takeRight as right};
+
+
+/**
+ * Keep values from left, while a test passes.
+ * @param x an array
+ * @param ft test function (v, i, x)
+ * @returns x[0..T-1] | ft(x[i]) = true ∀ i ∈ [0, T-1] & ft(x[T]) = false
+ */
+export function takeWhile<T>(x: T[], ft: TestFunction<T>): T[] {
+  return x.slice(0, scanWhile(x, ft));
+}
+
+
+/**
+ * Keep values from right, while a test passes.
+ * @param x an array
+ * @param ft test function (v, i, x)
+ * @returns x[T..] | ft(x[i]) = true ∀ i ∈ [T, |x|-1] & ft(x[T-1]) = false
+ */
+export function takeWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
+  return x.slice(scanWhileRight(x, ft));
+}
+
+
+/**
+ * Discard first n values only.
+ * @param x an array
+ * @param n number of values [1]
+ * @returns x[n..]
+ */
+export function drop<T>(x: T[], n: number=1): T[] {
+  return x.slice(n);
+}
+
+
+/**
+ * Discard last n values only.
+ * @param x an array
+ * @param n number of values [1]
+ * @returns x[0..-n]
+ */
+export function dropRight<T>(x: T[], n: number=1): T[] {
+  return x.slice(0, x.length-n);
+}
+
+
+/**
+ * Discard values from left, while a test passes.
+ * @param x an array
+ * @param ft test function (v, i, x)
+ * @returns x[T..] | ft(x[i]) = true ∀ i ∈ [0, T-1] & ft(x[T]) = false
+ */
+export function dropWhile<T>(x: T[], ft: TestFunction<T>): T[] {
+  return x.slice(scanWhile(x, ft));
+}
+
+
+/**
+ * Discard values from right, while a test passes.
+ * @param x an array
+ * @param ft test function (v, i, x)
+ * @returns x[0..T-1] | ft(x[i]) = true ∀ i ∈ [T, |x|-1] & ft(x[T-1]) = false
+ */
+export function dropWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
+  return x.slice(0, scanWhileRight(x, ft));
+}
+// #endregion
+
+
+
+
+// #region SCAN
+// ------------
 
 /**
  * Scan from left, while a test passes.
@@ -1403,6 +2111,36 @@ export function scanUntilRight<T>(x: T[], ft: TestFunction<T>): number {
     if (ft(x[i], i, x)) break;
   return ++i;
 }
+// #endregion
+
+
+
+
+// #region SEARCH
+// --------------
+
+/**
+ * Find first index of a value.
+ * @param x an array
+ * @param v search value
+ * @param i start index [0]
+ * @returns index of v in x[i..] if found else -1
+ */
+export function indexOf<T>(x: T[], v: T, i: number=0): number {
+  return x.indexOf(v, i);
+}
+
+
+/**
+ * Find last index of a value.
+ * @param x an array
+ * @param v search value
+ * @param i start index [|x|-1]
+ * @returns last index of v in x[0..i] if found else -1
+ */
+export function lastIndexOf<T>(x: T[], v: T, i: number=x.length-1) {
+  return x.lastIndexOf(v, i);
+}
 
 
 /**
@@ -1442,450 +2180,6 @@ export function searchAll<T>(x: T[], ft: TestFunction<T>): number[] {
   for (var v of x)
     if (ft(v, ++i, x)) a.push(i);
   return a;
-}
-
-
-/**
- * Find first index of a value.
- * @param x an array
- * @param v search value
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns first index of value, -1 if not found
- */
-export function searchValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var w  = fm(v, 0, null), i = -1;
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    if (fc(wx, w)===0) return i;
-  }
-  return -1;
-}
-
-
-/**
- * Find last index of a value.
- * @param x an array
- * @param v search value
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns last index of value, -1 if not found
- */
-export function searchValueRight<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var w = fm(v, 0, null);
-  for (var i=x.length-1; i>=0; --i) {
-    var wx = fm(x[i], i, x);
-    if (fc(wx, w)===0) return i;
-  }
-  return -1;
-}
-
-
-/**
- * Find indices of value.
- * @param x an array
- * @param v search value
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns indices of value
- */
-export function searchValueAll<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var w = fm(v, 0, null);
-  var i = -1, a = [];
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    if (fc(wx, w)===0) a.push(i);
-  }
-  return a;
-}
-
-
-/**
- * Find first index of minimum value.
- * @param x an array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns first index of minimum value, -1 if empty
- */
-export function searchMinimumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  if (X===0) return -1;
-  var mi = 0, mw = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
-    if (fc(w, mw)<0) { mi = i; mw = w; }
-  }
-  return mi;
-}
-
-
-/**
- * Find first index of maximum value.
- * @param x an array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns first index of maximum value, -1 if empty
- */
-export function searchMaximumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  if (X===0) return -1;
-  var ni = 0, nw = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
-    if (fc(w, nw)>0) { ni = i; nw = w; }
-  }
-  return ni;
-}
-
-
-/**
- * Find indices of minimum values.
- * @param x an array
- * @param n number of values
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns indices of minimum values in ascending order
- */
-export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  // Create a max heap of indices.
-  var IH = Math.min(n, X);
-  var ih = fromRange(0, IH);
-  buildMaxHeap$(ih, 0, IH, fc, i => fm(x[i], i, x), swapRaw$);
-  var wr = fm(x[ih[0]], ih[0], x);
-  // Search for minimum values, and update heap.
-  for (var i=n; i<X; ++i) {
-    var w = fm(x[i], i, x);
-    if (fc(w, wr) >= 0) continue;
-    ih[0] = i;
-    maxHeapify$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swapRaw$);
-    var wr = fm(x[ih[0]], ih[0], x);
-  }
-  // Sort max heap in ascending order.
-  ih.sort((i, j) => fc(fm(x[i], i, x), fm(x[j], j, x)));
-  return ih;
-}
-
-
-/**
- * Find indices of maximum values.
- * @param x an array
- * @param n number of values
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns indices of maximum values in descending order
- */
-export function searchMaximumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fd = (a: T|U, b: T|U) => -fc(a, b);
-  return searchMinimumValues(x, n, fd, fm);
-}
-
-
-/**
- * Find first index of an unsorted value.
- * @param x an array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns index of first unsorted value, -1 if sorted
- */
-export function searchUnsortedValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  if (X<=1) return -1;
-  var w0 = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
-    if (fc(w0, w)>0) return i;
-    w0 = w;
-  }
-  return -1;
-}
-
-
-/**
- * Find first index of an adjacent duplicate value.
- * @param x an array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns index of first adjacent duplicate value, -1 if none
- */
-export function searchAdjacentDuplicateValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  if (X<=1) return -1;
-  var w0 = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
-    if (fc(w0, w)===0) return i;
-    w0 = w;
-  }
-  return -1;
-}
-export {searchAdjacentDuplicateValue as searchAdjacentDuplicate};
-
-
-/**
- * Find first index where two arrays differ.
- * @param x an array
- * @param y another array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns first index where x[i] ≠ y[i], or -1
- */
-export function searchMismatchedValue<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  var Y  = y.length;
-  for (var i=0, I=Math.min(X, Y); i<I; ++i) {
-    var wx = fm(x[i], i, x);
-    var wy = fm(y[i], i, y);
-    if (fc(wx, wy)!==0) return i;
-  }
-  return X===Y? -1 : I;
-}
-export {searchMismatchedValue as searchMismatch};
-
-
-/**
- * Find first index of an infix.
- * @param x an array
- * @param y search infix
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns first i | x[i..i+|y|] = y else -1
- */
-export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X = x.length, Y = y.length;
-  for (var i=0; i<=X-Y; ++i)
-    if (isInfixAt(x, y, i, fc, fm)) return i;
-  return -1;
-}
-
-
-/**
- * Find last index of an infix.
- * @param x an array
- * @param y search infix
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns first i | x[i..i+|y|] = y else -1
- */
-export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X = x.length, Y = y.length;
-  for (var i=X-Y; i>=0; --i)
-    if (isInfixAt(x, y, i, fc, fm)) return i;
-  return -1;
-}
-
-
-/**
- * Find indices of an infix.
- * @param x an array
- * @param y search infix
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns i₀, i₁, ... | x[j..j+|y|] = y; j ∈ [i₀, i₁, ...]
- */
-export function searchInfixAll<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X = x.length, Y = y.length, a = [];
-  for (var i=0; i<=X-Y; ++i)
-    if (isInfixAt(x, y, i, fc, fm)) a.push(i);
-  return a;
-}
-
-
-function isInfixAt<T, U=T>(x: T[], y: T[], i: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>): boolean {
-  var Y = y.length;
-  for (var j=0; j<Y; ++j) {
-    var wx = fm(x[i+j], i+j, x);
-    var wy = fm(y[j], j, y);
-    if (fc(wx, wy)!==0) return false;
-  }
-  return true;
-}
-
-
-/**
- * Find first index of a subsequence.
- * @param x an array
- * @param y search subsequence
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns start index of subsequence, -1 if not found
- */
-export function searchSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var y1 = [...y].map(fm), Y = y1.length;
-  var a = -1, i = -1, j = 0;
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    if (fc(wx, y1[j])!==0) continue;
-    if (a<0) a = i;
-    if (++j>=Y) return a;
-  }
-  return -1;
-}
-
-
-/**
- * Examine if array has a value.
- * @param x an array
- * @param v search value
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns v ∈ x?
- */
-export function hasValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  return searchValue(x, v, fc, fm) >= 0;
-}
-
-
-/**
- * Examine if array has an unsorted value.
- * @param x an array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x is not sorted?
- */
-export function hasUnsortedValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  return searchUnsortedValue(x, fc, fm) >= 0;
-}
-
-
-/**
- * Examine if array starts with a prefix.
- * @param x an array
- * @param y search prefix
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x[0..|y|] = y?
- */
-export function hasPrefix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var Y = y.length;
-  return Y===0 || compare(x.slice(0, Y), y, fc, fm)===0;
-}
-export {hasPrefix as startsWith};
-
-
-/**
- * Examine if array ends with a suffix.
- * @param x an array
- * @param y search suffix
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x[|x|-|y|..] = y?
- */
-export function hasSuffix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var Y = y.length;
-  return Y===0 || compare(x.slice(-Y), y, fc, fm)===0;
-}
-export {hasSuffix as endsWith};
-
-
-/**
- * Examine if array contains an infix.
- * @param x an array
- * @param y search infix
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x[i..I] = y for some i, I?
- */
-export function hasInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  return searchInfix(x, y, fc, fm) >= 0;
-}
-
-
-/**
- * Examine if array has a subsequence.
- * @param x an array
- * @param y search subsequence
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x[i₀] ⧺ x[i₁] ⧺ ... = y, for some i₀, i₁, ...? | i₀ < i₁ < ...
- */
-export function hasSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  return searchSubsequence(x, y, fc, fm) >= 0;
-}
-
-
-/**
- * Examine if array has a permutation.
- * @param x an array
- * @param y search permutation
- * @param fc map function (v, i, x)
- * @param fm compare function (a, b)
- * @returns x contains a shuffled version of y?
- */
-export function hasPermutation<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var x1 = fm? x.map(fm) : x.slice();
-  var y1 = fm? y.map(fm) : y.slice();
-  return hasSubsequence(x1.sort(), y1.sort(), fc, fm);
-}
-// #endregion
-
-
-
-
-// #region COMPARE
-// ---------------
-
-/**
- * Compare two arrays (lexicographically).
- * @param x an array
- * @param y another array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x<y: -ve, x=y: 0, x>y: +ve
- */
-export function compare<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  var Y  = y.length;
-  for (var i=0, I=Math.min(X, Y); i<I; ++i) {
-    var wx = fm(x[i], i, x);
-    var wy = fm(y[i], i, y);
-    var c  = fc(wx, wy);
-    if (c!==0) return c;
-  }
-  return Math.sign(X-Y);
-}
-
-
-/**
- * Examine if two arrays are equal.
- * @param x an array
- * @param y another array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @returns x = y?
- */
-export function isEqual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var X = x.length, Y = y.length;
-  return X===Y && compare(x, y, fc, fm)===0;
 }
 // #endregion
 
@@ -1998,109 +2292,6 @@ export function reduceRight<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|
 
 
 /**
- * Perform exclusive prefix scan from left to right.
- * @param x an array
- * @param fr reduce function (acc, v, i, x)
- * @param acc initial value
- * @returns [acc, fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
- */
-export function exclusiveScan<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc: T|U): (T|U)[] {
-  var a = [];
-  for (var i=0, I=x.length; i<I; ++i) {
-    a.push(acc);
-    acc = fr(acc, x[i], i, x);
-  }
-  return a;
-}
-
-
-/**
- * Perform exclusive prefix scan from left to right!
- * @param x an array (updated!)
- * @param fr reduce function (acc, v, i, x)
- * @param acc initial value
- * @returns x = [acc, fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
- */
-export function exclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[] {
-  for (var i=0, I=x.length; i<I; ++i) {
-    var v = x[i];
-    x[i] = acc;
-    acc = fr(acc, v, i, x);
-  }
-  return x;
-}
-
-
-/**
- * Perform inclusive prefix scan from left to right.
- * @param x an array
- * @param fr reduce function (acc, v, i, x)
- * @param acc initial value
- * @returns [fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
- */
-export function inclusiveScan<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc: T|U): (T|U)[] {
-  var a = [];
-  for (var i=0, I=x.length; i<I; ++i) {
-    acc = fr(acc, x[i], i, x);
-    a.push(acc);
-  }
-  return a;
-}
-
-
-/**
- * Perform inclusive prefix scan from left to right!
- * @param x an array (updated!)
- * @param fr reduce function (acc, v, i, x)
- * @param acc initial value
- * @returns x = [fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
- */
-export function inclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[] {
-  for (var i=0, I=x.length; i<I; ++i)
-    acc = x[i] = fr(acc, x[i], i, x);
-  return x;
-}
-
-
-/**
- * Combine adjacent values of an array.
- * @param x an array
- * @param fc combine function (u, v)
- * @param acc initial value
- * @returns [fc(acc, v₀), fc(v₀, v₁)...] | vᵢ ∈ x
- */
-export function adjacentCombine<T>(x: T[], fc: CombineFunction<T>, acc: T): T[] {
-  var  a = [];
-  if (x.length>0) a.push(fc(acc, x[0]));
-  for (var i=1, I=x.length; i<I; ++i)
-    a.push(fc(x[i-1], x[i]));
-  return a;
-}
-// adjacentMap()?
-
-
-/**
- * Combine adjacent values of an array!
- * @param x an array (updated!)
- * @param fc combine function (u, v)
- * @param acc initial value
- * @returns x = [fc(acc, v₀), fc(v₀, v₁)...] | vᵢ ∈ x
- */
-export function adjacentCombine$<T>(x: T[], fc: CombineFunction<T>, acc: T): T[] {
-  var X = x.length;
-  if (X===0) return x;
-  var v = x[0];
-  x[0]  = fc(acc, v);
-  for (var i=1; i<X; ++i) {
-    var w = x[i];
-    x[i]  = fc(v, w);
-    v = w;
-  }
-  return x;
-}
-
-
-/**
  * Keep values which pass a test.
  * @param x an array
  * @param ft test function (v, i, x)
@@ -2180,26 +2371,13 @@ export function rejectAt<T>(x: T[], is: number[]): T[] {
     if (!is.includes(++i)) a.push(v);
   return a;
 }
+// #endregion
 
 
-/**
- * Produce accumulating values.
- * @param x an array
- * @param fr reduce function (acc, v, i, x)
- * @param acc initial value
- * @returns [fr(acc, v₀), fr(fr(acc, v₀), v₁), ...] | fr(acc, v₀) = v₀ if acc not given
- */
-export function accumulate<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|U): T|U[] {
-  var init = arguments.length <= 2;
-  var i = -1, a = [];
-  for (var v of x) {
-    if (init) { init = false; acc = v; ++i; }
-    else acc = fr(acc, v, ++i, x);
-    a.push(acc);
-  }
-  return a;
-}
 
+
+// #region FLATTEN
+// ---------------
 
 /**
  * Flatten nested array to given depth.
@@ -2241,6 +2419,196 @@ export function flatMap(x: any[], fm: MapFunction<any, any> | null=null, ft: Tes
     var w = fm(v, ++i, x);
     if (ft(w, i, x)) concat$(a, w);
     else a.push(w);
+  }
+  return a;
+}
+// #endregion
+
+
+
+
+// #region PREFIX SUM
+// ------------------
+
+/**
+ * Perform exclusive prefix scan from left to right.
+ * @param x an array
+ * @param fr reduce function (acc, v, i, x)
+ * @param acc initial value
+ * @returns [acc, fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
+ */
+export function exclusiveScan<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc: T|U): (T|U)[] {
+  var a = [];
+  for (var i=0, I=x.length; i<I; ++i) {
+    a.push(acc);
+    acc = fr(acc, x[i], i, x);
+  }
+  return a;
+}
+
+
+/**
+ * Perform exclusive prefix scan from left to right!
+ * @param x an array (updated!)
+ * @param fr reduce function (acc, v, i, x)
+ * @param acc initial value
+ * @returns x = [acc, fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
+ */
+export function exclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[] {
+  for (var i=0, I=x.length; i<I; ++i) {
+    var v = x[i];
+    x[i] = acc;
+    acc = fr(acc, v, i, x);
+  }
+  return x;
+}
+
+
+/**
+ * Perform inclusive prefix scan from left to right.
+ * @param x an array
+ * @param fr reduce function (acc, v, i, x)
+ * @param acc initial value
+ * @returns [fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
+ */
+export function inclusiveScan<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|U): (T|U)[] {
+  var init = arguments.length <= 2, a = [];
+  for (var i=0, I=x.length; i<I; ++i) {
+    acc  = init? x[i] : fr(acc, x[i], i, x);
+    a.push(acc);
+    init = false;
+  }
+  return a;
+}
+export {inclusiveScan as accumulate};
+
+
+/**
+ * Perform inclusive prefix scan from left to right!
+ * @param x an array (updated!)
+ * @param fr reduce function (acc, v, i, x)
+ * @param acc initial value
+ * @returns x = [fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
+ */
+export function inclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[] {
+  for (var i=0, I=x.length; i<I; ++i)
+    acc = x[i] = fr(acc, x[i], i, x);
+  return x;
+}
+
+
+/**
+ * Combine adjacent values of an array.
+ * @param x an array
+ * @param fc combine function (u, v)
+ * @param acc initial value
+ * @returns [fc(acc, v₀), fc(v₀, v₁)...] | vᵢ ∈ x
+ */
+export function adjacentCombine<T>(x: T[], fc: CombineFunction<T>, acc: T): T[] {
+  var  a = [];
+  if (x.length>0) a.push(fc(acc, x[0]));
+  for (var i=1, I=x.length; i<I; ++i)
+    a.push(fc(x[i-1], x[i]));
+  return a;
+}
+// adjacentMap()?
+
+
+/**
+ * Combine adjacent values of an array!
+ * @param x an array (updated!)
+ * @param fc combine function (u, v)
+ * @param acc initial value
+ * @returns x = [fc(acc, v₀), fc(v₀, v₁)...] | vᵢ ∈ x
+ */
+export function adjacentCombine$<T>(x: T[], fc: CombineFunction<T>, acc: T): T[] {
+  var X = x.length;
+  if (X===0) return x;
+  var v = x[0];
+  x[0]  = fc(acc, v);
+  for (var i=1; i<X; ++i) {
+    var w = x[i];
+    x[i]  = fc(v, w);
+    v = w;
+  }
+  return x;
+}
+// #endregion
+
+
+
+
+// #region COMBINE
+// ---------------
+
+/**
+ * Place a separator between every value.
+ * @param x an array
+ * @param v separator
+ * @returns [x[0], v, x[1], v, ..., x[|x|-1]]
+ */
+export function intersperse<T>(x: T[], v: T): T[] {
+  var a = [], i = -1;
+  for (var u of x) {
+    if (++i>0) a.push(v);
+    a.push(u);
+  }
+  return a;
+}
+
+
+/**
+ * Estimate new values between existing ones.
+ * @param x an array
+ * @param fc combine function (a, b)
+ * @returns [x[0], fc(x[0], x[1]), x[1], fc(x[1], x[2]), ..., x[|x|-1]]
+ */
+export function interpolate<T>(x: T[], fc: CombineFunction<T>): T[] {
+  var a = [], u: T, i = -1;
+  for (var v of x) {
+    if (++i>0) a.push(fc(u, v));
+    a.push(u = v);
+  }
+  return a;
+}
+
+
+/**
+ * Place values of an array between another.
+ * @param x an array
+ * @param y another array
+ * @param m number of values from x [1]
+ * @param n number of values from y [1]
+ * @param s step size for x [m]
+ * @param t step size for y [n]
+ * @returns x[0..m], y[0..n], x[s..s+m], y[t..t+n], ..., x[k*s..|x|-1] | k ∈ W
+ */
+export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=m, t: number=n): T[] {
+  var X = x.length, Y = y.length, a = [];
+  for (var i=0, j=0; i<X; i+=s) {
+    if (i>0) {
+      for (var k=j, K=k+n; k<K; ++k)
+        a.push(y[k % Y]);
+      j += t;
+    }
+    concat$(a, x.slice(i, i+m));
+  }
+  return a;
+}
+
+
+/**
+ * Place values from iterables alternately.
+ * @param xs arrays
+ * @returns x₀[0], x₁[0], ..., x₀[1], x₁[0], ... | [x₀, x₁, ...] = xs
+ */
+export function interleave<T>(xs: T[][]): T[] {
+  var a = [];
+  for (var i=0;; ++i) {
+    var n = 0;
+    for (var x of xs)
+      if (i<x.length) { a.push(x[i]); ++n; }
+    if (n===0) break;
   }
   return a;
 }
@@ -2534,7 +2902,87 @@ export function splice$<T>(x: T[], i: number, n: number=x.length-i, ...vs: T[]):
   x.splice(i, n, ...vs);
   return x;
 }
+// #endregion
 
+
+
+
+// #region COUNT/PARTITION
+// -----------------------
+
+/**
+ * Count values which satisfy a test.
+ * @param x an array
+ * @param ft test function (v, i, x)
+ * @returns Σtᵢ | tᵢ = 1 if ft(vᵢ) else 0; vᵢ ∈ x
+ */
+export function count<T>(x: T[], ft: TestFunction<T>): number {
+  var i = -1, a = 0;
+  for (var v of x)
+    if (ft(v, ++i, x)) ++a;
+  return a;
+}
+
+
+/**
+ * Count occurrences of each distinct value.
+ * @param x an array
+ * @param fm map function (v, i, x)
+ * @returns Map \{value ⇒ count\}
+ */
+export function countEach<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Map<T|U, number> {
+  var fm = fm || IDENTITY;
+  var i  = -1, a = new Map();
+  for (var v of x) {
+    var w = fm(v, ++i, x);
+    a.set(w, (a.get(w) || 0) + 1);
+  }
+  return a;
+}
+export {countEach as countAs};  // DEPRECATED
+
+
+/**
+ * Segregate values by test result.
+ * @param x an array
+ * @param ft test function (v, i, x)
+ * @returns [satisfies, doesnt]
+ */
+export function partition<T>(x: T[], ft: TestFunction<T>): [T[], T[]] {
+  var t: T[] = [], f: T[] = [], i = -1;
+  for (var v of x) {
+    if (ft(v, ++i, x)) t.push(v);
+    else f.push(v);
+  }
+  return [t, f];
+}
+
+
+/**
+ * Segregate each distinct value.
+ * @param x an array
+ * @param fm map function (v, i, x)
+ * @returns Map \{key ⇒ values\}
+ */
+export function partitionEach<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Map<T|U, T[]> {
+  var fm = fm || IDENTITY;
+  var i  = -1, a = new Map();
+  for (var v of x) {
+    var w = fm(v, ++i, x);
+    if (!a.has(w)) a.set(w, []);
+    a.get(w).push(v);
+  }
+  return a;
+}
+export {partitionEach as groupToMap};
+export {partitionEach as partitionAs};    // DEPRECATED
+// #endregion
+
+
+
+
+// #region SPLITS
+// --------------
 
 /**
  * Break array considering test as separator.
@@ -2659,42 +3107,6 @@ export function group<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
 
 
 /**
- * Segregate values by test result.
- * @param x an array
- * @param ft test function (v, i, x)
- * @returns [satisfies, doesnt]
- */
-export function partition<T>(x: T[], ft: TestFunction<T>): [T[], T[]] {
-  var t: T[] = [], f: T[] = [], i = -1;
-  for (var v of x) {
-    if (ft(v, ++i, x)) t.push(v);
-    else f.push(v);
-  }
-  return [t, f];
-}
-
-
-/**
- * Segregate each distinct value.
- * @param x an array
- * @param fm map function (v, i, x)
- * @returns Map \{key ⇒ values\}
- */
-export function partitionEach<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Map<T|U, T[]> {
-  var fm = fm || IDENTITY;
-  var i  = -1, a = new Map();
-  for (var v of x) {
-    var w = fm(v, ++i, x);
-    if (!a.has(w)) a.set(w, []);
-    a.get(w).push(v);
-  }
-  return a;
-}
-export {partitionEach as groupToMap};
-export {partitionEach as partitionAs};    // DEPRECATED
-
-
-/**
  * Break array into chunks of given size.
  * @param x an array
  * @param n chunk size [1]
@@ -2707,7 +3119,53 @@ export function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
     a.push(x.slice(i, i+n));
   return a;
 }
+// #endregion
 
+
+
+
+// #region CONCAT/JOIN
+// -------------------
+
+/**
+ * Append values from arrays.
+ * @param xs arrays
+ * @returns ...x₀, ...x₁, ... | [x₀, x₁, ...] = xs
+ */
+export function concat<T>(...xs: T[][]): T[] {
+  return [].concat(...xs);
+}
+
+
+/**
+ * Append values from arrays!
+ * @param x an array (updated!)
+ * @param ys arrays to append
+ * @returns x = [...x, ...y₀, ...y₁, ...] | [y₀, y₁, ...] = ys
+ */
+export function concat$<T>(x: T[], ...ys: Iterable<T>[]): T[] {
+  for (var y of ys)
+    x.push(...y);
+  return x;
+}
+
+
+/**
+ * Join values together into a string.
+ * @param x an array
+ * @param sep separator [,]
+ * @returns "$\{v₀\}$\{sep\}$\{v₁\}..." | vᵢ ∈ x
+ */
+export function join<T>(x: T[], sep: string=","): string {
+  return x.join(sep);
+}
+// #endregion
+
+
+
+
+// #region REARRANGE
+// -----------------
 
 /**
  * Obtain values that cycle through array.
@@ -2784,119 +3242,6 @@ export function rotate$<T>(x: T[], n: number=0): T[] {
   var y = x.slice(0, n);
   x.copyWithin(0, n);
   return copy$(x, y, x.length-n);
-}
-
-
-/**
- * Place a separator between every value.
- * @param x an array
- * @param v separator
- * @returns [x[0], v, x[1], v, ..., x[|x|-1]]
- */
-export function intersperse<T>(x: T[], v: T): T[] {
-  var a = [], i = -1;
-  for (var u of x) {
-    if (++i>0) a.push(v);
-    a.push(u);
-  }
-  return a;
-}
-
-
-/**
- * Estimate new values between existing ones.
- * @param x an array
- * @param fc combine function (a, b)
- * @returns [x[0], fc(x[0], x[1]), x[1], fc(x[1], x[2]), ..., x[|x|-1]]
- */
-export function interpolate<T>(x: T[], fc: CombineFunction<T>): T[] {
-  var a = [], u: T, i = -1;
-  for (var v of x) {
-    if (++i>0) a.push(fc(u, v));
-    a.push(u = v);
-  }
-  return a;
-}
-
-
-/**
- * Place values of an array between another.
- * @param x an array
- * @param y another array
- * @param m number of values from x [1]
- * @param n number of values from y [1]
- * @param s step size for x [m]
- * @param t step size for y [n]
- * @returns x[0..m], y[0..n], x[s..s+m], y[t..t+n], ..., x[k*s..|x|-1] | k ∈ W
- */
-export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=m, t: number=n): T[] {
-  var X = x.length, Y = y.length, a = [];
-  for (var i=0, j=0; i<X; i+=s) {
-    if (i>0) {
-      for (var k=j, K=k+n; k<K; ++k)
-        a.push(y[k % Y]);
-      j += t;
-    }
-    concat$(a, x.slice(i, i+m));
-  }
-  return a;
-}
-
-
-/**
- * Place values from iterables alternately.
- * @param xs arrays
- * @returns x₀[0], x₁[0], ..., x₀[1], x₁[0], ... | [x₀, x₁, ...] = xs
- */
-export function interleave<T>(xs: T[][]): T[] {
-  var a = [];
-  for (var i=0;; ++i) {
-    var n = 0;
-    for (var x of xs)
-      if (i<x.length) { a.push(x[i]); ++n; }
-    if (n===0) break;
-  }
-  return a;
-}
-// #endregion
-
-
-
-
-// #region COMBINE
-// ---------------
-
-/**
- * Append values from arrays.
- * @param xs arrays
- * @returns ...x₀, ...x₁, ... | [x₀, x₁, ...] = xs
- */
-export function concat<T>(...xs: T[][]): T[] {
-  return [].concat(...xs);
-}
-
-
-/**
- * Append values from arrays!
- * @param x an array (updated!)
- * @param ys arrays to append
- * @returns x = [...x, ...y₀, ...y₁, ...] | [y₀, y₁, ...] = ys
- */
-export function concat$<T>(x: T[], ...ys: Iterable<T>[]): T[] {
-  for (var y of ys)
-    x.push(...y);
-  return x;
-}
-
-
-/**
- * Join values together into a string.
- * @param x an array
- * @param sep separator [,]
- * @returns "$\{v₀\}$\{sep\}$\{v₁\}..." | vᵢ ∈ x
- */
-export function join<T>(x: T[], sep: string=","): string {
-  return x.join(sep);
 }
 // #endregion
 
@@ -3183,297 +3528,6 @@ export function cartesianProduct<T, U=T>(xs: T[][], fm: MapFunction<T[], T[]|U> 
     if (r<0) break;
   }
   return a;
-}
-// #endregion
-
-
-
-
-// #region SORT
-// ------------
-
-/**
- * Arrange values in order.
- * @param x an array
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x' | x' = x; x'[i] ≤ x'[j] ∀ i ≤ j
- */
-export function sort<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  return sort$(x.slice(), fc, fm, fs);
-}
-export {sort as toSorted};
-
-
-/**
- * Arrange values in order!
- * @param x an array (updated!)
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x | x[i] ≤ x[j] ∀ i ≤ j
- */
-export function sort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  var fc = fc || COMPARE;
-  if (!fm) return x.sort(fc);
-  var X  = x.length;
-  var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
-  return partialIntroSort$(x, 0, X, X, fc, fm, fs);
-}
-
-
-/**
- * Partially arrange values in order.
- * @param x an array
- * @param i start index
- * @param I end index (exclusive)
- * @param n minimum number of values to sort
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x' | x' = x; x'[i] ≤ x'[j] ∀ i ≤ j
- */
-export function partialSort<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  return partialSort$(x.slice(), i, I, n, fc, fm, fs);
-}
-
-
-/**
- * Partially arrange values in order!
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param n minimum number of values to sort
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x | x[i] ≤ x[j] ∀ i ≤ j
- */
-export function partialSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
-  // TODO: Check various sort functions.
-  return partialIntroSort$(x, i, I, n, fc, fm, fs);
-}
-
-
-/**
- * Partially arrange values in order!
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param n minimum number of values to sort
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x | x[i] ≤ x[j] ∀ i ≤ j
- */
-function partialIntroSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  var d = Math.floor(Math.log2(I-i)*2);  // Maximum depth of recursion
-  var s = 16;                            // When to switch to insertion sort
-  return partialIntroSortHelper$(x, i, I, d, s, n, fc, fm, fs);
-}
-
-
-// Partially arrange values in order with hybrid quick sort, heap sort, and insertion sort.
-function partialIntroSortHelper$<T, U=T>(x: T[], i: number, I: number, d: number, s: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  if (n<=0 || I-i<=1) return x;                     // Nothing to sort
-  if (I-i<=s) return partialInsertionSort$(x, i, I, n, fc, fm, fs);  // Insertion sort
-  if (d<=0)   return partialHeapSort$(x, i, I, n, fc, fm, fs);       // Heap sort
-  var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
-  var p = quickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
-  partialIntroSortHelper$(x, i,   p, d, s, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
-  partialIntroSortHelper$(x, p+1, I, d, s, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
-  return x;
-}
-
-
-/**
- * Partially arrange values in order!
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param n minimum number of values to sort
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x | x[i] ≤ x[j] ∀ i ≤ j
- */
-function partialQuickSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  if (n<=0 || I-i<=1) return x;                         // Nothing to sort
-  var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
-  var p = quickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
-  partialQuickSort$(x, i,   p, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
-  partialQuickSort$(x, p+1, I, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
-  return x;
-}
-
-
-// TODO: Make this a generic function.
-// Partition the array into two parts, such that values in the first part are less than values in the second part.
-function quickSortPartition$<T, U=T>(x: T[], i: number, I: number, p: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): number {
-  var wp = fm(x[p], p, x);  // Pivot value
-  var j  = i-1;   // Last index of values ≤ pivot
-  fs(x, p, I-1);  // Move pivot to end
-  for (var k=i; k<I-1; ++k) {
-    var wk = fm(x[k], k, x);
-    if (fc(wk, wp) > 0) continue;
-    fs(x, ++j, k);  // Move value ≤ pivot to left
-  }
-  fs(x, ++j, I-1);  // Move pivot to middle
-  return j;  // Return pivot index
-}
-
-
-/**
- * Partially arrange values in order!
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param n minimum number of values to sort
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x | x[i] ≤ x[j] ∀ i ≤ j
- */
-function partialHeapSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  buildReverseMinHeap$(x, i, I, fc, fm, fs);
-  for (var r=I-1; n>0 && i<I; ++i, --n) {
-    fs(x, i, r);  // Move root to the beginning
-    reverseMinHeapify$(x, i+1, I, r, fc, fm, fs);  // Rebuild heap
-  }
-  return x;
-}
-
-
-// Build a reverse min-heap, where root node is the smallest and placed at the end.
-function buildReverseMinHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  for (var r=I-Math.floor((I-i)/2); r<I; ++r)  // Reverse of r = X/2-1 .. 0
-    reverseMinHeapify$(x, i, I, r, fc, fm, fs);
-}
-
-
-/**
- * Reverse min-heapify values, such that root node is the smallest and placed at the end.
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param r root index
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- */
-function reverseMinHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  var s  = r;         // Index of smallest value
-  var lt = 2*r - I;   // Left child,  reverse of lt = 2*r+1
-  var rt = lt  - 1;   // Right child, reverse of rt = 2*r+2
-  if (lt>=i && fc(fm(x[lt], lt, x), fm(x[s], s, x)) < 0) s = lt;  // Left child is smaller?
-  if (rt>=i && fc(fm(x[rt], rt, x), fm(x[s], s, x)) < 0) s = rt;  // Right child is smaller?
-  if (s !== r) {     // Smallest is not root?
-    fs(x, s, r);     // Swap root with smallest
-    reverseMinHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
-  }
-}
-
-
-// Build a max-heap, where root node is the smallest and placed at the beginning.
-function buildMaxHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  for (var r=i+Math.floor((I-i)/2)-1; r>=i; --r)
-    maxHeapify$(x, i, I, r, fc, fm, fs);
-}
-
-
-/**
- * Max-heapify values, such that root node is the largest and placed at the beginning.
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param r root index
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- */
-function maxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  var s  = r;         // Index of largest value
-  var lt = 2*r - i + 1;  // Left child,  like lt = 2*r+1
-  var rt = lt  + 1;      // Right child, like rt = 2*r+2
-  if (lt<I && fc(fm(x[lt], lt, x), fm(x[s], s, x)) > 0) s = lt;  // Left child  is larger?
-  if (rt<I && fc(fm(x[rt], rt, x), fm(x[s], s, x)) > 0) s = rt;  // Right child is larger?
-  if (s !== r) {     // Largest is not root?
-    fs(x, s, r);     // Swap root with largest
-    maxHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
-  }
-}
-
-
-/**
- * Partially arrange values in order!
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param n minimum number of values to sort (ignored)
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x | x[i] ≤ x[j] ∀ i ≤ j
- */
-function partialInsertionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  // NOTE: Insertion sort does not support partial sorting, so we ignore n.
-  if (fs===swapRaw$) return partialInsertionSortSwapless$(x, i, I, n, fc, fm, fs);
-  else               return partialInsertionSortSwap$    (x, i, I, n, fc, fm, fs);
-}
-
-
-// Sort values in order with swap-enabled version of insertion sort.
-function partialInsertionSortSwap$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  for (var j=i+1; j<I; ++j) {
-    var key  = x[j];
-    var wkey = fm(key, j, x);
-    for (var k=j-1; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
-      fs(x, k, k+1);
-  }
-  return x;
-}
-
-
-// Sort values in order with swapless version of insertion sort.
-function partialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  for (var j=i+1; j<I; ++j) {
-    var key  = x[j];
-    var wkey = fm(key, j, x);
-    for (var k=j-1; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
-      x[k+1] = x[k];
-    x[k+1] = key;
-  }
-  return x;
-}
-
-
-/**
- * Partially arrange values in order!
- * @param x an array (updated!)
- * @param i start index
- * @param I end index (exclusive)
- * @param n minimum number of values to sort
- * @param fc compare function (a, b)
- * @param fm map function (v, i, x)
- * @param fs swap function (x, i, j)
- * @returns x | x[i] ≤ x[j] ∀ i ≤ j
- */
-function partialSelectionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  for (var j=i; n>0 && j<I; ++j, --n) {
-    var l  = j;
-    var wl = fm(x[l], l, x);
-    for (var k=j+1; k<I; ++k) {
-      var wk = fm(x[k], k, x);
-      if (fc(wl, wk) > 0) { l = k; wl = wk; }
-    }
-    fs(x, j, l);
-  }
-  return x;
 }
 // #endregion
 // #endregion
