@@ -323,7 +323,7 @@ export function index<T>(x: T[], i: number): number {
 /**
  * Get zero-based index range for part of array.
  * @param x an array
- * @param i start ±index [0]
+ * @param i begin ±index [0]
  * @param I end ±index (exclusive) [|x|]
  * @returns [i', I'] | i' ≤ I'; i', I' ∈ [0, |x|]
  */
@@ -354,7 +354,7 @@ export function isEmpty<T>(x: T[]): boolean {
 /**
  * Find the length of an array.
  * @param x an array
- * @param i start ±index [0]
+ * @param i begin ±index [0]
  * @param I end ±index (exclusive) [X]
  * @returns |x[i..I]|
  */
@@ -538,9 +538,9 @@ function swapRaw$<T>(x: T[], i: number, j: number): T[] {
 /**
  * Exchange two ranges of values.
  * @param x an array
- * @param i start index of first range
+ * @param i begin index of first range
  * @param I end index of first range (exclusive)
- * @param j start index of second range
+ * @param j begin index of second range
  * @param J end index of second range (exclusive)
  * @returns x' | x' = x; x'[i..I] = x[j..J]; x'[j..J] = x[i..I]
  */
@@ -556,9 +556,9 @@ export function swapRanges<T>(x: T[], i: number, I: number, j: number, J: number
 /**
  * Exchange two ranges of values!
  * @param x an array (updated!)
- * @param i start index of first range
+ * @param i begin index of first range
  * @param I end index of first range (exclusive)
- * @param j start index of second range
+ * @param j begin index of second range
  * @param J end index of second range (exclusive)
  * @returns x | x[i..I] ⇔ x[j..J]
  */
@@ -699,7 +699,7 @@ export function sort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
 /**
  * Arrange a range of values in order.
  * @param x an array
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
@@ -714,7 +714,7 @@ export function sortRange<T, U=T>(x: T[], i: number, I: number, fc: CompareFunct
 /**
  * Arrange a range of values in order!
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
@@ -761,7 +761,7 @@ export function partialSort$<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U>
 /**
  * Partially arrange a range of values in order.
  * @param x an array
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param n minimum number of values to sort
  * @param fc compare function (a, b)
@@ -777,7 +777,7 @@ export function partialSortRange<T, U=T>(x: T[], i: number, I: number, n: number
 /**
  * Partially arrange a range of values in order!
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param n minimum number of values to sort
  * @param fc compare function (a, b)
@@ -797,7 +797,7 @@ export function partialSortRange$<T, U=T>(x: T[], i: number, I: number, n: numbe
 /**
  * Partially arrange values in order!
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param n minimum number of values to sort
  * @param fc compare function (a, b)
@@ -828,7 +828,7 @@ function partialIntroSortRangeDo$<T, U=T>(x: T[], i: number, I: number, d: numbe
 /**
  * Partially arrange a range of values in order!
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param n minimum number of values to sort
  * @param fc compare function (a, b)
@@ -865,7 +865,7 @@ function quickSortPartitionRange$<T, U=T>(x: T[], i: number, I: number, p: numbe
 /**
  * Partially arrange a range of values in order!
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param n minimum number of values to sort
  * @param fc compare function (a, b)
@@ -893,7 +893,7 @@ function buildReverseMinHeapRange$<T, U=T>(x: T[], i: number, I: number, fc: Com
 /**
  * Reverse min-heapify a range of values, such that root node is the smallest and placed at the end.
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param r root index
  * @param fc compare function (a, b)
@@ -923,7 +923,7 @@ function buildMaxHeapRange$<T, U=T>(x: T[], i: number, I: number, fc: CompareFun
 /**
  * Max-heapify a range of values, such that root node is the largest and placed at the beginning.
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param r root index
  * @param fc compare function (a, b)
@@ -946,7 +946,7 @@ function maxHeapifyRange$<T, U=T>(x: T[], i: number, I: number, r: number, fc: C
 /**
  * Partially arrange a range of values in order!
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param n minimum number of values to sort (ignored)
  * @param fc compare function (a, b)
@@ -989,7 +989,7 @@ function partialInsertionSortRangeSwapless$<T, U=T>(x: T[], i: number, I: number
 /**
  * Partially arrange a range of values in order!
  * @param x an array (updated!)
- * @param i start index
+ * @param i begin index
  * @param I end index (exclusive)
  * @param n minimum number of values to sort
  * @param fc compare function (a, b)
@@ -1351,7 +1351,7 @@ export {last as back};
 /**
  * Get values from middle.
  * @param x an array
- * @param i start index
+ * @param i begin index
  * @param n number of values [1]
  * @returns x[i..i+n]
  */
@@ -1363,7 +1363,7 @@ export function middle<T>(x: T[], i: number, n: number=1): T[] {
 /**
  * Get part of an array.
  * @param x an array
- * @param i start index [0]
+ * @param i begin index [0]
  * @param I end index [|x|]
  * @returns x[i..I]
  */
@@ -1375,7 +1375,7 @@ export function slice<T>(x: T[], i: number=0, I: number=x.length): T[] {
 /**
  * Get part of an array!
  * @param x an array (updated!)
- * @param i start index [0]
+ * @param i begin index [0]
  * @param I end index [|x|]
  * @returns x = x[i..I]
  */
@@ -1396,7 +1396,7 @@ export function slice$<T>(x: T[], i: number=0, I: number=x.length): T[] {
  * Check if array has a value.
  * @param x an array
  * @param v search value
- * @param i start index [0]
+ * @param i begin index [0]
  * @returns v ∈ x[i..]?
  */
 export function includes<T>(x: T[], v: T, i: number=0): boolean {
@@ -1831,7 +1831,7 @@ function isInfixAt<T, U=T>(x: T[], y: T[], i: number, fc: CompareFunction<T|U>, 
  * @param y search subsequence
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
- * @returns start index of subsequence, -1 if not found
+ * @returns begin index of subsequence, -1 if not found
  */
 export function searchSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
   var fc = fc || COMPARE;
@@ -2185,7 +2185,7 @@ export function scanUntilRight<T>(x: T[], ft: TestFunction<T>): number {
  * Find first index of a value.
  * @param x an array
  * @param v search value
- * @param i start index [0]
+ * @param i begin index [0]
  * @returns index of v in x[i..] if found else -1
  */
 export function indexOf<T>(x: T[], v: T, i: number=0): number {
@@ -2197,7 +2197,7 @@ export function indexOf<T>(x: T[], v: T, i: number=0): number {
  * Find last index of a value.
  * @param x an array
  * @param v search value
- * @param i start index [|x|-1]
+ * @param i begin index [|x|-1]
  * @returns last index of v in x[0..i] if found else -1
  */
 export function lastIndexOf<T>(x: T[], v: T, i: number=x.length-1) {
@@ -2716,7 +2716,7 @@ export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null
  * Fill with given value.
  * @param x an array
  * @param v value
- * @param i start index [0]
+ * @param i begin index [0]
  * @param I end index [|x|]
  * @returns x' | x' = x; x'[i..I] = v
  */
@@ -2729,7 +2729,7 @@ export function fill<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
  * Fill with given value!
  * @param x an array (updated!)
  * @param v value
- * @param i start index [0]
+ * @param i begin index [0]
  * @param I end index [|x|]
  * @returns x | x[i..I] = v
  */
@@ -2843,7 +2843,7 @@ export {unshift$ as prepend$};
  * @param x target array
  * @param y source array
  * @param j write index [0]
- * @param i read start index [0]
+ * @param i read begin index [0]
  * @param I read end index [|x|]
  * @returns x[0..j] ⧺ y[i..I] ⧺ x[j+I-i..]
  */
@@ -2857,7 +2857,7 @@ export function copy<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.le
  * @param x target array (updated!)
  * @param y source array
  * @param j write index [0]
- * @param i read start index [0]
+ * @param i read begin index [0]
  * @param I read end index [|x|]
  * @returns x = x[0..j] ⧺ y[i..I] ⧺ x[j+I-i..]
  */
@@ -2874,7 +2874,7 @@ export function copy$<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.l
  * Copy part of array within.
  * @param x an array
  * @param j write index [0]
- * @param i read start index [0]
+ * @param i read begin index [0]
  * @param I read end index [|x|]
  * @returns x[0..j] ⧺ x[i..I] ⧺ x[j+I-i..]
  */
@@ -2891,7 +2891,7 @@ export function copyWithin<T>(x: T[], j: number=0, i: number=0, I: number=x.leng
  * Copy part of array within!
  * @param x an array (updated!)
  * @param j write index [0]
- * @param i read start index [0]
+ * @param i read begin index [0]
  * @param I read end index [|x|]
  * @returns x = x[0..j] ⧺ x[i..I] ⧺ x[j+I-i..]
  */
@@ -2904,7 +2904,7 @@ export function copyWithin$<T>(x: T[], j: number=0, i: number=0, I: number=x.len
  * Move part of array within.
  * @param x an array
  * @param j write index [0]
- * @param i read start index [0]
+ * @param i read begin index [0]
  * @param I read end index [|x|]
  * @returns x[0..j] ⧺ x[i..I] ⧺ x[j..i] ⧺ x[I..]
  */
@@ -2926,7 +2926,7 @@ function movePart<T>(x: T[], i: number, j: number, k: number): T[] {
  * Move part of array within!
  * @param x an array (updated!)
  * @param j write index [0]
- * @param i read start index [0]
+ * @param i read begin index [0]
  * @param I read end index [|x|]
  * @returns x = x[0..j] ⧺ x[i..I] ⧺ x[j..i] ⧺ x[I..]
  */
@@ -3232,7 +3232,7 @@ export function join<T>(x: T[], sep: string=","): string {
 /**
  * Obtain values that cycle through array.
  * @param x an array
- * @param i start index [0]
+ * @param i begin index [0]
  * @param n number of values [|x|]
  */
 export function cycle<T>(x: T[], i: number=0, n: number=x.length): T[] {
