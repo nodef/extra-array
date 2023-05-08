@@ -115,8 +115,12 @@ xarray.permutations([1, 2, 3]);
 | [searchUnsortedValue] | Find first index of an unsorted value. |
 | [sort] | Arrange values in order. |
 | [sort$] | Arrange values in order! |
+| [sortRange] | Arrange a range of values in order. |
+| [sortRange$] | Arrange a range of values in order! |
 | [partialSort] | Partially arrange values in order. |
 | [partialSort$] | Partially arrange values in order! |
+| [partialSortRange] | Partially arrange a range of values in order. |
+| [partialSortRange$] | Partially arrange a range of values in order! |
 |  |  |
 | [minimum] | Find first smallest value. |
 | [minimumEntry] | Find first smallest entry. |
@@ -349,8 +353,12 @@ xarray.permutations([1, 2, 3]);
 [searchUnsortedValue]: https://github.com/nodef/extra-array/wiki/searchUnsortedValue
 [sort]: https://github.com/nodef/extra-array/wiki/sort
 [sort$]: https://github.com/nodef/extra-array/wiki/sort$
+[sortRange]: https://github.com/nodef/extra-array/wiki/sortRange
+[sortRange$]: https://github.com/nodef/extra-array/wiki/sortRange$
 [partialSort]: https://github.com/nodef/extra-array/wiki/partialSort
 [partialSort$]: https://github.com/nodef/extra-array/wiki/partialSort$
+[partialSortRange]: https://github.com/nodef/extra-array/wiki/partialSortRange
+[partialSortRange$]: https://github.com/nodef/extra-array/wiki/partialSortRange$
 [minimum]: https://github.com/nodef/extra-array/wiki/minimum
 [minimumEntry]: https://github.com/nodef/extra-array/wiki/minimumEntry
 [maximum]: https://github.com/nodef/extra-array/wiki/maximum

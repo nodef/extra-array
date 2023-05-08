@@ -692,12 +692,74 @@ export function sort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
   var X  = x.length;
   var fm = fm || IDENTITY;
   var fs = fs || swapRaw$;
-  return partialIntroSort$(x, 0, X, X, fc, fm, fs);
+  return partialIntroSortRange$(x, 0, X, X, fc, fm, fs);
+}
+
+
+/**
+ * Arrange a range of values in order.
+ * @param x an array
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x' | x' = x; x'[i] ≤ x'[j] ∀ i ≤ j
+ */
+export function sortRange<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  return sortRange$(x.slice(), i, I, fc, fm, fs);
+}
+
+
+/**
+ * Arrange a range of values in order!
+ * @param x an array (updated!)
+ * @param i start index
+ * @param I end index (exclusive)
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+export function sortRange$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  var fc = fc || COMPARE;
+  var fm = fm || IDENTITY;
+  var fs = fs || swapRaw$;
+  var [i, I] = indexRange(x, i, I);
+  return partialIntroSortRange$(x, i, I, I-i, fc, fm, fs);
 }
 
 
 /**
  * Partially arrange values in order.
+ * @param x an array
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x' | x' = x; x'[i] ≤ x'[j] ∀ i ≤ j
+ */
+export function partialSort<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  return partialSort$(x.slice(), n, fc, fm, fs);
+}
+
+
+/**
+ * Partially arrange values in order!
+ * @param x an array (updated!)
+ * @param n minimum number of values to sort
+ * @param fc compare function (a, b)
+ * @param fm map function (v, i, x)
+ * @param fs swap function (x, i, j)
+ * @returns x | x[i] ≤ x[j] ∀ i ≤ j
+ */
+export function partialSort$<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  return partialSortRange$(x, 0, x.length, n, fc, fm, fs);
+}
+
+
+/**
+ * Partially arrange a range of values in order.
  * @param x an array
  * @param i start index
  * @param I end index (exclusive)
@@ -707,13 +769,13 @@ export function sort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
  * @param fs swap function (x, i, j)
  * @returns x' | x' = x; x'[i] ≤ x'[j] ∀ i ≤ j
  */
-export function partialSort<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  return partialSort$(x.slice(), i, I, n, fc, fm, fs);
+export function partialSortRange<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+  return partialSortRange$(x.slice(), i, I, n, fc, fm, fs);
 }
 
 
 /**
- * Partially arrange values in order!
+ * Partially arrange a range of values in order!
  * @param x an array (updated!)
  * @param i start index
  * @param I end index (exclusive)
@@ -723,12 +785,12 @@ export function partialSort<T, U=T>(x: T[], i: number, I: number, n: number, fc:
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-export function partialSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
+export function partialSortRange$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
   var fs = fs || swapRaw$;
-  // TODO: Check various sort functions.
-  return partialIntroSort$(x, i, I, n, fc, fm, fs);
+  var [i, I] = indexRange(x, i, I);
+  return partialIntroSortRange$(x, i, I, n, fc, fm, fs);
 }
 
 
@@ -743,28 +805,28 @@ export function partialSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-function partialIntroSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+function partialIntroSortRange$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   var d = Math.floor(Math.log2(I-i)*2);  // Maximum depth of recursion
   var s = 16;                            // When to switch to insertion sort
-  return partialIntroSortHelper$(x, i, I, d, s, n, fc, fm, fs);
+  return partialIntroSortRangeDo$(x, i, I, d, s, n, fc, fm, fs);
 }
 
 
-// Partially arrange values in order with hybrid quick sort, heap sort, and insertion sort.
-function partialIntroSortHelper$<T, U=T>(x: T[], i: number, I: number, d: number, s: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+// Partially arrange a range of values in order with hybrid quick sort, heap sort, and insertion sort.
+function partialIntroSortRangeDo$<T, U=T>(x: T[], i: number, I: number, d: number, s: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   if (n<=0 || I-i<=1) return x;                     // Nothing to sort
-  if (I-i<=s) return partialInsertionSort$(x, i, I, n, fc, fm, fs);  // Insertion sort
-  if (d<=0)   return partialHeapSort$(x, i, I, n, fc, fm, fs);       // Heap sort
+  if (I-i<=s) return partialInsertionSortRange$(x, i, I, n, fc, fm, fs);  // Insertion sort
+  if (d<=0)   return partialHeapSortRange$(x, i, I, n, fc, fm, fs);       // Heap sort
   var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
-  var p = quickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
-  partialIntroSortHelper$(x, i,   p, d, s, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
-  partialIntroSortHelper$(x, p+1, I, d, s, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
+  var p = quickSortPartitionRange$(x, i, I, p, fc, fm, fs);  // Partition array
+  partialIntroSortRangeDo$(x, i,   p, d, s, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
+  partialIntroSortRangeDo$(x, p+1, I, d, s, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
   return x;
 }
 
 
 /**
- * Partially arrange values in order!
+ * Partially arrange a range of values in order!
  * @param x an array (updated!)
  * @param i start index
  * @param I end index (exclusive)
@@ -774,19 +836,19 @@ function partialIntroSortHelper$<T, U=T>(x: T[], i: number, I: number, d: number
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-function partialQuickSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+function partialQuickSortRange$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   if (n<=0 || I-i<=1) return x;                         // Nothing to sort
   var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
-  var p = quickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
-  partialQuickSort$(x, i,   p, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
-  partialQuickSort$(x, p+1, I, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
+  var p = quickSortPartitionRange$(x, i, I, p, fc, fm, fs);  // Partition array
+  partialQuickSortRange$(x, i,   p, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
+  partialQuickSortRange$(x, p+1, I, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
   return x;
 }
 
 
 // TODO: Make this a generic function.
 // Partition the array into two parts, such that values in the first part are less than values in the second part.
-function quickSortPartition$<T, U=T>(x: T[], i: number, I: number, p: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): number {
+function quickSortPartitionRange$<T, U=T>(x: T[], i: number, I: number, p: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): number {
   var wp = fm(x[p], p, x);  // Pivot value
   var j  = i-1;   // Last index of values ≤ pivot
   fs(x, p, I-1);  // Move pivot to end
@@ -801,7 +863,7 @@ function quickSortPartition$<T, U=T>(x: T[], i: number, I: number, p: number, fc
 
 
 /**
- * Partially arrange values in order!
+ * Partially arrange a range of values in order!
  * @param x an array (updated!)
  * @param i start index
  * @param I end index (exclusive)
@@ -811,25 +873,25 @@ function quickSortPartition$<T, U=T>(x: T[], i: number, I: number, p: number, fc
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-function partialHeapSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  buildReverseMinHeap$(x, i, I, fc, fm, fs);
+function partialHeapSortRange$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  buildReverseMinHeapRange$(x, i, I, fc, fm, fs);
   for (var r=I-1; n>0 && i<I; ++i, --n) {
     fs(x, i, r);  // Move root to the beginning
-    reverseMinHeapify$(x, i+1, I, r, fc, fm, fs);  // Rebuild heap
+    reverseMinHeapifyRange$(x, i+1, I, r, fc, fm, fs);  // Rebuild heap
   }
   return x;
 }
 
 
-// Build a reverse min-heap, where root node is the smallest and placed at the end.
-function buildReverseMinHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+// Build a reverse min-heap from a range of values, where root node is the smallest and placed at the end.
+function buildReverseMinHeapRange$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
   for (var r=I-Math.floor((I-i)/2); r<I; ++r)  // Reverse of r = X/2-1 .. 0
-    reverseMinHeapify$(x, i, I, r, fc, fm, fs);
+    reverseMinHeapifyRange$(x, i, I, r, fc, fm, fs);
 }
 
 
 /**
- * Reverse min-heapify values, such that root node is the smallest and placed at the end.
+ * Reverse min-heapify a range of values, such that root node is the smallest and placed at the end.
  * @param x an array (updated!)
  * @param i start index
  * @param I end index (exclusive)
@@ -838,7 +900,7 @@ function buildReverseMinHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareF
  * @param fm map function (v, i, x)
  * @param fs swap function (x, i, j)
  */
-function reverseMinHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+function reverseMinHeapifyRange$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
   var s  = r;         // Index of smallest value
   var lt = 2*r - I;   // Left child,  reverse of lt = 2*r+1
   var rt = lt  - 1;   // Right child, reverse of rt = 2*r+2
@@ -846,20 +908,20 @@ function reverseMinHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc:
   if (rt>=i && fc(fm(x[rt], rt, x), fm(x[s], s, x)) < 0) s = rt;  // Right child is smaller?
   if (s !== r) {     // Smallest is not root?
     fs(x, s, r);     // Swap root with smallest
-    reverseMinHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
+    reverseMinHeapifyRange$(x, i, I, s, fc, fm, fs);  // Rebuild heap
   }
 }
 
 
-// Build a max-heap, where root node is the smallest and placed at the beginning.
-function buildMaxHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+// Build a max-heap from a range of values, where root node is the smallest and placed at the beginning.
+function buildMaxHeapRange$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
   for (var r=i+Math.floor((I-i)/2)-1; r>=i; --r)
-    maxHeapify$(x, i, I, r, fc, fm, fs);
+    maxHeapifyRange$(x, i, I, r, fc, fm, fs);
 }
 
 
 /**
- * Max-heapify values, such that root node is the largest and placed at the beginning.
+ * Max-heapify a range of values, such that root node is the largest and placed at the beginning.
  * @param x an array (updated!)
  * @param i start index
  * @param I end index (exclusive)
@@ -868,7 +930,7 @@ function buildMaxHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction
  * @param fm map function (v, i, x)
  * @param fs swap function (x, i, j)
  */
-function maxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
+function maxHeapifyRange$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
   var s  = r;         // Index of largest value
   var lt = 2*r - i + 1;  // Left child,  like lt = 2*r+1
   var rt = lt  + 1;      // Right child, like rt = 2*r+2
@@ -876,13 +938,13 @@ function maxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: Compar
   if (rt<I && fc(fm(x[rt], rt, x), fm(x[s], s, x)) > 0) s = rt;  // Right child is larger?
   if (s !== r) {     // Largest is not root?
     fs(x, s, r);     // Swap root with largest
-    maxHeapify$(x, i, I, s, fc, fm, fs);  // Rebuild heap
+    maxHeapifyRange$(x, i, I, s, fc, fm, fs);  // Rebuild heap
   }
 }
 
 
 /**
- * Partially arrange values in order!
+ * Partially arrange a range of values in order!
  * @param x an array (updated!)
  * @param i start index
  * @param I end index (exclusive)
@@ -892,15 +954,15 @@ function maxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: Compar
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-function partialInsertionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+function partialInsertionSortRange$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   // NOTE: Insertion sort does not support partial sorting, so we ignore n.
-  if (fs===swapRaw$) return partialInsertionSortSwapless$(x, i, I, n, fc, fm, fs);
-  else               return partialInsertionSortSwap$    (x, i, I, n, fc, fm, fs);
+  if (fs===swapRaw$) return partialInsertionSortRangeSwapless$(x, i, I, n, fc, fm, fs);
+  else               return partialInsertionSortRangeSwap$    (x, i, I, n, fc, fm, fs);
 }
 
 
-// Sort values in order with swap-enabled version of insertion sort.
-function partialInsertionSortSwap$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+// Sort a range of values in order with swap-enabled version of insertion sort.
+function partialInsertionSortRangeSwap$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   for (var j=i+1; j<I; ++j) {
     var key  = x[j];
     var wkey = fm(key, j, x);
@@ -911,8 +973,8 @@ function partialInsertionSortSwap$<T, U=T>(x: T[], i: number, I: number, n: numb
 }
 
 
-// Sort values in order with swapless version of insertion sort.
-function partialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+// Sort a range of values in order with swapless version of insertion sort.
+function partialInsertionSortRangeSwapless$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   for (var j=i+1; j<I; ++j) {
     var key  = x[j];
     var wkey = fm(key, j, x);
@@ -925,7 +987,7 @@ function partialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: number, n: 
 
 
 /**
- * Partially arrange values in order!
+ * Partially arrange a range of values in order!
  * @param x an array (updated!)
  * @param i start index
  * @param I end index (exclusive)
@@ -935,7 +997,7 @@ function partialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: number, n: 
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-function partialSelectionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+function partialSelectionSortRange$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   for (var j=i; n>0 && j<I; ++j, --n) {
     var l  = j;
     var wl = fm(x[l], l, x);
@@ -1161,14 +1223,14 @@ export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFuncti
   // Create a max heap of indices.
   var IH = Math.min(n, X);
   var ih = fromRange(0, IH);
-  buildMaxHeap$(ih, 0, IH, fc, i => fm(x[i], i, x), swapRaw$);
+  buildMaxHeapRange$(ih, 0, IH, fc, i => fm(x[i], i, x), swapRaw$);
   var wr = fm(x[ih[0]], ih[0], x);
   // Search for minimum values, and update heap.
   for (var i=n; i<X; ++i) {
     var w = fm(x[i], i, x);
     if (fc(w, wr) >= 0) continue;
     ih[0] = i;
-    maxHeapify$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swapRaw$);
+    maxHeapifyRange$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swapRaw$);
     var wr = fm(x[ih[0]], ih[0], x);
   }
   // Sort max heap in ascending order.
