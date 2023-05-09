@@ -4,7 +4,7 @@ authors:
   - family-names: Sahu
     given-names: Subhajit
     orcid: https://orcid.org/0000-0001-5140-6578
-title: "nodef/extra-array: A collection of functions for working with Arrays"
-version: 3.1.0
-doi: 10.5281/zenodo.7339658
-date-released: 2022-11-20
+title: "nodef/extra-array: An array is a collection of values, stored contiguously."
+version: 4.1.15
+doi: 10.5281/zenodo.7913300
+date-released: 2023-05-09
