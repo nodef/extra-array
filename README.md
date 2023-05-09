@@ -5,21 +5,35 @@ An [array] is a collection of values, stored contiguously.<br>
 📰 [Docs](https://nodef.github.io/extra-array/),
 📘 [Wiki](https://github.com/nodef/extra-array/wiki/).
 
-This package includes common array functions related to querying **about**
-arrays, **generating** them, **comparing** one with another, finding their
-**length**, **getting** and **setting** elements, obtaining its **properties**,
-getting a **part** of it, **rearranging** elements in it, **finding** an element
-of a subset of elements in it, performing **functional** operations,
-**manipulating** it in various ways, **combining** together arrays or its
-elements, of performing **set operations** upon it.
+![](https://i.imgur.com/46wYtxW.png)
 
-All functions except `from*()` take array as 1st parameter. Methods like
-`swap()` are pure and do not modify the array itself, while methods like
-`swap$()` *do modify (update)* the array itself. Some methods accept a map
-function for *faster comparision* (like [unique]). I find the map-approach
-beautiful, which I learned from Haskell's `sortOn()`. You can notice that I have
-followed Javascript naming scheme as far as possible. Some names are borrowed
-from Haskell, Python, Java, Processing.
+<br>
+
+
+This package includes comprehensive set of array functions for **generating** an
+array, **cloning** them, querying **about** them, getting non-negative
+**indices**, managing its **length**, **getting/setting** elements, fully or
+partially **sorting** them, obtaining **minimum(s)/maximum(s)**, **comparing**
+one with another, getting a **part** of it, **searching a value**, obtaining all
+possible **arrangements** or **random arrangements**, **finding** an element,
+**taking/dropping** elements or **scanning** from the begining or end the of an
+array, **searching** the index of a part of the array, performing **functional**
+operations, **flattening** multi-level arrays, obtaining **prefix sum**,
+**manipulating** it in various ways, **counting/partitioning** elements,
+**splitting** it, **concatenating/joining** multiple arrays, **rearranging**
+elements withing it, or performing **set operations** upon it. You can use our
+package in a variety of ways to streamline your development process and simplify
+the implementation of complex algorithms.
+
+We use a consistent naming scheme that helps you quickly identify the functions
+you need. All functions except `from*()` take array as 1st parameter. Some
+functions operate on a specified range in the array, and are called `ranged*()`.
+Functions like `swap()` are pure and do not modify the array itself, while
+functions like `swap$()` *do modify (update)* the array itself. Some functions
+accept a map function for *faster comparision*, such as `unique()`. Furher,
+functions which return an iterable instead of an array are prefixed with `i`,
+such as `isubsequences()`. We borrow some names from other programming languages
+such as *Haskell*, *Python*, *Java*, and *Processing*.
 
 This package is available in *Node.js* and *Web* formats. To use it on the web,
 simply use the `extra_array` global variable after loading with a `<script>`
@@ -43,11 +57,11 @@ xarray.get(x, -1);
 
 var x = [1, 2, 3, 4];
 xarray.swap(x, 0, 1);
-// → [2, 1, 3, 4]
+// → [ 2, 1, 3, 4 ]
 
 var x = [1, 2, 3, 4];
 xarray.rotate(x, 1);
-// → [4, 1, 2, 3]
+// → [ 2, 3, 4, 1 ]
 
 xarray.permutations([1, 2, 3]);
 // → [
@@ -64,6 +78,7 @@ xarray.permutations([1, 2, 3]);
 
 <br>
 <br>
+
 
 
 ## Index
@@ -83,9 +98,6 @@ xarray.permutations([1, 2, 3]);
 | [keys] | Obtain all indices. |
 | [values] | Get all values. |
 | [entries] | Obtain all index-value pairs. |
-| [ikeys] | List all indices. |
-| [ivalues] | List all values. |
-| [ientries] | List all index-value pairs. |
 |  |  |
 | [index] | Get zero-based index for an element in array. |
 | [indexRange] | Get zero-based index range for part of array. |
@@ -115,12 +127,8 @@ xarray.permutations([1, 2, 3]);
 | [searchUnsortedValue] | Find first index of an unsorted value. |
 | [sort] | Arrange values in order. |
 | [sort$] | Arrange values in order! |
-| [sortRange] | Arrange a range of values in order. |
-| [sortRange$] | Arrange a range of values in order! |
 | [partialSort] | Partially arrange values in order. |
 | [partialSort$] | Partially arrange values in order! |
-| [partialSortRange] | Partially arrange a range of values in order. |
-| [partialSortRange$] | Partially arrange a range of values in order! |
 |  |  |
 | [minimum] | Find first smallest value. |
 | [minimumEntry] | Find first smallest entry. |
@@ -166,11 +174,6 @@ xarray.permutations([1, 2, 3]);
 | [infixes] | Obtain all possible infixes. |
 | [subsequences] | Obtain all possible subsequences. |
 | [permutations] | Obtain all possible permutations. |
-| [iprefixes] | List all possible prefixes. |
-| [isuffixes] | List all possible suffixes. |
-| [iinfixes] | List all possible infixes. |
-| [isubsequences] | List all possible subsequences. |
-| [ipermutations] | List all possible permutations. |
 | [searchInfix] | Find first index of an infix. |
 | [searchInfixRight] | Find last index of an infix. |
 | [searchInfixAll] | Find indices of an infix. |
@@ -325,9 +328,6 @@ xarray.permutations([1, 2, 3]);
 [keys]: https://github.com/nodef/extra-array/wiki/keys
 [values]: https://github.com/nodef/extra-array/wiki/values
 [entries]: https://github.com/nodef/extra-array/wiki/entries
-[ikeys]: https://github.com/nodef/extra-array/wiki/ikeys
-[ivalues]: https://github.com/nodef/extra-array/wiki/ivalues
-[ientries]: https://github.com/nodef/extra-array/wiki/ientries
 [index]: https://github.com/nodef/extra-array/wiki/index
 [indexRange]: https://github.com/nodef/extra-array/wiki/indexRange
 [isEmpty]: https://github.com/nodef/extra-array/wiki/isEmpty
@@ -353,12 +353,8 @@ xarray.permutations([1, 2, 3]);
 [searchUnsortedValue]: https://github.com/nodef/extra-array/wiki/searchUnsortedValue
 [sort]: https://github.com/nodef/extra-array/wiki/sort
 [sort$]: https://github.com/nodef/extra-array/wiki/sort$
-[sortRange]: https://github.com/nodef/extra-array/wiki/sortRange
-[sortRange$]: https://github.com/nodef/extra-array/wiki/sortRange$
 [partialSort]: https://github.com/nodef/extra-array/wiki/partialSort
 [partialSort$]: https://github.com/nodef/extra-array/wiki/partialSort$
-[partialSortRange]: https://github.com/nodef/extra-array/wiki/partialSortRange
-[partialSortRange$]: https://github.com/nodef/extra-array/wiki/partialSortRange$
 [minimum]: https://github.com/nodef/extra-array/wiki/minimum
 [minimumEntry]: https://github.com/nodef/extra-array/wiki/minimumEntry
 [maximum]: https://github.com/nodef/extra-array/wiki/maximum
@@ -399,11 +395,6 @@ xarray.permutations([1, 2, 3]);
 [infixes]: https://github.com/nodef/extra-array/wiki/infixes
 [subsequences]: https://github.com/nodef/extra-array/wiki/subsequences
 [permutations]: https://github.com/nodef/extra-array/wiki/permutations
-[iprefixes]: https://github.com/nodef/extra-array/wiki/iprefixes
-[isuffixes]: https://github.com/nodef/extra-array/wiki/isuffixes
-[iinfixes]: https://github.com/nodef/extra-array/wiki/iinfixes
-[isubsequences]: https://github.com/nodef/extra-array/wiki/isubsequences
-[ipermutations]: https://github.com/nodef/extra-array/wiki/ipermutations
 [searchInfix]: https://github.com/nodef/extra-array/wiki/searchInfix
 [searchInfixRight]: https://github.com/nodef/extra-array/wiki/searchInfixRight
 [searchInfixAll]: https://github.com/nodef/extra-array/wiki/searchInfixAll
