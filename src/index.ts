@@ -3187,6 +3187,8 @@ export function group<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
  */
 export function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
   var a = [];
+  if (n<0) return a;
+  var s = Math.max(s, 1);
   for (var i=0, I=x.length; i<I; i+=s)
     a.push(x.slice(i, i+n));
   return a;
