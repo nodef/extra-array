@@ -42,6 +42,13 @@ from the [jsDelivr CDN].
 
 > Stability: [Experimental](https://www.youtube.com/watch?v=L1j93RnIxEo).
 
+> NOTE: The use of negative indices in certain functions such as `slice()` is
+> provided as a convenience for access elements from the end of the array.
+> However, negative indices can be thought of as referring to a virtual mirrored
+> version of the original array, which can be counter-intuitive and make it
+> harder to reason about the behavior of functions that use them. We are working
+> on a solution to this problem. Any suggestions are welcome.
+
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 [jsDelivr CDN]: https://cdn.jsdelivr.net/npm/extra-array.web/index.js
 
