@@ -2033,6 +2033,7 @@ export function findRight<T>(x: T[], ft: TestFunction<T>): T {
  * @returns x[0..n]
  */
 export function take<T>(x: T[], n: number=1): T[] {
+  var n = Math.max(n, 0);
   return x.slice(0, n);
 }
 export {take as left};
@@ -2045,7 +2046,9 @@ export {take as left};
  * @returns x[0..n]
  */
 export function takeRight<T>(x: T[], n: number=1): T[] {
-  return x.slice(x.length-n);
+  var X = x.length;
+  var n = Math.min(Math.max(n, 0), X);
+  return x.slice(X-n);
 }
 export {takeRight as right};
 
@@ -2079,6 +2082,7 @@ export function takeWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
  * @returns x[n..]
  */
 export function drop<T>(x: T[], n: number=1): T[] {
+  var n = Math.max(n, 0);
   return x.slice(n);
 }
 
@@ -2090,7 +2094,9 @@ export function drop<T>(x: T[], n: number=1): T[] {
  * @returns x[0..-n]
  */
 export function dropRight<T>(x: T[], n: number=1): T[] {
-  return x.slice(0, x.length-n);
+  var X = x.length;
+  var n = Math.min(Math.max(n, 0), X);
+  return x.slice(0, X-n);
 }
 
 
