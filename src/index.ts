@@ -2910,6 +2910,8 @@ export function copyWithin$<T>(x: T[], j: number=0, i: number=0, I: number=x.len
  * @returns x[0..j] ⧺ x[i..I] ⧺ x[j..i] ⧺ x[I..]
  */
 export function moveWithin<T>(x: T[], j: number=0, i: number=0, I: number=x.length): T[] {
+  var j = index(x, j);
+  var [i, I] = indexRange(x, i, I);
   if (j<i) return movePart(x, j, i, I);
   else     return movePart(x, i, I, j);
 }
@@ -2926,17 +2928,22 @@ function movePart<T>(x: T[], i: number, j: number, k: number): T[] {
 /**
  * Move part of array within!
  * @param x an array (updated!)
- * @param j write index [0]
- * @param i read begin index [0]
- * @param I read end index [|x|]
+ * @param j write ±index [0]
+ * @param i read begin ±index [0]
+ * @param I read end ±index [|x|]
  * @returns x = x[0..j] ⧺ x[i..I] ⧺ x[j..i] ⧺ x[I..]
  */
 export function moveWithin$<T>(x: T[], j: number=0, i: number=0, I: number=x.length): T[] {
-  var p = x.slice(i, I), P = p.length;
+  var j = index(x, j);
+  var [i, I] = indexRange(x, i, I);
+  var p =  x.slice(i, I), P = p.length;
   if (j<i) x.copyWithin(j+P, j, i);
   else     x.copyWithin(i,   I, j);
   return copy$(x, p, j<i? j : j-P);
 }
+// DOUBT: Are negative indices any helpful (other than basic shortcuts)?
+// DOUBT: It is not easy to use a negative index supporting function from another negative index supporting function.
+// DOUBT: Seems to me they are only complicating implementation of algorithms, and should be removed.
 
 
 /**
