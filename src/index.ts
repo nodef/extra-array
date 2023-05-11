@@ -3120,17 +3120,18 @@ export function cutRight<T>(x: T[], ft: TestFunction<T>): T[][] {
 /**
  * Break array at given indices.
  * @param x an array
- * @param is split indices (sorted)
+ * @param is split ±indices (left to right)
  * @returns x[0..j] ⧺ x[j..k] ⧺ ... | ft(x[i]) = true; i = j, k, ...; i ∈ is
  */
 export function cutAt<T>(x: T[], is: number[]): T[][] {
+  var X = x.length;
   var j = 0, a = [];
   for (var i of is) {
-    i = Math.max(j, index(x, i));
+    var i = i<0? X+i : i;
     a.push(x.slice(j, i));
-    j = i;
+    j = Math.max(j, i);
   }
-  a.push(x.slice(i));
+  a.push(x.slice(j));
   return a;
 }
 
@@ -3138,11 +3139,19 @@ export function cutAt<T>(x: T[], is: number[]): T[][] {
 /**
  * Break array after given indices.
  * @param x an array
- * @param is split indices (sorted)
+ * @param is split ±indices (left to right)
  * @returns x[0..j+1] ⧺ x[j+1..k] ⧺ ... | ft(x[i]) = true; i = j, k, ...; i ∈ is
  */
 export function cutAtRight<T>(x: T[], is: number[]): T[][] {
-  return cutAt(x, is.map(i => i+1));
+  var X = x.length;
+  var j = 0, a = [];
+  for (var i of is) {
+    var i = i<0? X+i : i;
+    a.push(x.slice(j, i+1));
+    j = Math.max(j, i+1);
+  }
+  a.push(x.slice(j));
+  return a;
 }
 
 
