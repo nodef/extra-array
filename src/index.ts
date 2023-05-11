@@ -2648,6 +2648,10 @@ export function interpolate<T>(x: T[], fc: CombineFunction<T>): T[] {
  */
 export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=m, t: number=n): T[] {
   var X = x.length, Y = y.length, a = [];
+  var m = Math.max(m, 0);
+  var n = Math.max(n, 0);
+  var s = Math.max(s, 1);
+  var t = Math.max(t, 1);
   for (var i=0, j=0; i<X; i+=s) {
     if (i>0) {
       for (var k=j, K=k+n; k<K; ++k)
