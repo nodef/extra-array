@@ -2880,11 +2880,7 @@ export function copy$<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.l
  * @returns x[0..j] ⧺ x[i..I] ⧺ x[j+I-i..]
  */
 export function copyWithin<T>(x: T[], j: number=0, i: number=0, I: number=x.length): T[] {
-  var I = i + Math.min(length(x, i, I), length(x, j));
-  var p = x.slice(0, j);
-  var q = x.slice(i, I);
-  var r = x.slice(j+q.length);
-  return p.concat(q, r);
+  return x.slice().copyWithin(j, i, I);
 }
 
 
