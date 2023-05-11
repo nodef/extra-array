@@ -1356,6 +1356,8 @@ export {last as back};
  * @returns x[i..i+n]
  */
 export function middle<T>(x: T[], i: number, n: number=1): T[] {
+  var i = index(x, i);
+  var n = Math.max(n, 0);
   return x.slice(i, i+n);
 }
 
