@@ -2942,12 +2942,14 @@ export function moveWithin$<T>(x: T[], j: number=0, i: number=0, I: number=x.len
 /**
  * Remove or replace existing values.
  * @param x an array
- * @param i remove index
+ * @param i remove ±index
  * @param n number of values to remove [rest]
  * @param vs values to insert
  * @returns x[0..i] ⧺ vs ⧺ x[i+n..]
  */
-export function splice<T>(x: T[], i: number, n: number=x.length-i, ...vs: T[]): T[] {
+export function splice<T>(x: T[], i: number, n: number=x.length, ...vs: T[]): T[] {
+  var i = index(x, i);
+  var n = Math.max(n, 0);
   return concat$(x.slice(0, i), vs, x.slice(i+n));
 }
 export {splice as toSpliced};
@@ -2956,12 +2958,12 @@ export {splice as toSpliced};
 /**
  * Remove or replace existing values!
  * @param x an array (updated!)
- * @param i remove index
+ * @param i remove ±index
  * @param n number of values to remove [rest]
  * @param vs values to insert
  * @returns x = x[0..i] ⧺ vs ⧺ x[i+n..]
  */
-export function splice$<T>(x: T[], i: number, n: number=x.length-i, ...vs: T[]): T[] {
+export function splice$<T>(x: T[], i: number, n: number=x.length, ...vs: T[]): T[] {
   x.splice(i, n, ...vs);
   return x;
 }
