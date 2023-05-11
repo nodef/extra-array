@@ -2644,7 +2644,7 @@ export function interpolate<T>(x: T[], fc: CombineFunction<T>): T[] {
  * @param n number of values from y [1]
  * @param s step size for x [m]
  * @param t step size for y [n]
- * @returns x[0..m], y[0..n], x[s..s+m], y[t..t+n], ..., x[k*s..|x|-1] | k ∈ W
+ * @returns x[0..m] ⧺ y[0..n] ⧺ x[s..s+m] ⧺ y[t..t+n] ⧺ ... ⧺ x[k*s..|x|-1] | k ∈ W
  */
 export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=m, t: number=n): T[] {
   var X = x.length, Y = y.length, a = [];
@@ -2663,7 +2663,7 @@ export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=
 /**
  * Place values from iterables alternately.
  * @param xs arrays
- * @returns x₀[0], x₁[0], ..., x₀[1], x₁[0], ... | [x₀, x₁, ...] = xs
+ * @returns [x₀[0], x₁[0], ..., x₀[1], x₁[0], ...] | [x₀, x₁, ...] = xs
  */
 export function interleave<T>(xs: T[][]): T[] {
   var a = [];
@@ -2743,7 +2743,7 @@ export function fill$<T>(x: T[], v: T, i: number=0, I: number=x.length): T[] {
  * Add value to the end.
  * @param x an array
  * @param vs values to add
- * @returns [...x, ...vs]
+ * @returns x ⧺ vs
  */
 export function push<T>(x: T[], ...vs: T[]): T[] {
   return x.concat(vs);
@@ -2756,7 +2756,7 @@ export {push as append};
  * Add values to the end!
  * @param x an array (updated!)
  * @param vs values to add
- * @returns x | x = [...x, ...vs]
+ * @returns x = x ⧺ vs
  */
 export function push$<T>(x: T[], ...vs: T[]): T[] {
   x.push(...vs);
@@ -2816,7 +2816,7 @@ export {shift$ as popFront$};
  * Add values to the start.
  * @param x an array
  * @param vs values to add
- * @returns [...vs, ...x]
+ * @returns vs ⧺ x
  */
 export function unshift<T>(x: Iterable<T>, ...vs: T[]): T[] {
   return concat$(vs, x);
@@ -2829,7 +2829,7 @@ export {unshift as prepend};
  * Add values to the start!
  * @param x an array (updated!)
  * @param vs values to add
- * @returns x = [...vs, ...x]
+ * @returns x = vs ⧺ x
  */
 export function unshift$<T>(x: T[], ...vs: T[]): T[] {
   x.unshift(...vs);
@@ -3056,7 +3056,7 @@ export {partitionEach as partitionAs};    // DEPRECATED
  * Break array considering test as separator.
  * @param x an array
  * @param ft test function (v, i, x)
- * @returns x[j..k] ⧺ x[l..m] ⧺ ... | ft(x[i]) = true; i = 0..j / k..l / ...
+ * @returns [x[j..k], x[l..m], ...] | ft(x[i]) = true; i = 0..j / k..l / ...
  */
 export function split<T>(x: T[], ft: TestFunction<T>): T[][] {
   var i = -1, a = [], b = [];
@@ -3073,7 +3073,7 @@ export function split<T>(x: T[], ft: TestFunction<T>): T[][] {
  * Break array considering indices as separator.
  * @param x an array
  * @param is indices (sorted)
- * @returns x[j..k] ⧺ x[l..m] ⧺ ... | ft(x[i]) = true; i = 0..j / k..l / ...; i ∈ is
+ * @returns [x[j..k], x[l..m], ...] | ft(x[i]) = true; i = 0..j / k..l / ...; i ∈ is
  */
 export function splitAt<T>(x: T[], is: number[]): T[][] {
   var i = -1, a = [], b = [];
@@ -3090,7 +3090,7 @@ export function splitAt<T>(x: T[], is: number[]): T[][] {
  * Break array when test passes.
  * @param x an array
  * @param ft test function (v, i, x)
- * @returns x[0..j] ⧺ x[j..k] ⧺ ... | ft(x[i]) = true; i = j, k, ...
+ * @returns [x[0..j], x[j..k], ...] | ft(x[i]) = true; i = j, k, ...
  */
 export function cut<T>(x: T[], ft: TestFunction<T>): T[][] {
   var j = 0, a = [];
@@ -3108,7 +3108,7 @@ export function cut<T>(x: T[], ft: TestFunction<T>): T[][] {
  * Break array after test passes.
  * @param x an array
  * @param ft test function (v, i, x)
- * @returns x[0..j+1] ⧺ x[j+1..k] ⧺ ... | ft(x[i]) = true; i = j, k, ...
+ * @returns [x[0..j+1], x[j+1..k], ...] | ft(x[i]) = true; i = j, k, ...
  */
 export function cutRight<T>(x: T[], ft: TestFunction<T>): T[][] {
   var j = 0, a = [];
@@ -3126,7 +3126,7 @@ export function cutRight<T>(x: T[], ft: TestFunction<T>): T[][] {
  * Break array at given indices.
  * @param x an array
  * @param is split ±indices (left to right)
- * @returns x[0..j] ⧺ x[j..k] ⧺ ... | ft(x[i]) = true; i = j, k, ...; i ∈ is
+ * @returns [x[0..j], x[j..k], ...] | ft(x[i]) = true; i = j, k, ...; i ∈ is
  */
 export function cutAt<T>(x: T[], is: number[]): T[][] {
   var X = x.length;
@@ -3145,7 +3145,7 @@ export function cutAt<T>(x: T[], is: number[]): T[][] {
  * Break array after given indices.
  * @param x an array
  * @param is split ±indices (left to right)
- * @returns x[0..j+1] ⧺ x[j+1..k] ⧺ ... | ft(x[i]) = true; i = j, k, ...; i ∈ is
+ * @returns [x[0..j+1], x[j+1..k], ...] | ft(x[i]) = true; i = j, k, ...; i ∈ is
  */
 export function cutAtRight<T>(x: T[], is: number[]): T[][] {
   var X = x.length;
@@ -3165,7 +3165,7 @@ export function cutAtRight<T>(x: T[], is: number[]): T[][] {
  * @param x an array
  * @param fc compare function (a, b)
  * @param fm map function (v, i, x)
- * @returns x[0..k], x[k..l], ... | fc(x[i], x[j]) = 0; i, j = 0..k / k..l / ...
+ * @returns [x[0..k], x[k..l], ...] | fc(x[i], x[j]) = 0; i, j = 0..k / k..l / ...
  */
 export function group<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[][] {
   var fc = fc || COMPARE;
@@ -3188,7 +3188,7 @@ export function group<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
  * @param x an array
  * @param n chunk size [1]
  * @param s chunk step [n]
- * @returns x[0..n], x[s..s+n], x[2s..2s+n], ...
+ * @returns x[0..n] ⧺ x[s..s+n] ⧺ x[2s..2s+n] ⧺ ...
  */
 export function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
   var a = [];
@@ -3209,7 +3209,7 @@ export function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
 /**
  * Append values from arrays.
  * @param xs arrays
- * @returns ...x₀, ...x₁, ... | [x₀, x₁, ...] = xs
+ * @returns x₀ ⧺ x₁ ⧺ ... | [x₀, x₁, ...] = xs
  */
 export function concat<T>(...xs: T[][]): T[] {
   return [].concat(...xs);
@@ -3220,7 +3220,7 @@ export function concat<T>(...xs: T[][]): T[] {
  * Append values from arrays!
  * @param x an array (updated!)
  * @param ys arrays to append
- * @returns x = [...x, ...y₀, ...y₁, ...] | [y₀, y₁, ...] = ys
+ * @returns x = x ⧺ y₀ ⧺ y₁ ⧺ ...] | [y₀, y₁, ...] = ys
  */
 export function concat$<T>(x: T[], ...ys: Iterable<T>[]): T[] {
   for (var y of ys)
@@ -3268,7 +3268,7 @@ export function cycle<T>(x: T[], i: number=0, n: number=x.length): T[] {
  * Repeat an array given times.
  * @param x an array
  * @param n times [1]
- * @returns ...x, ...x, ...(n times)
+ * @returns x ⧺ x ⧺ ...(n times)
  */
 export function repeat<T>(x: T[], n: number=1): T[] {
   for (var a=[]; n>0; --n)
@@ -3280,7 +3280,7 @@ export function repeat<T>(x: T[], n: number=1): T[] {
 /**
  * Reverse the values.
  * @param x an array
- * @returns x[|x|-1], x[|x|-2], ..., x[1], x[0]
+ * @returns [x[|x|-1], x[|x|-2], ..., x[1], x[0]]
  */
 export function reverse<T>(x: T[]): T[] {
   return x.slice().reverse();
