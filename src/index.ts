@@ -169,8 +169,8 @@ export {fromInvocation as fromCall};
  */
 export function fromApplication<T>(fm: MapFunction<T, T>, v: T, n: number): T[] {
   var a = [];
-  if (n!==0) a.push(v);
-  for (var i=1; i!==n; ++i)
+  if (n>0) a.push(v);
+  for (var i=1; i<n; ++i)
     a.push(v = fm(v, i, null));
   return a;
 }
@@ -308,24 +308,32 @@ export function ientries<T>(x: T[]): IEntries<T> {
 // #region INDEX
 // -------------
 
+// export function index(x: T[], i: number): number {
+//   var X = x.length;
+//   return Math.min(Math.max(i, 0), X);
+// }
+
+
 /**
- * Get zero-based index for an element in array.
+ * Get unmirrored index for an element in array.
  * @param x an array
- * @param i ±index
- * @returns i' | x[i'] = x[i]; i' ∈ [0, |x|]
+ * @param i mirrored ±index
+ * @returns i' | x.at(i') = x.at(i); i' ∈ [0, |x|]
  */
 export function index<T>(x: T[], i: number): number {
   var X = x.length;
-  return i>=0? Math.min(i, X) : Math.max(X+i, 0);
+  return i>=0? Math.min(i, X) : (i>=-X? X+i : X);
 }
+// TODO: unmirrorIndex()?
+// TODO: uncycleIndex()?
 
 
 /**
- * Get zero-based index range for part of array.
+ * Get unmirrored index range for a part of array.
  * @param x an array
- * @param i begin ±index [0]
- * @param I end ±index (exclusive) [|x|]
- * @returns [i', I'] | i' ≤ I'; i', I' ∈ [0, |x|]
+ * @param i begin mirrored ±index [0]
+ * @param I end mirrored ±index (exclusive) [|x|]
+ * @returns [i', I'] | x.slice(i', I') = x.slice(i, I); i' ≤ I'; i', I' ∈ [0, |x|]
  */
 export function indexRange<T>(x: T[], i: number=0, I: number=x.length): [number, number] {
   var X = x.length;
@@ -333,6 +341,8 @@ export function indexRange<T>(x: T[], i: number=0, I: number=x.length): [number,
   var I = I>=0? Math.min(I, X) : Math.max(X+I, 0);
   return [i, Math.max(i, I)];
 }
+// TODO: unmirrorIndexRange()?
+// TODO: uncycleIndexRange()?
 // #endregion
 
 
@@ -352,15 +362,17 @@ export function isEmpty<T>(x: T[]): boolean {
 
 
 /**
- * Find the length of an array.
+ * Find the length of a part of array.
  * @param x an array
- * @param i begin ±index [0]
- * @param I end ±index (exclusive) [X]
- * @returns |x[i..I]|
+ * @param i begin index [0]
+ * @param I end index (exclusive) [|x|]
+ * @returns |x|
  */
 export function length<T>(x: T[], i: number=0, I: number=x.length): number {
-  var [i, I] = indexRange(x, i, I);
-  return I-i;
+  var X = x.length;
+  var i = Math.min(Math.max(i, 0), X);
+  var I = Math.min(Math.max(I, 0), X);
+  return Math.max(I-i, 0);
 }
 export {length as size};
 
@@ -370,10 +382,11 @@ export {length as size};
  * @param x an array
  * @param n new length
  * @param vd default value
- * @returns resized x
+ * @returns x | x[|x|..n] = vd; |x| = n
  */
 export function resize$<T>(x: T[], n: number, vd: T) {
-  var X = x.length; x.length = n;
+  var X = x.length;
+  x.length = n;
   if (n>X) x.fill(vd, X);
   return x;
 }
@@ -403,7 +416,7 @@ export function clear$<T>(x: T[]) {
  * @returns x[i]
  */
 export function get<T>(x: T[], i: number): T {
-  return x[index(x, i)];
+  return x[i];
 }
 export {get as at};
 
@@ -419,7 +432,10 @@ export {get as at};
  * @returns [x[i₀], x[i₁], ...] | [i₀, i₁, ...] = is
  */
 export function getAll<T>(x: T[], is: number[]): T[] {
-  return is.map(i => get(x, i));
+  var a = [];
+  for (var i of is)
+    a.push(x[i]);
+  return a;
 }
 
 
@@ -431,7 +447,7 @@ export function getAll<T>(x: T[], is: number[]): T[] {
  */
 export function getPath(x: any[], p: number[]): any {
   for (var i of p)
-    x = is(x)? get(x, i) : undefined;
+    x = Array.isArray(x)? x[i] : undefined;
   return x;
 }
 
@@ -444,8 +460,8 @@ export function getPath(x: any[], p: number[]): any {
  */
 export function hasPath(x: any[], p: number[]): boolean {
   for (var i of p) {
-    if (!is(x)) return false;
-    x = get(x, i);
+    if (!Array.isArray(x)) return false;
+    x = x[i];
   }
   return true;
 }
@@ -472,7 +488,7 @@ export {set as with};
  * @returns x | x[i] = v
  */
 export function set$<T>(x: T[], i: number, v: T): T[] {
-  x[index(x, i)] = v;
+  x[i] = v;
   return x;
 }
 
@@ -489,8 +505,9 @@ export function set$<T>(x: T[], i: number, v: T): T[] {
  * @returns x | x[i₀][i₁][...] = v; [i₀, i₁, ...] = p
  */
 export function setPath$(x: any[], p: number[], v: any): any[] {
-  var y = getPath(x, p.slice(0, -1));
-  if (is(y)) set$(y, last(p), v);
+  var P = p.length;
+  var y = getPath(x, p.slice(0, P-1));
+  if (Array.isArray(y)) y[p[P-1]] = v;
   return x;
 }
 
@@ -515,24 +532,9 @@ export function swap<T>(x: T[], i: number, j: number): T[] {
  * @returns x | x[i] ⇔ x[j]
  */
 export function swap$<T>(x: T[], i: number, j: number): T[] {
-  var i = index(x, i), j = index(x, j);
   var t = x[i]; x[i] = x[j]; x[j] = t;
   return x;
 }
-
-
-/**
- * Exchange two values!
- * @param x an array (updated!)
- * @param i an +ve index
- * @param j another +ve index
- * @returns x | x[i] ⇔ x[j]
- */
-function swapRaw$<T>(x: T[], i: number, j: number): T[] {
-  var t = x[i]; x[i] = x[j]; x[j] = t;
-  return x;
-}
-// NOTE: May also be called swapUnchecked$().
 
 
 /**
@@ -542,14 +544,14 @@ function swapRaw$<T>(x: T[], i: number, j: number): T[] {
  * @param I end index of first range (exclusive)
  * @param j begin index of second range
  * @param J end index of second range (exclusive)
- * @returns x' | x' = x; x'[i..I] = x[j..J]; x'[j..J] = x[i..I]
+ * @returns x' | x' = x; x'[i..I] ⇔ x'[j..J]
  */
 export function swapRanges<T>(x: T[], i: number, I: number, j: number, J: number): T[] {
-  var [i, I] = indexRange(x, i, I);
-  var [j, J] = indexRange(x, j, J);
   if (j<i) [i, I, j, J] = [j, J, i, I];
   if (j<I) return x.slice();  // Skip if ranges overlap!
-  return x.slice(0, i).concat(x.slice(j, J), x.slice(i, j), x.slice(I));
+  var i = Math.max(i, 0), I = Math.max(I, 0);
+  var j = Math.max(j, 0), J = Math.max(J, 0);
+  return x.slice(0, i).concat(x.slice(j, J), x.slice(I, j), x.slice(i, I), x.slice(J));
 }
 
 
@@ -563,10 +565,10 @@ export function swapRanges<T>(x: T[], i: number, I: number, j: number, J: number
  * @returns x | x[i..I] ⇔ x[j..J]
  */
 export function swapRanges$<T>(x: T[], i: number, I: number, j: number, J: number): T[] {
-  var [i, I] = indexRange(x, i, I);
-  var [j, J] = indexRange(x, j, J);
   if (j<i) [i, I, j, J] = [j, J, i, I];
   if (j<I) return x;  // Skip if ranges overlap!
+  var i = Math.max(i, 0), I = Math.max(I, 0);
+  var j = Math.max(j, 0), J = Math.max(J, 0);
   var t = x.slice(i, I);
   x.splice(i, I-i, ...x.slice(j, J));
   x.splice(j, J-j, ...t);
@@ -691,7 +693,7 @@ export function sort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
   if (!fm && !fs) return x.sort(fc);
   var X  = x.length;
   var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
+  var fs = fs || swap$;
   return rangedPartialIntroSort$(x, 0, X, X, fc, fm, fs);
 }
 
@@ -724,7 +726,7 @@ export function rangedSort<T, U=T>(x: T[], i: number, I: number, fc: CompareFunc
 export function rangedSort$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
+  var fs = fs || swap$;
   var [i, I] = indexRange(x, i, I);
   return rangedPartialIntroSort$(x, i, I, I-i, fc, fm, fs);
 }
@@ -788,7 +790,7 @@ export function rangedPartialSort<T, U=T>(x: T[], i: number, I: number, n: numbe
 export function rangedPartialSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
   var fc = fc || COMPARE;
   var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
+  var fs = fs || swap$;
   var [i, I] = indexRange(x, i, I);
   return rangedPartialIntroSort$(x, i, I, n, fc, fm, fs);
 }
@@ -956,7 +958,7 @@ function rangedMaxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: 
  */
 function rangedPartialInsertionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   // NOTE: Insertion sort does not support partial sorting, so we ignore n.
-  if (fs===swapRaw$) return rangedPartialInsertionSortSwapless$(x, i, I, n, fc, fm, fs);
+  if (fs===swap$) return rangedPartialInsertionSortSwapless$(x, i, I, n, fc, fm, fs);
   else               return rangedPartialInsertionSortSwap$    (x, i, I, n, fc, fm, fs);
 }
 
@@ -1223,14 +1225,14 @@ export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFuncti
   // Create a max heap of indices.
   var IH = Math.min(n, X);
   var ih = fromRange(0, IH);
-  rangedBuildMaxHeap$(ih, 0, IH, fc, i => fm(x[i], i, x), swapRaw$);
+  rangedBuildMaxHeap$(ih, 0, IH, fc, i => fm(x[i], i, x), swap$);
   var wr = fm(x[ih[0]], ih[0], x);
   // Search for minimum values, and update heap.
   for (var i=n; i<X; ++i) {
     var w = fm(x[i], i, x);
     if (fc(w, wr) >= 0) continue;
     ih[0] = i;
-    rangedMaxHeapify$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swapRaw$);
+    rangedMaxHeapify$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swap$);
     var wr = fm(x[ih[0]], ih[0], x);
   }
   // Sort max heap in ascending order.
@@ -1370,6 +1372,8 @@ export function middle<T>(x: T[], i: number, n: number=1): T[] {
  * @returns x[i..I]
  */
 export function slice<T>(x: T[], i: number=0, I: number=x.length): T[] {
+  var i = Math.max(i, 0);
+  var I = Math.max(I, 0);
   return x.slice(i, I);
 }
 
@@ -1382,8 +1386,11 @@ export function slice<T>(x: T[], i: number=0, I: number=x.length): T[] {
  * @returns x = x[i..I]
  */
 export function slice$<T>(x: T[], i: number=0, I: number=x.length): T[] {
+  var X = x.length;
+  var i = Math.min(Math.max(i, 0), X);
+  var I = Math.min(Math.max(I, 0), X);
   x.copyWithin(0, i, I);
-  x.length = length(x, i, I);
+  x.length = I-i;
   return x;
 }
 // #endregion

@@ -1,10 +1,11 @@
 {
   "name": "extra-array",
-  "version": "4.1.13",
+  "version": "4.1.14",
   "description": "An array is a collection of values, stored contiguously.",
   "main": "index.js",
   "module": "index.mjs",
   "sideEffects": false,
+  "private": true,
   "exports": {
     "require": "./index.js",
     "import": "./index.mjs"
