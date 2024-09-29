@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest, windows-latest, macOS-latest]
-        node: [16.x, 18.x, 20.x]
+        node: [20.x, 22.x]
     name: Test with Node ${{ matrix.node }} on ${{ matrix.platform }}
     runs-on: ${{ matrix.platform }}
     steps:

@@ -5,8 +5,6 @@ An [array] is a collection of values, stored contiguously.<br>
 📰 [Docs](https://nodef.github.io/extra-array/),
 📘 [Wiki](https://github.com/nodef/extra-array/wiki/).
 
-![](https://i.imgur.com/46wYtxW.png)
-
 <br>
 
 
