@@ -11,7 +11,6 @@ env:
   EMAIL: ${{vars.EMAIL}}
   NPM_TOKEN:    ${{secrets.NPM_TOKEN}}
   GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
-  CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
   FORCE_COLOR: 1
 
 
@@ -20,62 +19,30 @@ jobs:
     strategy:
       matrix:
         platform: [ubuntu-latest, windows-latest, macOS-latest]
-        node: [20.x, 22.x]
-    name: Test with Node ${{matrix.node}} on ${{matrix.platform}}
+    name: Test on ${{matrix.platform}}
     runs-on: ${{matrix.platform}}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: denoland/setup-deno@v2
         with:
-          node-version: ${{matrix.node}}
-      - run: npm ci
-      - run: npm test
+          deno-version: v2.x
+      - run: deno test --allow-read
 
 
-  coverage:
-    name: Publish coverage
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 22.x
-      - run: npm ci
-      - run: npm test
-      - uses: paambaati/codeclimate-action@v3.0.0
-      - uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-
-
-  docs:
-    name: Publish docs
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 22.x
-      - uses: nodef/git-config.action@v1.0.0
-      - run: npm i -g typescript typedoc
-      - run: npm ci
-      - run: npm run publish-docs
-
-
-  packages:
+  publish-jsr:
     name: Publish packages
     needs: [test]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: denoland/setup-deno@v2
         with:
-          node-version: 22.x
-      - uses: nodef/npm-config.action@v1.0.0
+          deno-version: v2.x
+      - uses: nodef/npm-config.action@v1.2.0
         with:
-          entries: access = public
-      - run: npm i -g typescript rollup typedoc browserify terser
-      - run: npm ci
-      - run: npm run publish-packages
+          credentials: auto
+      - run: npx jsr publish
+      - run: deno -A build.ts --publish-core

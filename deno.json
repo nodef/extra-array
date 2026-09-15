@@ -1,0 +1,13 @@
+{
+  "name": "@nodef/extra-array",
+  "version": "4.4.0",
+  "license": "MIT",
+  "exports": "./index.ts",
+  "publish": {
+    "exclude": [".github/"]
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@^1.0.19",
+    "@std/cli": "jsr:@std/cli@^1.0.32"
+  }
+}
