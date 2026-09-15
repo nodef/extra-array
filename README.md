@@ -1,9 +1,9 @@
 An [array] is a collection of values, stored contiguously.<br>
-📦 [Node.js](https://www.npmjs.com/package/extra-array),
-🌐 [Web](https://www.npmjs.com/package/extra-array.web),
-📜 [Files](https://unpkg.com/extra-array/),
-📰 [Docs](https://nodef.github.io/extra-array/),
-📘 [Wiki](https://github.com/nodef/extra-array/wiki/).
+
+▌
+📦 [JSR](https://jsr.io/@nodef/extra-array),
+📦 [NPM](https://www.npmjs.com/package/extra-array),
+📰 [Docs](https://jsr.io/@nodef/extra-array/doc).
 
 <br>
 
@@ -31,31 +31,12 @@ are prefixed with `i`, such as `isubsequences()`. We borrow some names from
 other programming languages such as *Haskell*, *Python*, *Java*, and
 *Processing*.
 
-With this package, you can simplify the implementation of complex algorithms,
-and be able to achieve your goals faster, regardless of your level of expertise.
-Try it out today and discover how it can transform your development experience!
-This package is available in *Node.js* and *Web* formats. To use it on the web,
-simply use the `extra_array` global variable after loading with a `<script>` tag
-from the [jsDelivr CDN].
-
-> Stability: [Experimental](https://www.youtube.com/watch?v=L1j93RnIxEo).
-
-> NOTE: The use of negative indices in certain functions such as `slice()` is
-> provided as a convenience for access elements from the end of the array.
-> However, negative indices can be thought of as referring to a virtual mirrored
-> version of the original array, which can be counter-intuitive and make it
-> harder to reason about the behavior of functions that use them. We are working
-> on a solution to this problem. Any suggestions are welcome.
-
 [array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
-[jsDelivr CDN]: https://cdn.jsdelivr.net/npm/extra-array.web/index.js
 
 <br>
 
 ```javascript
-const xarray = require('extra-array');
-// import * as xarray from "extra-array";
-// import * as xarray from "https://unpkg.com/extra-array/index.mjs"; (deno)
+// import * as xarray from "jsr:@nodef/extra-array";
 
 var x = [1, 2, 3];
 xarray.get(x, -1);
@@ -316,193 +297,190 @@ xarray.permutations([1, 2, 3]);
 <br>
 
 
-[![](https://img.youtube.com/vi/VYOOiIJeBOA/maxresdefault.jpg)](https://www.youtube.com/watch?v=VYOOiIJeBOA)<br>
+[![](https://raw.githubusercontent.com/qb40/designs/gh-pages/0/image/11.png)](https://wolfram77.github.io)<br>
 [![ORG](https://img.shields.io/badge/org-nodef-green?logo=Org)](https://nodef.github.io)
-[![DOI](https://zenodo.org/badge/133759104.svg)](https://zenodo.org/badge/latestdoi/133759104)
-[![Coverage Status](https://coveralls.io/repos/github/nodef/extra-array/badge.svg?branch=master)](https://coveralls.io/github/nodef/extra-array?branch=master)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/77adb3752d187f463f25/test_coverage)](https://codeclimate.com/github/nodef/extra-array/test_coverage)
 ![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/extra-array)
 
 
-[fromRange]: https://github.com/nodef/extra-array/wiki/fromRange
-[fromInvocation]: https://github.com/nodef/extra-array/wiki/fromInvocation
-[fromApplication]: https://github.com/nodef/extra-array/wiki/fromApplication
-[fromIterable]: https://github.com/nodef/extra-array/wiki/fromIterable
-[fromIterable$]: https://github.com/nodef/extra-array/wiki/fromIterable$
-[shallowClone]: https://github.com/nodef/extra-array/wiki/shallowClone
-[deepClone]: https://github.com/nodef/extra-array/wiki/deepClone
-[is]: https://github.com/nodef/extra-array/wiki/is
-[keys]: https://github.com/nodef/extra-array/wiki/keys
-[values]: https://github.com/nodef/extra-array/wiki/values
-[entries]: https://github.com/nodef/extra-array/wiki/entries
-[index]: https://github.com/nodef/extra-array/wiki/index
-[indexRange]: https://github.com/nodef/extra-array/wiki/indexRange
-[isEmpty]: https://github.com/nodef/extra-array/wiki/isEmpty
-[length]: https://github.com/nodef/extra-array/wiki/length
-[resize$]: https://github.com/nodef/extra-array/wiki/resize$
-[clear$]: https://github.com/nodef/extra-array/wiki/clear$
-[get]: https://github.com/nodef/extra-array/wiki/get
-[getAll]: https://github.com/nodef/extra-array/wiki/getAll
-[getPath]: https://github.com/nodef/extra-array/wiki/getPath
-[hasPath]: https://github.com/nodef/extra-array/wiki/hasPath
-[set]: https://github.com/nodef/extra-array/wiki/set
-[set$]: https://github.com/nodef/extra-array/wiki/set$
-[setPath$]: https://github.com/nodef/extra-array/wiki/setPath$
-[swap]: https://github.com/nodef/extra-array/wiki/swap
-[swap$]: https://github.com/nodef/extra-array/wiki/swap$
-[swapRanges]: https://github.com/nodef/extra-array/wiki/swapRanges
-[swapRanges$]: https://github.com/nodef/extra-array/wiki/swapRanges$
-[remove]: https://github.com/nodef/extra-array/wiki/remove
-[remove$]: https://github.com/nodef/extra-array/wiki/remove$
-[removePath$]: https://github.com/nodef/extra-array/wiki/removePath$
-[isSorted]: https://github.com/nodef/extra-array/wiki/isSorted
-[hasUnsortedValue]: https://github.com/nodef/extra-array/wiki/hasUnsortedValue
-[searchUnsortedValue]: https://github.com/nodef/extra-array/wiki/searchUnsortedValue
-[sort]: https://github.com/nodef/extra-array/wiki/sort
-[sort$]: https://github.com/nodef/extra-array/wiki/sort$
-[partialSort]: https://github.com/nodef/extra-array/wiki/partialSort
-[partialSort$]: https://github.com/nodef/extra-array/wiki/partialSort$
-[minimum]: https://github.com/nodef/extra-array/wiki/minimum
-[minimumEntry]: https://github.com/nodef/extra-array/wiki/minimumEntry
-[maximum]: https://github.com/nodef/extra-array/wiki/maximum
-[maximumEntry]: https://github.com/nodef/extra-array/wiki/maximumEntry
-[range]: https://github.com/nodef/extra-array/wiki/range
-[rangeEntries]: https://github.com/nodef/extra-array/wiki/rangeEntries
-[minimums]: https://github.com/nodef/extra-array/wiki/minimums
-[minimumEntries]: https://github.com/nodef/extra-array/wiki/minimumEntries
-[maximums]: https://github.com/nodef/extra-array/wiki/maximums
-[maximumEntries]: https://github.com/nodef/extra-array/wiki/maximumEntries
-[searchMinimumValue]: https://github.com/nodef/extra-array/wiki/searchMinimumValue
-[searchMaximumValue]: https://github.com/nodef/extra-array/wiki/searchMaximumValue
-[searchMinimumValues]: https://github.com/nodef/extra-array/wiki/searchMinimumValues
-[searchMaximumValues]: https://github.com/nodef/extra-array/wiki/searchMaximumValues
-[isEqual]: https://github.com/nodef/extra-array/wiki/isEqual
-[compare]: https://github.com/nodef/extra-array/wiki/compare
-[head]: https://github.com/nodef/extra-array/wiki/head
-[tail]: https://github.com/nodef/extra-array/wiki/tail
-[init]: https://github.com/nodef/extra-array/wiki/init
-[last]: https://github.com/nodef/extra-array/wiki/last
-[middle]: https://github.com/nodef/extra-array/wiki/middle
-[slice]: https://github.com/nodef/extra-array/wiki/slice
-[slice$]: https://github.com/nodef/extra-array/wiki/slice$
-[includes]: https://github.com/nodef/extra-array/wiki/includes
-[hasValue]: https://github.com/nodef/extra-array/wiki/hasValue
-[searchValue]: https://github.com/nodef/extra-array/wiki/searchValue
-[searchValueRight]: https://github.com/nodef/extra-array/wiki/searchValueRight
-[searchValueAll]: https://github.com/nodef/extra-array/wiki/searchValueAll
-[searchAdjacentDuplicateValue]: https://github.com/nodef/extra-array/wiki/searchAdjacentDuplicateValue
-[searchMismatchedValue]: https://github.com/nodef/extra-array/wiki/searchMismatchedValue
-[hasPrefix]: https://github.com/nodef/extra-array/wiki/hasPrefix
-[hasSuffix]: https://github.com/nodef/extra-array/wiki/hasSuffix
-[hasInfix]: https://github.com/nodef/extra-array/wiki/hasInfix
-[hasSubsequence]: https://github.com/nodef/extra-array/wiki/hasSubsequence
-[hasPermutation]: https://github.com/nodef/extra-array/wiki/hasPermutation
-[prefixes]: https://github.com/nodef/extra-array/wiki/prefixes
-[suffixes]: https://github.com/nodef/extra-array/wiki/suffixes
-[infixes]: https://github.com/nodef/extra-array/wiki/infixes
-[subsequences]: https://github.com/nodef/extra-array/wiki/subsequences
-[permutations]: https://github.com/nodef/extra-array/wiki/permutations
-[searchInfix]: https://github.com/nodef/extra-array/wiki/searchInfix
-[searchInfixRight]: https://github.com/nodef/extra-array/wiki/searchInfixRight
-[searchInfixAll]: https://github.com/nodef/extra-array/wiki/searchInfixAll
-[searchSubsequence]: https://github.com/nodef/extra-array/wiki/searchSubsequence
-[randomValue]: https://github.com/nodef/extra-array/wiki/randomValue
-[randomPrefix]: https://github.com/nodef/extra-array/wiki/randomPrefix
-[randomSuffix]: https://github.com/nodef/extra-array/wiki/randomSuffix
-[randomInfix]: https://github.com/nodef/extra-array/wiki/randomInfix
-[randomSubsequence]: https://github.com/nodef/extra-array/wiki/randomSubsequence
-[randomPermutation]: https://github.com/nodef/extra-array/wiki/randomPermutation
-[randomPermutation$]: https://github.com/nodef/extra-array/wiki/randomPermutation$
-[find]: https://github.com/nodef/extra-array/wiki/find
-[findRight]: https://github.com/nodef/extra-array/wiki/findRight
-[take]: https://github.com/nodef/extra-array/wiki/take
-[takeRight]: https://github.com/nodef/extra-array/wiki/takeRight
-[takeWhile]: https://github.com/nodef/extra-array/wiki/takeWhile
-[takeWhileRight]: https://github.com/nodef/extra-array/wiki/takeWhileRight
-[drop]: https://github.com/nodef/extra-array/wiki/drop
-[dropRight]: https://github.com/nodef/extra-array/wiki/dropRight
-[dropWhile]: https://github.com/nodef/extra-array/wiki/dropWhile
-[dropWhileRight]: https://github.com/nodef/extra-array/wiki/dropWhileRight
-[scanWhile]: https://github.com/nodef/extra-array/wiki/scanWhile
-[scanWhileRight]: https://github.com/nodef/extra-array/wiki/scanWhileRight
-[scanUntil]: https://github.com/nodef/extra-array/wiki/scanUntil
-[scanUntilRight]: https://github.com/nodef/extra-array/wiki/scanUntilRight
-[indexOf]: https://github.com/nodef/extra-array/wiki/indexOf
-[lastIndexOf]: https://github.com/nodef/extra-array/wiki/lastIndexOf
-[search]: https://github.com/nodef/extra-array/wiki/search
-[searchRight]: https://github.com/nodef/extra-array/wiki/searchRight
-[searchAll]: https://github.com/nodef/extra-array/wiki/searchAll
-[forEach]: https://github.com/nodef/extra-array/wiki/forEach
-[some]: https://github.com/nodef/extra-array/wiki/some
-[every]: https://github.com/nodef/extra-array/wiki/every
-[map]: https://github.com/nodef/extra-array/wiki/map
-[map$]: https://github.com/nodef/extra-array/wiki/map$
-[reduce]: https://github.com/nodef/extra-array/wiki/reduce
-[reduceRight]: https://github.com/nodef/extra-array/wiki/reduceRight
-[filter]: https://github.com/nodef/extra-array/wiki/filter
-[filter$]: https://github.com/nodef/extra-array/wiki/filter$
-[filterAt]: https://github.com/nodef/extra-array/wiki/filterAt
-[reject]: https://github.com/nodef/extra-array/wiki/reject
-[reject$]: https://github.com/nodef/extra-array/wiki/reject$
-[rejectAt]: https://github.com/nodef/extra-array/wiki/rejectAt
-[flat]: https://github.com/nodef/extra-array/wiki/flat
-[flatMap]: https://github.com/nodef/extra-array/wiki/flatMap
-[exclusiveScan]: https://github.com/nodef/extra-array/wiki/exclusiveScan
-[exclusiveScan$]: https://github.com/nodef/extra-array/wiki/exclusiveScan$
-[inclusiveScan]: https://github.com/nodef/extra-array/wiki/inclusiveScan
-[inclusiveScan$]: https://github.com/nodef/extra-array/wiki/inclusiveScan$
-[adjacentCombine]: https://github.com/nodef/extra-array/wiki/adjacentCombine
-[adjacentCombine$]: https://github.com/nodef/extra-array/wiki/adjacentCombine$
-[intersperse]: https://github.com/nodef/extra-array/wiki/intersperse
-[interpolate]: https://github.com/nodef/extra-array/wiki/interpolate
-[intermix]: https://github.com/nodef/extra-array/wiki/intermix
-[interleave]: https://github.com/nodef/extra-array/wiki/interleave
-[zip]: https://github.com/nodef/extra-array/wiki/zip
-[fill]: https://github.com/nodef/extra-array/wiki/fill
-[fill$]: https://github.com/nodef/extra-array/wiki/fill$
-[push]: https://github.com/nodef/extra-array/wiki/push
-[push$]: https://github.com/nodef/extra-array/wiki/push$
-[pop]: https://github.com/nodef/extra-array/wiki/pop
-[pop$]: https://github.com/nodef/extra-array/wiki/pop$
-[shift]: https://github.com/nodef/extra-array/wiki/shift
-[shift$]: https://github.com/nodef/extra-array/wiki/shift$
-[unshift]: https://github.com/nodef/extra-array/wiki/unshift
-[unshift$]: https://github.com/nodef/extra-array/wiki/unshift$
-[copy]: https://github.com/nodef/extra-array/wiki/copy
-[copy$]: https://github.com/nodef/extra-array/wiki/copy$
-[copyWithin]: https://github.com/nodef/extra-array/wiki/copyWithin
-[copyWithin$]: https://github.com/nodef/extra-array/wiki/copyWithin$
-[moveWithin]: https://github.com/nodef/extra-array/wiki/moveWithin
-[moveWithin$]: https://github.com/nodef/extra-array/wiki/moveWithin$
-[splice]: https://github.com/nodef/extra-array/wiki/splice
-[splice$]: https://github.com/nodef/extra-array/wiki/splice$
-[count]: https://github.com/nodef/extra-array/wiki/count
-[countEach]: https://github.com/nodef/extra-array/wiki/countEach
-[partition]: https://github.com/nodef/extra-array/wiki/partition
-[partitionEach]: https://github.com/nodef/extra-array/wiki/partitionEach
-[split]: https://github.com/nodef/extra-array/wiki/split
-[splitAt]: https://github.com/nodef/extra-array/wiki/splitAt
-[cut]: https://github.com/nodef/extra-array/wiki/cut
-[cutRight]: https://github.com/nodef/extra-array/wiki/cutRight
-[cutAt]: https://github.com/nodef/extra-array/wiki/cutAt
-[cutAtRight]: https://github.com/nodef/extra-array/wiki/cutAtRight
-[group]: https://github.com/nodef/extra-array/wiki/group
-[chunk]: https://github.com/nodef/extra-array/wiki/chunk
-[concat]: https://github.com/nodef/extra-array/wiki/concat
-[concat$]: https://github.com/nodef/extra-array/wiki/concat$
-[join]: https://github.com/nodef/extra-array/wiki/join
-[cycle]: https://github.com/nodef/extra-array/wiki/cycle
-[repeat]: https://github.com/nodef/extra-array/wiki/repeat
-[reverse]: https://github.com/nodef/extra-array/wiki/reverse
-[reverse$]: https://github.com/nodef/extra-array/wiki/reverse$
-[rotate]: https://github.com/nodef/extra-array/wiki/rotate
-[rotate$]: https://github.com/nodef/extra-array/wiki/rotate$
-[isUnique]: https://github.com/nodef/extra-array/wiki/isUnique
-[isDisjoint]: https://github.com/nodef/extra-array/wiki/isDisjoint
-[unique]: https://github.com/nodef/extra-array/wiki/unique
-[union]: https://github.com/nodef/extra-array/wiki/union
-[union$]: https://github.com/nodef/extra-array/wiki/union$
-[intersection]: https://github.com/nodef/extra-array/wiki/intersection
-[difference]: https://github.com/nodef/extra-array/wiki/difference
-[symmetricDifference]: https://github.com/nodef/extra-array/wiki/symmetricDifference
-[cartesianProduct]: https://github.com/nodef/extra-array/wiki/cartesianProduct
+[fromRange]: https://jsr.io/@nodef/extra-version/doc/~/fromRange
+[fromInvocation]: https://jsr.io/@nodef/extra-version/doc/~/fromInvocation
+[fromApplication]: https://jsr.io/@nodef/extra-version/doc/~/fromApplication
+[fromIterable]: https://jsr.io/@nodef/extra-version/doc/~/fromIterable
+[fromIterable$]: https://jsr.io/@nodef/extra-version/doc/~/fromIterable$
+[shallowClone]: https://jsr.io/@nodef/extra-version/doc/~/shallowClone
+[deepClone]: https://jsr.io/@nodef/extra-version/doc/~/deepClone
+[is]: https://jsr.io/@nodef/extra-version/doc/~/is
+[keys]: https://jsr.io/@nodef/extra-version/doc/~/keys
+[values]: https://jsr.io/@nodef/extra-version/doc/~/values
+[entries]: https://jsr.io/@nodef/extra-version/doc/~/entries
+[index]: https://jsr.io/@nodef/extra-version/doc/~/index
+[indexRange]: https://jsr.io/@nodef/extra-version/doc/~/indexRange
+[isEmpty]: https://jsr.io/@nodef/extra-version/doc/~/isEmpty
+[length]: https://jsr.io/@nodef/extra-version/doc/~/length
+[resize$]: https://jsr.io/@nodef/extra-version/doc/~/resize$
+[clear$]: https://jsr.io/@nodef/extra-version/doc/~/clear$
+[get]: https://jsr.io/@nodef/extra-version/doc/~/get
+[getAll]: https://jsr.io/@nodef/extra-version/doc/~/getAll
+[getPath]: https://jsr.io/@nodef/extra-version/doc/~/getPath
+[hasPath]: https://jsr.io/@nodef/extra-version/doc/~/hasPath
+[set]: https://jsr.io/@nodef/extra-version/doc/~/set
+[set$]: https://jsr.io/@nodef/extra-version/doc/~/set$
+[setPath$]: https://jsr.io/@nodef/extra-version/doc/~/setPath$
+[swap]: https://jsr.io/@nodef/extra-version/doc/~/swap
+[swap$]: https://jsr.io/@nodef/extra-version/doc/~/swap$
+[swapRanges]: https://jsr.io/@nodef/extra-version/doc/~/swapRanges
+[swapRanges$]: https://jsr.io/@nodef/extra-version/doc/~/swapRanges$
+[remove]: https://jsr.io/@nodef/extra-version/doc/~/remove
+[remove$]: https://jsr.io/@nodef/extra-version/doc/~/remove$
+[removePath$]: https://jsr.io/@nodef/extra-version/doc/~/removePath$
+[isSorted]: https://jsr.io/@nodef/extra-version/doc/~/isSorted
+[hasUnsortedValue]: https://jsr.io/@nodef/extra-version/doc/~/hasUnsortedValue
+[searchUnsortedValue]: https://jsr.io/@nodef/extra-version/doc/~/searchUnsortedValue
+[sort]: https://jsr.io/@nodef/extra-version/doc/~/sort
+[sort$]: https://jsr.io/@nodef/extra-version/doc/~/sort$
+[partialSort]: https://jsr.io/@nodef/extra-version/doc/~/partialSort
+[partialSort$]: https://jsr.io/@nodef/extra-version/doc/~/partialSort$
+[minimum]: https://jsr.io/@nodef/extra-version/doc/~/minimum
+[minimumEntry]: https://jsr.io/@nodef/extra-version/doc/~/minimumEntry
+[maximum]: https://jsr.io/@nodef/extra-version/doc/~/maximum
+[maximumEntry]: https://jsr.io/@nodef/extra-version/doc/~/maximumEntry
+[range]: https://jsr.io/@nodef/extra-version/doc/~/range
+[rangeEntries]: https://jsr.io/@nodef/extra-version/doc/~/rangeEntries
+[minimums]: https://jsr.io/@nodef/extra-version/doc/~/minimums
+[minimumEntries]: https://jsr.io/@nodef/extra-version/doc/~/minimumEntries
+[maximums]: https://jsr.io/@nodef/extra-version/doc/~/maximums
+[maximumEntries]: https://jsr.io/@nodef/extra-version/doc/~/maximumEntries
+[searchMinimumValue]: https://jsr.io/@nodef/extra-version/doc/~/searchMinimumValue
+[searchMaximumValue]: https://jsr.io/@nodef/extra-version/doc/~/searchMaximumValue
+[searchMinimumValues]: https://jsr.io/@nodef/extra-version/doc/~/searchMinimumValues
+[searchMaximumValues]: https://jsr.io/@nodef/extra-version/doc/~/searchMaximumValues
+[isEqual]: https://jsr.io/@nodef/extra-version/doc/~/isEqual
+[compare]: https://jsr.io/@nodef/extra-version/doc/~/compare
+[head]: https://jsr.io/@nodef/extra-version/doc/~/head
+[tail]: https://jsr.io/@nodef/extra-version/doc/~/tail
+[init]: https://jsr.io/@nodef/extra-version/doc/~/init
+[last]: https://jsr.io/@nodef/extra-version/doc/~/last
+[middle]: https://jsr.io/@nodef/extra-version/doc/~/middle
+[slice]: https://jsr.io/@nodef/extra-version/doc/~/slice
+[slice$]: https://jsr.io/@nodef/extra-version/doc/~/slice$
+[includes]: https://jsr.io/@nodef/extra-version/doc/~/includes
+[hasValue]: https://jsr.io/@nodef/extra-version/doc/~/hasValue
+[searchValue]: https://jsr.io/@nodef/extra-version/doc/~/searchValue
+[searchValueRight]: https://jsr.io/@nodef/extra-version/doc/~/searchValueRight
+[searchValueAll]: https://jsr.io/@nodef/extra-version/doc/~/searchValueAll
+[searchAdjacentDuplicateValue]: https://jsr.io/@nodef/extra-version/doc/~/searchAdjacentDuplicateValue
+[searchMismatchedValue]: https://jsr.io/@nodef/extra-version/doc/~/searchMismatchedValue
+[hasPrefix]: https://jsr.io/@nodef/extra-version/doc/~/hasPrefix
+[hasSuffix]: https://jsr.io/@nodef/extra-version/doc/~/hasSuffix
+[hasInfix]: https://jsr.io/@nodef/extra-version/doc/~/hasInfix
+[hasSubsequence]: https://jsr.io/@nodef/extra-version/doc/~/hasSubsequence
+[hasPermutation]: https://jsr.io/@nodef/extra-version/doc/~/hasPermutation
+[prefixes]: https://jsr.io/@nodef/extra-version/doc/~/prefixes
+[suffixes]: https://jsr.io/@nodef/extra-version/doc/~/suffixes
+[infixes]: https://jsr.io/@nodef/extra-version/doc/~/infixes
+[subsequences]: https://jsr.io/@nodef/extra-version/doc/~/subsequences
+[permutations]: https://jsr.io/@nodef/extra-version/doc/~/permutations
+[searchInfix]: https://jsr.io/@nodef/extra-version/doc/~/searchInfix
+[searchInfixRight]: https://jsr.io/@nodef/extra-version/doc/~/searchInfixRight
+[searchInfixAll]: https://jsr.io/@nodef/extra-version/doc/~/searchInfixAll
+[searchSubsequence]: https://jsr.io/@nodef/extra-version/doc/~/searchSubsequence
+[randomValue]: https://jsr.io/@nodef/extra-version/doc/~/randomValue
+[randomPrefix]: https://jsr.io/@nodef/extra-version/doc/~/randomPrefix
+[randomSuffix]: https://jsr.io/@nodef/extra-version/doc/~/randomSuffix
+[randomInfix]: https://jsr.io/@nodef/extra-version/doc/~/randomInfix
+[randomSubsequence]: https://jsr.io/@nodef/extra-version/doc/~/randomSubsequence
+[randomPermutation]: https://jsr.io/@nodef/extra-version/doc/~/randomPermutation
+[randomPermutation$]: https://jsr.io/@nodef/extra-version/doc/~/randomPermutation$
+[find]: https://jsr.io/@nodef/extra-version/doc/~/find
+[findRight]: https://jsr.io/@nodef/extra-version/doc/~/findRight
+[take]: https://jsr.io/@nodef/extra-version/doc/~/take
+[takeRight]: https://jsr.io/@nodef/extra-version/doc/~/takeRight
+[takeWhile]: https://jsr.io/@nodef/extra-version/doc/~/takeWhile
+[takeWhileRight]: https://jsr.io/@nodef/extra-version/doc/~/takeWhileRight
+[drop]: https://jsr.io/@nodef/extra-version/doc/~/drop
+[dropRight]: https://jsr.io/@nodef/extra-version/doc/~/dropRight
+[dropWhile]: https://jsr.io/@nodef/extra-version/doc/~/dropWhile
+[dropWhileRight]: https://jsr.io/@nodef/extra-version/doc/~/dropWhileRight
+[scanWhile]: https://jsr.io/@nodef/extra-version/doc/~/scanWhile
+[scanWhileRight]: https://jsr.io/@nodef/extra-version/doc/~/scanWhileRight
+[scanUntil]: https://jsr.io/@nodef/extra-version/doc/~/scanUntil
+[scanUntilRight]: https://jsr.io/@nodef/extra-version/doc/~/scanUntilRight
+[indexOf]: https://jsr.io/@nodef/extra-version/doc/~/indexOf
+[lastIndexOf]: https://jsr.io/@nodef/extra-version/doc/~/lastIndexOf
+[search]: https://jsr.io/@nodef/extra-version/doc/~/search
+[searchRight]: https://jsr.io/@nodef/extra-version/doc/~/searchRight
+[searchAll]: https://jsr.io/@nodef/extra-version/doc/~/searchAll
+[forEach]: https://jsr.io/@nodef/extra-version/doc/~/forEach
+[some]: https://jsr.io/@nodef/extra-version/doc/~/some
+[every]: https://jsr.io/@nodef/extra-version/doc/~/every
+[map]: https://jsr.io/@nodef/extra-version/doc/~/map
+[map$]: https://jsr.io/@nodef/extra-version/doc/~/map$
+[reduce]: https://jsr.io/@nodef/extra-version/doc/~/reduce
+[reduceRight]: https://jsr.io/@nodef/extra-version/doc/~/reduceRight
+[filter]: https://jsr.io/@nodef/extra-version/doc/~/filter
+[filter$]: https://jsr.io/@nodef/extra-version/doc/~/filter$
+[filterAt]: https://jsr.io/@nodef/extra-version/doc/~/filterAt
+[reject]: https://jsr.io/@nodef/extra-version/doc/~/reject
+[reject$]: https://jsr.io/@nodef/extra-version/doc/~/reject$
+[rejectAt]: https://jsr.io/@nodef/extra-version/doc/~/rejectAt
+[flat]: https://jsr.io/@nodef/extra-version/doc/~/flat
+[flatMap]: https://jsr.io/@nodef/extra-version/doc/~/flatMap
+[exclusiveScan]: https://jsr.io/@nodef/extra-version/doc/~/exclusiveScan
+[exclusiveScan$]: https://jsr.io/@nodef/extra-version/doc/~/exclusiveScan$
+[inclusiveScan]: https://jsr.io/@nodef/extra-version/doc/~/inclusiveScan
+[inclusiveScan$]: https://jsr.io/@nodef/extra-version/doc/~/inclusiveScan$
+[adjacentCombine]: https://jsr.io/@nodef/extra-version/doc/~/adjacentCombine
+[adjacentCombine$]: https://jsr.io/@nodef/extra-version/doc/~/adjacentCombine$
+[intersperse]: https://jsr.io/@nodef/extra-version/doc/~/intersperse
+[interpolate]: https://jsr.io/@nodef/extra-version/doc/~/interpolate
+[intermix]: https://jsr.io/@nodef/extra-version/doc/~/intermix
+[interleave]: https://jsr.io/@nodef/extra-version/doc/~/interleave
+[zip]: https://jsr.io/@nodef/extra-version/doc/~/zip
+[fill]: https://jsr.io/@nodef/extra-version/doc/~/fill
+[fill$]: https://jsr.io/@nodef/extra-version/doc/~/fill$
+[push]: https://jsr.io/@nodef/extra-version/doc/~/push
+[push$]: https://jsr.io/@nodef/extra-version/doc/~/push$
+[pop]: https://jsr.io/@nodef/extra-version/doc/~/pop
+[pop$]: https://jsr.io/@nodef/extra-version/doc/~/pop$
+[shift]: https://jsr.io/@nodef/extra-version/doc/~/shift
+[shift$]: https://jsr.io/@nodef/extra-version/doc/~/shift$
+[unshift]: https://jsr.io/@nodef/extra-version/doc/~/unshift
+[unshift$]: https://jsr.io/@nodef/extra-version/doc/~/unshift$
+[copy]: https://jsr.io/@nodef/extra-version/doc/~/copy
+[copy$]: https://jsr.io/@nodef/extra-version/doc/~/copy$
+[copyWithin]: https://jsr.io/@nodef/extra-version/doc/~/copyWithin
+[copyWithin$]: https://jsr.io/@nodef/extra-version/doc/~/copyWithin$
+[moveWithin]: https://jsr.io/@nodef/extra-version/doc/~/moveWithin
+[moveWithin$]: https://jsr.io/@nodef/extra-version/doc/~/moveWithin$
+[splice]: https://jsr.io/@nodef/extra-version/doc/~/splice
+[splice$]: https://jsr.io/@nodef/extra-version/doc/~/splice$
+[count]: https://jsr.io/@nodef/extra-version/doc/~/count
+[countEach]: https://jsr.io/@nodef/extra-version/doc/~/countEach
+[partition]: https://jsr.io/@nodef/extra-version/doc/~/partition
+[partitionEach]: https://jsr.io/@nodef/extra-version/doc/~/partitionEach
+[split]: https://jsr.io/@nodef/extra-version/doc/~/split
+[splitAt]: https://jsr.io/@nodef/extra-version/doc/~/splitAt
+[cut]: https://jsr.io/@nodef/extra-version/doc/~/cut
+[cutRight]: https://jsr.io/@nodef/extra-version/doc/~/cutRight
+[cutAt]: https://jsr.io/@nodef/extra-version/doc/~/cutAt
+[cutAtRight]: https://jsr.io/@nodef/extra-version/doc/~/cutAtRight
+[group]: https://jsr.io/@nodef/extra-version/doc/~/group
+[chunk]: https://jsr.io/@nodef/extra-version/doc/~/chunk
+[concat]: https://jsr.io/@nodef/extra-version/doc/~/concat
+[concat$]: https://jsr.io/@nodef/extra-version/doc/~/concat$
+[join]: https://jsr.io/@nodef/extra-version/doc/~/join
+[cycle]: https://jsr.io/@nodef/extra-version/doc/~/cycle
+[repeat]: https://jsr.io/@nodef/extra-version/doc/~/repeat
+[reverse]: https://jsr.io/@nodef/extra-version/doc/~/reverse
+[reverse$]: https://jsr.io/@nodef/extra-version/doc/~/reverse$
+[rotate]: https://jsr.io/@nodef/extra-version/doc/~/rotate
+[rotate$]: https://jsr.io/@nodef/extra-version/doc/~/rotate$
+[isUnique]: https://jsr.io/@nodef/extra-version/doc/~/isUnique
+[isDisjoint]: https://jsr.io/@nodef/extra-version/doc/~/isDisjoint
+[unique]: https://jsr.io/@nodef/extra-version/doc/~/unique
+[union]: https://jsr.io/@nodef/extra-version/doc/~/union
+[union$]: https://jsr.io/@nodef/extra-version/doc/~/union$
+[intersection]: https://jsr.io/@nodef/extra-version/doc/~/intersection
+[difference]: https://jsr.io/@nodef/extra-version/doc/~/difference
+[symmetricDifference]: https://jsr.io/@nodef/extra-version/doc/~/symmetricDifference
+[cartesianProduct]: https://jsr.io/@nodef/extra-version/doc/~/cartesianProduct

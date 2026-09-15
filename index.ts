@@ -1,12 +1,3 @@
-import {mod} from "extra-math";
-import {
-  IDENTITY,
-  COMPARE,
-} from "extra-function";
-
-
-
-
 // #region TYPES
 // =============
 
@@ -53,7 +44,7 @@ export type CompareFunction<T> = (a: T, b: T) => number;
  * @param i index of value in array
  * @param x array containing the value
  */
-export type ProcessFunction<T> = (v: T, i: number, x: T[]) => void;
+export type ProcessFunction<T> = (v: T, i: number, x: T[] | null) => void;
 
 
 /**
@@ -63,7 +54,7 @@ export type ProcessFunction<T> = (v: T, i: number, x: T[]) => void;
  * @param x array containing the value
  * @returns selected?
  */
-export type TestFunction<T> = (v: T, i: number, x: T[]) => boolean;
+export type TestFunction<T> = (v: T, i: number, x: T[] | null) => boolean;
 
 
 /**
@@ -73,7 +64,7 @@ export type TestFunction<T> = (v: T, i: number, x: T[]) => boolean;
  * @param x array containing the value
  * @returns transformed value
  */
-export type MapFunction<T, U> = (v: T, i: number, x: T[]) => U;
+export type MapFunction<T, U> = (v: T, i: number, x: T[] | null) => U;
 
 
 /**
@@ -84,7 +75,7 @@ export type MapFunction<T, U> = (v: T, i: number, x: T[]) => U;
  * @param x array containing the value
  * @returns reduced value
  */
-export type ReduceFunction<T, U> = (acc: U, v: T, i: number, x: T[]) => U;
+export type ReduceFunction<T, U> = (acc: U, v: T, i: number, x: T[] | null) => U;
 
 
 /**
@@ -114,11 +105,29 @@ export type SwapFunction<T> = (x: T[], i: number, j: number) => T[];
 // #region HELPERS
 // ---------------
 
+/** Return the same (first) value. */
+function IDENTITY<T>(v: T): T {
+  return v;
+}
+
+
+/** Compare two values. */
+function COMPARE<T>(a: T, b: T): number {
+  return a<b? -1 : (a>b? 1 : 0);
+}
+
+
+/** Find the remainder of x/y with sign of y (floored division). */
+function mod(x: number, y: number): number {
+  return x - y * Math.floor(x/y);
+}
+
+
 /** Convert an iterable to set. */
 function toSet<T, U=T>(x: T[], fm: MapFunction<T, U> | null=null): Set<T|U> {
   if (!fm) return new Set(x);
-  var a = new Set<U>(), i = -1;
-  for (var v of x)
+  const a = new Set<U>(); let i = -1;
+  for (const v of x)
     a.add(fm(v, ++i, x));
   return a;
 }
@@ -138,8 +147,8 @@ function toSet<T, U=T>(x: T[], fm: MapFunction<T, U> | null=null): Set<T|U> {
  * @returns [v, v+dv, v+2dv, ...]
  */
 export function fromRange(v: number, V: number, dv: number=1): number[] {
-  var n = (V - v)/dv, a = [];
-  for (var i=0; i<n; ++i, v+=dv)
+  const n = (V - v)/dv, a = [];
+  for (let i=0; i<n; ++i, v+=dv)
     a.push(v);
   return a;
 }
@@ -151,9 +160,9 @@ export function fromRange(v: number, V: number, dv: number=1): number[] {
  * @param n number of values
  * @returns [fn(), fn(), ...]
  */
-export function fromInvocation<T>(fn: Function, n: number): T[] {
-  var a = [];
-  for (var i=0; i<n; ++i)
+export function fromInvocation<T>(fn: () => T, n: number): T[] {
+  const a = [];
+  for (let i=0; i<n; ++i)
     a.push(fn());
   return a;
 }
@@ -168,9 +177,9 @@ export {fromInvocation as fromCall};
  * @returns [v, fm(v), fm(fm(v)), ...]
  */
 export function fromApplication<T>(fm: MapFunction<T, T>, v: T, n: number): T[] {
-  var a = [];
+  const a = [];
   if (n!==0) a.push(v);
-  for (var i=1; i!==n; ++i)
+  for (let i=1; i!==n; ++i)
     a.push(v = fm(v, i, null));
   return a;
 }
@@ -237,7 +246,7 @@ export function deepClone<T>(x: T[]): T[] {
  * @param v a value
  * @returns v is an array?
  */
-export function is(v: any): v is any[] {
+export function is(v: unknown): v is unknown[] {
   return Array.isArray(v);
 }
 
@@ -315,7 +324,7 @@ export function ientries<T>(x: T[]): IEntries<T> {
  * @returns i' | x[i'] = x[i]; i' ∈ [0, |x|]
  */
 export function index<T>(x: T[], i: number): number {
-  var X = x.length;
+  const X = x.length;
   return i>=0? Math.min(i, X) : Math.max(X+i, 0);
 }
 
@@ -328,9 +337,9 @@ export function index<T>(x: T[], i: number): number {
  * @returns [i', I'] | i' ≤ I'; i', I' ∈ [0, |x|]
  */
 export function indexRange<T>(x: T[], i: number=0, I: number=x.length): [number, number] {
-  var X = x.length;
-  var i = i>=0? Math.min(i, X) : Math.max(X+i, 0);
-  var I = I>=0? Math.min(I, X) : Math.max(X+I, 0);
+  const X = x.length;
+  i = i>=0? Math.min(i, X) : Math.max(X+i, 0);
+  I = I>=0? Math.min(I, X) : Math.max(X+I, 0);
   return [i, Math.max(i, I)];
 }
 // #endregion
@@ -359,7 +368,7 @@ export function isEmpty<T>(x: T[]): boolean {
  * @returns |x[i..I]|
  */
 export function length<T>(x: T[], i: number=0, I: number=x.length): number {
-  var [i, I] = indexRange(x, i, I);
+  [i, I] = indexRange(x, i, I);
   return I-i;
 }
 export {length as size};
@@ -372,8 +381,8 @@ export {length as size};
  * @param vd default value
  * @returns resized x
  */
-export function resize$<T>(x: T[], n: number, vd: T) {
-  var X = x.length; x.length = n;
+export function resize$<T>(x: T[], n: number, vd: T): T[] {
+  const X = x.length; x.length = n;
   if (n>X) x.fill(vd, X);
   return x;
 }
@@ -384,7 +393,7 @@ export function resize$<T>(x: T[], n: number, vd: T) {
  * @param x an array (updated!)
  * @returns cleared x
  */
-export function clear$<T>(x: T[]) {
+export function clear$<T>(x: T[]): T[] {
   x.length = 0;
   return x;
 }
@@ -429,10 +438,11 @@ export function getAll<T>(x: T[], is: number[]): T[] {
  * @param p path
  * @returns x[i₀][i₁][...] | [i₀, i₁, ...] = p
  */
-export function getPath(x: any[], p: number[]): any {
-  for (var i of p)
-    x = is(x)? get(x, i) : undefined;
-  return x;
+export function getPath(x: unknown[], p: number[]): unknown {
+  let a: unknown | undefined = x;
+  for (const i of p)
+    a = is(a)? get(a, i) : undefined;
+  return a;
 }
 
 
@@ -442,10 +452,11 @@ export function getPath(x: any[], p: number[]): any {
  * @param p path
  * @returns x[i₀][i₁][...] exists? | [i₀, i₁, ...] = p
  */
-export function hasPath(x: any[], p: number[]): boolean {
-  for (var i of p) {
-    if (!is(x)) return false;
-    x = get(x, i);
+export function hasPath(x: unknown[], p: number[]): boolean {
+  let a: unknown | undefined = x;
+  for (const i of p) {
+    if (!is(a)) return false;
+    a = get(a, i);
   }
   return true;
 }
@@ -488,9 +499,9 @@ export function set$<T>(x: T[], i: number, v: T): T[] {
  * @param v value
  * @returns x | x[i₀][i₁][...] = v; [i₀, i₁, ...] = p
  */
-export function setPath$(x: any[], p: number[], v: any): any[] {
-  var y = getPath(x, p.slice(0, -1));
-  if (is(y)) set$(y, last(p), v);
+export function setPath$(x: unknown[], p: number[], v: unknown): unknown[] {
+  const y = getPath(x, p.slice(0, -1));
+  if (is(y)) set$(y, last(p) as number, v);
   return x;
 }
 
@@ -515,8 +526,8 @@ export function swap<T>(x: T[], i: number, j: number): T[] {
  * @returns x | x[i] ⇔ x[j]
  */
 export function swap$<T>(x: T[], i: number, j: number): T[] {
-  var i = index(x, i), j = index(x, j);
-  var t = x[i]; x[i] = x[j]; x[j] = t;
+  i = index(x, i); j = index(x, j);
+  const t = x[i]; x[i] = x[j]; x[j] = t;
   return x;
 }
 
@@ -529,7 +540,7 @@ export function swap$<T>(x: T[], i: number, j: number): T[] {
  * @returns x | x[i] ⇔ x[j]
  */
 function swapRaw$<T>(x: T[], i: number, j: number): T[] {
-  var t = x[i]; x[i] = x[j]; x[j] = t;
+  const t = x[i]; x[i] = x[j]; x[j] = t;
   return x;
 }
 // NOTE: May also be called swapUnchecked$().
@@ -545,8 +556,8 @@ function swapRaw$<T>(x: T[], i: number, j: number): T[] {
  * @returns x' | x' = x; x'[i..I] = x[j..J]; x'[j..J] = x[i..I]
  */
 export function swapRanges<T>(x: T[], i: number, I: number, j: number, J: number): T[] {
-  var [i, I] = indexRange(x, i, I);
-  var [j, J] = indexRange(x, j, J);
+  [i, I] = indexRange(x, i, I);
+  [j, J] = indexRange(x, j, J);
   if (j<i) [i, I, j, J] = [j, J, i, I];
   if (j<I) return x.slice();  // Skip if ranges overlap!
   return x.slice(0, i).concat(x.slice(j, J), x.slice(i, j), x.slice(I));
@@ -563,11 +574,11 @@ export function swapRanges<T>(x: T[], i: number, I: number, j: number, J: number
  * @returns x | x[i..I] ⇔ x[j..J]
  */
 export function swapRanges$<T>(x: T[], i: number, I: number, j: number, J: number): T[] {
-  var [i, I] = indexRange(x, i, I);
-  var [j, J] = indexRange(x, j, J);
+  [i, I] = indexRange(x, i, I);
+  [j, J] = indexRange(x, j, J);
   if (j<i) [i, I, j, J] = [j, J, i, I];
   if (j<I) return x;  // Skip if ranges overlap!
-  var t = x.slice(i, I);
+  const t = x.slice(i, I);
   x.splice(i, I-i, ...x.slice(j, J));
   x.splice(j, J-j, ...t);
   return x;
@@ -582,7 +593,7 @@ export function swapRanges$<T>(x: T[], i: number, I: number, j: number, J: numbe
  * @returns x[0..i] ⧺ x[i+1..]
  */
 export function remove<T>(x: T[], i: number): T[] {
-  var i = index(x, i);
+  i = index(x, i);
   return x.slice(0, i).concat(x.slice(i+1));
 }
 
@@ -605,9 +616,9 @@ export function remove$<T>(x: T[], i: number): T[] {
  * @param p path
  * @returns x \\: [i₀][i₁][...] | [i₀, i₁, ...] = p
  */
-export function removePath$(x: any[], p: number[]): any[] {
-  var y = getPath(x, p.slice(0, -1));
-  if (is(y)) y.splice(last(p), 1);
+export function removePath$(x: unknown[], p: number[]): unknown[] {
+  const y = getPath(x, p.slice(0, -1));
+  if (is(y)) y.splice(last(p) as number, 1);
   return x;
 }
 // #endregion
@@ -650,13 +661,13 @@ export function hasUnsortedValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null
  * @returns index of first unsorted value, -1 if sorted
  */
 export function searchUnsortedValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X  = x.length;
   if (X<=1) return -1;
-  var w0 = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
+  let w0 = fm(x[0], 0, x);
+  for (let i=1; i<X; ++i) {
+    const w = fm(x[i], i, x);
     if (fc(w0, w)>0) return i;
     w0 = w;
   }
@@ -687,11 +698,11 @@ export {sort as toSorted};
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
 export function sort$<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  var fc = fc || COMPARE;
+  fc = fc || COMPARE;
   if (!fm && !fs) return x.sort(fc);
-  var X  = x.length;
-  var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
+  const X  = x.length;
+  fm = fm || IDENTITY;
+  fs = fs || swapRaw$;
   return rangedPartialIntroSort$(x, 0, X, X, fc, fm, fs);
 }
 
@@ -722,10 +733,10 @@ export function rangedSort<T, U=T>(x: T[], i: number, I: number, fc: CompareFunc
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
 export function rangedSort$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
-  var [i, I] = indexRange(x, i, I);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  fs = fs || swapRaw$;
+  [i, I] = indexRange(x, i, I);
   return rangedPartialIntroSort$(x, i, I, I-i, fc, fm, fs);
 }
 
@@ -786,10 +797,10 @@ export function rangedPartialSort<T, U=T>(x: T[], i: number, I: number, n: numbe
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
 export function rangedPartialSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null, fs: SwapFunction<T> | null=null): T[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var fs = fs || swapRaw$;
-  var [i, I] = indexRange(x, i, I);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  fs = fs || swapRaw$;
+  [i, I] = indexRange(x, i, I);
   return rangedPartialIntroSort$(x, i, I, n, fc, fm, fs);
 }
 
@@ -806,8 +817,8 @@ export function rangedPartialSort$<T, U=T>(x: T[], i: number, I: number, n: numb
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
 function rangedPartialIntroSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  var d = Math.floor(Math.log2(I-i)*2);  // Maximum depth of recursion
-  var s = 16;                            // When to switch to insertion sort
+  const d = Math.floor(Math.log2(I-i)*2);  // Maximum depth of recursion
+  const s = 16;                            // When to switch to insertion sort
   return rangedPartialIntroSortDo$(x, i, I, d, s, n, fc, fm, fs);
 }
 
@@ -817,8 +828,8 @@ function rangedPartialIntroSortDo$<T, U=T>(x: T[], i: number, I: number, d: numb
   if (n<=0 || I-i<=1) return x;                     // Nothing to sort
   if (I-i<=s) return rangedPartialInsertionSort$(x, i, I, n, fc, fm, fs);  // Insertion sort
   if (d<=0)   return rangedPartialHeapSort$(x, i, I, n, fc, fm, fs);       // Heap sort
-  var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
-  var p = rangedQuickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
+  let p = i + Math.floor((I-i)*Math.random());            // Choose pivot
+  p = rangedQuickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
   rangedPartialIntroSortDo$(x, i,   p, d, s, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
   rangedPartialIntroSortDo$(x, p+1, I, d, s, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
   return x;
@@ -836,12 +847,12 @@ function rangedPartialIntroSortDo$<T, U=T>(x: T[], i: number, I: number, d: numb
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-function rangedPartialQuickSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+function _rangedPartialQuickSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   if (n<=0 || I-i<=1) return x;                         // Nothing to sort
-  var p = i + Math.floor((I-i)*Math.random());          // Choose pivot
-  var p = rangedQuickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
-  rangedPartialQuickSort$(x, i,   p, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
-  rangedPartialQuickSort$(x, p+1, I, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
+  let p = i + Math.floor((I-i)*Math.random());            // Choose pivot
+  p = rangedQuickSortPartition$(x, i, I, p, fc, fm, fs);  // Partition array
+  _rangedPartialQuickSort$(x, i,   p, Math.min(p-i, n),   fc, fm, fs);  // Sort left part
+  _rangedPartialQuickSort$(x, p+1, I, Math.min(I-p-1, n), fc, fm, fs);  // Sort right part
   return x;
 }
 
@@ -849,11 +860,11 @@ function rangedPartialQuickSort$<T, U=T>(x: T[], i: number, I: number, n: number
 // TODO: Make this a generic function.
 // Partition the array into two parts, such that values in the first part are less than values in the second part.
 function rangedQuickSortPartition$<T, U=T>(x: T[], i: number, I: number, p: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): number {
-  var wp = fm(x[p], p, x);  // Pivot value
-  var j  = i-1;   // Last index of values ≤ pivot
+  const wp = fm(x[p], p, x);  // Pivot value
+  let j  = i-1;   // Last index of values ≤ pivot
   fs(x, p, I-1);  // Move pivot to end
-  for (var k=i; k<I-1; ++k) {
-    var wk = fm(x[k], k, x);
+  for (let k=i; k<I-1; ++k) {
+    const wk = fm(x[k], k, x);
     if (fc(wk, wp) > 0) continue;
     fs(x, ++j, k);  // Move value ≤ pivot to left
   }
@@ -875,7 +886,7 @@ function rangedQuickSortPartition$<T, U=T>(x: T[], i: number, I: number, p: numb
  */
 function rangedPartialHeapSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
   rangedBuildReverseMinHeap$(x, i, I, fc, fm, fs);
-  for (var r=I-1; n>0 && i<I; ++i, --n) {
+  for (const r=I-1; n>0 && i<I; ++i, --n) {
     fs(x, i, r);  // Move root to the beginning
     rangedReverseMinHeapify$(x, i+1, I, r, fc, fm, fs);  // Rebuild heap
   }
@@ -885,7 +896,7 @@ function rangedPartialHeapSort$<T, U=T>(x: T[], i: number, I: number, n: number,
 
 // Build a reverse min-heap from a range of values, where root node is the smallest and placed at the end.
 function rangedBuildReverseMinHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  for (var r=I-Math.floor((I-i)/2); r<I; ++r)  // Reverse of r = X/2-1 .. 0
+  for (let r=I-Math.floor((I-i)/2); r<I; ++r)  // Reverse of r = X/2-1 .. 0
     rangedReverseMinHeapify$(x, i, I, r, fc, fm, fs);
 }
 
@@ -901,9 +912,9 @@ function rangedBuildReverseMinHeap$<T, U=T>(x: T[], i: number, I: number, fc: Co
  * @param fs swap function (x, i, j)
  */
 function rangedReverseMinHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  var s  = r;         // Index of smallest value
-  var lt = 2*r - I;   // Left child,  reverse of lt = 2*r+1
-  var rt = lt  - 1;   // Right child, reverse of rt = 2*r+2
+  let s  = r;         // Index of smallest value
+  const lt = 2*r - I;   // Left child,  reverse of lt = 2*r+1
+  const rt = lt  - 1;   // Right child, reverse of rt = 2*r+2
   if (lt>=i && fc(fm(x[lt], lt, x), fm(x[s], s, x)) < 0) s = lt;  // Left child is smaller?
   if (rt>=i && fc(fm(x[rt], rt, x), fm(x[s], s, x)) < 0) s = rt;  // Right child is smaller?
   if (s !== r) {     // Smallest is not root?
@@ -915,7 +926,7 @@ function rangedReverseMinHeapify$<T, U=T>(x: T[], i: number, I: number, r: numbe
 
 // Build a max-heap from a range of values, where root node is the smallest and placed at the beginning.
 function rangedBuildMaxHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  for (var r=i+Math.floor((I-i)/2)-1; r>=i; --r)
+  for (let r=i+Math.floor((I-i)/2)-1; r>=i; --r)
     rangedMaxHeapify$(x, i, I, r, fc, fm, fs);
 }
 
@@ -931,9 +942,9 @@ function rangedBuildMaxHeap$<T, U=T>(x: T[], i: number, I: number, fc: CompareFu
  * @param fs swap function (x, i, j)
  */
 function rangedMaxHeapify$<T, U=T>(x: T[], i: number, I: number, r: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): void {
-  var s  = r;         // Index of largest value
-  var lt = 2*r - i + 1;  // Left child,  like lt = 2*r+1
-  var rt = lt  + 1;      // Right child, like rt = 2*r+2
+  let s  = r;         // Index of largest value
+  const lt = 2*r - i + 1;  // Left child,  like lt = 2*r+1
+  const rt = lt  + 1;      // Right child, like rt = 2*r+2
   if (lt<I && fc(fm(x[lt], lt, x), fm(x[s], s, x)) > 0) s = lt;  // Left child  is larger?
   if (rt<I && fc(fm(x[rt], rt, x), fm(x[s], s, x)) > 0) s = rt;  // Right child is larger?
   if (s !== r) {     // Largest is not root?
@@ -962,11 +973,11 @@ function rangedPartialInsertionSort$<T, U=T>(x: T[], i: number, I: number, n: nu
 
 
 // Sort a range of values in order with swap-enabled version of insertion sort.
-function rangedPartialInsertionSortSwap$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  for (var j=i+1; j<I; ++j) {
-    var key  = x[j];
-    var wkey = fm(key, j, x);
-    for (var k=j-1; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
+function rangedPartialInsertionSortSwap$<T, U=T>(x: T[], i: number, I: number, _n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  for (let j=i+1; j<I; ++j) {
+    const key  = x[j];
+    const wkey = fm(key, j, x);
+    for (let k=j-1; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
       fs(x, k, k+1);
   }
   return x;
@@ -974,11 +985,12 @@ function rangedPartialInsertionSortSwap$<T, U=T>(x: T[], i: number, I: number, n
 
 
 // Sort a range of values in order with swapless version of insertion sort.
-function rangedPartialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  for (var j=i+1; j<I; ++j) {
-    var key  = x[j];
-    var wkey = fm(key, j, x);
-    for (var k=j-1; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
+function rangedPartialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: number, _n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, _fs: SwapFunction<T>): T[] {
+  for (let j=i+1; j<I; ++j) {
+    const key  = x[j];
+    const wkey = fm(key, j, x);
+    let k = j-1;
+    for (; k>=i && fc(fm(x[k], k, x), wkey)>0; --k)
       x[k+1] = x[k];
     x[k+1] = key;
   }
@@ -997,12 +1009,12 @@ function rangedPartialInsertionSortSwapless$<T, U=T>(x: T[], i: number, I: numbe
  * @param fs swap function (x, i, j)
  * @returns x | x[i] ≤ x[j] ∀ i ≤ j
  */
-function rangedPartialSelectionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
-  for (var j=i; n>0 && j<I; ++j, --n) {
-    var l  = j;
-    var wl = fm(x[l], l, x);
-    for (var k=j+1; k<I; ++k) {
-      var wk = fm(x[k], k, x);
+function _rangedPartialSelectionSort$<T, U=T>(x: T[], i: number, I: number, n: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>, fs: SwapFunction<T>): T[] {
+  for (let j=i; n>0 && j<I; ++j, --n) {
+    let l  = j;
+    let wl = fm(x[l], l, x);
+    for (let k=j+1; k<I; ++k) {
+      const wk = fm(x[k], k, x);
       if (fc(wl, wk) > 0) { l = k; wl = wk; }
     }
     fs(x, j, l);
@@ -1025,7 +1037,7 @@ function rangedPartialSelectionSort$<T, U=T>(x: T[], i: number, I: number, n: nu
  * @returns v | v ≤ vᵢ; vᵢ ∈ x
  */
 export function minimum<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T {
-  var i = searchMinimumValue(x, fc, fm);
+  const i = searchMinimumValue(x, fc, fm);
   return x[i];
 }
 export {minimum as min};
@@ -1039,7 +1051,7 @@ export {minimum as min};
  * @returns [min_index, min_value]
  */
 export function minimumEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T] {
-  var i = searchMinimumValue(x, fc, fm);
+  const i = searchMinimumValue(x, fc, fm);
   return [i, x[i]];
 }
 export {minimumEntry as minEntry};
@@ -1053,7 +1065,7 @@ export {minimumEntry as minEntry};
  * @returns v | v ≥ vᵢ; vᵢ ∈ x
  */
 export function maximum<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T {
-  var i = searchMaximumValue(x, fc, fm);
+  const i = searchMaximumValue(x, fc, fm);
   return x[i];
 }
 export {maximum as max};
@@ -1067,7 +1079,7 @@ export {maximum as max};
  * @returns [max_index, max_value]
  */
 export function maximumEntry<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T] {
-  var i = searchMaximumValue(x, fc, fm);
+  const i = searchMaximumValue(x, fc, fm);
   return [i, x[i]];
 }
 export {maximumEntry as maxEntry};
@@ -1080,8 +1092,8 @@ export {maximumEntry as maxEntry};
  * @param fm map function (v, i, x)
  * @returns [min_value, max_value]
  */
-export function range<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [T, T] {
-  var [a, b] = rangeEntries(x, fc, fm);
+export function range<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [T | undefined, T | undefined] {
+  const [a, b] = rangeEntries(x, fc, fm);
   return [a[1], b[1]];
 }
 
@@ -1093,16 +1105,16 @@ export function range<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
  * @param fm map function (v, i, x)
  * @returns [min_entry, max_entry]
  */
-export function rangeEntries<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [[number, T], [number, T]] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
+export function rangeEntries<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [[number, T | undefined], [number, T | undefined]] {
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X  = x.length;
   if (X===0) return [[-1, undefined], [-1, undefined]];
-  var v  = x[0], w = fm(v, 0, x);
-  var mi = 0, mv = v, mw = w;
-  var ni = 0, nv = v, nw = w;
-  for (var i=1; i<X; ++i) {
-    var v = x[i], w = fm(v, i, x);
+  let v  = x[0], w = fm(v, 0, x);
+  let mi = 0, mv = v, mw = w;
+  let ni = 0, nv = v, nw = w;
+  for (let i=1; i<X; ++i) {
+    v = x[i]; w = fm(v, i, x);
     if (fc(w, mw)<0) { mi = i; mv = v; mw = w; }
     if (fc(w, nw)>0) { ni = i; nv = v; nw = w; }
   }
@@ -1118,8 +1130,8 @@ export function rangeEntries<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=nul
  * @param fm map function (v, i, x)
  * @returns n smallest values in ascending order
  */
-export function minimums<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
-  var is = searchMinimumValues(x, n, fc, fm);
+export function minimums<T, U=T>(x: T[], n: number, fc: CompareFunction<number|T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
+  const is = searchMinimumValues(x, n, fc, fm);
   return is.map(i => x[i]);
 }
 
@@ -1132,8 +1144,8 @@ export function minimums<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | n
  * @param fm map function (v, i, x)
  * @returns n smallest entries in ascending order
  */
-export function minimumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T][] {
-  var is = searchMinimumValues(x, n, fc, fm);
+export function minimumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<number|T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T][] {
+  const is = searchMinimumValues(x, n, fc, fm);
   return is.map(i => [i, x[i]]);
 }
 
@@ -1146,8 +1158,8 @@ export function minimumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<T|
  * @param fm map function (v, i, x)
  * @returns n largest values in descending order
  */
-export function maximums<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
-  var is = searchMaximumValues(x, n, fc, fm);
+export function maximums<T, U=T>(x: T[], n: number, fc: CompareFunction<number|T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
+  const is = searchMaximumValues(x, n, fc, fm);
   return is.map(i => x[i]);
 }
 
@@ -1160,8 +1172,8 @@ export function maximums<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | n
  * @param fm map function (v, i, x)
  * @returns n largest entries in descending order
  */
-export function maximumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T][] {
-  var is = searchMaximumValues(x, n, fc, fm);
+export function maximumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<number|T|U> | null=null, fm: MapFunction<T, T|U> | null=null): [number, T][] {
+  const is = searchMaximumValues(x, n, fc, fm);
   return is.map(i => [i, x[i]]);
 }
 
@@ -1174,13 +1186,13 @@ export function maximumEntries<T, U=T>(x: T[], n: number, fc: CompareFunction<T|
  * @returns first index of minimum value, -1 if empty
  */
 export function searchMinimumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X  = x.length;
   if (X===0) return -1;
-  var mi = 0, mw = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
+  let mi = 0, mw = fm(x[0], 0, x);
+  for (let i=1; i<X; ++i) {
+    const w = fm(x[i], i, x);
     if (fc(w, mw)<0) { mi = i; mw = w; }
   }
   return mi;
@@ -1195,13 +1207,13 @@ export function searchMinimumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | nu
  * @returns first index of maximum value, -1 if empty
  */
 export function searchMaximumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X  = x.length;
   if (X===0) return -1;
-  var ni = 0, nw = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
+  let ni = 0, nw = fm(x[0], 0, x);
+  for (let i=1; i<X; ++i) {
+    const w = fm(x[i], i, x);
     if (fc(w, nw)>0) { ni = i; nw = w; }
   }
   return ni;
@@ -1216,22 +1228,22 @@ export function searchMaximumValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | nu
  * @param fm map function (v, i, x)
  * @returns indices of minimum values in ascending order
  */
-export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
+export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<number|T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X  = x.length;
   // Create a max heap of indices.
-  var IH = Math.min(n, X);
-  var ih = fromRange(0, IH);
+  const IH = Math.min(n, X);
+  const ih = fromRange(0, IH);
   rangedBuildMaxHeap$(ih, 0, IH, fc, i => fm(x[i], i, x), swapRaw$);
-  var wr = fm(x[ih[0]], ih[0], x);
+  let wr = fm(x[ih[0]], ih[0], x);
   // Search for minimum values, and update heap.
-  for (var i=n; i<X; ++i) {
-    var w = fm(x[i], i, x);
+  for (let i=n; i<X; ++i) {
+    const w = fm(x[i], i, x);
     if (fc(w, wr) >= 0) continue;
     ih[0] = i;
     rangedMaxHeapify$(ih, 0, IH, 0, fc, i => fm(x[i], i, x), swapRaw$);
-    var wr = fm(x[ih[0]], ih[0], x);
+    wr = fm(x[ih[0]], ih[0], x);
   }
   // Sort max heap in ascending order.
   ih.sort((i, j) => fc(fm(x[i], i, x), fm(x[j], j, x)));
@@ -1247,9 +1259,9 @@ export function searchMinimumValues<T, U=T>(x: T[], n: number, fc: CompareFuncti
  * @param fm map function (v, i, x)
  * @returns indices of maximum values in descending order
  */
-export function searchMaximumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fd = (a: T|U, b: T|U) => -fc(a, b);
+export function searchMaximumValues<T, U=T>(x: T[], n: number, fc: CompareFunction<number|T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
+  fc = fc || COMPARE;
+  const fd = (a: number|T|U, b: number|T|U) => -fc(a, b);
   return searchMinimumValues(x, n, fd, fm);
 }
 // #endregion
@@ -1269,7 +1281,7 @@ export function searchMaximumValues<T, U=T>(x: T[], n: number, fc: CompareFuncti
  * @returns x = y?
  */
 export function isEqual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var X = x.length, Y = y.length;
+  const X = x.length, Y = y.length;
   return X===Y && compare(x, y, fc, fm)===0;
 }
 
@@ -1283,14 +1295,14 @@ export function isEqual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
  * @returns x<y: -ve, x=y: 0, x>y: +ve
  */
 export function compare<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  var Y  = y.length;
-  for (var i=0, I=Math.min(X, Y); i<I; ++i) {
-    var wx = fm(x[i], i, x);
-    var wy = fm(y[i], i, y);
-    var c  = fc(wx, wy);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X  = x.length;
+  const Y  = y.length;
+  for (let i=0, I=Math.min(X, Y); i<I; ++i) {
+    const wx = fm(x[i], i, x);
+    const wy = fm(y[i], i, y);
+    const c  = fc(wx, wy);
     if (c!==0) return c;
   }
   return Math.sign(X-Y);
@@ -1309,7 +1321,7 @@ export function compare<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
  * @param vd default value
  * @returns x[0] || vd
  */
-export function head<T>(x: T[], vd?: T): T {
+export function head<T>(x: T[], vd?: T): T | undefined {
   return x.length>0? x[0] : vd;
 }
 export {head as front};
@@ -1342,7 +1354,7 @@ export function init<T>(x: T[]): T[] {
  * @param vd default value
  * @returns x[|x|-1] || vd
  */
-export function last<T>(x: T[], vd?: T): T {
+export function last<T>(x: T[], vd?: T): T | undefined {
   return x.length>0? x[x.length-1] : vd;
 }
 export {last as back};
@@ -1356,8 +1368,8 @@ export {last as back};
  * @returns x[i..i+n]
  */
 export function middle<T>(x: T[], i: number, n: number=1): T[] {
-  var i = index(x, i);
-  var n = Math.max(n, 0);
+  i = index(x, i);
+  n = Math.max(n, 0);
   return x.slice(i, i+n);
 }
 
@@ -1428,11 +1440,11 @@ export function hasValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=n
  * @returns first index of value, -1 if not found
  */
 export function searchValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var w  = fm(v, 0, null), i = -1;
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const w  = fm(v, 0, null); let i = -1;
+  for (const vx of x) {
+    const wx = fm(vx, ++i, x);
     if (fc(wx, w)===0) return i;
   }
   return -1;
@@ -1448,11 +1460,11 @@ export function searchValue<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | nul
  * @returns last index of value, -1 if not found
  */
 export function searchValueRight<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var w = fm(v, 0, null);
-  for (var i=x.length-1; i>=0; --i) {
-    var wx = fm(x[i], i, x);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const w = fm(v, 0, null);
+  for (let i=x.length-1; i>=0; --i) {
+    const wx = fm(x[i], i, x);
     if (fc(wx, w)===0) return i;
   }
   return -1;
@@ -1468,12 +1480,12 @@ export function searchValueRight<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> 
  * @returns indices of value
  */
 export function searchValueAll<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var w = fm(v, 0, null);
-  var i = -1, a = [];
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const w = fm(v, 0, null);
+  let i = -1; const a = [];
+  for (const vx of x) {
+    const wx = fm(vx, ++i, x);
     if (fc(wx, w)===0) a.push(i);
   }
   return a;
@@ -1488,13 +1500,13 @@ export function searchValueAll<T, U=T>(x: T[], v: T, fc: CompareFunction<T|U> | 
  * @returns index of first adjacent duplicate value, -1 if none
  */
 export function searchAdjacentDuplicateValue<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X  = x.length;
   if (X<=1) return -1;
-  var w0 = fm(x[0], 0, x);
-  for (var i=1; i<X; ++i) {
-    var w = fm(x[i], i, x);
+  let w0 = fm(x[0], 0, x);
+  for (let i=1; i<X; ++i) {
+    const w = fm(x[i], i, x);
     if (fc(w0, w)===0) return i;
     w0 = w;
   }
@@ -1512,13 +1524,14 @@ export {searchAdjacentDuplicateValue as searchAdjacentDuplicate};
  * @returns first index where x[i] ≠ y[i], or -1
  */
 export function searchMismatchedValue<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X  = x.length;
-  var Y  = y.length;
-  for (var i=0, I=Math.min(X, Y); i<I; ++i) {
-    var wx = fm(x[i], i, x);
-    var wy = fm(y[i], i, y);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X = x.length;
+  const Y = y.length;
+  const I = Math.min(X, Y);
+  for (let i=0; i<I; ++i) {
+    const wx = fm(x[i], i, x);
+    const wy = fm(y[i], i, y);
     if (fc(wx, wy)!==0) return i;
   }
   return X===Y? -1 : I;
@@ -1541,7 +1554,7 @@ export {searchMismatchedValue as searchMismatch};
  * @returns x[0..|y|] = y?
  */
 export function hasPrefix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var Y = y.length;
+  const Y = y.length;
   return Y===0 || compare(x.slice(0, Y), y, fc, fm)===0;
 }
 export {hasPrefix as startsWith};
@@ -1556,7 +1569,7 @@ export {hasPrefix as startsWith};
  * @returns x[|x|-|y|..] = y?
  */
 export function hasSuffix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var Y = y.length;
+  const Y = y.length;
   return Y===0 || compare(x.slice(-Y), y, fc, fm)===0;
 }
 export {hasSuffix as endsWith};
@@ -1597,9 +1610,10 @@ export function hasSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> 
  * @returns x contains a shuffled version of y?
  */
 export function hasPermutation<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var x1 = fm? x.map(fm) : x.slice();
-  var y1 = fm? y.map(fm) : y.slice();
-  return hasSubsequence(x1.sort(), y1.sort(), fc, fm);
+  const x1 = fm? x.map(fm) : x.slice();
+  const y1 = fm? y.map(fm) : y.slice();
+  return hasSubsequence<T|U>(x1.sort(), y1.sort(), fc);
+  // return hasSubsequence<T|U>(x1.sort(), y1.sort(), fc, fm);
 }
 
 
@@ -1621,10 +1635,10 @@ export function prefixes<T>(x: T[], n: number=-1): T[][] {
  * @returns [], x[..1], x[..2], ... if n<0; x[..n] otherwise
  */
 export function* iprefixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
-  var X = x.length;
+  const X = x.length;
   if (n>X)  return;
   if (n>=0) { yield x.slice(0, n); return; }
-  for (var i=0; i<=X; ++i)
+  for (let i=0; i<=X; ++i)
     yield x.slice(0, i);
 }
 
@@ -1647,10 +1661,10 @@ export function suffixes<T>(x: T[], n: number=-1): T[][] {
  * @returns x[0..], x[1..], x[2..], ... if n<0; x[-n..] otherwise
  */
 export function* isuffixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
-  var X = x.length;
+  const X = x.length;
   if (n>X)  return;
   if (n>=0) { yield x.slice(x.length - n); return; }
-  for (var i=0; i<=X; ++i)
+  for (let i=0; i<=X; ++i)
     yield x.slice(i);
 }
 
@@ -1678,17 +1692,17 @@ export function iinfixes<T>(x: T[], n: number=-1): IterableIterator<T[]> {
 }
 
 function* infixesFixed<T>(x: T[], n: number): IterableIterator<T[]> {
-  var X = x.length;
+  const X = x.length;
   if (n>X)   return;
   if (n===0) { yield []; return; }
-  for (var i=0, I=X-n+1; i<I; ++i)
+  for (let i=0, I=X-n+1; i<I; ++i)
     yield x.slice(i, i+n);
 }
 
 function* infixesAll<T>(x: T[]): IterableIterator<T[]> {
-  var X = x.length; yield [];
-  for (var i=0; i<X; ++i) {
-    for (var j=i+1; j<=X; ++j)
+  const X = x.length; yield [];
+  for (let i=0; i<X; ++i) {
+    for (let j=i+1; j<=X; ++j)
       yield x.slice(i, j);
   }
 }
@@ -1712,13 +1726,13 @@ export function subsequences<T>(x: T[], n: number=-1): T[][] {
  * @returns elements selected by bit from 0..2^|x| if n<0; only of length n otherwise
  */
 export function* isubsequences<T>(x: T[], n: number=-1): IterableIterator<T[]> {
-  var X = x.length;
+  const X = x.length;
   if (n>X) return;
   if (n===X)          { yield x;  return; }
   if (n===0 || X===0) { yield []; return; }
-  var y = x.slice(0, -1);
+  const y = x.slice(0, -1);
   yield* isubsequences(y, n);
-  for (var s of isubsequences(y, n-1)) {
+  for (const s of isubsequences(y, n-1)) {
     s.push(x[X-1]);
     yield s;
   }
@@ -1743,20 +1757,20 @@ export function permutations<T>(x: T[], n: number=-1): T[][] {
  * @returns [], arrangements of length 1, of length 2, ... if n<0; only of length n otherwise
  */
 export function* ipermutations<T>(x: T[], n: number=-1): IterableIterator<T[]> {
-  var X = x.length;
+  const X = x.length;
   if (n>X) return;
-  var i = n<0? 0 : n;
-  var I = n<0? X : n
+  let   i = n<0? 0 : n;
+  const I = n<0? X : n
   for (; i<=I; ++i)
     yield* ipermutationsFixed(x, i);
 }
 
 function* ipermutationsFixed<T>(x: T[], n: number): IterableIterator<T[]> {
-  var X = x.length;
+  const X = x.length;
   if (X===0 || n===0) { yield []; return; }
-  for (var i=0; i<X; ++i) {
-    var y = splice(x, i, 1);
-    for (var p of ipermutationsFixed(y, n-1))
+  for (let i=0; i<X; ++i) {
+    const y = splice(x, i, 1);
+    for (const p of ipermutationsFixed(y, n-1))
       yield [x[i], ...p];
   }
 }
@@ -1771,10 +1785,10 @@ function* ipermutationsFixed<T>(x: T[], n: number): IterableIterator<T[]> {
  * @returns first i | x[i..i+|y|] = y else -1
  */
 export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X = x.length, Y = y.length;
-  for (var i=0; i<=X-Y; ++i)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X = x.length, Y = y.length;
+  for (let i=0; i<=X-Y; ++i)
     if (isInfixAt(x, y, i, fc, fm)) return i;
   return -1;
 }
@@ -1789,10 +1803,10 @@ export function searchInfix<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | n
  * @returns first i | x[i..i+|y|] = y else -1
  */
 export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X = x.length, Y = y.length;
-  for (var i=X-Y; i>=0; --i)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X = x.length, Y = y.length;
+  for (let i=X-Y; i>=0; --i)
     if (isInfixAt(x, y, i, fc, fm)) return i;
   return -1;
 }
@@ -1807,20 +1821,20 @@ export function searchInfixRight<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U
  * @returns i₀, i₁, ... | x[j..j+|y|] = y; j ∈ [i₀, i₁, ...]
  */
 export function searchInfixAll<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var X = x.length, Y = y.length, a = [];
-  for (var i=0; i<=X-Y; ++i)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const X = x.length, Y = y.length, a = [];
+  for (let i=0; i<=X-Y; ++i)
     if (isInfixAt(x, y, i, fc, fm)) a.push(i);
   return a;
 }
 
 
 function isInfixAt<T, U=T>(x: T[], y: T[], i: number, fc: CompareFunction<T|U>, fm: MapFunction<T, T|U>): boolean {
-  var Y = y.length;
-  for (var j=0; j<Y; ++j) {
-    var wx = fm(x[i+j], i+j, x);
-    var wy = fm(y[j], j, y);
+  const Y = y.length;
+  for (let j=0; j<Y; ++j) {
+    const wx = fm(x[i+j], i+j, x);
+    const wy = fm(y[j], j, y);
     if (fc(wx, wy)!==0) return false;
   }
   return true;
@@ -1836,12 +1850,12 @@ function isInfixAt<T, U=T>(x: T[], y: T[], i: number, fc: CompareFunction<T|U>, 
  * @returns begin index of subsequence, -1 if not found
  */
 export function searchSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): number {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var y1 = [...y].map(fm), Y = y1.length;
-  var a = -1, i = -1, j = 0;
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const y1 = [...y].map(fm), Y = y1.length;
+  let a = -1, i = -1, j = 0;
+  for (const vx of x) {
+    const wx = fm(vx, ++i, x);
     if (fc(wx, y1[j])!==0) continue;
     if (a<0) a = i;
     if (++j>=Y) return a;
@@ -1863,7 +1877,8 @@ export function searchSubsequence<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|
  * @returns x[i] | i ∈ 0..|x|
  */
 export function randomValue<T>(x: T[], fr: ReadFunction<number> | null=Math.random): T {
-  var i = Math.floor(fr() * x.length);
+  fr = fr || Math.random;
+  const i = Math.floor(fr() * x.length);
   return x[i];
 }
 export {randomValue as value};  // DEPRECATED
@@ -1876,10 +1891,11 @@ export {randomValue as value};  // DEPRECATED
  * @param fr random number generator ([0, 1))
  * @returns x[..i] if n<0; x[..n] otherwise | i ∈ 0..|x|
  */
-export function randomPrefix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
-  var X = x.length;
+export function randomPrefix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] | null {
+  fr = fr || Math.random;
+  const X = x.length;
   if (n>X) return null;
-  var n = n>=0? n : Math.floor((X+1)*fr());
+  n = n>=0? n : Math.floor((X+1)*fr());
   return x.slice(0, n);
 }
 export {randomPrefix as prefix};  // DEPRECATED
@@ -1892,10 +1908,10 @@ export {randomPrefix as prefix};  // DEPRECATED
  * @param fr random number generator ([0, 1))
  * @returns x[|x|-i..] if n<0; x[|x|-n..] otherwise | i ∈ 0..|x|
  */
-export function randomSuffix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
-  var X = x.length;
+export function randomSuffix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] | null {
+  const X = x.length;
   if (n>X) return null;
-  var n = n>=0? n : Math.floor((X+1)*fr());
+  n = n>=0? n : Math.floor((X+1)*(fr as ReadFunction<number>)());
   return x.slice(X-n);
 }
 export {randomSuffix as suffix};  // DEPRECATED
@@ -1908,19 +1924,19 @@ export {randomSuffix as suffix};  // DEPRECATED
  * @param fr random number generator ([0, 1))
  * @returns x[i..j] if n<0; x[i..i+n] otherwise | i, j ∈ 0..|x|
  */
-export function randomInfix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
-  var X = x.length;
+export function randomInfix<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] | null {
+  const X = x.length;
   if (n>X) return null;
-  var n = n>=0? n : randomInfixLength(X, fr());
-  var i = Math.floor((X+1-n)*fr());
+  n = n>=0? n : randomInfixLength(X, (fr as ReadFunction<number>)());
+  const i = Math.floor((X+1-n)*(fr as ReadFunction<number>)());
   return x.slice(i, i+n);
 }
 export {randomInfix as infix};  // DEPRECATED
 
 // Not all infix lengths are equally proable.
 function randomInfixLength(X: number, r: number): number {
-  var C = 0.5 * X*(X+1) + 1;
-  var n = 0.5 * Math.sqrt(1 + 8*r*C) - 0.5;
+  const C = 0.5 * X*(X+1) + 1;
+  const n = 0.5 * Math.sqrt(1 + 8*r*C) - 0.5;
   return X+1  - Math.floor(n+1);
 }
 
@@ -1932,23 +1948,23 @@ function randomInfixLength(X: number, r: number): number {
  * @param fr random number generator ([0, 1))
  * @returns x[i, j, ...] | [i, j, ...] = is; |is| = |x| if n<0 else n
  */
-export function randomSubsequence<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
-  var X = x.length;
+export function randomSubsequence<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] | null {
+  const X = x.length;
   if (n>X)  return null;
-  if (n>=0) return randomSubsequenceFixed(x, n, fr);
-  else      return randomSubsequenceAll(x, fr);
+  if (n>=0) return randomSubsequenceFixed(x, n, fr as ReadFunction<number>);
+  else      return randomSubsequenceAll(x, fr as ReadFunction<number>);
 }
 export {randomSubsequence as subsequence};  // DEPRECATED
 
 function randomSubsequenceFixed<T>(x: T[], n: number, fr: ReadFunction<number>): T[] {
-  var is = fromRange(0, x.length);
+  const is = fromRange(0, x.length);
   randomPermutation$(is, n, fr).sort();
   return getAll(x, is);
 }
 
 function randomSubsequenceAll<T>(x: T[], fr: ReadFunction<number>): T[] {
-  var a = [];
-  for (var v of x)
+  const a: T[] = [];
+  for (const v of x)
     if (fr()<0.5) a.push(v);
   return a;
 }
@@ -1961,8 +1977,8 @@ function randomSubsequenceAll<T>(x: T[], fr: ReadFunction<number>): T[] {
  * @param fr random number generator ([0, 1))
  * @returns x' | x' = x; values are randomly shuffled
  */
-export function randomPermutation<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
-  var X = x.length;
+export function randomPermutation<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] | null {
+  const X = x.length;
   if (n>X) return null;
   return randomPermutation$(x.slice(), n, fr);
 }
@@ -1977,12 +1993,13 @@ export {randomPermutation as permutation};  // DEPRECATED
  * @returns x | values are randomly shuffled
  */
 export function randomPermutation$<T>(x: T[], n: number=-1, fr: ReadFunction<number> | null=Math.random): T[] {
-  var X = x.length;
+  fr = fr || Math.random;
+  const X = x.length;
   if (n>X) return x;
-  var n = n>=0? n : Math.floor((X+1)*fr());
-  for (var i=0; i<n; ++i) {
-    var j = i + Math.floor((X-i)*fr());
-    var t = x[i]; x[i] = x[j]; x[j] = t;
+  n = n>=0? n : Math.floor((X+1)*fr());
+  for (let i=0; i<n; ++i) {
+    const j = i + Math.floor((X-i)*fr());
+    const t = x[i]; x[i] = x[j]; x[j] = t;
   }
   x.length = n;
   return x;
@@ -2006,7 +2023,7 @@ export {randomPermutation$ as shuffle$};
  * @returns first v | ft(v) = true; v ∈ x
  */
 export function find<T>(x: T[], ft: TestFunction<T>): T {
-  return x.find(ft);
+  return x.find(ft) as T;
 }
 
 
@@ -2017,8 +2034,9 @@ export function find<T>(x: T[], ft: TestFunction<T>): T {
  * @returns last v | ft(v) = true; v ∈ x
  */
 export function findRight<T>(x: T[], ft: TestFunction<T>): T {
-  for (var i=x.length-1; i>=0; --i)
+  for (let i=x.length-1; i>=0; --i)
     if (ft(x[i], i, x)) return x[i];
+  return undefined as unknown as T;
 }
 // #endregion
 
@@ -2035,7 +2053,7 @@ export function findRight<T>(x: T[], ft: TestFunction<T>): T {
  * @returns x[0..n]
  */
 export function take<T>(x: T[], n: number=1): T[] {
-  var n = Math.max(n, 0);
+  n = Math.max(n, 0);
   return x.slice(0, n);
 }
 export {take as left};
@@ -2048,8 +2066,8 @@ export {take as left};
  * @returns x[0..n]
  */
 export function takeRight<T>(x: T[], n: number=1): T[] {
-  var X = x.length;
-  var n = Math.min(Math.max(n, 0), X);
+  const X = x.length;
+  n = Math.min(Math.max(n, 0), X);
   return x.slice(X-n);
 }
 export {takeRight as right};
@@ -2084,7 +2102,7 @@ export function takeWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
  * @returns x[n..]
  */
 export function drop<T>(x: T[], n: number=1): T[] {
-  var n = Math.max(n, 0);
+  n = Math.max(n, 0);
   return x.slice(n);
 }
 
@@ -2096,8 +2114,8 @@ export function drop<T>(x: T[], n: number=1): T[] {
  * @returns x[0..-n]
  */
 export function dropRight<T>(x: T[], n: number=1): T[] {
-  var X = x.length;
-  var n = Math.min(Math.max(n, 0), X);
+  const X = x.length;
+  n = Math.min(Math.max(n, 0), X);
   return x.slice(0, X-n);
 }
 
@@ -2137,8 +2155,8 @@ export function dropWhileRight<T>(x: T[], ft: TestFunction<T>): T[] {
  * @returns first index where test fails
  */
 export function scanWhile<T>(x: T[], ft: TestFunction<T>): number {
-  var i = -1;
-  for (var v of x)
+  let i = -1;
+  for (const v of x)
     if (!ft(v, ++i, x)) return i;
   return ++i;
 }
@@ -2151,7 +2169,8 @@ export function scanWhile<T>(x: T[], ft: TestFunction<T>): number {
  * @returns first index where test passes till end
  */
 export function scanWhileRight<T>(x: T[], ft: TestFunction<T>): number {
-  for (var i=x.length-1; i>=0; --i)
+  let i = x.length-1;
+  for (; i>=0; --i)
     if (!ft(x[i], i, x)) break;
   return ++i;
 }
@@ -2164,8 +2183,8 @@ export function scanWhileRight<T>(x: T[], ft: TestFunction<T>): number {
  * @returns first index where test passes
  */
 export function scanUntil<T>(x: T[], ft: TestFunction<T>): number {
-  var i = -1;
-  for (var v of x)
+  let i = -1;
+  for (const v of x)
     if (ft(v, ++i, x)) return i;
   return ++i;
 }
@@ -2178,7 +2197,8 @@ export function scanUntil<T>(x: T[], ft: TestFunction<T>): number {
  * @returns first index where test fails till end
  */
 export function scanUntilRight<T>(x: T[], ft: TestFunction<T>): number {
-  for (var i=x.length-1; i>=0; --i)
+  let i = x.length-1;
+  for (; i>=0; --i)
     if (ft(x[i], i, x)) break;
   return ++i;
 }
@@ -2209,7 +2229,7 @@ export function indexOf<T>(x: T[], v: T, i: number=0): number {
  * @param i begin index [|x|-1]
  * @returns last index of v in x[0..i] if found else -1
  */
-export function lastIndexOf<T>(x: T[], v: T, i: number=x.length-1) {
+export function lastIndexOf<T>(x: T[], v: T, i: number=x.length-1): number {
   return x.lastIndexOf(v, i);
 }
 
@@ -2233,7 +2253,7 @@ export {search as findIndex};
  * @returns last index of value, -1 if not found
  */
 export function searchRight<T>(x: T[], ft: TestFunction<T>): number {
-  for (var i=x.length-1; i>=0; --i)
+  for (let i=x.length-1; i>=0; --i)
     if (ft(x[i], i, x)) return i;
   return -1;
 }
@@ -2247,8 +2267,9 @@ export {searchRight as findLastIndex};
  * @returns indices of value
  */
 export function searchAll<T>(x: T[], ft: TestFunction<T>): number[] {
-  var i = -1, a = [];
-  for (var v of x)
+  let i = -1;
+  const a: number[] = [];
+  for (const v of x)
     if (ft(v, ++i, x)) a.push(i);
   return a;
 }
@@ -2283,7 +2304,8 @@ export function some<T>(x: T[], ft: TestFunction<T> | null=null): boolean {
 export {some as anyOf};
 
 function someBoolean<T>(x: T[]): boolean {
-  for (var i=0, I=x.length; i<I; ++i)
+  const I = x.length;
+  for (let i=0; i<I; ++i)
     if (x[i]) return true;
   return false;
 }
@@ -2302,7 +2324,8 @@ export function every<T>(x: T[], ft: TestFunction<T> | null=null): boolean {
 export {every as allOf};
 
 function everyBoolean<T>(x: T[]): boolean {
-  for (var i=0, I=x.length; i<I; ++i)
+  const I = x.length;
+  for (let i=0; i<I; ++i)
     if (!x[i]) return false;
   return true;
 }
@@ -2326,7 +2349,8 @@ export function map<T, U=T>(x: T[], fm: MapFunction<T, T|U>): (T|U)[] {
  * @returns x = [fm(v₀), fm(v₁), ...]; vᵢ ∈ x
  */
 export function map$<T>(x: T[], fm: MapFunction<T, T>): T[] {
-  for (var i=0, I=x.length; i<I; ++i)
+  const I = x.length;
+  for (let i=0; i<I; ++i)
     x[i] = fm(x[i], i, x);
   return x;
 }
@@ -2340,8 +2364,8 @@ export function map$<T>(x: T[], fm: MapFunction<T, T>): T[] {
  * @returns fr(fr(acc, v₀), v₁)... | fr(acc, v₀) = v₀ if acc not given
  */
 export function reduce<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|U): T|U {
-  var init = arguments.length <= 2;
-  return init? x.reduce(fr as any) : x.reduce(fr, acc);
+  const init = arguments.length <= 2;
+  return init? x.reduce(fr as ReduceFunction<T, T>) : x.reduce(fr as ReduceFunction<T, T>, acc as T);
 }
 
 
@@ -2353,12 +2377,12 @@ export function reduce<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|U): T
  * @returns fr(fr(acc, vₓ₋₀), vₓ₋₁)... | fr(acc, vₓ₋₀) = vₓ₋₀ if acc not given
  */
 export function reduceRight<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|U): T|U {
-  var init = arguments.length <= 2;
-  for (var i=x.length-1; i>=0; --i) {
+  let init = arguments.length <= 2;
+  for (let i=x.length-1; i>=0; --i) {
     if (init)  { acc = x[i]; init = false; }
-    else acc = fr(acc, x[i], i, x);
+    else acc = fr(acc as T | U, x[i], i, x);
   }
-  return acc;
+  return acc as T | U;
 }
 
 
@@ -2381,7 +2405,9 @@ export {filter as findAll};
  * @returns x = [v₀, v₁, ...] | ft(vᵢ) = true; vᵢ ∈ x
  */
 export function filter$<T>(x: T[], ft: TestFunction<T>): T[] {
-  for (var i=0, j=0, I=x.length; i<I; ++i)
+  const I = x.length;
+  let j = 0;
+  for (let i=0; i<I; ++i)
     if (ft(x[i], i, x)) x[j++] = x[i];
   x.length = j;
   return x;
@@ -2395,8 +2421,9 @@ export function filter$<T>(x: T[], ft: TestFunction<T>): T[] {
  * @returns v₀, v₁, ... | vᵢ = x[i]; i ∈ is
  */
 export function filterAt<T>(x: T[], is: number[]): T[] {
-  var X = x.length, a = [];
-  for (var i of is)
+  const X = x.length;
+  const a: T[] = [];
+  for (const i of is)
     if (i>=0 && i<X) a.push(x[i]);
   return a;
 }
@@ -2409,8 +2436,9 @@ export function filterAt<T>(x: T[], is: number[]): T[] {
  * @returns [v₀, v₁, ...] | ft(vᵢ) = false; vᵢ ∈ x
  */
 export function reject<T>(x: T[], ft: TestFunction<T>): T[] {
-  var i = -1, a = [];
-  for (var v of x)
+  let i = -1;
+  const a: T[] = [];
+  for (const v of x)
     if (!ft(v, ++i, x)) a.push(v);
   return a;
 }
@@ -2423,7 +2451,9 @@ export function reject<T>(x: T[], ft: TestFunction<T>): T[] {
  * @returns x = [v₀, v₁, ...] | ft(vᵢ) = false; vᵢ ∈ x
  */
 export function reject$<T>(x: T[], ft: TestFunction<T>): T[] {
-  for (var i=0, j=0, I=x.length; i<I; ++i)
+  const I = x.length;
+  let j = 0;
+  for (let i=0; i<I; ++i)
     if (!ft(x[i], i, x)) x[j++] = x[i];
   x.length = j;
   return x;
@@ -2437,8 +2467,9 @@ export function reject$<T>(x: T[], ft: TestFunction<T>): T[] {
  * @returns [v₀, v₁, ...] | vᵢ = x[i]; i ∉ is
  */
 export function rejectAt<T>(x: T[], is: number[]): T[] {
-  var i = -1, a = [];
-  for (var v of x)
+  let i = -1;
+  const a: T[] = [];
+  for (const v of x)
     if (!is.includes(++i)) a.push(v);
   return a;
 }
@@ -2458,17 +2489,17 @@ export function rejectAt<T>(x: T[], is: number[]): T[] {
  * @param ft flatten test function (v, i, x) [is]
  * @returns flat iterable
  */
-export function flat(x: any[], n: number=-1, fm: MapFunction<any, any> | null=null, ft: TestFunction<any> | null=null): any[] {
-  var fm = fm || IDENTITY;
-  var ft = ft || is;
+export function flat(x: unknown[], n: number=-1, fm: MapFunction<unknown, unknown> | null=null, ft: TestFunction<unknown> | null=null): unknown[] {
+  fm = fm || IDENTITY;
+  ft = ft || is;
   return flatTo$([], x, n, fm, ft);
 }
 
-function flatTo$(a: any[], x: any[], n: number, fm: MapFunction<any, any>, ft: TestFunction<any>): any[] {
-  var i = -1;
-  for (var v of x) {
-    var w = fm(v, ++i, x);
-    if (n!==0 && ft(w, i, x)) flatTo$(a, v, n-1, fm, ft);
+function flatTo$(a: unknown[], x: unknown[], n: number, fm: MapFunction<unknown, unknown>, ft: TestFunction<unknown>): unknown[] {
+  let i = -1;
+  for (const v of x) {
+    const w = fm(v, ++i, x);
+    if (n!==0 && ft(w, i, x)) flatTo$(a, v as unknown[], n-1, fm, ft);
     else a.push(w);
   }
   return a;
@@ -2482,13 +2513,14 @@ function flatTo$(a: any[], x: any[], n: number, fm: MapFunction<any, any>, ft: T
  * @param ft flatten test function (v, i, x) [is]
  * @returns flat iterable
  */
-export function flatMap(x: any[], fm: MapFunction<any, any> | null=null, ft: TestFunction<any> | null=null): any[] {
-  var fm = fm || IDENTITY;
-  var ft = ft || is;
-  var i = -1, a = [];
-  for (var v of x) {
-    var w = fm(v, ++i, x);
-    if (ft(w, i, x)) concat$(a, w);
+export function flatMap(x: unknown[], fm: MapFunction<unknown, unknown> | null=null, ft: TestFunction<unknown> | null=null): unknown[] {
+  fm = fm || IDENTITY;
+  ft = ft || is;
+  let i = -1;
+  const a: unknown[] = [];
+  for (const v of x) {
+    const w = fm(v, ++i, x);
+    if (ft(w, i, x)) concat$(a, w as Iterable<unknown>);
     else a.push(w);
   }
   return a;
@@ -2509,8 +2541,9 @@ export function flatMap(x: any[], fm: MapFunction<any, any> | null=null, ft: Tes
  * @returns [acc, fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
  */
 export function exclusiveScan<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc: T|U): (T|U)[] {
-  var a = [];
-  for (var i=0, I=x.length; i<I; ++i) {
+  const a: (T|U)[] = [];
+  const I = x.length;
+  for (let i=0; i<I; ++i) {
     a.push(acc);
     acc = fr(acc, x[i], i, x);
   }
@@ -2526,8 +2559,9 @@ export function exclusiveScan<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc: T
  * @returns x = [acc, fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
  */
 export function exclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[] {
-  for (var i=0, I=x.length; i<I; ++i) {
-    var v = x[i];
+  const I = x.length;
+  for (let i=0; i<I; ++i) {
+    const v = x[i];
     x[i] = acc;
     acc = fr(acc, v, i, x);
   }
@@ -2543,9 +2577,11 @@ export function exclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[]
  * @returns [fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
  */
 export function inclusiveScan<T, U=T>(x: T[], fr: ReduceFunction<T, T|U>, acc?: T|U): (T|U)[] {
-  var init = arguments.length <= 2, a = [];
-  for (var i=0, I=x.length; i<I; ++i) {
-    acc  = init? x[i] : fr(acc, x[i], i, x);
+  let init = arguments.length <= 2;
+  const a: (T|U)[] = [];
+  const I = x.length;
+  for (let i=0; i<I; ++i) {
+    acc = init? x[i] : fr(acc as T|U, x[i], i, x);
     a.push(acc);
     init = false;
   }
@@ -2562,7 +2598,8 @@ export {inclusiveScan as accumulate};
  * @returns x = [fr(acc, v₀), fr(fr(acc, v₀), v₁)...]
  */
 export function inclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[] {
-  for (var i=0, I=x.length; i<I; ++i)
+  const I = x.length;
+  for (let i=0; i<I; ++i)
     acc = x[i] = fr(acc, x[i], i, x);
   return x;
 }
@@ -2576,9 +2613,10 @@ export function inclusiveScan$<T>(x: T[], fr: ReduceFunction<T, T>, acc: T): T[]
  * @returns [fc(acc, v₀), fc(v₀, v₁)...] | vᵢ ∈ x
  */
 export function adjacentCombine<T>(x: T[], fc: CombineFunction<T>, acc: T): T[] {
-  var  a = [];
+  const a: T[] = [];
   if (x.length>0) a.push(fc(acc, x[0]));
-  for (var i=1, I=x.length; i<I; ++i)
+  const I = x.length;
+  for (let i=1; i<I; ++i)
     a.push(fc(x[i-1], x[i]));
   return a;
 }
@@ -2593,12 +2631,12 @@ export function adjacentCombine<T>(x: T[], fc: CombineFunction<T>, acc: T): T[] 
  * @returns x = [fc(acc, v₀), fc(v₀, v₁)...] | vᵢ ∈ x
  */
 export function adjacentCombine$<T>(x: T[], fc: CombineFunction<T>, acc: T): T[] {
-  var X = x.length;
+  const X = x.length;
   if (X===0) return x;
-  var v = x[0];
+  let v = x[0];
   x[0]  = fc(acc, v);
-  for (var i=1; i<X; ++i) {
-    var w = x[i];
+  for (let i=1; i<X; ++i) {
+    const w = x[i];
     x[i]  = fc(v, w);
     v = w;
   }
@@ -2619,8 +2657,8 @@ export function adjacentCombine$<T>(x: T[], fc: CombineFunction<T>, acc: T): T[]
  * @returns [x[0], v, x[1], v, ..., x[|x|-1]]
  */
 export function intersperse<T>(x: T[], v: T): T[] {
-  var a = [], i = -1;
-  for (var u of x) {
+  const a: T[] = []; let i = -1;
+  for (const u of x) {
     if (++i>0) a.push(v);
     a.push(u);
   }
@@ -2635,8 +2673,10 @@ export function intersperse<T>(x: T[], v: T): T[] {
  * @returns [x[0], fc(x[0], x[1]), x[1], fc(x[1], x[2]), ..., x[|x|-1]]
  */
 export function interpolate<T>(x: T[], fc: CombineFunction<T>): T[] {
-  var a = [], u: T, i = -1;
-  for (var v of x) {
+  const a = [];
+  let u: T = undefined as T;
+  let i = -1;
+  for (const v of x) {
     if (++i>0) a.push(fc(u, v));
     a.push(u = v);
   }
@@ -2655,14 +2695,16 @@ export function interpolate<T>(x: T[], fc: CombineFunction<T>): T[] {
  * @returns x[0..m] ⧺ y[0..n] ⧺ x[s..s+m] ⧺ y[t..t+n] ⧺ ... ⧺ x[k*s..|x|-1] | k ∈ W
  */
 export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=m, t: number=n): T[] {
-  var X = x.length, Y = y.length, a = [];
-  var m = Math.max(m, 0);
-  var n = Math.max(n, 0);
-  var s = Math.max(s, 1);
-  var t = Math.max(t, 1);
-  for (var i=0, j=0; i<X; i+=s) {
+  const X = x.length;
+  const Y = y.length;
+  const a: T[] = [];
+  m = Math.max(m, 0);
+  n = Math.max(n, 0);
+  s = Math.max(s, 1);
+  t = Math.max(t, 1);
+  for (let i=0, j=0; i<X; i+=s) {
     if (i>0) {
-      for (var k=j, K=k+n; k<K; ++k)
+      for (let k=j, K=k+n; k<K; ++k)
         a.push(y[k % Y]);
       j += t;
     }
@@ -2678,10 +2720,10 @@ export function intermix<T>(x: T[], y: T[], m: number=1, n: number=1, s: number=
  * @returns [x₀[0], x₁[0], ..., x₀[1], x₁[0], ...] | [x₀, x₁, ...] = xs
  */
 export function interleave<T>(xs: T[][]): T[] {
-  var a = [];
-  for (var i=0;; ++i) {
-    var n = 0;
-    for (var x of xs)
+  const a: T[] = [];
+  for (let i=0;; ++i) {
+    let n = 0;
+    for (const x of xs)
       if (i<x.length) { a.push(x[i]); ++n; }
     if (n===0) break;
   }
@@ -2697,17 +2739,18 @@ export function interleave<T>(xs: T[][]): T[] {
  * @param vd default value
  * @returns [fm([x₀[0], x₁[0], ...]), fm([x₀[1], x₁[1], ...]), ...]
  */
-export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null, fe: EndFunction=null, vd?: T): (T[]|U)[] {
-  var fm = fm || IDENTITY;
-  var fe = fe || some as EndFunction;
-  var X = xs.length, a = [];
+export function zip<T, U=T[]>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null, fe: EndFunction | null=null, vd?: T): (T[]|U)[] {
+  fm = fm || IDENTITY;
+  fe = fe || some as EndFunction;
+  const X = xs.length, a: (T[]|U)[] = [];
   if (X===0) return a;
-  var ds = new Array(X).fill(false);
-  var ls = xs.map(x => x.length);
-  for (var i=0;; ++i) {
-    for (var j=0, vs=[]; j<X; ++j) {
+  const ds = new Array(X).fill(false);
+  const ls = xs.map(x => x.length);
+  for (let i=0;; ++i) {
+    const vs: T[] = [];
+    for (let j=0; j<X; ++j) {
       ds[j] = i>=ls[j];
-      vs[j] = ds[j]? vd : xs[j][i];
+      vs[j] = ds[j]? vd as T : xs[j][i];
     }
     if (fe(ds)) break;
     a.push(fm(vs, i, null));
@@ -2875,8 +2918,8 @@ export function copy<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.le
  * @returns x = x[0..j] ⧺ y[i..I] ⧺ x[j+I-i..]
  */
 export function copy$<T>(x: T[], y: T[], j: number=0, i: number=0, I: number=y.length): T[] {
-  var j = index(x, j);
-  var [i, I] = indexRange(y, i, I);
+  j = index(x, j);
+  [i, I] = indexRange(y, i, I);
   for (; i<I; ++i, ++j)
     x[j] = y[i];
   return x;
@@ -2918,8 +2961,8 @@ export function copyWithin$<T>(x: T[], j: number=0, i: number=0, I: number=x.len
  * @returns x[0..j] ⧺ x[i..I] ⧺ x[j..i] ⧺ x[I..]
  */
 export function moveWithin<T>(x: T[], j: number=0, i: number=0, I: number=x.length): T[] {
-  var j = index(x, j);
-  var [i, I] = indexRange(x, i, I);
+  j = index(x, j);
+  [i, I] = indexRange(x, i, I);
   if (j<i) return movePart(x, j, i, I);
   else     return movePart(x, i, I, j);
 }
@@ -2942,9 +2985,9 @@ function movePart<T>(x: T[], i: number, j: number, k: number): T[] {
  * @returns x = x[0..j] ⧺ x[i..I] ⧺ x[j..i] ⧺ x[I..]
  */
 export function moveWithin$<T>(x: T[], j: number=0, i: number=0, I: number=x.length): T[] {
-  var j = index(x, j);
-  var [i, I] = indexRange(x, i, I);
-  var p =  x.slice(i, I), P = p.length;
+  j = index(x, j);
+  [i, I] = indexRange(x, i, I);
+  const p =  x.slice(i, I), P = p.length;
   if (j<i) x.copyWithin(j+P, j, i);
   else     x.copyWithin(i,   I, j);
   return copy$(x, p, j<i? j : j-P);
@@ -2963,8 +3006,8 @@ export function moveWithin$<T>(x: T[], j: number=0, i: number=0, I: number=x.len
  * @returns x[0..i] ⧺ vs ⧺ x[i+n..]
  */
 export function splice<T>(x: T[], i: number, n: number=x.length, ...vs: T[]): T[] {
-  var i = index(x, i);
-  var n = Math.max(n, 0);
+  i = index(x, i);
+  n = Math.max(n, 0);
   return concat$(x.slice(0, i), vs, x.slice(i+n));
 }
 export {splice as toSpliced};
@@ -2997,8 +3040,8 @@ export function splice$<T>(x: T[], i: number, n: number=x.length, ...vs: T[]): T
  * @returns Σtᵢ | tᵢ = 1 if ft(vᵢ) else 0; vᵢ ∈ x
  */
 export function count<T>(x: T[], ft: TestFunction<T>): number {
-  var i = -1, a = 0;
-  for (var v of x)
+  let i = -1, a = 0;
+  for (const v of x)
     if (ft(v, ++i, x)) ++a;
   return a;
 }
@@ -3011,10 +3054,10 @@ export function count<T>(x: T[], ft: TestFunction<T>): number {
  * @returns Map \{value ⇒ count\}
  */
 export function countEach<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Map<T|U, number> {
-  var fm = fm || IDENTITY;
-  var i  = -1, a = new Map();
-  for (var v of x) {
-    var w = fm(v, ++i, x);
+  fm = fm || IDENTITY;
+  let i  = -1; const a = new Map();
+  for (const v of x) {
+    const w = fm(v, ++i, x);
     a.set(w, (a.get(w) || 0) + 1);
   }
   return a;
@@ -3029,8 +3072,9 @@ export {countEach as countAs};  // DEPRECATED
  * @returns [satisfies, doesnt]
  */
 export function partition<T>(x: T[], ft: TestFunction<T>): [T[], T[]] {
-  var t: T[] = [], f: T[] = [], i = -1;
-  for (var v of x) {
+  const t: T[] = [], f: T[] = [];
+  let i = -1;
+  for (const v of x) {
     if (ft(v, ++i, x)) t.push(v);
     else f.push(v);
   }
@@ -3045,12 +3089,12 @@ export function partition<T>(x: T[], ft: TestFunction<T>): [T[], T[]] {
  * @returns Map \{key ⇒ values\}
  */
 export function partitionEach<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): Map<T|U, T[]> {
-  var fm = fm || IDENTITY;
-  var i  = -1, a = new Map();
-  for (var v of x) {
-    var w = fm(v, ++i, x);
+  fm = fm || IDENTITY;
+  let i  = -1; const a = new Map<T|U, T[]>();
+  for (const v of x) {
+    const w = fm(v, ++i, x);
     if (!a.has(w)) a.set(w, []);
-    a.get(w).push(v);
+    a.get(w)!.push(v);
   }
   return a;
 }
@@ -3071,8 +3115,10 @@ export {partitionEach as partitionAs};    // DEPRECATED
  * @returns [x[j..k], x[l..m], ...] | ft(x[i]) = true; i = 0..j / k..l / ...
  */
 export function split<T>(x: T[], ft: TestFunction<T>): T[][] {
-  var i = -1, a = [], b = [];
-  for (var v of x) {
+  let i = -1;
+  const a: T[][] = [];
+  let b: T[] = [];
+  for (const v of x) {
     if (!ft(v, ++i, x))  b.push(v);
     else if (b.length) { a.push(b); b = []; }
   }
@@ -3088,8 +3134,10 @@ export function split<T>(x: T[], ft: TestFunction<T>): T[][] {
  * @returns [x[j..k], x[l..m], ...] | ft(x[i]) = true; i = 0..j / k..l / ...; i ∈ is
  */
 export function splitAt<T>(x: T[], is: number[]): T[][] {
-  var i = -1, a = [], b = [];
-  for (var v of x) {
+  let i = -1;
+  const a: T[][] = [];
+  let b: T[] = [];
+  for (const v of x) {
     if (!is.includes(++i)) b.push(v);
     else if(b.length)    { a.push(b); b = []; }
   }
@@ -3105,8 +3153,9 @@ export function splitAt<T>(x: T[], is: number[]): T[][] {
  * @returns [x[0..j], x[j..k], ...] | ft(x[i]) = true; i = j, k, ...
  */
 export function cut<T>(x: T[], ft: TestFunction<T>): T[][] {
-  var j = 0, a = [];
-  for (var i=0, I=x.length; i<I; ++i) {
+  let j = 0; const a = [];
+  const I = x.length;
+  for (let i=0; i<I; ++i) {
     if (!ft(x[i], i, x)) continue;
     a.push(x.slice(j, i));
     j = i;
@@ -3123,8 +3172,9 @@ export function cut<T>(x: T[], ft: TestFunction<T>): T[][] {
  * @returns [x[0..j+1], x[j+1..k], ...] | ft(x[i]) = true; i = j, k, ...
  */
 export function cutRight<T>(x: T[], ft: TestFunction<T>): T[][] {
-  var j = 0, a = [];
-  for (var i=0, I=x.length; i<I; ++i) {
+  let j = 0; const a = [];
+  const I = x.length;
+  for (let i=0; i<I; ++i) {
     if (!ft(x[i], i, x)) continue;
     a.push(x.slice(j, i+1));
     j = i+1;
@@ -3141,10 +3191,10 @@ export function cutRight<T>(x: T[], ft: TestFunction<T>): T[][] {
  * @returns [x[0..j], x[j..k], ...] | ft(x[i]) = true; i = j, k, ...; i ∈ is
  */
 export function cutAt<T>(x: T[], is: number[]): T[][] {
-  var X = x.length;
-  var j = 0, a = [];
-  for (var i of is) {
-    var i = i<0? X+i : i;
+  const X = x.length;
+  let j = 0; const a = [];
+  for (let i of is) {
+    i = i<0? X+i : i;
     a.push(x.slice(j, i));
     j = Math.max(j, i);
   }
@@ -3160,10 +3210,10 @@ export function cutAt<T>(x: T[], is: number[]): T[][] {
  * @returns [x[0..j+1], x[j+1..k], ...] | ft(x[i]) = true; i = j, k, ...; i ∈ is
  */
 export function cutAtRight<T>(x: T[], is: number[]): T[][] {
-  var X = x.length;
-  var j = 0, a = [];
-  for (var i of is) {
-    var i = i<0? X+i : i;
+  const X = x.length;
+  let j = 0; const a = [];
+  for (let i of is) {
+    i = i<0? X+i : i;
     a.push(x.slice(j, i+1));
     j = Math.max(j, i+1);
   }
@@ -3180,12 +3230,13 @@ export function cutAtRight<T>(x: T[], is: number[]): T[][] {
  * @returns [x[0..k], x[k..l], ...] | fc(x[i], x[j]) = 0; i, j = 0..k / k..l / ...
  */
 export function group<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[][] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var a  = [], b = [];
-  var u: T|U,  i = -1;
-  for (var v of x) {
-    var w = fm(v, ++i, x);
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const a: T[][] = [];
+  let b: T[] = [];
+  let u: T|U = undefined as T, i = -1;
+  for (const v of x) {
+    const w = fm(v, ++i, x);
     if (i===0 || fc(u, w)===0) b.push(v);
     else { a.push(b); b = [v]; }
     u = w;
@@ -3203,10 +3254,11 @@ export function group<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: 
  * @returns x[0..n] ⧺ x[s..s+n] ⧺ x[2s..2s+n] ⧺ ...
  */
 export function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
-  var a = [];
+  const a: T[][] = [];
   if (n<0) return a;
-  var s = Math.max(s, 1);
-  for (var i=0, I=x.length; i<I; i+=s)
+  s = Math.max(s, 1);
+  const I = x.length;
+  for (let i=0; i<I; i+=s)
     a.push(x.slice(i, i+n));
   return a;
 }
@@ -3224,7 +3276,7 @@ export function chunk<T>(x: T[], n: number=1, s: number=n): T[][] {
  * @returns x₀ ⧺ x₁ ⧺ ... | [x₀, x₁, ...] = xs
  */
 export function concat<T>(...xs: T[][]): T[] {
-  return [].concat(...xs);
+  return ([] as T[]).concat(...xs);
 }
 
 
@@ -3235,7 +3287,7 @@ export function concat<T>(...xs: T[][]): T[] {
  * @returns x = x ⧺ y₀ ⧺ y₁ ⧺ ...] | [y₀, y₁, ...] = ys
  */
 export function concat$<T>(x: T[], ...ys: Iterable<T>[]): T[] {
-  for (var y of ys)
+  for (const y of ys)
     x.push(...y);
   return x;
 }
@@ -3265,12 +3317,13 @@ export function join<T>(x: T[], sep: string=","): string {
  * @param n number of values [|x|]
  */
 export function cycle<T>(x: T[], i: number=0, n: number=x.length): T[] {
-  var X = x.length;
+  const X = x.length;
   if (n<=0 || X===0) return [];
-  var i = mod(i, X);
-  var a = x.slice(i, i+n);
+  i = mod(i, X);
+  const a = x.slice(i, i+n);
   n -= a.length;
-  for (var m=0, M=Math.floor(n/X); m<M; ++m)
+  const M = Math.floor(n/X);
+  for (let m=0; m<M; ++m)
     concat$(a, x);
   return concat$(a, x.slice(0, n % X));
 }
@@ -3283,7 +3336,8 @@ export function cycle<T>(x: T[], i: number=0, n: number=x.length): T[] {
  * @returns x ⧺ x ⧺ ...(n times)
  */
 export function repeat<T>(x: T[], n: number=1): T[] {
-  for (var a=[]; n>0; --n)
+  const a: T[] = [];
+  for (; n>0; --n)
     concat$(a, x);
   return a;
 }
@@ -3317,7 +3371,7 @@ export function reverse$<T>(x: T[]): T[] {
  * @returns x[n..] ⧺ x[0..n]
  */
 export function rotate<T>(x: T[], n: number=0): T[] {
-  var n = mod(n, x.length);
+  n = mod(n, x.length);
   return concat$(x.slice(n), x.slice(0, n));
 }
 
@@ -3329,8 +3383,8 @@ export function rotate<T>(x: T[], n: number=0): T[] {
  * @returns x = x[n..] ⧺ x[0..n]
  */
 export function rotate$<T>(x: T[], n: number=0): T[] {
-  var n = mod(n, x.length);
-  var y = x.slice(0, n);
+  n = mod(n, x.length);
+  const y = x.slice(0, n);
   x.copyWithin(0, n);
   return copy$(x, y, x.length-n);
 }
@@ -3355,10 +3409,10 @@ export function isUnique<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, f
 }
 
 function isUniqueMap<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): boolean {
-  var fm = fm || IDENTITY;
-  var s  = new Set(), i = -1;
-  for (var v of x) {
-    var w = fm(v, ++i, x);
+  fm = fm || IDENTITY;
+  const s  = new Set(); let i = -1;
+  for (const v of x) {
+    const w = fm(v, ++i, x);
     if (s.has(w)) return false;
     s.add(w);
   }
@@ -3366,11 +3420,11 @@ function isUniqueMap<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): boole
 }
 
 function isUniqueDual<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var x1 = [...x].map(fm);
-  for (var wx of x1) {
-    for (var wy of x1)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const x1 = [...x].map(fm);
+  for (const wx of x1) {
+    for (const wy of x1)
       if (fc(wx, wy)===0) return false;
   }
   return true;
@@ -3391,22 +3445,22 @@ export function isDisjoint<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 }
 
 function isDisjointMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): boolean {
-  var fm = fm || IDENTITY;
-  var s  = toSet(y, fm), i = -1;
-  for (var v of x) {
-    var w = fm(v, ++i, x);
+  fm = fm || IDENTITY;
+  const s  = toSet(y, fm); let i = -1;
+  for (const v of x) {
+    const w = fm(v, ++i, x);
     if (s.has(w)) return false;
   }
   return true;
 }
 
 function isDisjointDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): boolean {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var y1 = [...y].map(fm), i = -1;
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    for (var wy of y1)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const y1 = [...y].map(fm); let i = -1;
+  for (const vx of x) {
+    const wx = fm(vx, ++i, x);
+    for (const wy of y1)
       if (fc(wx, wy)===0) return false;
   }
   return true;
@@ -3426,11 +3480,11 @@ export function unique<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm:
 }
 
 function uniqueMap<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): T[] {
-  var fm = fm || IDENTITY;
-  var s  = new Set();
-  var i  = -1, a = [];
-  for (var v of x) {
-    var w = fm(v, ++i, x);
+  fm = fm || IDENTITY;
+  const s  = new Set();
+  let i  = -1; const a = [];
+  for (const v of x) {
+    const w = fm(v, ++i, x);
     if (s.has(w)) continue;
     s.add(w); a.push(v);
   }
@@ -3438,12 +3492,12 @@ function uniqueMap<T, U=T>(x: T[], fm: MapFunction<T, T|U> | null=null): T[] {
 }
 
 function uniqueDual<T, U=T>(x: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var i  = -1, s = [], a = [];
-  x: for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    for (var ws of s)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  let i  = -1; const s = [], a = [];
+  x: for (const vx of x) {
+    const wx = fm(vx, ++i, x);
+    for (const ws of s)
       if (fc(ws, wx)===0) continue x;
     s.push(wx); a.push(vx);
   }
@@ -3478,22 +3532,22 @@ export function union$<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=n
 }
 
 function unionMap$<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
-  var fm = fm || IDENTITY;
-  var s  = toSet(x, fm), i = -1;
-  for (var vy of y) {
-    var wy = fm(vy, ++i, y);
+  fm = fm || IDENTITY;
+  const s  = toSet(x, fm); let i = -1;
+  for (const vy of y) {
+    const wy = fm(vy, ++i, y);
     if (!s.has(wy)) x.push(vy);
   }
   return x;
 }
 
 function unionDual$<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var x1 = x.map(fm), i = -1;
-  y: for (var vy of y) {
-    var wy = fm(vy, ++i, y);
-    for (var wx of x1)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const x1 = x.map(fm); let i = -1;
+  y: for (const vy of y) {
+    const wy = fm(vy, ++i, y);
+    for (const wx of x1)
       if (fc(wx, wy)===0) continue y;
     x.push(vy);
   }
@@ -3515,24 +3569,24 @@ export function intersection<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | 
 }
 
 function intersectionMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
-  var fm = fm || IDENTITY;
-  var s  = toSet(y, fm);
-  var i  = -1, a = [];
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
+  fm = fm || IDENTITY;
+  const s  = toSet(y, fm);
+  let i  = -1; const a = [];
+  for (const vx of x) {
+    const wx = fm(vx, ++i, x);
     if (s.has(wx)) a.push(vx);
   }
   return a;
 }
 
 function intersectionDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var y1 = [...y].map(fm);
-  var i  = -1, a = [];
-  x: for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    for (var wy of y1)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const y1 = [...y].map(fm);
+  let i  = -1; const a = [];
+  x: for (const vx of x) {
+    const wx = fm(vx, ++i, x);
+    for (const wy of y1)
       if (fc(wx, wy)===0) { a.push(vx); continue x; }
   }
   return a;
@@ -3553,24 +3607,24 @@ export function difference<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | nu
 }
 
 function differenceMap<T, U=T>(x: T[], y: T[], fm: MapFunction<T, T|U> | null=null): T[] {
-  var fm = fm || IDENTITY;
-  var s  = toSet(y, fm);
-  var i  = -1, a = [];
-  for (var vx of x) {
-    var wx = fm(vx, ++i, x);
+  fm = fm || IDENTITY;
+  const s  = toSet(y, fm);
+  let i  = -1; const a = [];
+  for (const vx of x) {
+    const wx = fm(vx, ++i, x);
     if (!s.has(wx)) a.push(vx);
   }
   return a;
 }
 
 function differenceDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
-  var fc = fc || COMPARE;
-  var fm = fm || IDENTITY;
-  var y1 = [...y].map(fm);
-  var i  = -1, a  = [];
-  x: for (var vx of x) {
-    var wx = fm(vx, ++i, x);
-    for (var wy of y1)
+  fc = fc || COMPARE;
+  fm = fm || IDENTITY;
+  const y1 = [...y].map(fm);
+  let i  = -1; const a  = [];
+  x: for (const vx of x) {
+    const wx = fm(vx, ++i, x);
+    for (const wy of y1)
       if (fc(wx, wy)===0) continue x;
     a.push(vx);
   }
@@ -3587,10 +3641,10 @@ function differenceDual<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=
  * @returns x-y ∪ y-x
  */
 export function symmetricDifference<T, U=T>(x: T[], y: T[], fc: CompareFunction<T|U> | null=null, fm: MapFunction<T, T|U> | null=null): T[] {
-  var x0 = fromIterable$(x);
-  var y0 = fromIterable$(y);
-  var ax = difference(x0, y0, fc, fm);
-  var ay = difference(y0, x0, fc, fm);
+  const x0 = fromIterable$(x);
+  const y0 = fromIterable$(y);
+  const ax = difference(x0, y0, fc, fm);
+  const ay = difference(y0, x0, fc, fm);
   return concat$(ax, ay);
 }
 
@@ -3602,17 +3656,20 @@ export function symmetricDifference<T, U=T>(x: T[], y: T[], fc: CompareFunction<
  * @returns x₀ × x₁ × ... = \{[v₀, v₁, ...] | v₀ ∈ x₀, v₁ ∈ x₁, ...] \}
  */
 export function cartesianProduct<T, U=T>(xs: T[][], fm: MapFunction<T[], T[]|U> | null=null): (T[]|U)[] {
-  var fm = fm || IDENTITY;
-  var XS = xs.length, a = [];
+  fm = fm || IDENTITY;
+  const XS = xs.length;
+  const a: (T[]|U)[] = [];
   if (XS===0) return a;
-  var is = new Array(XS).fill(0);
-  var ls = xs.map(x => x.length);
+  const is = new Array(XS).fill(0);
+  const ls = xs.map(x => x.length);
   if (ls.some(l => l===0)) return a;
-  for (var i=0;; ++i) {
-    for (var j=0, vs=[]; j<XS; ++j)
+  for (let i=0;; ++i) {
+    const vs: T[] = [];
+    for (let j=0; j<XS; ++j)
       vs.push(xs[j][is[j]]);
     a.push(fm(vs, i, null));
-    for (var r=XS-1; r>=0; --r) {
+    let r = XS-1;
+    for (; r>=0; --r) {
       if (++is[r]<ls[r]) break;
       is[r] = 0;
     }
