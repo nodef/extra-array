@@ -1,3 +1,9 @@
+import {IDENTITY, COMPARE} from "@nodef/extra-function";
+import {mod} from "@nodef/extra-math";
+
+
+
+
 // #region TYPES
 // =============
 
@@ -104,24 +110,6 @@ export type SwapFunction<T> = (x: T[], i: number, j: number) => T[];
 
 // #region HELPERS
 // ---------------
-
-/** Return the same (first) value. */
-function IDENTITY<T>(v: T): T {
-  return v;
-}
-
-
-/** Compare two values. */
-function COMPARE<T>(a: T, b: T): number {
-  return a<b? -1 : (a>b? 1 : 0);
-}
-
-
-/** Find the remainder of x/y with sign of y (floored division). */
-function mod(x: number, y: number): number {
-  return x - y * Math.floor(x/y);
-}
-
 
 /** Convert an iterable to set. */
 function toSet<T, U=T>(x: T[], fm: MapFunction<T, U> | null=null): Set<T|U> {
