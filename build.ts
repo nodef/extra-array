@@ -1,4 +1,4 @@
-import {parseArgs}  from "@std/cli";
+import {parseArgs}  from "@std/cli/parse-args";
 
 
 // Run a command in a subprocess, with inherited stdio.
@@ -15,15 +15,16 @@ async function run(command: string, args: string[], cwd?: string) {
 
 
 // Publish core package to npm.
-async function publishCoreToNpm() {
-  const name = JSON.parse(await Deno.readTextFile('deno.json')).name.replace(/^@nodef\//, '');
+async function publishCoreToNpm(name: string) {
+  const file = name.replace(/\//g, '__');
   console.log(`Publishing the ${name} package to npm...`);
-  await run('deno', ['pack', '--output', `${name}.tgz`, '--allow-dirty']);
+  await run('deno', ['pack', '--output', `${file}.tgz`, '--allow-dirty']);
   Deno.mkdirSync('.temp-pack', {recursive: true});
-  await run('tar', ['-xzf', `${name}.tgz`, '-C', '.temp-pack']);
-  Deno.removeSync(`${name}.tgz`);
+  await run('tar', ['-xzf', `${file}.tgz`, '-C', '.temp-pack']);
+  Deno.removeSync(`${file}.tgz`);
   const meta = JSON.parse(await Deno.readTextFile('.temp-pack/package/package.json'));
   meta.name = name;
+  // meta.bin  = {"sleep": "bin.js"};
   await Deno.writeTextFile('.temp-pack/package/package.json', JSON.stringify(meta, null, 2));
   await run('npm', ['publish', '--access', 'public'], '.temp-pack/package');
   await Deno.remove('.temp-pack', {recursive: true});
@@ -32,12 +33,15 @@ async function publishCoreToNpm() {
 
 // Main function, of course.
 async function main() {
+  const meta = JSON.parse(await Deno.readTextFile('deno.json'));
+  const name = meta.name.replace(/^@nodef\//, '');
   const args = parseArgs(Deno.args, {
     boolean: ['publish-core'],
     default: {'publish-core': false}
   });
   if (args['publish-core']) {
-    await publishCoreToNpm();
+    await publishCoreToNpm(name);
+    await publishCoreToNpm(`@nodef/${name}`);
   }
 }
 main();

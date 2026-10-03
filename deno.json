@@ -1,6 +1,6 @@
 {
   "name": "@nodef/extra-array",
-  "version": "4.4.4",
+  "version": "4.4.6",
   "license": "MIT",
   "exports": "./index.ts",
   "publish": {

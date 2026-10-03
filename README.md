@@ -2,7 +2,7 @@ An [array] is a collection of values, stored contiguously.<br>
 
 ▌
 📦 [JSR](https://jsr.io/@nodef/extra-array),
-📦 [NPM](https://www.npmjs.com/package/extra-array),
+📦 [NPM](https://www.npmjs.com/package/@nodef/extra-array),
 📰 [Docs](https://jsr.io/@nodef/extra-array/doc).
 
 <br>
@@ -36,7 +36,7 @@ other programming languages such as *Haskell*, *Python*, *Java*, and
 <br>
 
 ```javascript
-// import * as xarray from "jsr:@nodef/extra-array";
+import * as xarray from "jsr:@nodef/extra-array";
 
 var x = [1, 2, 3];
 xarray.get(x, -1);
