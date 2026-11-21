@@ -1,6 +1,6 @@
 {
   "name": "@nodef/extra-array",
-  "version": "4.4.6",
+  "version": "4.5.3",
   "license": "MIT",
   "exports": "./index.ts",
   "publish": {
@@ -11,8 +11,8 @@
     ]
   },
   "imports": {
-    "@nodef/extra-function": "jsr:@nodef/extra-function@^1.4.1",
-    "@nodef/extra-math": "jsr:@nodef/extra-math@^1.6.1",
+    "@nodef/extra-function": "jsr:@nodef/extra-function@^1.4.2",
+    "@nodef/extra-math": "jsr:@nodef/extra-math@^1.8.0",
     "@std/assert": "jsr:@std/assert@^1.0.19",
     "@std/cli": "jsr:@std/cli@^1.0.32"
   }

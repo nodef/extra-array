@@ -1,8 +1,8 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@nodef/extra-function@^1.4.1": "1.4.1",
-    "jsr:@nodef/extra-math@^1.6.1": "1.6.1",
+    "jsr:@nodef/extra-function@^1.4.2": "1.4.2",
+    "jsr:@nodef/extra-math@^1.8.0": "1.8.0",
     "jsr:@nodef/extra-number@^2.6.0": "2.6.0",
     "jsr:@std/assert@^1.0.19": "1.0.19",
     "jsr:@std/cli@^1.0.32": "1.0.32",
@@ -11,11 +11,11 @@
     "jsr:@std/internal@^1.0.14": "1.0.14"
   },
   "jsr": {
-    "@nodef/extra-function@1.4.1": {
-      "integrity": "43be508904a624352563550eb01a2d46da56c72cb87cd9667c2291e6883bfc7a"
+    "@nodef/extra-function@1.4.2": {
+      "integrity": "ecb5bb30a7bc7f9211b5161e4bca5c2fd1c8552685174b63b1d3f773f90e17a9"
     },
-    "@nodef/extra-math@1.6.1": {
-      "integrity": "fa82c802c7a0f4336a8073578292fc7d754817a7d61207534ed0743770d63d06",
+    "@nodef/extra-math@1.8.0": {
+      "integrity": "e17745b7ae90117e397bc146aa903dd32eb19084f116252cbef87c72cdad6ab5",
       "dependencies": [
         "jsr:@nodef/extra-number"
       ]
@@ -45,8 +45,8 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@nodef/extra-function@^1.4.1",
-      "jsr:@nodef/extra-math@^1.6.1",
+      "jsr:@nodef/extra-function@^1.4.2",
+      "jsr:@nodef/extra-math@^1.8.0",
       "jsr:@std/assert@^1.0.19",
       "jsr:@std/cli@^1.0.32"
     ]
